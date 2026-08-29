@@ -211,6 +211,7 @@ imperium/
 ├─ tools/
 │  └─ forge/                    CLI: engraving → alpha planes
 ├─ db/schema.ts
+├─ lib/                         auth.ts, auth-client.ts, env.ts — server/client glue, not engine or content
 └─ CLAUDE.md
 ```
 

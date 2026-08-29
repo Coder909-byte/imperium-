@@ -1,0 +1,66 @@
+{
+  "id": "gallia",
+  "name": "Gaul",
+  "latinName": "Gallia",
+  "civilisation": "Rome",
+  "mapCentroid": [2.5, 46.6],
+  "heldFrom": -58,
+  "heldTo": 486,
+  "scene": {
+    "lut": "engraving_dust",
+    "ambientBed": "wind_plains",
+    "planes": [
+      {
+        "id": "far_hills",
+        "asset": "gallia/far_hills.webp",
+        "depth": 0.1,
+        "tint": "#8a7a63",
+        "blur": 2
+      },
+      {
+        "id": "character_stage",
+        "asset": "gallia/character_stage.webp",
+        "depth": 0.6,
+        "tint": "#3a2f22"
+      }
+    ]
+  },
+  "beats": [
+    {
+      "id": "alesia-second-wall",
+      "year": "52 BC",
+      "sortYear": -52,
+      "headline": "The wall that faces both ways",
+      "body": "Caesar's army had Vercingetorix's forty thousand men boxed in at Alesia behind eleven miles of siegeworks. Then word came that a Gallic relief force, Caesar's own account puts it at a quarter of a million, was marching to break the siege from outside. He built a second wall, facing outward, so his own army was besieging and besieged at the same time.",
+      "visibleLayers": ["far_hills", "character_stage"],
+      "camera": {
+        "x": 0,
+        "y": 0,
+        "scale": 1.05,
+        "durationMs": 2800,
+        "ease": "power2.inOut"
+      },
+      "fx": ["dust"],
+      "actors": [
+        {
+          "rig": "legionary",
+          "clip": "march",
+          "x": 0.3,
+          "y": 0.7,
+          "count": 12,
+          "phase": 0.2
+        }
+      ],
+      "audio": {
+        "cue": "wind_plains_swell",
+        "bedIntensity": 0.4
+      },
+      "sources": [
+        {
+          "label": "Caesar, Commentarii de Bello Gallico, Book VII",
+          "url": "https://www.perseus.tufts.edu/hopper/text?doc=Perseus%3Atext%3A1999.02.0002"
+        }
+      ]
+    }
+  ]
+}

@@ -41,6 +41,7 @@ engine/         rendering. Pure. Never imports content/
 content/        region JSON, questions, geojson, rigs, assets/manifest.json, schema.ts
 tools/forge/    CLI: engraving scan → alpha-line-art WebP plane
 db/             Drizzle schema and migrations
+lib/            auth.ts, auth-client.ts, env.ts — server/client glue, not engine or content
 docs/           PRD.md, adr/
 ```
 
@@ -94,8 +95,9 @@ npm run lint           # eslint
 npm run test           # vitest
 npm run test:e2e       # playwright
 npm run validate       # zod-validate all content/ JSON
-npm run db:generate    # drizzle migration from schema
-npm run db:push        # apply to Neon
+npm run db:generate    # write a migration file from schema changes
+npm run db:migrate     # apply pending migrations in db/migrations/ to the database
+npm run db:push        # push schema directly, no migration file — throwaway experiments only, never part of a documented flow
 npm run forge -- <file>  # engraving → alpha plane
 ```
 

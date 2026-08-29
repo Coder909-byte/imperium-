@@ -1,0 +1,36 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+env:
+  # Placeholders only — no real secrets in CI. `next build` needs these
+  # variables to be *present* (lib/env.ts fails fast on missing ones) but
+  # nothing at build time actually opens a database connection or talks
+  # to Google, so fake values are enough to get through typecheck/build.
+  DATABASE_URL: "postgresql://ci:ci@localhost:5432/ci"
+  BETTER_AUTH_SECRET: "ci-placeholder-secret-not-used-for-anything-real"
+  BETTER_AUTH_URL: "http://localhost:3000"
+  GOOGLE_CLIENT_ID: "ci-placeholder-client-id"
+  GOOGLE_CLIENT_SECRET: "ci-placeholder-client-secret"
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+
+      - run: npm ci
+
+      - run: npm run typecheck
+      - run: npm run lint
+      - run: npm run validate
+      - run: npm run test
+      - run: npm run build
