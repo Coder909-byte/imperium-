@@ -1,0 +1,46 @@
+{
+  "id": "mesopotamia",
+  "name": "Mesopotamia",
+  "latinName": "Mesopotamia",
+  "heldFrom": 116,
+  "heldTo": 118,
+  "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+      [
+        [
+          40.32,
+          37.723
+        ],
+        [
+          43.104,
+          37.108
+        ],
+        [
+          46.005,
+          34.769
+        ],
+        [
+          46.005,
+          32.431
+        ],
+        [
+          43.8,
+          32.8
+        ],
+        [
+          40.552,
+          35.508
+        ],
+        [
+          40.32,
+          37.723
+        ]
+      ]
+    ]
+  },
+  "labelCentroid": [
+    43.104,
+    35.077
+  ]
+}

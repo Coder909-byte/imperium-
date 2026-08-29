@@ -1,0 +1,187 @@
+/* Hand-written CSS for the atlas — CLAUDE.md: Tailwind is for site chrome,
+   not the atlas or scene player. Cinzel for map lettering (letterspaced),
+   EB Garamond for the caption/teaser line. Both loaded in app/atlas/layout.tsx
+   as CSS variables (--font-cinzel, --font-garamond). */
+
+.wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.svg {
+  width: 100%;
+  height: auto;
+  background: #1a1108;
+}
+
+.ocean {
+  fill: #b9c9c1;
+  stroke: none;
+  /* Natural Earth's ocean polygon has interior rings (holes) for every
+     landmass. SVG's default nonzero fill-rule only punches a hole when
+     the hole ring winds opposite its exterior; the mapshaper conversion
+     doesn't guarantee that. evenodd subtracts holes regardless of
+     winding direction, so land renders as land, not filled ocean. */
+  fill-rule: evenodd;
+}
+
+.lake {
+  fill: #a9bdb9;
+  stroke: none;
+  fill-rule: evenodd;
+}
+
+.coastline {
+  fill: none;
+  stroke: #3a2510;
+  stroke-width: 1.1;
+  stroke-linejoin: round;
+}
+
+.river {
+  fill: none;
+  stroke: #4a6a72;
+  stroke-width: 0.8;
+  opacity: 0.75;
+}
+
+.province {
+  stroke: #3a2510;
+  stroke-width: 1;
+  stroke-linejoin: round;
+  transition: fill-opacity 200ms ease, stroke-opacity 200ms ease;
+}
+
+.held {
+  fill: #a33d2b;
+  fill-opacity: 0.55;
+  stroke-opacity: 1;
+  cursor: pointer;
+}
+
+.held:focus-visible {
+  outline: 2px solid #f2e2b8;
+  outline-offset: 1px;
+}
+
+.hovered {
+  fill-opacity: 0.85;
+}
+
+.unheld {
+  fill: none;
+  stroke-opacity: 0.25;
+  pointer-events: none;
+}
+
+.provinceLabel {
+  font-family: var(--font-cinzel), "Cinzel", serif;
+  font-size: 8px;
+  letter-spacing: 0.06em;
+  fill: #241708;
+  text-shadow: 0 0 3px #f2e2b8;
+  pointer-events: none;
+  animation: labelFadeIn 300ms ease both;
+}
+
+.cityMark {
+  fill: #241708;
+  /* A city dot sitting on top of a province must not steal the click/
+     hover that province is waiting for underneath it. */
+  pointer-events: none;
+}
+
+.cityLabel {
+  font-family: var(--font-garamond), "EB Garamond", serif;
+  font-style: italic;
+  font-size: 7px;
+  fill: #241708;
+  pointer-events: none;
+}
+
+.seaLabel {
+  font-family: var(--font-cinzel), "Cinzel", serif;
+  font-size: 9px;
+  letter-spacing: 0.28em;
+  fill: #35505a;
+  opacity: 0.8;
+  pointer-events: none;
+}
+
+.insets {
+  cursor: pointer;
+}
+
+.inset:focus-visible .insetFrame {
+  stroke: #f2e2b8;
+}
+
+.insetFrame {
+  fill: none;
+  stroke: #3a2510;
+  stroke-width: 2;
+}
+
+.insetLabel {
+  font-family: var(--font-cinzel), "Cinzel", serif;
+  font-size: 9px;
+  letter-spacing: 0.08em;
+  fill: #f2e2b8;
+}
+
+.insetProvinceHeld {
+  fill: #a33d2b;
+  fill-opacity: 0.55;
+  stroke: #3a2510;
+  stroke-width: 0.6;
+}
+
+.insetProvinceUnheld {
+  fill: none;
+  stroke: #3a2510;
+  stroke-width: 0.4;
+  stroke-opacity: 0.25;
+}
+
+.cartoucheTitle {
+  font-family: var(--font-cinzel), "Cinzel", serif;
+  font-size: 13px;
+  letter-spacing: 0.12em;
+  fill: #241708;
+}
+
+.eraLabel {
+  font-family: var(--font-cinzel), "Cinzel", serif;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  fill: #241708;
+}
+
+.teaser {
+  min-height: 1.4em;
+  font-family: var(--font-garamond), "EB Garamond", serif;
+  font-style: italic;
+  color: #241708;
+  text-align: center;
+}
+
+@keyframes labelFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .province,
+  .provinceLabel {
+    transition: none;
+    animation: none;
+  }
+}

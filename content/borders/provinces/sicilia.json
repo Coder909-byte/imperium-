@@ -1,0 +1,42 @@
+{
+  "id": "sicilia",
+  "name": "Sicilia",
+  "latinName": "Provincia Siciliae",
+  "heldFrom": -241,
+  "heldTo": 476,
+  "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+      [
+        [
+          12.42,
+          37.785
+        ],
+        [
+          13.522,
+          38.4
+        ],
+        [
+          15.494,
+          38.338
+        ],
+        [
+          15.378,
+          36.985
+        ],
+        [
+          13.638,
+          37.046
+        ],
+        [
+          12.42,
+          37.785
+        ]
+      ]
+    ]
+  },
+  "labelCentroid": [
+    13.928,
+    37.6
+  ]
+}

@@ -150,3 +150,75 @@ export const Question = z
 
 export type QuestionOption = z.infer<typeof QuestionOption>;
 export type Question = z.infer<typeof Question>;
+
+// --- Atlas content ----------------------------------------------------
+// Province boundaries, city markers and sea labels for engine/atlas.
+// Geometry is stored as lon/lat GeoJSON (WGS84) — engine/atlas/projection.ts
+// is the only place that turns it into SVG paths, and it does that for
+// every layer alike, hand-authored provinces included (see ADR 002: the
+// provinces round-trip through real lon/lat so the same projection code
+// exercises them, rather than the hand art skipping the pipeline).
+
+export const GeoPosition = z.tuple([z.number(), z.number()]); // [lon, lat]
+
+// Minimal GeoJSON geometry shapes — only what the atlas needs, not the
+// full spec (no GeometryCollection, no bbox, no CRS member).
+const LinearRing = z.array(GeoPosition).min(4); // closed: first === last
+
+export const PolygonGeometry = z.object({
+  type: z.literal("Polygon"),
+  coordinates: z.array(LinearRing).min(1),
+});
+
+export const MultiPolygonGeometry = z.object({
+  type: z.literal("MultiPolygon"),
+  coordinates: z.array(z.array(LinearRing).min(1)).min(1),
+});
+
+export const ProvinceGeometry = z.union([PolygonGeometry, MultiPolygonGeometry]);
+
+export const Province = z
+  .object({
+    id: z.string(),
+    name: z.string(),
+    latinName: z.string(),
+    heldFrom: z.number(),
+    heldTo: z.number().nullable(),
+    geometry: ProvinceGeometry,
+    // Where the map draws the province's name label — not always the same
+    // as the geometric centroid, which can fall outside an irregular or
+    // crescent-shaped province.
+    labelCentroid: GeoPosition,
+  })
+  .superRefine((province, ctx) => {
+    if (province.heldTo !== null && province.heldTo < province.heldFrom) {
+      ctx.addIssue({
+        code: "custom",
+        message: `heldTo (${province.heldTo}) is before heldFrom (${province.heldFrom})`,
+        path: ["heldTo"],
+      });
+    }
+  });
+
+export type GeoPosition = z.infer<typeof GeoPosition>;
+export type PolygonGeometry = z.infer<typeof PolygonGeometry>;
+export type MultiPolygonGeometry = z.infer<typeof MultiPolygonGeometry>;
+export type ProvinceGeometry = z.infer<typeof ProvinceGeometry>;
+export type Province = z.infer<typeof Province>;
+
+export const City = z.object({
+  id: z.string(),
+  name: z.string(),
+  latinName: z.string(),
+  position: GeoPosition,
+});
+
+export const SeaLabel = z.object({
+  id: z.string(),
+  text: z.string(), // e.g. "MARE INTERNVM" — set in Roman-inscriptional caps
+  position: GeoPosition,
+  rotation: z.number().default(0), // degrees, for lettering that follows a coastline
+});
+
+export type City = z.infer<typeof City>;
+export type SeaLabel = z.infer<typeof SeaLabel>;

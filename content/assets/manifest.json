@@ -1,1 +1,30 @@
-[]
+[
+  {
+    "file": "content/borders/physical/coastline.geojson",
+    "source": "https://naturalearth.s3.amazonaws.com/50m_physical/ne_50m_coastline.zip",
+    "licence": "Public Domain (Natural Earth) — https://www.naturalearthdata.com/about/terms-of-use/",
+    "retrieved": "2026-08-30",
+    "notes": "Natural Earth 1:50m physical vectors, v4.0.0. Converted shapefile → GeoJSON with `npx mapshaper ne_50m_coastline.shp -clip bbox=-15,18,50,62 -simplify 15% keep-shapes -o format=geojson precision=0.001`, clipped to the Roman-extent bounding box (lon −15..50, lat 18..62). Attribution not required; \"Made with Natural Earth\" credited anyway."
+  },
+  {
+    "file": "content/borders/physical/ocean.geojson",
+    "source": "https://naturalearth.s3.amazonaws.com/50m_physical/ne_50m_ocean.zip",
+    "licence": "Public Domain (Natural Earth) — https://www.naturalearthdata.com/about/terms-of-use/",
+    "retrieved": "2026-08-30",
+    "notes": "Natural Earth 1:50m physical vectors, v4.0.0. Same mapshaper conversion as coastline.geojson."
+  },
+  {
+    "file": "content/borders/physical/rivers.geojson",
+    "source": "https://naturalearth.s3.amazonaws.com/50m_physical/ne_50m_rivers_lake_centerlines.zip",
+    "licence": "Public Domain (Natural Earth) — https://www.naturalearthdata.com/about/terms-of-use/",
+    "retrieved": "2026-08-30",
+    "notes": "Natural Earth 1:50m physical vectors, v5.0.0. Same mapshaper conversion as coastline.geojson; kept all 92 features in the clip extent rather than pre-filtering by scalerank, to avoid dropping historically relevant rivers (e.g. Rhône, Jordan) that carry a high scalerank in this dataset despite their historical importance."
+  },
+  {
+    "file": "content/borders/physical/lakes.geojson",
+    "source": "https://naturalearth.s3.amazonaws.com/50m_physical/ne_50m_lakes.zip",
+    "licence": "Public Domain (Natural Earth) — https://www.naturalearthdata.com/about/terms-of-use/",
+    "retrieved": "2026-08-30",
+    "notes": "Natural Earth 1:50m physical vectors, v5.0.0. Same mapshaper conversion as coastline.geojson."
+  }
+]

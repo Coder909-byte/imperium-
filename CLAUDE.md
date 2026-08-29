@@ -113,7 +113,7 @@ npm run forge -- <file>  # engraving → alpha plane
 
 ## Current state
 
-Milestone: **M0 — complete.** Drizzle + Neon migrated, Better Auth (email/password + Google) wired with a profile-creation hook, `/login` `/signup` `/profile` routes, content schema + validate script with a Gallia fixture, Vitest + Playwright green, CI on PRs. Next: M1 — Atlas.
+Milestone: **M1 — Atlas — complete.** `engine/atlas/projection.ts` (pure GeoJSON→SVG via d3-geo, conic conformal, ring-winding self-correcting — see `normalizeWinding.ts`) + `AtlasMap.tsx` (client, held regions as a pure function of the selected year, hover, click→`/scene/[id]`) + `AtlasFilters`/`AtlasFrame`/`AtlasInsets`. Four eras (350 BC/200 BC/117 AD/486 AD), era switch is a cut (morph is M2). Natural Earth 1:50m physical basemap (public domain, manifested) + 24 placeholder provinces (hand-drawn viewBox prototypes, unprojected via `tools/unproject.ts`/`unproject.cli.ts`, real geometry lands later per ADR 002). `/scene/[regionId]` stub. Atlas route JS: 133.4KB gzipped (budget 180KB). `engine/` still never imports `content/`. Vitest + Playwright green, CI on PRs. Next: M2 — Border morphing.
 
 Update this line at the end of every session.
 

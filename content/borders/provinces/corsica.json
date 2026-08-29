@@ -1,0 +1,38 @@
+{
+  "id": "corsica",
+  "name": "Corsica",
+  "latinName": "Corsica",
+  "heldFrom": -238,
+  "heldTo": 456,
+  "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+      [
+        [
+          8.476,
+          43.138
+        ],
+        [
+          9.346,
+          43.015
+        ],
+        [
+          9.578,
+          41.538
+        ],
+        [
+          8.766,
+          41.415
+        ],
+        [
+          8.476,
+          43.138
+        ]
+      ]
+    ]
+  },
+  "labelCentroid": [
+    9.056,
+    42.277
+  ]
+}

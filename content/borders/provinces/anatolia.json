@@ -1,0 +1,50 @@
+{
+  "id": "anatolia",
+  "name": "Cappadocia & Pontus",
+  "latinName": "Cappadocia et Pontus",
+  "heldFrom": -25,
+  "heldTo": null,
+  "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+      [
+        [
+          33.824,
+          42.4
+        ],
+        [
+          36.144,
+          42.031
+        ],
+        [
+          38.58,
+          41.538
+        ],
+        [
+          39.74,
+          40.431
+        ],
+        [
+          39.044,
+          39.2
+        ],
+        [
+          36.724,
+          38.338
+        ],
+        [
+          34.404,
+          40.431
+        ],
+        [
+          33.824,
+          42.4
+        ]
+      ]
+    ]
+  },
+  "labelCentroid": [
+    36.724,
+    40.554
+  ]
+}

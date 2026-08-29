@@ -1,0 +1,38 @@
+{
+  "id": "creta",
+  "name": "Creta",
+  "latinName": "Creta et Cyrenaica",
+  "heldFrom": -69,
+  "heldTo": null,
+  "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+      [
+        [
+          23.383,
+          35.508
+        ],
+        [
+          26.051,
+          35.508
+        ],
+        [
+          26.283,
+          34.892
+        ],
+        [
+          23.847,
+          34.769
+        ],
+        [
+          23.383,
+          35.508
+        ]
+      ]
+    ]
+  },
+  "labelCentroid": [
+    24.833,
+    35.138
+  ]
+}

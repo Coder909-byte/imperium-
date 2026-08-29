@@ -1,7 +1,7 @@
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import { describe, expect, it } from "vitest";
-import { Region, Question } from "./schema";
+import { Region, Question, Province } from "./schema";
 
 describe("Region schema", () => {
   it("accepts the gallia fixture", () => {
@@ -88,6 +88,68 @@ describe("Question schema", () => {
     const result = Question.safeParse({
       ...base,
       wrongQuips: { ...base.wrongQuips, z: "not a real option" },
+    });
+    expect(result.success).toBe(false);
+  });
+});
+
+describe("Province schema", () => {
+  it("accepts the gallia province fixture written by tools/unproject.ts", () => {
+    const raw = readFileSync(
+      join(__dirname, "borders", "provinces", "gallia.json"),
+      "utf-8",
+    );
+    const result = Province.safeParse(JSON.parse(raw));
+    expect(result.success).toBe(true);
+  });
+
+  const validGeometry = {
+    type: "Polygon" as const,
+    coordinates: [
+      [
+        [0, 0],
+        [1, 0],
+        [1, 1],
+        [0, 0],
+      ],
+    ],
+  };
+
+  it("rejects heldTo before heldFrom", () => {
+    const result = Province.safeParse({
+      id: "backwards",
+      name: "Backwards",
+      latinName: "Retro",
+      heldFrom: 100,
+      heldTo: 50,
+      geometry: validGeometry,
+      labelCentroid: [0.5, 0.3],
+    });
+    expect(result.success).toBe(false);
+  });
+
+  it("accepts a null heldTo for a province still held at the latest era", () => {
+    const result = Province.safeParse({
+      id: "still-held",
+      name: "Still Held",
+      latinName: "Adhuc Tenetur",
+      heldFrom: -50,
+      heldTo: null,
+      geometry: validGeometry,
+      labelCentroid: [0.5, 0.3],
+    });
+    expect(result.success).toBe(true);
+  });
+
+  it("rejects a ring with fewer than 4 positions", () => {
+    const result = Province.safeParse({
+      id: "too-few-points",
+      name: "Too Few Points",
+      latinName: "Pauca Puncta",
+      heldFrom: -50,
+      heldTo: null,
+      geometry: { type: "Polygon", coordinates: [[[0, 0], [1, 1], [0, 0]]] },
+      labelCentroid: [0.5, 0.3],
     });
     expect(result.success).toBe(false);
   });

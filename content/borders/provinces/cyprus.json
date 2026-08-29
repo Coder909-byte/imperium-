@@ -1,0 +1,38 @@
+{
+  "id": "cyprus",
+  "name": "Cyprus",
+  "latinName": "Cyprus",
+  "heldFrom": -58,
+  "heldTo": null,
+  "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+      [
+        [
+          32.2,
+          35.138
+        ],
+        [
+          34.404,
+          35.754
+        ],
+        [
+          34.868,
+          35.138
+        ],
+        [
+          33.592,
+          34.523
+        ],
+        [
+          32.2,
+          35.138
+        ]
+      ]
+    ]
+  },
+  "labelCentroid": [
+    33.476,
+    35.138
+  ]
+}

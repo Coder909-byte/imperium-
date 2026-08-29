@@ -1,0 +1,7 @@
+[
+  { "id": "roma", "name": "Rome", "latinName": "Roma", "position": [12.4964, 41.9028] },
+  { "id": "alesia", "name": "Alesia", "latinName": "Alesia", "position": [4.5, 47.533] },
+  { "id": "carthago", "name": "Carthage", "latinName": "Carthago", "position": [10.3236, 36.8528] },
+  { "id": "alexandria", "name": "Alexandria", "latinName": "Alexandria", "position": [29.9187, 31.2001] },
+  { "id": "athenae", "name": "Athens", "latinName": "Athenae", "position": [23.7275, 37.9838] }
+]

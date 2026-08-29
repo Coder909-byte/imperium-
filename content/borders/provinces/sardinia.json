@@ -1,0 +1,42 @@
+{
+  "id": "sardinia",
+  "name": "Sardinia",
+  "latinName": "Sardinia et Corsica",
+  "heldFrom": -238,
+  "heldTo": 456,
+  "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+      [
+        [
+          8.186,
+          41.169
+        ],
+        [
+          9.346,
+          41.292
+        ],
+        [
+          9.694,
+          39.569
+        ],
+        [
+          8.998,
+          38.831
+        ],
+        [
+          8.302,
+          39.2
+        ],
+        [
+          8.186,
+          41.169
+        ]
+      ]
+    ]
+  },
+  "labelCentroid": [
+    8.94,
+    40.185
+  ]
+}
