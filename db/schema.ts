@@ -44,6 +44,11 @@ export const account = pgTable("account", {
   id: text("id").primaryKey(),
   accountId: text("account_id").notNull(),
   providerId: text("provider_id").notNull(),
+  // Synthetic issuer Better Auth assigns per account (e.g. "local:oauth:google")
+  // — required on this installed version even though the PRD's DB sketch
+  // (written against an older Better Auth) didn't have it. Confirmed by
+  // reading node_modules/@better-auth/core/dist/db/schema/account.mjs.
+  issuer: text("issuer").notNull(),
   userId: text("user_id")
     .notNull()
     .references(() => user.id, { onDelete: "cascade" }),
