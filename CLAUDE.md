@@ -1,1 +1,116 @@
-@AGENTS.md
+# CLAUDE.md
+
+Conventions for this repository. Read this at the start of every session.
+
+## What this is
+
+**Imperium** — an interactive historical atlas. Click a region on a period map, transition through clouds into an animated cinematic scene that tells you what happened there, then take a quiz on it. Rome first; the engine must generalise to other civilisations.
+
+Full spec: `docs/PRD.md`. Read the relevant section before starting a milestone. Don't read the whole thing every session.
+
+## Stack
+
+- Next.js 16 (App Router) · TypeScript strict · React 19
+- **Atlas:** SVG + `d3-geo` + GSAP MorphSVG
+- **Scenes:** PixiJS v8 (WebGL) + GSAP timelines + `pixi-filters`
+- **Characters:** cutout puppet rigs — Pixi containers with GSAP-rotated parts. No Rive, no Spine.
+- **Audio:** Howler.js
+- **Auth:** Better Auth · **DB:** Postgres (Neon) + Drizzle
+- **Content:** JSON in `content/`, validated with Zod
+- **Test:** Vitest (unit) + Playwright (e2e)
+
+Everything here is free to use. **Do not add a dependency that costs money, has a paid tier required for production use, or requires an account to ship.** If one seems necessary, stop and ask.
+
+## Hard rules
+
+1. **`engine/` never imports from `content/`.** Content is passed in as arguments. This is what makes adding a second civilisation cost zero engine work. Breaking it defeats the architecture.
+2. **The quiz answer key never reaches the client before submission.** `/api/quiz/session` strips `correctOptionId`. Grading happens in `/api/quiz/answer`. This is tested in Playwright.
+3. **Every art or audio asset gets a row in `content/assets/manifest.json`** with source URL and licence, added at the moment it enters the repo. No exceptions.
+4. **No asset ships without a verified public-domain or CC0 licence.** Artist death dates are not proof; the specific scan's rights status is.
+5. **Content schema validation is a CI gate.** Malformed region JSON fails the build, never the runtime.
+6. **`prefers-reduced-motion` is respected everywhere**, and the content stays fully available when it's on.
+
+## Directory structure
+
+```
+app/            Next.js routes and API handlers
+engine/         rendering. Pure. Never imports content/
+  scene/        SceneRenderer, Camera, BeatDirector, layers/, puppet/, particles/, post/
+  atlas/        projection, MorphBorders, AtlasMap
+  audio/        AudioDirector
+content/        region JSON, questions, geojson, rigs, assets/manifest.json, schema.ts
+tools/forge/    CLI: engraving scan → alpha-line-art WebP plane
+db/             Drizzle schema and migrations
+docs/           PRD.md, adr/
+```
+
+## Conventions
+
+- TypeScript strict. No `any` — use `unknown` and narrow.
+- Zod schemas are the single source of truth for content shapes. Infer TS types from them (`z.infer`), never hand-write a parallel interface.
+- Server Components by default. `'use client'` only where a browser API or interactivity requires it. The scene player is client; everything around it is server.
+- Zustand for client state. No Redux.
+- Tailwind for site chrome (nav, forms, profile, quiz). Hand-written CSS for the atlas and scene player — the cinematic UI needs control Tailwind fights.
+- Named exports. Default exports only where Next.js requires them (pages, layouts).
+- Files under ~300 lines. Split when they grow past it.
+- Comments explain *why*, not *what*. Delete any comment that restates the code.
+
+## Rendering rules
+
+- **Atlas is SVG. Scenes are Pixi.** Do not mix. They have different jobs.
+- Every beat gets camera motion. Never a static hold.
+- Handheld camera noise (Perlin, ~0.4Hz, 3–6px translate, 0.2° rotate) runs permanently in scenes. It is not optional polish; it is most of the perceived quality.
+- Scene planes are monochrome line art with alpha, tinted at runtime via `ColorMatrixFilter`. Never bake colour into an asset — it breaks visual consistency across sources.
+- Distant crowds are instanced quads on a shared texture, never individual puppet rigs.
+- Detect low-end devices and degrade: 4 planes, halved particles, no godrays or chromatic aberration. A stuttering scene is worse than a static image.
+
+## Performance budgets
+
+Enforced. Do not merge work that breaks these.
+
+| Metric | Budget |
+|---|---|
+| Atlas TTI | < 2.0s on 4G |
+| Scene first beat interactive | < 3.0s |
+| Scene frame time | < 16ms on Pixel 6a class |
+| Scene assets per region | < 2.5MB |
+| Atlas route JS | < 180KB gzipped |
+
+## Writing (when generating any user-facing copy)
+
+- Plain, direct sentences. No marketing voice.
+- Quiz feedback punches at history or at the wrong answer — **never at the user**. Dry, not zany. No emoji, no "Oof!", no exclamation spam. Under 30 words. Every quip must still teach the correct fact.
+- Beat copy: 180–700 characters, concrete detail over summary. If it reads like an encyclopaedia, rewrite it.
+- Ancient numbers are claims, attributed to whoever claimed them.
+- Errors state what went wrong and how to fix it. They don't apologise.
+
+## Commands
+
+```bash
+npm run dev            # dev server
+npm run build          # production build
+npm run typecheck      # tsc --noEmit
+npm run lint           # eslint
+npm run test           # vitest
+npm run test:e2e       # playwright
+npm run validate       # zod-validate all content/ JSON
+npm run db:generate    # drizzle migration from schema
+npm run db:push        # apply to Neon
+npm run forge -- <file>  # engraving → alpha plane
+```
+
+`npm run validate` and `npm run typecheck` must pass before any commit.
+
+## Working style
+
+- **One milestone per session.** Milestones are in `docs/PRD.md` §10, each with acceptance criteria. Do not start the next until the current one's criteria pass.
+- Before writing code for a milestone, restate the acceptance criteria and outline the approach. Wait for confirmation on anything ambiguous.
+- Write the test alongside the feature, not after.
+- When a decision from PRD §17 gets made, write a short ADR in `docs/adr/NNN-title.md`: context, decision, consequences. Three paragraphs is plenty.
+- If something in the PRD turns out to be wrong or impossible, say so and propose an alternative. Don't silently work around it.
+
+## Current state
+
+Milestone: **M0 — not started.**
+
+Update this line at the end of every session.
