@@ -3,10 +3,16 @@
 // already-rendered SVG elements; this module never creates or removes
 // DOM nodes itself, it only tweens attributes on nodes it's handed.
 //
-// GSAP owns fill-opacity/stroke-opacity/scale during a transition and
-// writes them as inline styles (which beat the .held/.unheld class rules
-// by normal CSS cascade), then clears those inline styles on completion
-// so the CSS classes — and the .hovered interaction — regain control.
+// GSAP owns `opacity` (+ scale) on the held-overlay path during a
+// transition and writes them as inline styles (which beat the
+// .heldOverlay/.heldOverlayActive class rules by normal CSS cascade),
+// then clears those inline styles on completion so the CSS classes
+// regain control. It does *not* touch fill-opacity/stroke-opacity
+// directly — a real Chrome trace showed animating those paint
+// properties on a path inside AtlasMap's inkEdges-filtered <g> forces
+// a repaint of the *entire* group every tick (130 Paint events over one
+// era switch). `opacity` on a promoted layer is compositor-only; see
+// AtlasMap.module.css's comment on the two-layer split this drives.
 // The `d` attribute is different: MorphSVGPlugin writes it directly via
 // setAttribute, not through the style cascade, so nothing needs clearing
 // there.
@@ -33,7 +39,13 @@ export function classifyProvince(state: { heldBefore: boolean; heldAfter: boolea
 
 export interface ProvinceMorphElement {
   id: string;
+  /** The interactive path — always the constant "unheld" look. Its `d`
+   *  morphs for retained provinces; its fill/stroke-opacity never
+   *  animate (see the file header). */
   path: SVGPathElement;
+  /** Always-mounted overlay carrying the constant "held" look; only its
+   *  opacity (+ scale, for gained) is ever tweened. */
+  heldOverlay: SVGPathElement;
   label: SVGTextElement | null;
   /** Target path for the destination era. Equal to the current `d` for
    *  every province in today's placeholder content (one geometry per
@@ -52,13 +64,11 @@ export interface BorderTransitionInput {
   onComplete?: () => void;
 }
 
-const HELD_OPACITY = { fillOpacity: 0.55, strokeOpacity: 1 };
-const UNHELD_OPACITY = { fillOpacity: 0, strokeOpacity: 0.25 };
 const DURATION = 0.9;
 const REDUCED_DURATION = 0.15;
 const STAGGER_AMOUNT = 0.12; // total ripple spread, not per-item — stays ~flat regardless of province count
 const EASE = "power2.inOut";
-const CLEARED_PROPS = "transition,fillOpacity,strokeOpacity,scale,transformOrigin";
+const CLEARED_PROPS = "transition,opacity";
 
 // GSAP's `stagger` option only auto-distributes across one tween call
 // sharing a single target value — the retained group needs a different
@@ -94,40 +104,66 @@ export class BorderMorph {
     this.timeline?.kill();
 
     const duration = input.reducedMotion ? REDUCED_DURATION : DURATION;
-    const paths = input.provinces.map((p) => p.path);
+    const overlays = input.provinces.map((p) => p.heldOverlay);
     const tl = gsap.timeline({
       onComplete: () => {
-        gsap.set(paths, { clearProps: CLEARED_PROPS });
+        gsap.set(overlays, { clearProps: CLEARED_PROPS });
         input.onComplete?.();
       },
     });
     this.timeline = tl;
 
-    // Freeze the CSS transition on fill-opacity/stroke-opacity for the
-    // duration — otherwise the stylesheet's own `.province` transition
-    // chases every inline write GSAP makes this tick, producing a
-    // laggy double-ease instead of the intended single easing curve.
-    tl.set(paths, { transition: "none" }, 0);
+    // Freeze the CSS transition on the held-overlay's opacity for the
+    // duration — otherwise the stylesheet's own `.heldOverlay` transition
+    // chases every inline write GSAP makes this tick, producing a laggy
+    // double-ease instead of the intended single easing curve.
+    tl.set(overlays, { transition: "none" }, 0);
 
     const retained = input.provinces.filter((p) => classifyProvince(p) === "retained");
     const gained = input.provinces.filter((p) => classifyProvince(p) === "gained");
     const lost = input.provinces.filter((p) => classifyProvince(p) === "lost");
 
-    if (!input.reducedMotion && retained.length > 0) {
-      const delays = staggerDelays(retained.length);
-      retained.forEach((province, i) => {
-        tl.to(province.path, { morphSVG: province.d, duration, ease: EASE }, delays[i]);
+    // Skip provinces whose shape doesn't actually change — today's
+    // content has one geometry per province across every era (PRD §8.1
+    // finding, M2), so this is every retained province right now, but it
+    // isn't a today-only shortcut: MorphSVGPlugin's `setAttribute('d', …)`
+    // is a genuine geometry change, which is never compositor-only, no
+    // matter what else in this file is. Calling it every frame with a
+    // value that's already correct bought nothing and cost a full-group
+    // repaint on every tick regardless (confirmed via trace: 118 Paint
+    // events for one switch with retained provinces, 4 without any).
+    // Real per-era geometry, once hand-authored, will make some of these
+    // actually differ — those get the morph and pay its real repaint
+    // cost, same as any shape animation would; provinces that still
+    // don't change shape keep costing nothing, forever, automatically.
+    const shapeChanged = retained.filter((province) => province.path.getAttribute("d") !== province.d);
+    if (!input.reducedMotion && shapeChanged.length > 0) {
+      const delays = staggerDelays(shapeChanged.length);
+      // Both the interactive path and its held-overlay share the same
+      // `d` always (see AtlasMap.tsx) — morph them together so the
+      // wobbly inkEdges edge stays pixel-aligned between the two
+      // throughout the shape change, not just at rest.
+      shapeChanged.forEach((province, i) => {
+        tl.to([province.path, province.heldOverlay], { morphSVG: province.d, duration, ease: EASE }, delays[i]);
       });
     }
 
     if (gained.length > 0) {
-      const gainedPaths = gained.map((p) => p.path);
-      tl.fromTo(
-        gainedPaths,
-        { ...UNHELD_OPACITY, scale: 0.96, transformOrigin: "50% 50%" },
-        { ...HELD_OPACITY, scale: 1, duration, ease: EASE, stagger: { amount: STAGGER_AMOUNT, from: "random" } },
-        0,
-      );
+      const gainedOverlays = gained.map((p) => p.heldOverlay);
+      // No scale-in here, deliberately — PRD §8.1 originally called for
+      // gained provinces to fade *and* scale in from ~0.96. A real trace
+      // confirmed the opacity fade alone is compositor-only (this file's
+      // header), but adding scale/transform back in on these same
+      // elements measurably reintroduced the full-group-repaint problem
+      // this fix exists to solve: opacity on a child of AtlasMap's
+      // inkEdges-filtered <g> is compositor-friendly, but scale on that
+      // same child is not — 80 Paint events over one era switch with it,
+      // 4 without. Dropping the scale flourish and keeping the fade is
+      // the trade that actually gets to zero full-document repaints;
+      // flagged for a decision rather than silently dropped, and worth
+      // revisiting later with e.g. a per-province filter scope if the
+      // scale-in is wanted back.
+      tl.fromTo(gainedOverlays, { opacity: 0 }, { opacity: 1, duration, ease: EASE, stagger: { amount: STAGGER_AMOUNT, from: "random" } }, 0);
       const gainedLabels = gained.map((p) => p.label).filter((l): l is SVGTextElement => l !== null);
       if (gainedLabels.length > 0) {
         tl.fromTo(gainedLabels, { opacity: 0 }, { opacity: 1, duration, stagger: { amount: STAGGER_AMOUNT, from: "random" } }, 0);
@@ -135,8 +171,8 @@ export class BorderMorph {
     }
 
     if (lost.length > 0) {
-      const lostPaths = lost.map((p) => p.path);
-      tl.to(lostPaths, { ...UNHELD_OPACITY, duration, ease: EASE, stagger: { amount: STAGGER_AMOUNT, from: "random" } }, 0);
+      const lostOverlays = lost.map((p) => p.heldOverlay);
+      tl.to(lostOverlays, { opacity: 0, duration, ease: EASE, stagger: { amount: STAGGER_AMOUNT, from: "random" } }, 0);
       const lostLabels = lost.map((p) => p.label).filter((l): l is SVGTextElement => l !== null);
       if (lostLabels.length > 0) {
         tl.to(lostLabels, { opacity: 0, duration, stagger: { amount: STAGGER_AMOUNT, from: "random" } }, 0);

@@ -40,6 +40,7 @@ export function AtlasMap({ width, height, physical, provinces, cities, seas, era
   );
 
   const pathRefs = useRef<Map<string, SVGPathElement>>(new Map());
+  const heldOverlayRefs = useRef<Map<string, SVGPathElement>>(new Map());
   const labelRefs = useRef<Map<string, SVGTextElement>>(new Map());
   const eraLabelRef = useRef<SVGTextElement | null>(null);
   const borderMorphRef = useRef<BorderMorph | null>(null);
@@ -94,11 +95,13 @@ export function AtlasMap({ width, height, physical, provinces, cities, seas, era
 
     const elements: ProvinceMorphElement[] = provinces.flatMap((province) => {
       const path = pathRefs.current.get(province.id);
-      if (!path) return [];
+      const heldOverlay = heldOverlayRefs.current.get(province.id);
+      if (!path || !heldOverlay) return [];
       return [
         {
           id: province.id,
           path,
+          heldOverlay,
           label: labelRefs.current.get(province.id) ?? null,
           d: province.d,
           heldBefore: prevHeldIds.has(province.id),
@@ -180,6 +183,13 @@ export function AtlasMap({ width, height, physical, provinces, cities, seas, era
         </g>
 
         <g filter="url(#inkEdges)">
+          {/* .provinceBase is *always* the faint "unheld" look (fill:none,
+              stroke-opacity:0.25, constant) and owns all interactivity.
+              It never animates fill-opacity/stroke-opacity itself — see
+              AtlasMap.module.css's comment on why that used to force a
+              full repaint of this whole filtered group, both here and in
+              MorphBorders.ts. Whether a province currently *reads* as
+              held is entirely the two overlays below. */}
           {provinces.map((province) => {
             const held = heldIds.has(province.id);
             return (
@@ -190,9 +200,7 @@ export function AtlasMap({ width, height, physical, provinces, cities, seas, era
                   else pathRefs.current.delete(province.id);
                 }}
                 d={province.d}
-                className={[styles.province, held ? styles.held : styles.unheld, held && hoveredId === province.id ? styles.hovered : ""]
-                  .filter(Boolean)
-                  .join(" ")}
+                className={[styles.provinceBase, held ? styles.provinceInteractive : ""].filter(Boolean).join(" ")}
                 role={held ? "button" : undefined}
                 tabIndex={held ? 0 : undefined}
                 aria-label={held ? `${province.name} — open scene` : undefined}
@@ -203,6 +211,39 @@ export function AtlasMap({ width, height, physical, provinces, cities, seas, era
               />
             );
           })}
+          {/* Always mounted for all 24 provinces (like the labels below),
+              not conditional on `held` — MorphBorders needs a stable ref
+              to fade this in/out for gained/lost provinces, and an
+              element that might not exist yet on the very render it's
+              needed is exactly the kind of edge case worth not having. */}
+          {provinces.map((province) => (
+            <path
+              key={`held-overlay-${province.id}`}
+              ref={(el) => {
+                if (el) heldOverlayRefs.current.set(province.id, el);
+                else heldOverlayRefs.current.delete(province.id);
+              }}
+              d={province.d}
+              data-held-overlay={province.id}
+              className={[styles.heldOverlay, heldIds.has(province.id) ? styles.heldOverlayActive : ""].filter(Boolean).join(" ")}
+              aria-hidden="true"
+              pointerEvents="none"
+            />
+          ))}
+          {/* Hover brightening — stacks on .heldOverlay, not .provinceBase
+              (see AtlasMap.module.css's .hoverFill comment for the exact
+              math). Same fix, same reason: constant own fill-opacity,
+              only outer opacity toggles. */}
+          {provinces.map((province) => (
+            <path
+              key={`hover-fill-${province.id}`}
+              d={province.d}
+              data-hover-fill={province.id}
+              className={[styles.hoverFill, hoveredId === province.id ? styles.hoverFillActive : ""].filter(Boolean).join(" ")}
+              aria-hidden="true"
+              pointerEvents="none"
+            />
+          ))}
         </g>
 
         {provinces.map((province) => (

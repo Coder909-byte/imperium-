@@ -42,9 +42,12 @@ test.describe("cloud transition", () => {
     await expect(page.locator('[class*="mass"]')).toHaveCount(0);
 
     await page.locator('path[aria-label="Latium — open scene"]').click();
-    // 200ms cross-fade total — comfortably settled well inside the
-    // ~1.2s+ the full sweep would still be mid-flight for.
-    await page.waitForURL("**/scene/latium", { timeout: 1000 });
+    // 200ms cross-fade total uncontended — comfortably settled well
+    // inside the ~1.2s+ the full sweep would still be mid-flight for.
+    // This suite runs with 2 Playwright workers, and real CPU
+    // contention from another worker's test can stretch wall-clock
+    // timing, so the margin here is generous rather than tight.
+    await page.waitForURL("**/scene/latium", { timeout: 2000 });
     await expect(page.getByTestId("cloud-sweep")).toHaveAttribute("data-active", "false", { timeout: 800 });
   });
 

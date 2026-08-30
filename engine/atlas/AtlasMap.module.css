@@ -49,38 +49,92 @@
   opacity: 0.75;
 }
 
-.province {
+/* Three stacked paths per province, not one — the province group used to
+   be a single filtered <path> whose fill-opacity/stroke-opacity animated
+   directly for both hover and held/unheld, and a real Chrome trace
+   (invalidationTracking, not assumed) showed both cases forcing a
+   repaint of the *entire* inkEdges-filtered <g> — all 24 provinces plus
+   the physical layers — on every tick: fill-opacity/stroke-opacity are
+   paint properties, feeding what the SVG filter rasterizes, and Blink
+   repaints a filtered group as one unit when anything inside it changes.
+   Hover alone cost 18 Paint events per interaction; the era-switch morph
+   (GSAP, ~60fps, ~900ms) cost 130 — essentially every single frame.
+
+   The fix, same shape both times: keep each layer's *own* fill-opacity/
+   stroke-opacity constant, and animate only *outer* opacity (+ scale) —
+   both post-filter compositing operations, not paint input, so once a
+   layer is promoted (will-change) toggling it is compositor-only. Confirmed
+   the same way: Paint events per hover dropped 18 -> ~2; see
+   MorphBorders.ts and the e2e regression tests for the per-frame case.
+
+     .provinceBase   always the "unheld" look (faint outline) — owns
+                     click/hover/keyboard. Never animates fill/stroke.
+     .heldOverlay    always the "held" look at fixed alpha, MorphBorders
+                     (M2) fades it 0<->1 for era switches — never touches
+                     its own fill-opacity/stroke-opacity, just opacity.
+     .hoverFill      the hover brighten-up, unchanged from before — still
+                     stacks on top of .heldOverlay, not .provinceBase. */
+.provinceBase {
+  fill: none;
   stroke: #3a2510;
   stroke-width: 1;
   stroke-linejoin: round;
-  transition: fill-opacity 200ms ease, stroke-opacity 200ms ease;
-  /* MorphBorders (M2) scales gained provinces in from ~0.96 — fill-box
-     makes that scale originate from the shape's own bounding-box centre
-     instead of the SVG viewport's (0,0), which is what transform-origin
-     means by default on an SVG element. */
-  transform-box: fill-box;
+  stroke-opacity: 0.25;
+  pointer-events: none;
 }
 
-.held {
-  fill: #a33d2b;
-  fill-opacity: 0.55;
-  stroke-opacity: 1;
+.provinceInteractive {
   cursor: pointer;
+  /* `all`, not `auto` — .provinceBase has fill:none (the fill lives on
+     .heldOverlay now, see the comment above), and `auto`/visiblePainted
+     hit-tests only *painted* area: a fill:none path's interior isn't
+     "painted" at all, so `auto` only hit-tests the 1px stroke line, not
+     the province's interior. `all` treats the whole geometric shape as
+     clickable regardless of what's actually visible there. */
+  pointer-events: all;
 }
 
-.held:focus-visible {
+.provinceInteractive:focus-visible {
   outline: 2px solid #f2e2b8;
   outline-offset: 1px;
 }
 
-.hovered {
-  fill-opacity: 0.85;
+.heldOverlay {
+  fill: #a33d2b;
+  fill-opacity: 0.55;
+  stroke: #3a2510;
+  stroke-width: 1;
+  stroke-linejoin: round;
+  stroke-opacity: 1;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 200ms ease;
+  /* Only opacity, not transform — no scale-in on gained provinces
+     anymore (see MorphBorders.ts's comment: it measurably reintroduced
+     the full-group-repaint problem this whole file exists to solve). */
+  will-change: opacity;
 }
 
-.unheld {
-  fill: none;
-  stroke-opacity: 0.25;
-  pointer-events: none;
+.heldOverlayActive {
+  opacity: 1;
+}
+
+/* Solving 0.85 = 0.55 + x*(1-0.55) for x: two same-color layers stacked
+   with alpha "over" compositing combine as top + bottom*(1-top), not by
+   simple addition. Stacked on .heldOverlay's fixed 0.55 (once active),
+   this reproduces the original single-path 0.85 hover result exactly —
+   same pixels, different mechanism. */
+.hoverFill {
+  fill: #a33d2b;
+  fill-opacity: 0.6667;
+  stroke: none;
+  opacity: 0;
+  transition: opacity 200ms ease;
+  will-change: opacity;
+}
+
+.hoverFillActive {
+  opacity: 1;
 }
 
 .provinceLabel {
@@ -195,8 +249,10 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .province,
-  .provinceLabel {
+  .provinceBase,
+  .heldOverlay,
+  .provinceLabel,
+  .hoverFill {
     transition: none;
     animation: none;
   }
