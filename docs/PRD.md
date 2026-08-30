@@ -2,10 +2,12 @@
 
 **Working title:** Imperium (product) · "History Made Cool" (internal)
 **Owner:** Jivesh Nazar
-**Version:** 1.1 — zero-budget revision
+**Version:** 1.2 — painted parallax revision
 **Status:** Pre-build. This document is the build spec.
 
-> **Changes from v1.0:** Rive removed (its free plan cannot export runtime files). Characters are now cutout puppet rigs driven by GSAP. Art direction changed from painted-realistic to **animated engraving**, built from public-domain sources. `flubber` replaced by GSAP MorphSVG, now free. Every dependency in this document costs nothing.
+> **Changes from v1.1:** Art direction changed from animated engraving back to **painted parallax** (§3) — primary sources are full-colour academic history paintings (Gérôme, Alma-Tadema, Poynter, Bierstadt), not monochrome etchings. The per-scene LUT (§4), not colour-stripping at the asset level, now does the cross-source consistency work. Engravings demote to reference/fallback for architectural detail and figure poses, and stay the source for cutout character parts, where alpha-from-luminance still applies. Blender documented as a post-M8 escape hatch (§3.6) if painted planes read flat, not adopted.
+>
+> **Changes from v1.0:** Rive removed (its free plan cannot export runtime files). Characters are now cutout puppet rigs driven by GSAP. `flubber` replaced by GSAP MorphSVG, now free. Every dependency in this document costs nothing.
 
 ---
 
@@ -53,48 +55,52 @@ Session target: 8–14 minutes. One region and its quiz.
 
 ---
 
-## 3. Art direction: animated engraving
+## 3. Art direction: painted parallax
 
 ### The decision
 
-Photorealistic AC-style scenes need commissioned art. There is no budget. The alternative is not "worse realistic" — it's a different style entirely, and it's the better product.
+Photorealistic AC-style scenes need commissioned art. There is no budget. The alternative is not "worse realistic" — it's public-domain 19th-century academic history painting, and at identical effort it lands materially closer to the reference look than a monochrome style would.
 
-**Everything in Imperium is etched line art that moves.** The map is an engraved atlas. The scenes are engravings from that same atlas, coming alive. The two halves of the product share one visual language instead of fighting each other.
+The original decision (v1.0–1.1) was animated engraving — everything as etched line art, alpha-from-luminance, tinted at runtime. That choice existed to solve one problem: mixing sources without it looking like a ransom note. Monochrome-with-alpha unifies free-for-nothing, because the palette lives in code, not in the file.
 
-Realistic-but-generic costs money. Stylised-but-unmistakable is free. Take the second.
+But the post chain (§4) already carries a per-scene LUT via `ColorMatrixFilter`, applied to the whole stage — and that LUT unifies full-colour planes exactly as well as it unified monochrome ones. Once the consistency problem is solved in code, the monochrome constraint isn't buying anything anymore. It was only ever costing realism.
+
+**Primary sources are academic history paintings, kept in full colour.** Photorealistic, archaeologically researched, dramatically lit, public domain in high resolution. Same plane-separation workflow, same Pixi pipeline, same effort — closer to the target look.
 
 ### Where the art comes from
 
-The best Roman art ever made is public domain and downloadable in high resolution today.
-
 | Source | What's there |
 |---|---|
-| **Cichorius plates (1896)** | Line drawings of the entire Trajan's Column frieze — a continuous carved narrative of a Roman campaign. Soldiers marching, building, fighting, in sequence. A free period-accurate character library. |
-| **Piranesi, *Vedute di Roma*** | Thousands of architectural etchings, extraordinary detail. |
-| **Gérôme** (d. 1904), **Alma-Tadema** (d. 1912), **Thomas Cole's *Course of Empire*** | Composition and atmosphere reference; usable directly. |
-| Rijksmuseum · Met Open Access · Getty Open Content · Library of Congress · NYPL Digital Collections · Wikimedia Commons | High-res CC0 / PD downloads. |
+| **Gérôme** (d. 1904) | Archaeologically obsessive figure and interior scenes — arenas, temples, market scenes, dramatic single-point lighting. |
+| **Alma-Tadema** (d. 1912) | Marble, light, and crowd staging — the best public-domain reference for Roman civic space. |
+| **Poynter** | Figure composition and costume detail; usable directly. |
+| **Bierstadt** | Landscape and atmosphere — skies, distance, weather, for scenes painting doesn't otherwise cover. |
+| Rijksmuseum · Met Open Access · Getty Open Content · Wikimedia Commons | High-res CC0 / PD downloads of the above and more. |
+
+**Engravings (Piranesi, Cichorius) demote from primary source to reference and fallback.** Still useful — architectural detail and figure poses where no painting exists — but no longer where the plane art comes from by default.
 
 **Verify the rights status of every individual asset before use.** "The artist died in 1904" and "this specific scan is CC0" are separate questions. Record the source URL and licence for each file in `content/assets/manifest.json`. Non-negotiable — this is the thing that could kill the project later.
 
-### The technique that makes it work: alpha-from-luminance
+### Colour and consistency: the LUT does the unifying work now
 
-Mixing sources normally looks like a ransom note — different papers, tones, contrast. Solve it in one step:
+Backdrop planes keep their colour. No desaturation, no levels pass, no luminance-to-alpha conversion:
 
-1. Desaturate the engraving.
-2. Level it so the ink is near-black and the paper near-white.
-3. **Convert luminance to alpha.** Ink becomes opaque, paper becomes fully transparent.
-4. Export as WebP with alpha. The plane is now pure monochrome line art.
-5. Tint at runtime in Pixi with `ColorMatrixFilter`.
+1. Source the painting at the highest resolution available.
+2. Plane-separate as before (below).
+3. Export each plane as WebP, colour intact.
+4. Consistency across sources — a Gérôme interior next to a Bierstadt sky — comes from the per-scene LUT applied in Pixi via `ColorMatrixFilter`, not from stripping colour at the asset level.
 
-Every asset from every source now shares one palette, because the palette is applied in code, not baked into the file. A Piranesi etching and a Cichorius plate composite seamlessly. Scene mood becomes a single variable.
+Scene mood is still a single variable — the LUT — same as under the engraving approach. The asset itself now carries more information into the frame instead of less.
 
-This also makes scenes tiny — monochrome-with-alpha WebP compresses brutally well. Budget under 200KB per plane.
+**Alpha-from-luminance is not gone — it's scoped down to where it earns its keep:** cutout character parts and foreground silhouettes, where a clean matte matters more than colour fidelity. Engraved figures still work well here precisely because ink-on-paper gives a near-binary luminance split that mattes cleanly; a painted figure doesn't, so cutout puppet source material still leans on engravings and high-contrast figure studies (§ Characters, below), independent of what backdrop planes use.
 
-**Tools, all free:** [Photopea](https://photopea.com) (browser, Photoshop-like, no install), GIMP, or Krita. The batch conversion gets scripted in M7.
+Colour planes don't compress as tightly as monochrome-with-alpha WebP did — expect scene asset payload to run higher per plane than the old ~200KB assumption. Re-check the per-region budget (§11) once the first painted scene (M8, Gallia) is built.
+
+**Tools, all free:** [Photopea](https://photopea.com) (browser, Photoshop-like, no install), GIMP, or Krita.
 
 ### Plane separation
 
-Per scene, 5–8 planes:
+Per scene, 5–8 planes, unchanged:
 
 ```
 sky · far architecture · mid architecture · mid terrain
@@ -105,14 +111,28 @@ Lasso the foreground elements, cut to their own layer, clone-stamp the hole behi
 
 ### Characters: cutout puppets
 
-Cut a figure from a Cichorius plate. Separate it at the joints — head, torso, upper arm, forearm, thigh, shin, foot. Reassemble in a Pixi container with correct pivots. Animate by rotating the parts with GSAP.
+Cut a figure from an engraving — a Cichorius plate, or a high-contrast figure study where no engraving exists. Separate it at the joints — head, torso, upper arm, forearm, thigh, shin, foot. Reassemble in a Pixi container with correct pivots. Animate by rotating the parts with GSAP.
 
-This is how cutout animation has always worked. It's free, needs no new tool, and profile-view engraved figures are *ideal* source material because they were carved in profile in the first place.
+This is how cutout animation has always worked. It's free, needs no new tool, and profile-view engraved figures are *ideal* source material because they were carved in profile in the first place, and their ink/paper contrast alpha-mattes cleanly (see above) in a way a painted figure won't.
 
 **Rig library for v1:** `legionary`, `auxiliary`, `cavalry`, `standard_bearer`, `gaul_warrior`, `civilian`.
 **Clips per rig:** `idle`, `march`, `brace`, `thrust`, `fall`, `raise`.
 
 Distant crowds are never individual rigs — instanced quads on a shared 4-frame march texture. Thousands of units at negligible cost.
+
+### 3.6 — Escape hatch: Blender, if M8 falls short
+
+Documented, not adopted. Revisit only after M8 ships Gallia with painted planes — if the result still looks flat once the grade, camera drift, and particles are in, this is the free path to more realism:
+
+- **Blender** (free) rendering out to layered PNGs with alpha — feeds the existing Pixi pipeline with zero code change. Planes stay planes; only how they're made changes.
+- **Poly Haven** and **ambientCG** for CC0 HDRIs, PBR textures, and models. HDRI lighting is most of the realism gain — more than modelling quality.
+- **Mixamo** for auto-rigging and motion-capture animation cycles, rendered to sprite sheets. Verified free with an Adobe account, royalty-free for unlimited commercial use; the only restriction is no redistributing the raw files as asset packs. Unmaintained since Adobe's 2015 acquisition and it has had multi-day outages — download and keep local copies rather than depending on live availability.
+
+**Cost:** 2–3 weeks learning Blender, then 10–14h art per scene instead of 5h. Roughly +60–100h across the twelve launch regions.
+
+**Risk to record:** stylised art has a high floor — worst case, it's not to taste. Attempted realism has a low floor — amateur 3D reads as amateur instantly, and reads as amateur *faster* than amateur painting does. Do not adopt speculatively.
+
+**Decision point:** after M8. If adopted, prefer it surgically — characters only — over rebuilding backdrops. Painted backdrop planes and 3D-rendered character planes can sit in the same parallax stack; the plane model doesn't care how a plane was made.
 
 ---
 
@@ -161,7 +181,7 @@ Every item is free. Where I recommend against something you already know, the re
 | Database | **Postgres on Neon** free tier | Serverless, branches per PR. |
 | ORM | **Drizzle** | Over Prisma despite your familiarity: far smaller serverless cold start, SQL-shaped API suits the quiz analytics. Prisma is acceptable if velocity wins. |
 | Content | **JSON in-repo, Zod-validated** | Version-controlled content, CI-enforced schema. Authoring UI comes in v2. |
-| Assets | **Cloudflare R2** free tier (10GB, no egress) | Scene art is heavy; S3 egress would hurt. |
+| Assets | **Cloudflare R2** free tier (10GB, no egress) | Scene art is heavy — full-colour painted planes more so than the monochrome-alpha planes originally budgeted (§3) — and S3 egress would hurt. Still comfortably inside 10GB at 12-region launch scale. |
 | Hosting | **Vercel Hobby** | Free. ⚠️ Hobby is **non-commercial only** — the day you charge for anything, you need Pro. |
 | Analytics | **PostHog** free tier | Per-beat drop-off is the most valuable number you'll have. |
 | Errors | **Sentry** free tier | WebGL fails in device-specific ways. |
@@ -209,7 +229,7 @@ imperium/
 │  ├─ assets/manifest.json      source URL + licence per file
 │  └─ schema.ts                 Zod
 ├─ tools/
-│  └─ forge/                    CLI: engraving → alpha planes
+│  └─ forge/                    CLI: source scan → scene plane (colour, or alpha for engravings/character parts)
 ├─ db/schema.ts
 ├─ lib/                         auth.ts, auth-client.ts, env.ts — server/client glue, not engine or content
 └─ CLAUDE.md
@@ -275,7 +295,7 @@ const Region = z.object({
       id: z.string(),
       asset: z.string(),
       depth: z.number().min(0).max(1),
-      tint: z.string(),              // hex — applied to alpha line art
+      tint: z.string(),              // hex — applied via ColorMatrixFilter; alpha planes only (characters, silhouettes), colour backdrop planes use the scene-level lut instead
       blur: z.number().default(0),
     })),
   }),
@@ -378,7 +398,9 @@ Worked examples:
 
 Engineering is ~7 weeks of evenings. Content never ends. Plan around it.
 
-**Per region:** 4h research and drafting · 2h fact-check · 5h art (sourcing etchings, plane separation, alpha conversion) · 2h scene composition and camera · 2h quiz writing with per-option quips · 1h audio. **≈16 hours.**
+**Per region:** 4h research and drafting · 2h fact-check · 5h art (sourcing paintings, plane separation, colour export) · 2h scene composition and camera · 2h quiz writing with per-option quips · 1h audio. **≈16 hours.**
+
+The painted workflow doesn't move this estimate. Sourcing a painting instead of an engraving is the same search-and-license effort; plane separation is the same lasso-and-clone-stamp workflow either way; the only step that changes is the export pass, which gets *simpler* (skip desaturate/level/luminance-to-alpha, export straight to WebP). Still ~5h.
 
 Twelve regions for a credible launch ≈ **190 hours**. That is the real schedule. Everything else is a rounding error.
 
@@ -428,11 +450,11 @@ Rig format (`content/rigs/*.json`): parts, pivots, z-order, clips as keyframed r
 ✅ 40 legionaries with staggered phase offsets plus a 500-unit distant crowd, holding 60fps.
 
 **M7 — Asset forge** *(~2 days)*
-`tools/forge` CLI: batch desaturate → level → luminance-to-alpha → resize → WebP, plus manifest entry stubs. `npm run forge -- ./raw/piranesi-01.jpg --tint mid`.
-✅ A raw engraving scan becomes a game-ready alpha plane in one command, manifest row generated.
+`tools/forge` CLI: resize → colour-correct → WebP for painted planes; batch desaturate → level → luminance-to-alpha → resize → WebP for engraving/character sources; plus manifest entry stubs. `npm run forge -- ./raw/gerome-01.jpg` (colour plane) or `npm run forge -- ./raw/cichorius-01.jpg --alpha --tint mid` (character source).
+✅ A raw painting scan becomes a game-ready colour plane, and a raw engraving scan a game-ready alpha plane, each in one command, manifest row generated.
 
 **M8 — Gallia to the ceiling** *(~6 days)*
-Six beats, real etching planes, puppet actors, full audio, all effects. The reference implementation.
+Six beats, real painted planes, puppet actors, full audio, all effects. The reference implementation.
 ✅ Someone who has never seen the project watches end to end without touching their phone.
 
 **M9 — Quiz** *(~3 days)*
@@ -458,7 +480,7 @@ Enforced in CI. WebGL products die on mobile.
 | Atlas TTI | < 2.0s on 4G |
 | Scene first beat interactive | < 3.0s |
 | Scene frame time | < 16ms on Pixel 6a class |
-| Scene asset payload | < 2.5MB per region (alpha line art compresses well) |
+| Scene asset payload | < 2.5MB per region (painted colour planes; re-verify after M8 — heavier than the alpha-line-art estimate this budget was originally set against) |
 | Atlas route JS | < 180KB gzipped |
 
 Low-end detection degrades to 4 planes, halved particles, no godrays or chromatic aberration. **Never ship a stuttering scene** — a stuttering cinematic is worse than a static image.
@@ -503,7 +525,7 @@ Beat-level drop-off is the most valuable number you will have. It names the bori
 
 **v1 — Rome (months 1–3).** 12 regions, quiz, accounts. Prove the format.
 
-**v2 — Generalisation (months 4–6).** Second civilisation, chosen to stress the engine differently: **the Mongol expansion** over Feudal Japan, because the map animates as a moving front rather than static provinces, forcing the border system to become genuinely general. Add the `/studio` authoring tool — hand-writing JSON stops scaling around region 30. Note the art sourcing shifts: Persian and Chinese manuscript illustration, much of it PD, same alpha pipeline.
+**v2 — Generalisation (months 4–6).** Second civilisation, chosen to stress the engine differently: **the Mongol expansion** over Feudal Japan, because the map animates as a moving front rather than static provinces, forcing the border system to become genuinely general. Add the `/studio` authoring tool — hand-writing JSON stops scaling around region 30. Note the art sourcing shifts: Persian and Chinese manuscript illustration and 19th-century orientalist/academic painting of the region, much of it PD, same painted-plane pipeline (§3) — colour kept, consistency from the per-scene LUT.
 
 **v3 — Platform (months 7–12).**
 - **Timelines** as well as maps — vertical scroll through a century, scenes triggering at scroll positions.

@@ -39,7 +39,7 @@ engine/         rendering. Pure. Never imports content/
   atlas/        projection, MorphBorders, AtlasMap
   audio/        AudioDirector
 content/        region JSON, questions, geojson, rigs, assets/manifest.json, schema.ts
-tools/forge/    CLI: engraving scan → alpha-line-art WebP plane
+tools/forge/    CLI: source scan → WebP scene plane (colour for paintings, alpha for engravings/character parts)
 db/             Drizzle schema and migrations
 lib/            auth.ts, auth-client.ts, env.ts — server/client glue, not engine or content
 docs/           PRD.md, adr/
@@ -61,7 +61,7 @@ docs/           PRD.md, adr/
 - **Atlas is SVG. Scenes are Pixi.** Do not mix. They have different jobs.
 - Every beat gets camera motion. Never a static hold.
 - Handheld camera noise (Perlin, ~0.4Hz, 3–6px translate, 0.2° rotate) runs permanently in scenes. It is not optional polish; it is most of the perceived quality.
-- Scene planes are monochrome line art with alpha, tinted at runtime via `ColorMatrixFilter`. Never bake colour into an asset — it breaks visual consistency across sources.
+- Scene backdrop planes are full-colour painted art (PRD §3) — never strip colour at the asset level. Cross-source consistency comes from the per-scene LUT via `ColorMatrixFilter` in the post chain, not from monochrome-with-alpha assets. Alpha-from-luminance is still used, but scoped to cutout character parts and foreground silhouettes, where a clean matte matters more than colour fidelity.
 - Distant crowds are instanced quads on a shared texture, never individual puppet rigs.
 - Detect low-end devices and degrade: 4 planes, halved particles, no godrays or chromatic aberration. A stuttering scene is worse than a static image.
 
@@ -98,7 +98,7 @@ npm run validate       # zod-validate all content/ JSON
 npm run db:generate    # write a migration file from schema changes
 npm run db:migrate     # apply pending migrations in db/migrations/ to the database
 npm run db:push        # push schema directly, no migration file — throwaway experiments only, never part of a documented flow
-npm run forge -- <file>  # engraving → alpha plane
+npm run forge -- <file>  # source scan → scene plane (colour or alpha, see PRD §3)
 ```
 
 `npm run validate` and `npm run typecheck` must pass before any commit.
