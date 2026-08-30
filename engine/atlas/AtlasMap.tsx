@@ -4,13 +4,22 @@
 // selected year (PRD §8.1) — there is no per-era snapshot state, just a
 // `heldIds` set recomputed from `eraOrder[0]`'s year on every render.
 // No content imports — everything arrives as props (engine/ hard rule).
-import { useMemo, useState, type KeyboardEvent } from "react";
+//
+// Era switches animate via MorphBorders (M2) — GSAP + MorphSVGPlugin,
+// lazy-loaded on idle after mount so it never lands in the initial atlas
+// bundle (PRD §11 / CLAUDE.md budget). `eraOrder` itself still updates
+// synchronously on click: insets and interactivity (aria-label, click,
+// keyboard) cut instantly, per PRD §8.1 — only the main map's *visual*
+// fill/stroke/scale/opacity/path is owned by the transition, and only
+// for its ~900ms (or 150ms under prefers-reduced-motion) duration.
+import { useEffect, useMemo, useRef, useState, type KeyboardEvent } from "react";
 import { useRouter } from "next/navigation";
 import { AtlasFilters } from "./AtlasFilters";
 import { AtlasFrame } from "./AtlasFrame";
 import { AtlasInsets } from "./AtlasInsets";
 import { isHeld } from "./heldRegions";
 import type { AtlasMapProps } from "./types";
+import type { BorderMorph, ProvinceMorphElement } from "./MorphBorders";
 import styles from "./AtlasMap.module.css";
 
 function formatYear(year: number): string {
@@ -21,6 +30,18 @@ export function AtlasMap({ width, height, physical, provinces, cities, seas, era
   const router = useRouter();
   const [eraOrder, setEraOrder] = useState<number[]>(() => eras.map((_, i) => i));
   const [hoveredId, setHoveredId] = useState<string | null>(null);
+  // Lazy initializer, not an effect — reducedMotion never affects render
+  // output (only the imperative transition), so there's nothing for a
+  // server/first-client-render mismatch to catch here.
+  const [reducedMotion, setReducedMotion] = useState<boolean>(() =>
+    typeof window === "undefined" ? false : window.matchMedia("(prefers-reduced-motion: reduce)").matches,
+  );
+
+  const pathRefs = useRef<Map<string, SVGPathElement>>(new Map());
+  const labelRefs = useRef<Map<string, SVGTextElement>>(new Map());
+  const eraLabelRef = useRef<SVGTextElement | null>(null);
+  const borderMorphRef = useRef<BorderMorph | null>(null);
+  const morphModuleRef = useRef<Promise<typeof import("./MorphBorders")> | null>(null);
 
   const mainEra = eras[eraOrder[0]];
   const heldIds = useMemo(
@@ -28,7 +49,74 @@ export function AtlasMap({ width, height, physical, provinces, cities, seas, era
     [provinces, mainEra.year],
   );
 
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const handleChange = (event: MediaQueryListEvent) => setReducedMotion(event.matches);
+    mediaQuery.addEventListener("change", handleChange);
+    return () => mediaQuery.removeEventListener("change", handleChange);
+  }, []);
+
+  // Warm the morph module on idle so it's already cached by the time a
+  // user actually clicks — keeps it out of the initial bundle (it's
+  // still a dynamic import, still code-split) without paying a visible
+  // network stall on the typical first interaction.
+  useEffect(() => {
+    const win = window as Window & {
+      requestIdleCallback?: (callback: () => void) => number;
+      cancelIdleCallback?: (handle: number) => void;
+    };
+    if (win.requestIdleCallback) {
+      const handle = win.requestIdleCallback(() => void loadMorphModule());
+      return () => win.cancelIdleCallback?.(handle);
+    }
+    const timeout = window.setTimeout(() => void loadMorphModule(), 200);
+    return () => window.clearTimeout(timeout);
+  }, []);
+
+  useEffect(() => {
+    return () => borderMorphRef.current?.kill();
+  }, []);
+
+  function loadMorphModule() {
+    if (!morphModuleRef.current) {
+      morphModuleRef.current = import("./MorphBorders");
+    }
+    return morphModuleRef.current;
+  }
+
+  async function runBorderTransition(prevHeldIds: ReadonlySet<string>, nextHeldIds: ReadonlySet<string>) {
+    const mod = await loadMorphModule();
+    if (!borderMorphRef.current) {
+      borderMorphRef.current = new mod.BorderMorph();
+    }
+
+    const elements: ProvinceMorphElement[] = provinces.flatMap((province) => {
+      const path = pathRefs.current.get(province.id);
+      if (!path) return [];
+      return [
+        {
+          id: province.id,
+          path,
+          label: labelRefs.current.get(province.id) ?? null,
+          d: province.d,
+          heldBefore: prevHeldIds.has(province.id),
+          heldAfter: nextHeldIds.has(province.id),
+        },
+      ];
+    });
+
+    borderMorphRef.current.transition({
+      provinces: elements,
+      eraLabelEl: eraLabelRef.current,
+      reducedMotion,
+    });
+  }
+
   function swapToMain(slotIndex: number) {
+    const nextEra = eras[eraOrder[slotIndex]];
+    const nextHeldIds = new Set(provinces.filter((p) => isHeld(nextEra.year, p)).map((p) => p.id));
+    const prevHeldIds = heldIds;
+
     setEraOrder((order) => {
       const next = [...order];
       const main = next[0];
@@ -36,6 +124,8 @@ export function AtlasMap({ width, height, physical, provinces, cities, seas, era
       next[slotIndex] = main;
       return next;
     });
+
+    void runBorderTransition(prevHeldIds, nextHeldIds);
   }
 
   function goToScene(regionId: string) {
@@ -83,6 +173,10 @@ export function AtlasMap({ width, height, physical, provinces, cities, seas, era
             return (
               <path
                 key={province.id}
+                ref={(el) => {
+                  if (el) pathRefs.current.set(province.id, el);
+                  else pathRefs.current.delete(province.id);
+                }}
                 d={province.d}
                 className={[styles.province, held ? styles.held : styles.unheld, held && hoveredId === province.id ? styles.hovered : ""]
                   .filter(Boolean)
@@ -99,13 +193,21 @@ export function AtlasMap({ width, height, physical, provinces, cities, seas, era
           })}
         </g>
 
-        {provinces
-          .filter((p) => heldIds.has(p.id))
-          .map((p) => (
-            <text key={`label-${p.id}`} x={p.labelX} y={p.labelY} textAnchor="middle" className={styles.provinceLabel}>
-              {p.name}
-            </text>
-          ))}
+        {provinces.map((province) => (
+          <text
+            key={`label-${province.id}`}
+            ref={(el) => {
+              if (el) labelRefs.current.set(province.id, el);
+              else labelRefs.current.delete(province.id);
+            }}
+            x={province.labelX}
+            y={province.labelY}
+            textAnchor="middle"
+            className={[styles.provinceLabel, heldIds.has(province.id) ? styles.labelHeld : styles.labelUnheld].join(" ")}
+          >
+            {province.name}
+          </text>
+        ))}
 
         {cities.map((city) => (
           <g key={city.id} transform={`translate(${city.x} ${city.y})`}>
@@ -138,7 +240,7 @@ export function AtlasMap({ width, height, physical, provinces, cities, seas, era
           eraOrder={eraOrder}
           onSelect={swapToMain}
         />
-        <AtlasFrame width={width} height={height} eraLabel={mainEra.label} />
+        <AtlasFrame width={width} height={height} eraLabel={mainEra.label} eraLabelRef={eraLabelRef} />
         <rect x={0} y={0} width={width} height={height} fill="url(#vignette)" pointerEvents="none" />
       </svg>
 

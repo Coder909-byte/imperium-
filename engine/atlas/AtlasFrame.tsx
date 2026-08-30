@@ -1,5 +1,6 @@
 // Ornate double border, corner rules, and a title cartouche with a
 // vector-drawn aquila — static decoration, no raster assets.
+import type { RefObject } from "react";
 import styles from "./AtlasMap.module.css";
 
 interface AtlasFrameProps {
@@ -7,6 +8,9 @@ interface AtlasFrameProps {
   height: number;
   eraLabel: string;
   title?: string;
+  // MorphBorders (M2) needs the live DOM node to cross-fade on era
+  // switch — the text content itself stays owned by React/eraLabel.
+  eraLabelRef?: RefObject<SVGTextElement | null>;
 }
 
 const INK = "#3a2510";
@@ -35,7 +39,7 @@ function Aquila({ cx, cy, scale = 1 }: { cx: number; cy: number; scale?: number 
   );
 }
 
-export function AtlasFrame({ width, height, eraLabel, title = "IMPERIVM ROMANVM" }: AtlasFrameProps) {
+export function AtlasFrame({ width, height, eraLabel, title = "IMPERIVM ROMANVM", eraLabelRef }: AtlasFrameProps) {
   const cx = width / 2;
   const inset = 14;
 
@@ -61,7 +65,7 @@ export function AtlasFrame({ width, height, eraLabel, title = "IMPERIVM ROMANVM"
         {title}
       </text>
       <Aquila cx={cx} cy={48} scale={0.22} />
-      <text x={cx} y={65} textAnchor="middle" className={styles.eraLabel}>
+      <text ref={eraLabelRef} x={cx} y={65} textAnchor="middle" className={styles.eraLabel}>
         {eraLabel}
       </text>
     </g>

@@ -26,5 +26,12 @@
     "licence": "Public Domain (Natural Earth) — https://www.naturalearthdata.com/about/terms-of-use/",
     "retrieved": "2026-08-30",
     "notes": "Natural Earth 1:50m physical vectors, v5.0.0. Same mapshaper conversion as coastline.geojson."
+  },
+  {
+    "file": "package.json (gsap dependency)",
+    "source": "https://www.npmjs.com/package/gsap",
+    "licence": "GSAP Standard \"No Charge\" License — https://gsap.com/standard-license",
+    "retrieved": "2026-08-30",
+    "notes": "gsap@3.15.0, used for engine/atlas/MorphBorders.ts (M2). Not an art/audio asset — a code dependency; recorded here per CLAUDE.md's licence-verification instinct, at the user's explicit request. Confirmed free for commercial use, including MorphSVGPlugin — historically a paid Club GreenSock bonus plugin — directly from the installed package's own files, not from memory: node_modules/gsap/package.json's license field points to the standard-license URL, and node_modules/gsap/README.md (bundled in the npm package) states \"GSAP is now 100% FREE including ALL of the bonus plugins like SplitText, MorphSVG... even for commercial use\", per Webflow's April 2025 sponsorship (webflow.com/blog/gsap-becomes-free)."
   }
 ]

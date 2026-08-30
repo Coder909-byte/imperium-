@@ -54,6 +54,11 @@
   stroke-width: 1;
   stroke-linejoin: round;
   transition: fill-opacity 200ms ease, stroke-opacity 200ms ease;
+  /* MorphBorders (M2) scales gained provinces in from ~0.96 — fill-box
+     makes that scale originate from the shape's own bounding-box centre
+     instead of the SVG viewport's (0,0), which is what transform-origin
+     means by default on an SVG element. */
+  transform-box: fill-box;
 }
 
 .held {
@@ -86,6 +91,17 @@
   text-shadow: 0 0 3px #f2e2b8;
   pointer-events: none;
   animation: labelFadeIn 300ms ease both;
+}
+
+/* Labels are always mounted now (M2) — unheld ones sit at opacity 0
+   rather than unmounting, so MorphBorders can cross-fade them in step
+   with their province's geometry instead of an instant pop. */
+.labelHeld {
+  opacity: 1;
+}
+
+.labelUnheld {
+  opacity: 0;
 }
 
 .cityMark {

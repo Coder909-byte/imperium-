@@ -60,3 +60,67 @@ test.describe("atlas", () => {
     await expect(page.locator('g[filter="url(#inkEdges)"]').first()).toBeVisible();
   });
 });
+
+// M2 — border morphing (MorphBorders.ts).
+test.describe("atlas — border morphing", () => {
+  test.beforeEach(async ({ page }) => {
+    await page.goto("/atlas");
+  });
+
+  test("era switch settles to the target era's held set, with no malformed paths", async ({ page }) => {
+    const inset117 = page.locator('g[aria-label="Switch main map to 117 AD"]');
+    await inset117.click();
+
+    await expect(page.locator('path[aria-label$="open scene"]')).toHaveCount(23);
+    await expect(page.getByText("117 AD", { exact: true }).first()).toBeVisible();
+
+    // Interactivity (aria-label, click affordance) updates instantly —
+    // it's the *visual* fill-opacity that's still mid-transition right
+    // after click. Give it up to ~1.2s (900ms tween + stagger spread)
+    // to settle on Gallia, a province gained by this switch.
+    const gallia = page.locator('path[aria-label="Gallia — open scene"]');
+    await expect(gallia).toHaveCSS("fill-opacity", "0.55", { timeout: 1200 });
+
+    // No path anywhere on the map should carry a corrupted `d` once the
+    // transition (including MorphSVG's point-count equalization on
+    // retained provinces) has run.
+    const dValues = await page.locator("path").evaluateAll((els) => els.map((el) => el.getAttribute("d")));
+    for (const d of dValues) {
+      expect(d, `malformed path data: ${d}`).not.toBeNull();
+      expect(d).not.toContain("NaN");
+      expect(d?.trim().startsWith("M")).toBe(true);
+    }
+  });
+
+  test("rapid era switching leaves no stuck or half-rendered paths", async ({ page }) => {
+    const inset117 = page.locator('g[aria-label="Switch main map to 117 AD"]');
+    const inset486 = page.locator('g[aria-label="Switch main map to 486 AD"]');
+
+    await inset117.click();
+    await inset486.click(); // fired before the first transition's ~900ms would have finished
+
+    // Settles on the *last* click's target, not a queued or blended state.
+    await expect(page.getByText("486 AD", { exact: true }).first()).toBeVisible();
+    await expect(page.locator('path[aria-label$="open scene"]')).toHaveCount(9);
+    await expect(page.locator('path[aria-label="Aegyptus — open scene"]')).toBeVisible();
+
+    const dValues = await page.locator("path").evaluateAll((els) => els.map((el) => el.getAttribute("d")));
+    for (const d of dValues) {
+      expect(d).not.toBeNull();
+      expect(d).not.toContain("NaN");
+    }
+  });
+
+  test("prefers-reduced-motion settles fast, as a flat cross-fade", async ({ page }) => {
+    await page.emulateMedia({ reducedMotion: "reduce" });
+    await page.goto("/atlas"); // reload so the reduced-motion state is read at mount
+
+    const inset117 = page.locator('g[aria-label="Switch main map to 117 AD"]');
+    await inset117.click();
+
+    // The reduced-motion path is a flat 150ms tween — this settles well
+    // inside a window the full ~900ms(+stagger) path would still miss.
+    const gallia = page.locator('path[aria-label="Gallia — open scene"]');
+    await expect(gallia).toHaveCSS("fill-opacity", "0.55", { timeout: 500 });
+  });
+});
