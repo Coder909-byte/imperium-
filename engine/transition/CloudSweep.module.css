@@ -1,0 +1,124 @@
+/* Hand-written — matches AtlasMap's own convention that the cinematic
+   UI needs control Tailwind fights (CLAUDE.md). Every animated value
+   here is `transform`/`opacity` only, written directly from refs in
+   CloudSweep.tsx, never through a React re-render — see the perf note
+   at the top of that file. */
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+/* Only capture clicks while a sweep is actually covering the screen —
+   otherwise this fixed, full-viewport layer would sit over every page
+   doing nothing but blocking the atlas/scene beneath it. */
+.overlay[data-active="true"] {
+  pointer-events: auto;
+}
+
+.defs {
+  position: absolute;
+  width: 0;
+  height: 0;
+}
+
+.mass {
+  position: absolute;
+  top: -20vh;
+  height: 140vh;
+  width: 58vw;
+  will-change: transform;
+}
+
+.mass[data-side="left"] {
+  left: 0;
+  /* The filter lives on the mass (the thing actually being translated),
+     not on each of its 3 blob children — one filtered/layer-promoted
+     element per side instead of three. Real trace measurement (not
+     assumed) showed 6 separately-filtered blobs costing enough one-time
+     raster work, clustered right at sweep start, to measurably drag
+     in-phase fps down; this halves that count for the same silhouette,
+     since the filter still distorts the combined alpha of all 3
+     overlapping children — it just does it once per mass, not per blob. */
+  filter: url(#cloudEdge);
+}
+
+.mass[data-side="right"] {
+  right: 0;
+  filter: url(#cloudEdge);
+}
+
+.blob {
+  position: absolute;
+  /* Static, asymmetric corners — what keeps a "cloud mass" reading as
+     organic rather than three overlapping ellipses, once the parent's
+     filter has distorted the combined edge. */
+  border-radius: 48% 52% 45% 55% / 55% 45% 58% 42%;
+}
+
+.mass[data-side="left"] .blob {
+  /* Trailing edge (left, off the edge of the screen) shades toward
+     parchment; leading edge (right, sweeping toward centre) toward a
+     warm off-white — the atlas's own gradient stops (AtlasFilters.tsx). */
+  background: linear-gradient(100deg, #e2c98f 0%, #f8f0dc 75%);
+}
+
+.mass[data-side="right"] .blob {
+  background: linear-gradient(280deg, #e2c98f 0%, #f8f0dc 75%);
+}
+
+.blob[data-blob="1"] {
+  width: 62%;
+  height: 72%;
+  top: 14%;
+  left: 18%;
+  opacity: 0.96;
+}
+
+.blob[data-blob="2"] {
+  width: 46%;
+  height: 56%;
+  top: -2%;
+  left: -4%;
+  opacity: 0.85;
+}
+
+.blob[data-blob="3"] {
+  width: 50%;
+  height: 60%;
+  top: 34%;
+  left: 46%;
+  opacity: 0.9;
+}
+
+.puff {
+  position: absolute;
+  border-radius: 50%;
+  /* No feDisplacementMap here, deliberately — the brief calls for the
+     noise-displaced edge on the two masses specifically (that's the
+     silhouette read up close); 14 more elements each getting their own
+     filter-promoted compositor layer measurably dragged in-phase fps
+     down in a real trace (52->~35fps range), for a distortion nobody
+     can see on a sprite this small and far away. A soft radial gradient
+     reads as a puff of cloud at this scale for a fraction of the cost. */
+  background: radial-gradient(circle at 35% 35%, #f8f0dc 0%, #e2c98f 100%);
+  will-change: transform, opacity;
+}
+
+.puff[data-side="left"] {
+  left: 0;
+}
+
+.puff[data-side="right"] {
+  right: 0;
+}
+
+.crossfade {
+  position: absolute;
+  inset: 0;
+  background: #e2c98f;
+  will-change: opacity;
+}

@@ -20,6 +20,7 @@ import { AtlasInsets } from "./AtlasInsets";
 import { isHeld } from "./heldRegions";
 import type { AtlasMapProps } from "./types";
 import type { BorderMorph, ProvinceMorphElement } from "./MorphBorders";
+import { useTransitionStore } from "@/engine/transition/transitionStore";
 import styles from "./AtlasMap.module.css";
 
 function formatYear(year: number): string {
@@ -28,6 +29,7 @@ function formatYear(year: number): string {
 
 export function AtlasMap({ width, height, physical, provinces, cities, seas, eras }: AtlasMapProps) {
   const router = useRouter();
+  const requestSweep = useTransitionStore((s) => s.requestSweep);
   const [eraOrder, setEraOrder] = useState<number[]>(() => eras.map((_, i) => i));
   const [hoveredId, setHoveredId] = useState<string | null>(null);
   // Lazy initializer, not an effect — reducedMotion never affects render
@@ -129,7 +131,17 @@ export function AtlasMap({ width, height, physical, provinces, cities, seas, era
   }
 
   function goToScene(regionId: string) {
-    router.push(`/scene/${regionId}`);
+    requestSweep(() => router.push(`/scene/${regionId}`));
+  }
+
+  // Raw onClick + router.push doesn't get the prefetch-on-viewport
+  // behaviour <Link> gives you for free — do it on hover instead, so
+  // the RSC payload is usually already warm by the time someone clicks.
+  // CloudSweep's hold is forgiving either way, but this is most of what
+  // keeps it forgiving.
+  function handleProvinceHover(regionId: string) {
+    setHoveredId(regionId);
+    router.prefetch(`/scene/${regionId}`);
   }
 
   function handleProvinceKeyDown(event: KeyboardEvent<SVGPathElement>, regionId: string) {
@@ -184,7 +196,7 @@ export function AtlasMap({ width, height, physical, provinces, cities, seas, era
                 role={held ? "button" : undefined}
                 tabIndex={held ? 0 : undefined}
                 aria-label={held ? `${province.name} — open scene` : undefined}
-                onMouseEnter={held ? () => setHoveredId(province.id) : undefined}
+                onMouseEnter={held ? () => handleProvinceHover(province.id) : undefined}
                 onMouseLeave={held ? () => setHoveredId(null) : undefined}
                 onClick={held ? () => goToScene(province.id) : undefined}
                 onKeyDown={held ? (event) => handleProvinceKeyDown(event, province.id) : undefined}

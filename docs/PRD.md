@@ -220,6 +220,10 @@ imperium/
 │  │  ├─ projection.ts          d3-geo GeoJSON → SVG paths
 │  │  ├─ MorphBorders.ts        MorphSVG era interpolation
 │  │  └─ AtlasMap.tsx
+│  ├─ transition/
+│  │  ├─ CloudSweep.tsx         atlas<->scene sweep — CSS/SVG, not WebGL (ADR 004)
+│  │  ├─ transitionStore.ts     zustand — cross-tree sweep trigger
+│  │  └─ sweepTween.ts          dependency-free rAF tween driver
 │  └─ audio/AudioDirector.ts
 ├─ content/
 │  ├─ regions/{id}.json
@@ -341,9 +345,9 @@ quizAnswer      id, sessionId, questionId, chosenOptionId,
 
 ### 8.2 Cloud transition
 
-Clash-of-Clans style. Two cloud masses sweep in from left and right, meet, hold ~250ms while the route swaps, then part. Total 2.0s.
+Clash-of-Clans style. Two cloud masses sweep in from left and right, meet, hold ~250ms while the route swaps, then part. Total ~2.0s.
 
-WebGL quads with a scrolling noise-displaced alpha mask, plus 12–16 drifting puff sprites at varied depth. This runs on every atlas↔scene transition and is the most-seen animation in the product. It deserves real polish.
+**CSS/SVG, not WebGL** (M3; see ADR 004). Each mass is a translated `<div>` with a static `feTurbulence`+`feDisplacementMap` filter for the noise-displaced organic edge — the same technique `AtlasFilters.tsx`'s `inkEdges` already uses — plus 12–16 drifting puff sprites (plain gradient circles, no filter) at varied depth and speed for parallax. All motion is `transform`/`opacity` only, driven by a dependency-free `requestAnimationFrame` tween, not GSAP: this overlay has to be ready on the very first click, with none of border-morphing's idle-prefetch grace period, so it ships eager rather than risk a cold dynamic import racing a click. WebGL was the original plan but would mean standing up a third render pipeline (atlas is SVG, scenes are Pixi) purely for a ~2-second overlay, paying real context-creation latency on the product's single most latency-sensitive interaction, for a shape that's fundamentally a 2D masked silhouette. This runs on every atlas↔scene transition and is the most-seen animation in the product. It deserves real polish.
 
 ### 8.3 Scene player
 
@@ -434,7 +438,7 @@ GSAP MorphSVG between era boundary sets. Gained regions fade in, lost fade out.
 ✅ Era switch animates over ~900ms with no path popping or self-intersection.
 
 **M3 — Cloud transition** *(~2 days)*
-WebGL cloud sweep, noise-displaced alpha, parallax puffs, route swap at full cover. Reusable both directions.
+CSS/SVG cloud sweep (§8.2, ADR 004), noise-displaced alpha, parallax puffs, route swap at full occlusion. Reusable both directions.
 ✅ 60fps on mid-range Android. No white flash. No layout shift either side.
 
 **M4 — Scene engine core** *(~5 days)*

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { BackToAtlasButton } from "./BackToAtlasButton";
 
 // Stub for M1 — region name only. The real scene engine (Pixi, beats,
 // camera) is built in M4; this just proves the atlas routes here.
@@ -22,6 +23,9 @@ export default async function ScenePage(props: PageProps<"/scene/[regionId]">) {
     <main className="p-6">
       <h1 className="text-2xl font-semibold">{titleCase(regionId)}</h1>
       <p className="mt-2 text-sm text-neutral-500">Scene coming in M4.</p>
+      <div className="mt-6">
+        <BackToAtlasButton />
+      </div>
     </main>
   );
 }
