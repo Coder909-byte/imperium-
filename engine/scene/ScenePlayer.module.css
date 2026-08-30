@@ -1,0 +1,161 @@
+/* Hand-written per CLAUDE.md — the cinematic scene player needs control
+   Tailwind fights (letterbox bars, an absolutely-positioned canvas host,
+   caption contrast against the bar rather than the scene beneath it). */
+
+.player {
+  position: relative;
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  aspect-ratio: 21 / 9;
+  background: #000;
+  overflow: hidden;
+  border-radius: 4px;
+  font-family: Georgia, "Times New Roman", serif;
+}
+
+.canvasHost {
+  position: absolute;
+  inset: 0;
+}
+
+.canvasHost :global(canvas) {
+  display: block;
+}
+
+.topBar,
+.bottomBar {
+  position: absolute;
+  left: 0;
+  right: 0;
+  background: #0a0806;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.topBar {
+  /* A thin accent, not a real letterbox bar — an earlier 6%-tall version
+     covered almost exactly the top sliver placeholderBand.ts leaves
+     visible for the farthest plane, hiding it behind solid black
+     (caught from a real screenshot: the "sky" layer never appeared even
+     though it was in visibleLayers). The scene's own aspect-ratio box
+     is already the letterboxing; this is just a cinematic top edge. */
+  top: 0;
+  height: 4px;
+}
+
+.bottomBar {
+  bottom: 0;
+  min-height: 26%;
+  padding: 0.75rem 1.5rem 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 0.6rem;
+  pointer-events: auto;
+}
+
+.captionBlock {
+  color: #f4ede0; /* against #0a0806, comfortably above 4.5:1 (PRD §12) */
+  max-width: 46rem;
+}
+
+.eyebrow {
+  margin: 0 0 0.15rem;
+  font-size: 0.8rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #c9a876;
+}
+
+.headline {
+  margin: 0 0 0.35rem;
+  font-size: clamp(1.1rem, 2.4vw, 1.6rem);
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.body {
+  margin: 0;
+  font-size: clamp(0.85rem, 1.5vw, 1rem);
+  line-height: 1.45;
+  color: #dcd2bf;
+}
+
+.controls {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.navButton,
+.autoplayButton,
+.exitButton {
+  background: rgba(244, 237, 224, 0.08);
+  border: 1px solid rgba(244, 237, 224, 0.35);
+  color: #f4ede0;
+  border-radius: 999px;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.navButton {
+  width: 2.25rem;
+  height: 2.25rem;
+  font-size: 1.1rem;
+  line-height: 1;
+}
+
+.navButton:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+
+.navButton:not(:disabled):hover,
+.autoplayButton:hover,
+.exitButton:hover {
+  background: rgba(244, 237, 224, 0.18);
+}
+
+.autoplayButton {
+  padding: 0.4rem 0.9rem;
+  font-size: 0.85rem;
+}
+
+.pips {
+  display: flex;
+  gap: 0.4rem;
+  margin: 0 0.25rem;
+}
+
+.pip {
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 999px;
+  background: rgba(244, 237, 224, 0.3);
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+.pip[aria-current="true"] {
+  background: #f4ede0;
+}
+
+.exitButton {
+  position: absolute;
+  top: 0.6rem;
+  left: 0.6rem;
+  z-index: 3;
+  padding: 0.45rem 0.9rem;
+  font-size: 0.8rem;
+  pointer-events: auto;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .navButton,
+  .autoplayButton,
+  .exitButton {
+    transition: none;
+  }
+}

@@ -1,0 +1,66 @@
+{
+  "id": "placeholder",
+  "name": "Engine Test Region",
+  "latinName": "Regio Exemplar",
+  "civilisation": "Test",
+  "mapCentroid": [0, 0],
+  "heldFrom": 0,
+  "heldTo": null,
+  "scene": {
+    "lut": "none",
+    "ambientBed": "none",
+    "planes": [
+      { "id": "sky", "asset": "placeholder/sky.webp", "depth": 0.05, "tint": "#eef0ec", "blur": 0 },
+      { "id": "far_hills", "asset": "placeholder/far_hills.webp", "depth": 0.25, "tint": "#e6e2d4", "blur": 1 },
+      { "id": "mid_ground", "asset": "placeholder/mid_ground.webp", "depth": 0.55, "tint": "#f2ecdc", "blur": 0 },
+      { "id": "foreground", "asset": "placeholder/foreground.webp", "depth": 0.9, "tint": "#ded2b8", "blur": 3 }
+    ]
+  },
+  "beats": [
+    {
+      "id": "dawn-arrival",
+      "year": "Day 1",
+      "sortYear": 1,
+      "headline": "The engine boots for the first time",
+      "body": "Two planes only: a pale sky and a hazy ridge of hills far in the distance. Nothing moves except the camera's own slow, permanent drift, and the picture is still just placeholder colour standing in for whatever a painter will eventually put here.",
+      "visibleLayers": ["sky", "far_hills"],
+      "camera": { "x": 0, "y": 0, "scale": 1, "durationMs": 2800, "ease": "power2.inOut" }
+    },
+    {
+      "id": "hills-approach",
+      "year": "Day 2",
+      "sortYear": 2,
+      "headline": "The hills come into view",
+      "body": "The camera pushes right and up, and a third plane slides in underneath the hills: a mid-ground band, closer than either of the first two and noticeably more responsive when the pointer moves across it. Depth is not just a number in a JSON file at this point, it is a thing you can see and feel by nudging the mouse a few pixels left and right and watching three flat rectangles slide past each other at three different, clearly distinguishable speeds.",
+      "visibleLayers": ["sky", "far_hills", "mid_ground"],
+      "camera": { "x": 0.3, "y": -0.1, "scale": 1.05, "durationMs": 3200, "ease": "power1.inOut" }
+    },
+    {
+      "id": "into-the-midground",
+      "year": "Day 3",
+      "sortYear": 3,
+      "headline": "Into the midground, sky dropped",
+      "body": "The sky plane fades out entirely and the camera pans hard left while pushing in, so the mid-ground band now dominates the frame. This beat's body is written deliberately long, well past the roughly twenty-two words the reading-speed formula floors at seven seconds for, specifically so that autoplay's dwell time actually has to stretch to give a reader enough time to finish it rather than cutting away mid-sentence the way a fixed-interval slideshow would. A long beat like this one is the whole reason the dwell calculation exists at all: without it, whoever wrote this paragraph would have wasted their time, because nobody reading on autoplay would ever see the second half of it.",
+      "visibleLayers": ["far_hills", "mid_ground"],
+      "camera": { "x": -0.25, "y": 0.15, "scale": 1.15, "durationMs": 3600, "ease": "power3.inOut" }
+    },
+    {
+      "id": "foreground-close",
+      "year": "Day 4",
+      "sortYear": 4,
+      "headline": "A foreground element closes in",
+      "body": "Short beat, close plane. The foreground band swings in, heavily blurred to read as nearest, and drifts hardest of all four under both handheld noise and pointer parallax alike, well past the others.",
+      "visibleLayers": ["mid_ground", "foreground"],
+      "camera": { "x": 0.1, "y": 0.2, "scale": 1.3, "durationMs": 2400, "ease": "power2.out" }
+    },
+    {
+      "id": "full-reveal",
+      "year": "Day 5",
+      "sortYear": 5,
+      "headline": "Every plane at once, pulled back",
+      "body": "The camera eases back out past its neutral scale and every plane still in the rig — sky, far hills, mid-ground, foreground — comes back into view together for the first time since the opening beat, so the full four-plane depth stack can be read against the pointer all at once, cool distant blue through warm near orange.",
+      "visibleLayers": ["sky", "far_hills", "mid_ground", "foreground"],
+      "camera": { "x": 0, "y": 0, "scale": 0.92, "durationMs": 3000, "ease": "power2.inOut" }
+    }
+  ]
+}
