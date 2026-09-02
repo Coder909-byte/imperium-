@@ -1,0 +1,23 @@
+/* Layout only — colour, type and the letterbox box itself come from
+   engine/scene/ScenePlayer.module.css (.player/.captionBlock/.eyebrow/
+   .headline/.body), reused as-is so this state reads as the same
+   cinematic shell the real player renders into, not a different page. */
+
+.center {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  text-align: center;
+}
+
+.latinName {
+  font-style: italic;
+  opacity: 0.85;
+}
+
+.actions {
+  margin-top: 1.25rem;
+}

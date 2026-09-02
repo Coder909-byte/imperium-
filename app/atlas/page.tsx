@@ -1,7 +1,9 @@
+import { Suspense } from "react";
 import type { Metadata } from "next";
 import { AtlasMap } from "@/engine/atlas/AtlasMap";
 import { loadAtlasContent } from "./loadContent";
 import { buildAtlasProps } from "./buildAtlasProps";
+import { DevPlaceholderLink } from "./DevPlaceholderLink";
 
 export const metadata: Metadata = {
   title: "Atlas — Imperium",
@@ -18,6 +20,11 @@ export default function AtlasPage() {
   return (
     <main className="p-6">
       <AtlasMap {...props} />
+      {/* Suspense keeps useSearchParams from opting the whole page into
+          dynamic rendering — see DevPlaceholderLink for why this exists. */}
+      <Suspense fallback={null}>
+        <DevPlaceholderLink />
+      </Suspense>
     </main>
   );
 }

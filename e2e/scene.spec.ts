@@ -91,11 +91,19 @@ test.describe("scene player — reduced motion", () => {
 });
 
 test.describe("scene player — unauthored region fallback", () => {
-  test("a region with no content/regions/{id}.json keeps the M1 stub, not a crash", async ({ page }) => {
+  test("a region with no content/regions/{id}.json gets the NotYetWritten shell, not a crash", async ({ page }) => {
     await page.goto("/scene/latium");
+    await expect(page.getByTestId("not-yet-written")).toBeVisible();
     await expect(page.locator("h1")).toHaveText("Latium");
-    await expect(page.getByText("No scene has been written for this region yet.")).toBeVisible();
+    await expect(page.getByText("Ager Romanus")).toBeVisible(); // Latin name, pulled from content/borders/provinces/
+    await expect(page.getByText(/hasn.t been written yet/)).toBeVisible();
     await expect(page.getByTestId("scene-player")).toHaveCount(0);
+    await expect(page.locator("canvas")).toHaveCount(0);
+
+    // The return-to-atlas control actually works from this state, not
+    // just present.
+    await page.getByRole("button", { name: "← Return to the map" }).click();
+    await page.waitForURL("**/atlas");
   });
 });
 

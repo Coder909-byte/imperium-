@@ -272,3 +272,21 @@ test.describe("atlas — hover and morph performance", () => {
     expectNoRepeatedDocumentScopedPaint(paints);
   });
 });
+
+// TEMPORARY — remove alongside DevPlaceholderLink at M8. placeholder.json
+// isn't a province (no polygon on the map, so no click target exists for
+// it) — this is the only way to reach it from the atlas without typing
+// the URL.
+test.describe("atlas — dev placeholder link", () => {
+  test("hidden by default, present and working behind ?dev=1", async ({ page }) => {
+    await page.goto("/atlas");
+    await expect(page.getByRole("button", { name: /DEV — open placeholder scene/ })).toHaveCount(0);
+
+    await page.goto("/atlas?dev=1");
+    const devLink = page.getByRole("button", { name: /DEV — open placeholder scene/ });
+    await expect(devLink).toBeVisible();
+    await devLink.click();
+    await page.waitForURL("**/scene/placeholder");
+    await expect(page.getByTestId("scene-player")).toBeVisible();
+  });
+});
