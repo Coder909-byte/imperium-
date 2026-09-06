@@ -11,6 +11,15 @@
 //
 // No content imports — a region's rendered content arrives already
 // built as ParallaxPlane instances from ScenePlayer.
+//
+// Registers the GL/GPU/Canvas particle render pipes before `Application`
+// is ever constructed below — pixi.js's renderer builds its pipe list
+// once, from whatever's registered with the extension system at that
+// moment, so this has to run before `app.init()`, not merely before the
+// first `new ParticleContainer()` (that's where this import lived
+// originally; it registered the pipe, but too late for the renderer
+// that had already finished constructing itself to ever pick it up).
+import "pixi.js/particle-container";
 import { Application, Container, type Ticker } from "pixi.js";
 
 export type SceneRendererStatus = "idle" | "initializing" | "ready" | "destroyed";
@@ -67,6 +76,14 @@ export class SceneRenderer {
   getTicker(): Ticker {
     if (!this.app) throw new Error("SceneRenderer.getTicker() called before init() resolved");
     return this.app.ticker;
+  }
+
+  /** The whole-stage container — where PostChain's filter chain attaches
+   *  (PRD §4: "applied to the whole stage"), a superset of cameraContainer
+   *  since it's what actually gets rendered to the canvas. */
+  getStage(): Container {
+    if (!this.app) throw new Error("SceneRenderer.getStage() called before init() resolved");
+    return this.app.stage;
   }
 
   getStageSize(): { width: number; height: number } {

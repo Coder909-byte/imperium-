@@ -9,10 +9,13 @@
 import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import { BeatDirector } from "./BeatDirector";
 import { Camera } from "./Camera";
+import { detectStartingTier, readNavigatorSignals, type DeviceTier } from "./deviceTier";
 import { SceneRenderer } from "./SceneRenderer";
+import { SceneEffects } from "./SceneEffects";
 import { ParallaxPlane } from "./layers/ParallaxPlane";
 import { computePlaceholderBand } from "./layers/placeholderBand";
 import { createPlaceholderTexture } from "./layers/placeholderTexture";
+import { selectPlanesForTier } from "./layers/selectActivePlanes";
 import type { SceneRegion } from "./types";
 import styles from "./ScenePlayer.module.css";
 
@@ -28,13 +31,19 @@ export interface ScenePlayerProps {
   region: SceneRegion;
   /** Called on Escape or the exit control. Routing lives outside this component. */
   onExit: () => void;
+  /** Dev-only overrides (scene-lab) — the real /scene/[regionId] route never sets these. */
+  forcedTier?: DeviceTier;
+  forcedLut?: string;
+  forcedChainEnabled?: boolean;
 }
 
-export function ScenePlayer({ region, onExit }: ScenePlayerProps) {
+export function ScenePlayer({ region, onExit, forcedTier, forcedLut, forcedChainEnabled }: ScenePlayerProps) {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const rendererRef = useRef<SceneRenderer | null>(null);
   const cameraRef = useRef<Camera | null>(null);
+  const effectsRef = useRef<SceneEffects | null>(null);
   const planesRef = useRef<Map<string, ParallaxPlane>>(new Map());
+  const [tier, setTier] = useState<DeviceTier>(forcedTier ?? "high");
   // A lazy useState initializer, not a ref: the linter (correctly) forbids
   // reading a ref's `.current` during render — a `useState` value that's
   // never actually re-set is the sanctioned way to construct one
@@ -75,6 +84,7 @@ export function ScenePlayer({ region, onExit }: ScenePlayerProps) {
     const renderer = new SceneRenderer(hostEl);
     rendererRef.current = renderer;
     let cancelled = false;
+    let unsubscribeTier: (() => void) | null = null;
 
     void renderer.init().then(() => {
       if (cancelled || renderer.getStatus() !== "ready") return;
@@ -83,11 +93,38 @@ export function ScenePlayer({ region, onExit }: ScenePlayerProps) {
       camera.setReducedMotion(reducedMotion);
       cameraRef.current = camera;
 
+      // Deliberately the true visible stage size, NOT overscanned like
+      // planes below — planes are oversized so camera drift never
+      // reveals empty canvas past their edge, but particles are discrete
+      // objects meant to be seen; positioning them against the
+      // overscanned (1.35x larger) bounds put most of a beat's fx
+      // sitting at or past the actual visible edge, invisible in every
+      // screenshot despite spawning, ticking, and being visible=true the
+      // whole time — caught by literally dumping live particle state via
+      // console.log mid-tick, not by reasoning about the math again.
+      // Read fresh every call so a resize stays correct on the next frame.
+      const getBounds = () => renderer.getStageSize();
+
+      // Planes are built and added to cameraContainer *before*
+      // SceneEffects is constructed, deliberately — SceneEffects' own
+      // constructor adds particle containers to the same cameraContainer,
+      // and Pixi renders children in add-order. Building this the other
+      // way round once put particles first, planes second, which put
+      // every particle permanently behind an opaque plane rectangle —
+      // confirmed invisible via an actual chain-on/chain-off screenshot,
+      // not caught by any test (nothing asserts pixel content). The tier
+      // used to pick which planes to build at all (PRD §11's 4-plane cap)
+      // is computed here with the same pure heuristic SceneEffects'
+      // DeviceTierController uses internally — calling it twice is free
+      // and deterministic; only the controller actually constructed
+      // below owns the live snapshot/runtime monitor/console log.
+      const initialTierGuess = forcedTier ?? detectStartingTier(readNavigatorSignals());
       const stage = renderer.getStageSize();
       const overscanWidth = stage.width * PLANE_OVERSCAN;
       const overscanHeight = stage.height * PLANE_OVERSCAN;
+      const planeDefs = selectPlanesForTier(region.planes, initialTierGuess);
       const planes = new Map<string, ParallaxPlane>();
-      region.planes.forEach((planeDef, index) => {
+      planeDefs.forEach((planeDef, index) => {
         // Bottom-anchored, depth-scaled band, not a full-bleed rect —
         // see placeholderBand.ts: a same-size opaque rectangle per plane
         // made every plane but the frontmost invisible, defeating the
@@ -101,21 +138,54 @@ export function ScenePlayer({ region, onExit }: ScenePlayerProps) {
         planes.set(planeDef.id, plane);
       });
       planesRef.current = planes;
+
+      const effects = new SceneEffects({
+        stage: renderer.getStage(),
+        cameraContainer: renderer.cameraContainer,
+        ticker: renderer.getTicker(),
+        lutKey: forcedLut ?? region.lut,
+        getBounds,
+        forcedTier,
+      });
+      if (forcedChainEnabled !== undefined) effects.setChainEnabled(forcedChainEnabled);
+      effectsRef.current = effects;
+      setTier(effects.deviceTier.getSnapshot().tier);
+
+      // Tier only ever downgrades at runtime, never upgrades (deviceTier.ts) —
+      // so this only ever needs to shrink the live plane set, never rebuild
+      // dropped planes back in.
+      unsubscribeTier = effects.deviceTier.subscribe(() => {
+        const snapshot = effects.deviceTier.getSnapshot();
+        setTier(snapshot.tier);
+        if (snapshot.tier !== "low") return;
+        const allowedIds = new Set(selectPlanesForTier(region.planes, "low").map((p) => p.id));
+        for (const [id, plane] of planesRef.current) {
+          if (!allowedIds.has(id)) {
+            plane.destroy();
+            planesRef.current.delete(id);
+          }
+        }
+      });
+
       setEngineReady(true);
     });
 
     return () => {
       cancelled = true;
+      unsubscribeTier?.();
       cameraRef.current?.destroy();
       cameraRef.current = null;
+      effectsRef.current?.destroy();
+      effectsRef.current = null;
       for (const plane of planesRef.current.values()) plane.destroy();
       planesRef.current = new Map();
       renderer.destroy();
       rendererRef.current = null;
       setEngineReady(false);
     };
-    // region is treated as stable for this component's lifetime — a
-    // caller that swaps regions (e.g. /dev/scene-lab) remounts via key.
+    // region/forcedTier/forcedLut/forcedChainEnabled are treated as stable
+    // for this component's lifetime — a caller that changes them (e.g.
+    // /dev/scene-lab) remounts via key, same as region already did in M4.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [region]);
 
@@ -125,25 +195,36 @@ export function ScenePlayer({ region, onExit }: ScenePlayerProps) {
   // pointer happened to be at.
   useEffect(() => {
     cameraRef.current?.setReducedMotion(reducedMotion);
+    effectsRef.current?.setReducedMotion(reducedMotion);
     if (reducedMotion) {
       for (const plane of planesRef.current.values()) plane.setPointerOffset(0, 0);
     }
   }, [reducedMotion, engineReady]);
 
-  // Applies the current beat's camera move and layer visibility.
+  // Applies the current beat's camera move, layer visibility, and fx
+  // (particles/shake/lightSource — PRD §4/§10, M5).
   useEffect(() => {
     if (!engineReady) return;
     const camera = cameraRef.current;
     const renderer = rendererRef.current;
     if (!camera || !renderer) return;
 
-    camera.animateTo(beat.camera, renderer.getStageSize());
+    camera.animateTo(beat.camera, renderer.getStageSize(), { shakeActive: beat.fx.includes("shake") });
+    effectsRef.current?.applyBeat(beat.fx, beat.lightSource);
     const visible = new Set(beat.visibleLayers);
     const fadeMs = reducedMotion ? 0 : beat.camera.durationMs;
     for (const [id, plane] of planesRef.current) {
       plane.setVisible(visible.has(id), fadeMs);
     }
   }, [engineReady, beat, reducedMotion]);
+
+  // Live LUT preview (scene-lab only) — the real /scene/[regionId] route
+  // never passes forcedLut, so this only ever re-fires there on region
+  // change, which already remounts the whole engine anyway.
+  useEffect(() => {
+    if (!engineReady || forcedLut === undefined) return;
+    effectsRef.current?.setLutPreset(forcedLut);
+  }, [engineReady, forcedLut]);
 
   // Pointer parallax — skipped entirely under reduced motion (PRD §12),
   // not just zeroed, so no listener cost is paid either.
@@ -180,7 +261,7 @@ export function ScenePlayer({ region, onExit }: ScenePlayerProps) {
   }, [beatDirector, onExit]);
 
   return (
-    <div className={styles.player} data-testid="scene-player">
+    <div className={styles.player} data-testid="scene-player" data-device-tier={tier} data-active-fx={beat.fx.join(",")}>
       <div ref={containerRef} className={styles.canvasHost} />
       <div className={styles.topBar} />
 

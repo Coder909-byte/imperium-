@@ -1,0 +1,15 @@
+# 005. Hand-rolled Vignette filter instead of a library one
+
+## Context
+
+PRD §4's post chain names six filters, in order: `ColorMatrixFilter -> AdvancedBloom -> Godray -> Noise -> RGBSplit -> Vignette`. `pixi.js` v8 core ships `ColorMatrixFilter` and `NoiseFilter` directly; `pixi-filters@6.1.5` (the pixi.js-v8-compatible major line, confirmed peer-compatible with the installed `pixi.js@8.20.1` before M5 started) ships `AdvancedBloomFilter`, `GodrayFilter`, and `RGBSplitFilter`. It does not ship a `VignetteFilter` — that existed in pixi-filters' older v3/v4 API (targeting Pixi v4/v5) and was dropped when the library's filters were rewritten for Pixi v8's shader pipeline. The nearest thing still in the v6 library, `OldFilmFilter`, bundles a vignette with sepia toning and film scratches/dust that PRD §4 never asked for and that would fight the per-scene LUT's own grading.
+
+CLAUDE.md's noise.ts already sets a precedent for this exact situation: PRD asked for Perlin noise for the camera's handheld drift, no dependency-free Perlin implementation was worth adding for one effect, and a small hand-rolled seeded value-noise function did the job instead, flagged honestly as not true gradient noise. `sweepTween.ts`'s dependency-free rAF tween driver is the same call for a different effect.
+
+## Decision
+
+Write a small custom Pixi `Filter` (`engine/scene/post/VignetteFilter.ts`): one GLSL fragment shader computing a distance-from-centre darken with a configurable radius/softness/intensity, using Pixi's own `defaultFilterVert` for the vertex stage and a `UniformGroup` for the three parameters — the same construction shape `pixi.js`'s own `NoiseFilter`/`AlphaFilter` use internally. GLSL-only: no WGSL/`gpuProgram` is written, because `SceneRenderer.ts` already pins `preference: "webgl"` explicitly, so there is no live WebGPU code path in this product to also maintain shader source for. Per `Filter`'s own documented behaviour, a filter with no `gpuProgram` simply renders as a no-op if a renderer ever does need WebGPU — a safe default today, not a silent bug, and a one-line addition if that renderer preference ever changes.
+
+## Consequences
+
+The post chain has all six filters PRD §4 specifies, in the specified order, with zero added dependency weight for the one PRD lists that no current library ships for Pixi v8. The filter is simple enough (one distance calculation, three uniforms) that hand-rolling it is materially less risk than evaluating and pinning a whole extra filter library, or than routing it through `OldFilmFilter` and fighting its unwanted sepia/scratch effects. The cost is that this filter's correctness rests on this codebase's own review rather than an upstream library's test suite and issue history — mitigated by keeping the shader intentionally small (a single `smoothstep` over UV distance from centre, no aspect-ratio correction, flagged as a deliberate simplification in the file itself) and by the same "construct once, mutate properties" discipline every other filter in the chain already follows, so there's exactly one thing to get right at construction time.

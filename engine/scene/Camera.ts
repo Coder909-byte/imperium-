@@ -24,6 +24,22 @@ export const HANDHELD_DRIFT = {
   ROTATION_DEG: 0.2,
 } as const;
 
+// Screen shake (PRD §10/M5, fx: 'shake') — a beat-scoped effect layered
+// on *top* of handheld drift the same way drift is layered on top of the
+// beat tween: additive, never a replacement. Higher frequency and larger
+// amplitude than drift so it reads as a distinct effect rather than
+// "stronger drift". `intensity` (below) ramps 0->1/1->0 over FADE_MS
+// rather than snapping, so a beat boundary that turns shake on or off
+// doesn't pop. Also eyeballed, not measured — same honesty as
+// HANDHELD_DRIFT above.
+export const SCREEN_SHAKE = {
+  FREQUENCY_HZ: 5,
+  TRANSLATE_X_PX: 11,
+  TRANSLATE_Y_PX: 9,
+  ROTATION_DEG: 0.5,
+  FADE_MS: 300,
+} as const;
+
 // Fractional camera.x/y (SceneCamera) are read as this fraction of the
 // stage's *smaller* dimension — keeps a 0.3 pan visually similar in a
 // wide or tall viewport, rather than stretching with aspect ratio.
@@ -69,6 +85,24 @@ export function computeDrift(
   };
 }
 
+/** Pure — same shape as computeDrift, sampling separate noise channels
+ *  at SCREEN_SHAKE's higher frequency/amplitude. Exported for unit
+ *  testing without a running ticker. The raw shake magnitude only —
+ *  Camera scales it by the current fade-in/out intensity itself. */
+export function computeShake(
+  tSeconds: number,
+  noiseX: (x: number) => number,
+  noiseY: (x: number) => number,
+  noiseRot: (x: number) => number,
+): Drift {
+  const phase = tSeconds * SCREEN_SHAKE.FREQUENCY_HZ;
+  return {
+    x: noiseX(phase) * SCREEN_SHAKE.TRANSLATE_X_PX,
+    y: noiseY(phase) * SCREEN_SHAKE.TRANSLATE_Y_PX,
+    rotationDeg: noiseRot(phase) * SCREEN_SHAKE.ROTATION_DEG,
+  };
+}
+
 const DEG_TO_RAD = Math.PI / 180;
 
 /**
@@ -91,28 +125,52 @@ export class Camera {
   private readonly noiseX = createNoise1D(11);
   private readonly noiseY = createNoise1D(29);
   private readonly noiseRot = createNoise1D(53);
+  // Separate seeds so shake decorrelates from drift rather than reading
+  // as "drift, but bigger" whenever both are active on the same beat.
+  private readonly shakeNoiseX = createNoise1D(151);
+  private readonly shakeNoiseY = createNoise1D(173);
+  private readonly shakeNoiseRot = createNoise1D(191);
+  private readonly shakeState = { intensity: 0 };
+  private shakeTween: gsap.core.Tween | null = null;
   private readonly startTime = performance.now();
   private tween: gsap.core.Tween | null = null;
   private reducedMotion = false;
   private readonly tick = (): void => {
+    const tSeconds = (performance.now() - this.startTime) / 1000;
     const drift = this.reducedMotion
       ? { x: 0, y: 0, rotationDeg: 0 }
-      : computeDrift((performance.now() - this.startTime) / 1000, this.noiseX, this.noiseY, this.noiseRot);
+      : computeDrift(tSeconds, this.noiseX, this.noiseY, this.noiseRot);
+
+    // Additive with drift, scaled by the current fade intensity — never
+    // replaces drift, per PRD's "screen shake composes with handheld
+    // drift" requirement. reducedMotion zeroes it the same way it zeroes
+    // drift, regardless of shakeState.intensity (setReducedMotion also
+    // snaps intensity to 0, but this guard is what actually matters —
+    // it can't render even mid-fade).
+    const shakeRaw =
+      this.reducedMotion || this.shakeState.intensity === 0
+        ? { x: 0, y: 0, rotationDeg: 0 }
+        : computeShake(tSeconds, this.shakeNoiseX, this.shakeNoiseY, this.shakeNoiseRot);
+    const shake = {
+      x: shakeRaw.x * this.shakeState.intensity,
+      y: shakeRaw.y * this.shakeState.intensity,
+      rotationDeg: shakeRaw.rotationDeg * this.shakeState.intensity,
+    };
 
     // Planes are placed at local (0,0) — "scene centre" — so the
     // container itself has to sit at the stage's visual centre for that
-    // to land in the middle of the canvas. beatTarget/drift are the
-    // *additional* pan on top of this rest position, so scale and
+    // to land in the middle of the canvas. beatTarget/drift/shake are
+    // the *additional* pan on top of this rest position, so scale and
     // rotation pivot naturally around scene centre rather than the
     // canvas's top-left corner. Reading the stage size fresh every tick
     // (a cheap property read, not a recomputation) rather than caching
     // it means a resize is correct on the very next frame with no
     // separate resize listener/plumbing needed.
     const stage = this.getStageSize();
-    this.container.x = stage.width / 2 + this.beatTarget.x + drift.x;
-    this.container.y = stage.height / 2 + this.beatTarget.y + drift.y;
+    this.container.x = stage.width / 2 + this.beatTarget.x + drift.x + shake.x;
+    this.container.y = stage.height / 2 + this.beatTarget.y + drift.y + shake.y;
     this.container.scale.set(this.beatTarget.scale);
-    this.container.rotation = drift.rotationDeg * DEG_TO_RAD;
+    this.container.rotation = (drift.rotationDeg + shake.rotationDeg) * DEG_TO_RAD;
   };
 
   constructor(container: Container, ticker: CameraTicker, getStageSize: () => StageSize) {
@@ -124,20 +182,38 @@ export class Camera {
 
   setReducedMotion(value: boolean): void {
     this.reducedMotion = value;
+    if (value) {
+      // No shake at all under reduced motion (PRD §12), not just a
+      // suppressed render — kill any inflight fade so it can't resume
+      // partway once reduced motion turns back off mid-tween.
+      this.shakeTween?.kill();
+      this.shakeState.intensity = 0;
+    }
   }
 
   /** Moves to a beat's camera target. Reduced motion makes this an
    *  instant cut (duration 0) rather than skipping the move — the
    *  camera still has to land on the beat's framing. */
-  animateTo(camera: SceneCamera, stage: StageSize): void {
+  animateTo(camera: SceneCamera, stage: StageSize, options: { shakeActive?: boolean } = {}): void {
     this.tween?.kill();
     const target = computeCameraTarget(camera, stage);
     const duration = this.reducedMotion ? 0 : camera.durationMs / 1000;
     this.tween = gsap.to(this.beatTarget, { ...target, duration, ease: camera.ease });
+    this.setShakeActive(options.shakeActive ?? false);
+  }
+
+  /** Fades shake's intensity in or out rather than snapping it, so a
+   *  beat boundary that turns 'shake' fx on or off doesn't pop. A no-op
+   *  under reduced motion — setReducedMotion already holds intensity at 0. */
+  private setShakeActive(active: boolean): void {
+    if (this.reducedMotion) return;
+    this.shakeTween?.kill();
+    this.shakeTween = gsap.to(this.shakeState, { intensity: active ? 1 : 0, duration: SCREEN_SHAKE.FADE_MS / 1000 });
   }
 
   destroy(): void {
     this.tween?.kill();
+    this.shakeTween?.kill();
     this.ticker.remove(this.tick);
   }
 }

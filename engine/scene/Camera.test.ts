@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { computeCameraTarget, computeDrift, HANDHELD_DRIFT } from "./Camera";
+import { computeCameraTarget, computeDrift, computeShake, HANDHELD_DRIFT, SCREEN_SHAKE } from "./Camera";
 import { createNoise1D } from "./noise";
 import type { SceneCamera } from "./types";
 
@@ -63,5 +63,36 @@ describe("computeDrift", () => {
     const samples = Array.from({ length: 60 }, (_, i) => computeDrift(i * 0.2, noiseX, noiseY, noiseRot));
     const anyMovement = samples.some((s) => Math.abs(s.x) > 0.5 || Math.abs(s.y) > 0.5);
     expect(anyMovement).toBe(true);
+  });
+});
+
+describe("computeShake", () => {
+  const noiseX = createNoise1D(151);
+  const noiseY = createNoise1D(173);
+  const noiseRot = createNoise1D(191);
+
+  it("stays within SCREEN_SHAKE's configured amplitude on every axis", () => {
+    for (let t = 0; t < 10; t += 0.1) {
+      const shake = computeShake(t, noiseX, noiseY, noiseRot);
+      expect(Math.abs(shake.x)).toBeLessThanOrEqual(SCREEN_SHAKE.TRANSLATE_X_PX);
+      expect(Math.abs(shake.y)).toBeLessThanOrEqual(SCREEN_SHAKE.TRANSLATE_Y_PX);
+      expect(Math.abs(shake.rotationDeg)).toBeLessThanOrEqual(SCREEN_SHAKE.ROTATION_DEG);
+    }
+  });
+
+  it("moves faster than handheld drift — its noise phase advances over 10x as fast per second", () => {
+    expect(SCREEN_SHAKE.FREQUENCY_HZ).toBeGreaterThan(HANDHELD_DRIFT.FREQUENCY_HZ * 10);
+  });
+
+  it("uses its own noise channels — its shape diverges from drift's rather than being a scaled copy", () => {
+    const driftNoiseX = createNoise1D(11);
+    const driftSamples = Array.from({ length: 40 }, (_, i) => computeDrift(i * 0.3, driftNoiseX, driftNoiseX, driftNoiseX).x);
+    const shakeSamples = Array.from({ length: 40 }, (_, i) => computeShake(i * 0.3, noiseX, noiseX, noiseX).x);
+    // Same seed/phase would make these proportional (a fixed ratio at
+    // every sample, since both feed the same noise fn). Different seeds
+    // must disagree at some sample even after normalising for amplitude.
+    const ratios = driftSamples.map((d, i) => (d === 0 ? null : shakeSamples[i] / d)).filter((r): r is number => r !== null);
+    const allSameRatio = ratios.every((r) => Math.abs(r - ratios[0]) < 1e-6);
+    expect(allSameRatio).toBe(false);
   });
 });

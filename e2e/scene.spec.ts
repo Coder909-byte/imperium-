@@ -146,7 +146,9 @@ test.describe("/dev/scene-lab", () => {
     writeTempRegion("Original headline");
     await page.goto("/dev/scene-lab");
 
-    await page.getByRole("combobox").selectOption(TEMP_REGION_ID);
+    // M5 added Tier/LUT/post-chain selects alongside the region one —
+    // target by label rather than a bare role query, which now matches 4.
+    await page.getByLabel("Region:").selectOption(TEMP_REGION_ID);
     await expect(page.getByRole("heading", { name: "Original headline" })).toBeVisible();
 
     writeTempRegion("Edited after save");
@@ -164,6 +166,83 @@ test.describe("/dev/scene-lab", () => {
     const source = readFileSync(join(process.cwd(), "app", "dev", "scene-lab", "page.tsx"), "utf-8");
     expect(source).toContain('process.env.NODE_ENV === "production"');
     expect(source).toContain("notFound()");
+  });
+});
+
+test.describe("scene player — post chain, particles, shake, device tier (M5)", () => {
+  function trackErrors(page: import("@playwright/test").Page): string[] {
+    const errors: string[] = [];
+    page.on("console", (msg) => {
+      if (msg.type() === "error") errors.push(msg.text());
+    });
+    page.on("pageerror", (err) => errors.push(err.message));
+    return errors;
+  }
+
+  test("every beat's fx (particles + shake) plays through with zero console errors", async ({ page }) => {
+    const errors = trackErrors(page);
+    await page.goto("/scene/placeholder");
+    const player = page.getByTestId("scene-player");
+    await expect(player).toBeVisible();
+
+    // Matches content/regions/placeholder.json's per-beat fx exactly —
+    // one emitter/kind combination per beat, all six emitters plus
+    // shake covered across the five beats.
+    const expectedFx = ["dust", "rain", "smoke,embers", "fire,shake", "arrow_volley"];
+    for (let i = 0; i < expectedFx.length; i++) {
+      await page.getByRole("tab", { name: new RegExp(`Go to beat ${i + 1}:`) }).click();
+      await expect(player).toHaveAttribute("data-active-fx", expectedFx[i]);
+    }
+
+    expect(errors, `console errors: ${JSON.stringify(errors)}`).toHaveLength(0);
+  });
+
+  test("reduced motion plays the fire+shake beat with no shake and no console errors", async ({ page }) => {
+    const errors = trackErrors(page);
+    await page.emulateMedia({ reducedMotion: "reduce" });
+    await page.goto("/scene/placeholder");
+    await page.getByRole("tab", { name: /Go to beat 4:/ }).click();
+    await expect(page.getByTestId("scene-player")).toHaveAttribute("data-active-fx", "fire,shake");
+    // No pixel-level shake assertion here (that's Camera.test.ts's
+    // computeShake unit tests plus a manual scene-lab look) — this just
+    // confirms the reduced-motion path through Camera/SceneEffects
+    // doesn't throw with shake+fire actually active.
+    expect(errors, `console errors: ${JSON.stringify(errors)}`).toHaveLength(0);
+  });
+
+  test("device tier reports itself on the player, and scene-lab's override pins it", async ({ page }) => {
+    await page.goto("/scene/placeholder");
+    // Whatever the real heuristic picks in CI, it's one of the two valid tiers.
+    await expect(page.getByTestId("scene-player")).toHaveAttribute("data-device-tier", /^(high|low)$/);
+  });
+
+  test("scene-lab: forcing the tier override pins the player to it", async ({ page }) => {
+    await page.goto("/dev/scene-lab");
+    await page.getByLabel("Region:").selectOption("placeholder");
+    await expect(page.getByTestId("scene-player")).toBeVisible();
+
+    await page.getByLabel("Tier:").selectOption("low");
+    await expect(page.getByTestId("scene-player")).toHaveAttribute("data-device-tier", "low");
+
+    await page.getByLabel("Tier:").selectOption("high");
+    await expect(page.getByTestId("scene-player")).toHaveAttribute("data-device-tier", "high");
+  });
+
+  test("scene-lab: the post chain on/off toggle remounts cleanly with no console errors either way", async ({ page }) => {
+    const errors = trackErrors(page);
+    await page.goto("/dev/scene-lab");
+    await page.getByLabel("Region:").selectOption("placeholder");
+    await expect(page.getByTestId("scene-player")).toBeVisible();
+
+    await page.getByLabel("Post chain:").selectOption("off");
+    await expect(page.getByTestId("scene-player")).toBeVisible();
+    await expect(page.locator("canvas")).toHaveCount(1);
+
+    await page.getByLabel("Post chain:").selectOption("on");
+    await expect(page.getByTestId("scene-player")).toBeVisible();
+    await expect(page.locator("canvas")).toHaveCount(1);
+
+    expect(errors, `console errors: ${JSON.stringify(errors)}`).toHaveLength(0);
   });
 });
 

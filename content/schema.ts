@@ -22,6 +22,12 @@ export const Beat = z.object({
       z.enum(["dust", "smoke", "embers", "rain", "arrow_volley", "fire", "shake", "flash"]),
     )
     .default([]),
+  // Gates the post chain's Godray filter (PRD §4: "only when a light source
+  // is in frame") — an explicit per-beat author call rather than inferred
+  // from fx or lut, because neither reliably implies it: a beat can have
+  // 'fire' fx off-frame, or sit under an outdoor-mood lut while framed on
+  // an interior with no visible sun.
+  lightSource: z.boolean().default(false),
   actors: z
     .array(
       z.object({

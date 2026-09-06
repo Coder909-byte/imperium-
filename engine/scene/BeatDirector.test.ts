@@ -10,6 +10,8 @@ function makeBeat(id: string, wordCount: number): SceneBeat {
     body: Array.from({ length: wordCount }, () => "word").join(" "),
     visibleLayers: [],
     camera: { x: 0, y: 0, scale: 1, durationMs: 1000, ease: "power2.inOut" },
+    fx: [],
+    lightSource: false,
   };
 }
 

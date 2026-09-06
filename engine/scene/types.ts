@@ -3,12 +3,16 @@
 // content/ JSON into these, the same split app/atlas/buildAtlasProps.ts
 // already uses for engine/atlas.
 //
-// M4 deliberately carries only what the engine renders this milestone:
-// camera + layer visibility + caption text. `actors`/`fx`/`audio`/
-// `sources` exist in content/schema.ts's Beat today but belong to later
-// milestones (puppets: M6, particles/post: M5, audio: M10) — adding
-// unused fields here now would be plumbing with nothing on the other
-// end of it.
+// M4 carried only camera + layer visibility + caption text.
+// M5 adds `lut` (region-level grade preset key), and `fx`/`lightSource`
+// per beat (particles, screen shake, godray gating) — the post chain and
+// particle emitters this milestone renders. `actors`/`audio`/`sources`
+// still belong to later milestones (puppets: M6, audio: M10).
+
+// Structurally mirrors content/schema.ts's Beat.fx enum, but declared
+// independently — engine/ never imports content/ (CLAUDE.md), same
+// split SceneCamera already uses against Beat.camera.
+export type FxKind = "dust" | "smoke" | "embers" | "rain" | "arrow_volley" | "fire" | "shake" | "flash";
 
 export interface SceneCamera {
   /** Pan target, as a fraction of the current stage size — e.g. 0.3 pans
@@ -31,6 +35,13 @@ export interface SceneBeat {
   body: string;
   visibleLayers: string[];
   camera: SceneCamera;
+  /** Particle emitters and screen shake active for this beat's duration —
+   *  see engine/scene/particles/ and Camera.ts's shake support. 'flash'
+   *  is accepted (content/schema.ts already enumerates it) but unrendered
+   *  this milestone; nothing here reads it yet. */
+  fx: FxKind[];
+  /** Gates the post chain's Godray filter (PRD §4). */
+  lightSource: boolean;
 }
 
 export interface ScenePlane {
@@ -53,6 +64,8 @@ export interface ScenePlane {
 export interface SceneRegion {
   id: string;
   name: string;
+  /** Post chain grade preset key — see engine/scene/post/lut.ts's LUT_PRESETS. */
+  lut: string;
   planes: ScenePlane[];
   beats: SceneBeat[];
 }
