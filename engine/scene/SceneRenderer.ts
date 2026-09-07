@@ -50,6 +50,16 @@ export class SceneRenderer {
     if (this.status !== "idle") return;
     this.status = "initializing";
 
+    // Marks bracket exactly `app.init()` — Pixi's WebGL/WebGPU context
+    // creation plus its own internal setup — separate from everything
+    // ScenePlayer does before/after it (chunk already downloaded and
+    // evaluated by the time this runs; plane/texture construction and
+    // the first render happen after). Named and left in permanently
+    // (not gated behind a dev check) because this is exactly the kind
+    // of number that's cheap to keep measuring and expensive to
+    // reconstruct after the fact — see CLAUDE.md's session note asking
+    // for a real breakdown of first-beat-interactive, not an estimate.
+    performance.mark("imperium:pixi-init-start");
     const app = new Application();
     await app.init({
       resizeTo: this.hostElement,
@@ -60,6 +70,7 @@ export class SceneRenderer {
       autoDensity: true,
       preference: "webgl",
     });
+    performance.mark("imperium:pixi-init-end");
 
     if (this.status !== "initializing") {
       // destroy() ran while we were awaiting init — never mount.
@@ -70,6 +81,7 @@ export class SceneRenderer {
     this.app = app;
     app.stage.addChild(this.cameraContainer);
     this.hostElement.appendChild(app.canvas);
+    performance.mark("imperium:pixi-canvas-attached");
     this.status = "ready";
   }
 

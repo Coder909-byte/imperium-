@@ -151,6 +151,14 @@ export function ScenePlayer({ region, onExit, forcedTier, forcedLut, forcedChain
       effectsRef.current = effects;
       setTier(effects.deviceTier.getSnapshot().tier);
 
+      // Brackets the fully-synchronous scene-graph build (planes' canvas
+      // texture draws + Pixi object construction) that runs between Pixi
+      // context creation finishing and the ticker's first actual draw —
+      // see SceneRenderer.ts's marks for why these are permanent, not
+      // dev-only.
+      performance.mark("imperium:scene-graph-built");
+      renderer.getTicker().addOnce(() => performance.mark("imperium:scene-first-frame"));
+
       // Tier only ever downgrades at runtime, never upgrades (deviceTier.ts) —
       // so this only ever needs to shrink the live plane set, never rebuild
       // dropped planes back in.

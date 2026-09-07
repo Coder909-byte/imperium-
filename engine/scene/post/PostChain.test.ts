@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 import { selectActiveFilterIds, type PostChainState } from "./PostChain";
 
 function state(overrides: Partial<PostChainState> = {}): PostChainState {
-  return { tier: "high", lightSourceActive: false, chainEnabled: true, ...overrides };
+  return { tier: "high", lightSourceActive: false, chainEnabled: true, atmosphereLoaded: true, ...overrides };
 }
 
 describe("selectActiveFilterIds", () => {
@@ -40,5 +40,14 @@ describe("selectActiveFilterIds", () => {
     const order = ["lut", "bloom", "godray", "grain", "chromaticAberration", "vignette"];
     const indices = ids.map((id) => order.indexOf(id));
     expect(indices).toEqual([...indices].sort((a, b) => a - b));
+  });
+
+  it("before atmosphere loads, only the eager LUT+Vignette pair is active, even with a light source and high tier", () => {
+    const ids = selectActiveFilterIds(state({ atmosphereLoaded: false, lightSourceActive: true }));
+    expect(ids).toEqual(["lut", "vignette"]);
+  });
+
+  it("atmosphereLoaded: false plus chainEnabled: false still yields nothing", () => {
+    expect(selectActiveFilterIds(state({ atmosphereLoaded: false, chainEnabled: false }))).toEqual([]);
   });
 });
