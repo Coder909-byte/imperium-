@@ -7,9 +7,11 @@
 // engine's generalise-to-other-civilisations goal. No content imports:
 // `region` arrives already adapted to engine/scene/types.ts's shapes.
 import { useEffect, useRef, useState, useSyncExternalStore } from "react";
+import { Container } from "pixi.js";
 import { BeatDirector } from "./BeatDirector";
 import { Camera } from "./Camera";
 import { detectStartingTier, readNavigatorSignals, type DeviceTier } from "./deviceTier";
+import { SceneActors } from "./SceneActors";
 import { SceneRenderer } from "./SceneRenderer";
 import { SceneEffects } from "./SceneEffects";
 import { ParallaxPlane } from "./layers/ParallaxPlane";
@@ -42,6 +44,7 @@ export function ScenePlayer({ region, onExit, forcedTier, forcedLut, forcedChain
   const rendererRef = useRef<SceneRenderer | null>(null);
   const cameraRef = useRef<Camera | null>(null);
   const effectsRef = useRef<SceneEffects | null>(null);
+  const actorsRef = useRef<SceneActors | null>(null);
   const planesRef = useRef<Map<string, ParallaxPlane>>(new Map());
   const [tier, setTier] = useState<DeviceTier>(forcedTier ?? "high");
   // A lazy useState initializer, not a ref: the linter (correctly) forbids
@@ -122,6 +125,18 @@ export function ScenePlayer({ region, onExit, forcedTier, forcedLut, forcedChain
       const stage = renderer.getStageSize();
       const overscanWidth = stage.width * PLANE_OVERSCAN;
       const overscanHeight = stage.height * PLANE_OVERSCAN;
+
+      // Planes and actors share one sortable-by-depth container so an
+      // actor (PRD §3's "character stage" slot) can interleave between
+      // them instead of always sitting on top of every plane — see
+      // content/schema.ts's actor `depth` field and SceneActors.ts.
+      // zIndex sorting (not manual child-index juggling) does the work;
+      // it's the same mechanism PuppetActor already uses for its own
+      // parts' draw order.
+      const layersContainer = new Container();
+      layersContainer.sortableChildren = true;
+      renderer.cameraContainer.addChild(layersContainer);
+
       const planeDefs = selectPlanesForTier(region.planes, initialTierGuess);
       const planes = new Map<string, ParallaxPlane>();
       planeDefs.forEach((planeDef, index) => {
@@ -134,10 +149,14 @@ export function ScenePlayer({ region, onExit, forcedTier, forcedLut, forcedChain
         const texture = createPlaceholderTexture({ id: planeDef.id, depth: planeDef.depth, index, width: band.width, height: band.height });
         const plane = new ParallaxPlane({ id: planeDef.id, depth: planeDef.depth, texture, tint: planeDef.tint, blur: planeDef.blur });
         plane.setSize(band.width, band.height, band.baseOffsetY);
-        renderer.cameraContainer.addChild(plane.container);
+        plane.container.zIndex = planeDef.depth;
+        layersContainer.addChild(plane.container);
         planes.set(planeDef.id, plane);
       });
       planesRef.current = planes;
+
+      const actors = new SceneActors({ layersContainer, ticker: renderer.getTicker(), rigDefs: region.rigs });
+      actorsRef.current = actors;
 
       const effects = new SceneEffects({
         stage: renderer.getStage(),
@@ -185,6 +204,8 @@ export function ScenePlayer({ region, onExit, forcedTier, forcedLut, forcedChain
       cameraRef.current = null;
       effectsRef.current?.destroy();
       effectsRef.current = null;
+      actorsRef.current?.destroy();
+      actorsRef.current = null;
       for (const plane of planesRef.current.values()) plane.destroy();
       planesRef.current = new Map();
       renderer.destroy();
@@ -204,13 +225,15 @@ export function ScenePlayer({ region, onExit, forcedTier, forcedLut, forcedChain
   useEffect(() => {
     cameraRef.current?.setReducedMotion(reducedMotion);
     effectsRef.current?.setReducedMotion(reducedMotion);
+    actorsRef.current?.setReducedMotion(reducedMotion);
     if (reducedMotion) {
       for (const plane of planesRef.current.values()) plane.setPointerOffset(0, 0);
     }
   }, [reducedMotion, engineReady]);
 
-  // Applies the current beat's camera move, layer visibility, and fx
-  // (particles/shake/lightSource — PRD §4/§10, M5).
+  // Applies the current beat's camera move, layer visibility, fx
+  // (particles/shake/lightSource — PRD §4/§10, M5), and actors (PRD
+  // §3/§10, M6).
   useEffect(() => {
     if (!engineReady) return;
     const camera = cameraRef.current;
@@ -219,6 +242,13 @@ export function ScenePlayer({ region, onExit, forcedTier, forcedLut, forcedChain
 
     camera.animateTo(beat.camera, renderer.getStageSize(), { shakeActive: beat.fx.includes("shake") });
     effectsRef.current?.applyBeat(beat.fx, beat.lightSource);
+    // Reduced-motion is NOT passed here — SceneActors tracks it via its
+    // own setReducedMotion() (the effect above, which fires on the same
+    // reducedMotion change and runs first). Threading it through here
+    // too would rebuild every actor — destroying and reconstructing
+    // Pixi objects and resetting each PuppetActor's phase — on a bare
+    // reduced-motion toggle that didn't actually change the beat.
+    actorsRef.current?.applyBeat(beat.actors);
     const visible = new Set(beat.visibleLayers);
     const fadeMs = reducedMotion ? 0 : beat.camera.durationMs;
     for (const [id, plane] of planesRef.current) {
@@ -269,7 +299,13 @@ export function ScenePlayer({ region, onExit, forcedTier, forcedLut, forcedChain
   }, [beatDirector, onExit]);
 
   return (
-    <div className={styles.player} data-testid="scene-player" data-device-tier={tier} data-active-fx={beat.fx.join(",")}>
+    <div
+      className={styles.player}
+      data-testid="scene-player"
+      data-device-tier={tier}
+      data-active-fx={beat.fx.join(",")}
+      data-active-actors={beat.actors.map((a) => `${a.rig}:${a.clip}:${a.count}`).join(",")}
+    >
       <div ref={containerRef} className={styles.canvasHost} />
       <div className={styles.topBar} />
 

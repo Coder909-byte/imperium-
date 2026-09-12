@@ -6,6 +6,7 @@ import { existsSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 import type { NextRequest } from "next/server";
 import { Region } from "@/content/schema";
+import { loadRigs } from "@/app/scene/[regionId]/loadRigs";
 
 const REGIONS_DIR = join(process.cwd(), "content", "regions");
 const VALID_ID = /^[a-z0-9-]+$/;
@@ -38,5 +39,8 @@ export async function GET(request: NextRequest) {
     return Response.json({ ok: false, error: issues }, { status: 400 });
   }
 
-  return Response.json({ ok: true, data: result.data }, { headers: { "Cache-Control": "no-store" } });
+  // Rigs come along in the same poll — scene-lab's whole hot-reload
+  // model is "re-read everything from disk every second", and the rig
+  // set is tiny, so there's no reason to give it a separate endpoint.
+  return Response.json({ ok: true, data: result.data, rigs: loadRigs() }, { headers: { "Cache-Control": "no-store" } });
 }

@@ -1,14 +1,41 @@
 // Adapts loaded content into engine/scene's plain-prop shapes — the
 // same split app/atlas/buildAtlasProps.ts uses for engine/atlas.
-// `actors`/`audio`/`sources` exist on content/schema.ts's Beat but
-// aren't carried through: the engine doesn't render them yet
-// (puppets: M6, audio: M10) — see engine/scene/types.ts. `fx`/
-// `lightSource` and the region's `lut` are new in M5 (post chain +
-// particles).
-import type { Region } from "@/content/schema";
-import type { SceneRegion } from "@/engine/scene/types";
+// `audio`/`sources` exist on content/schema.ts's Beat but aren't
+// carried through: the engine doesn't render them yet (M10) — see
+// engine/scene/types.ts. `fx`/`lightSource` and the region's `lut` are
+// M5 (post chain + particles); `actors` and `rigs` are M6 (puppets).
+import type { Region, Rig } from "@/content/schema";
+import type { RigDef, SceneRegion } from "@/engine/scene/types";
 
-export function buildSceneProps(region: Region): SceneRegion {
+// Exported for /dev/scene-lab's rig inspector, which loads a single rig
+// outside the context of any region/beat.
+export function adaptRig(rig: Rig): RigDef {
+  return {
+    id: rig.id,
+    parts: rig.parts.map((part) => ({
+      id: part.id,
+      parent: part.parent,
+      texture: part.texture,
+      pivot: part.pivot,
+      size: part.size,
+      zOrder: part.zOrder,
+      rest: { x: part.rest.x, y: part.rest.y, rotation: part.rest.rotation, scale: part.rest.scale },
+    })),
+    clips: rig.clips.map((clip) => ({
+      id: clip.id,
+      durationMs: clip.durationMs,
+      loop: clip.loop,
+      tracks: Object.fromEntries(
+        Object.entries(clip.tracks).map(([partId, keyframes]) => [
+          partId,
+          keyframes.map((kf) => ({ t: kf.t, rot: kf.rot, ease: kf.ease })),
+        ]),
+      ),
+    })),
+  };
+}
+
+export function buildSceneProps(region: Region, rigs: Rig[] = []): SceneRegion {
   return {
     id: region.id,
     name: region.name,
@@ -34,6 +61,18 @@ export function buildSceneProps(region: Region): SceneRegion {
       },
       fx: beat.fx,
       lightSource: beat.lightSource,
+      actors: beat.actors.map((actor) => ({
+        rig: actor.rig,
+        clip: actor.clip,
+        x: actor.x,
+        y: actor.y,
+        scale: actor.scale,
+        count: actor.count,
+        flip: actor.flip,
+        phase: actor.phase,
+        depth: actor.depth,
+      })),
     })),
+    rigs: rigs.map(adaptRig),
   };
 }

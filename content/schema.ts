@@ -39,6 +39,13 @@ export const Beat = z.object({
         count: z.number().default(1), // >1 → instanced crowd
         flip: z.boolean().default(false),
         phase: z.number().default(0), // animation time offset
+        // Where this actor sits in the plane depth stack (PRD §3's
+        // "character stage" slot sits between mid and near terrain).
+        // Defaulted rather than required so no existing beat needs
+        // migrating — M6 adds this ahead of any real plane needing it,
+        // deliberately (see CLAUDE.md M6 note): cheaper to add now than
+        // to retrofit once M8's planes exist to interleave against.
+        depth: z.number().min(0).max(1).default(0.6),
       }),
     )
     .default([]),
@@ -88,6 +95,146 @@ export const Region = z.object({
 
 export type Beat = z.infer<typeof Beat>;
 export type Region = z.infer<typeof Region>;
+
+// --- Rig content (M6, cutout puppets) --------------------------------
+// content/rigs/{name}.json. A rig is a flat list of parts (joints) plus
+// a set of named clips. Playback design (see docs/adr — recorded after
+// this milestone): sparse keyframes authored by hand, interpolated with
+// a GSAP ease *function* at playback time — not raw per-frame samples
+// (too tedious to hand-author) and not a live GSAP Timeline per
+// instance (too costly to run 40+ of at 60fps; see engine/scene/puppet).
+//
+// `rot` on a keyframe is a DELTA in degrees from the part's own `rest`
+// rotation, not an absolute angle — so a part with no track in a given
+// clip simply stays at rest, and authoring "swing the forearm +40° and
+// back" doesn't require knowing what the rest pose's raw angle was.
+
+export const RigKeyframe = z.object({
+  t: z.number().min(0).max(1), // normalized position within the clip's duration
+  rot: z.number(), // degrees, delta from the part's rest rotation
+  // Eases the transition *into* this keyframe from the previous one —
+  // a GSAP core ease name (gsap.parseEase), resolved once at rig-load
+  // time (engine/scene/puppet/rigLoader.ts), never re-parsed per frame.
+  ease: z.string().default("power1.inOut"),
+});
+
+export const RigClip = z
+  .object({
+    id: z.string(), // 'idle' | 'march' | 'brace' | 'thrust' | 'fall' | 'raise' for the v1 legionary, not enforced as an enum — other rigs may need different clips
+    durationMs: z.number().positive(),
+    loop: z.boolean().default(false),
+    // Keyed by part id. A part absent here holds its rest rotation for
+    // this clip's whole duration.
+    tracks: z.record(z.string(), z.array(RigKeyframe).min(1)),
+  })
+  .superRefine((clip, ctx) => {
+    for (const [partId, keyframes] of Object.entries(clip.tracks)) {
+      if (keyframes[0]?.t !== 0) {
+        ctx.addIssue({ code: "custom", message: `track "${partId}" must start at t: 0`, path: ["tracks", partId, "0", "t"] });
+      }
+      if (keyframes[keyframes.length - 1]?.t !== 1) {
+        ctx.addIssue({ code: "custom", message: `track "${partId}" must end at t: 1`, path: ["tracks", partId, `${keyframes.length - 1}`, "t"] });
+      }
+      for (let i = 1; i < keyframes.length; i++) {
+        if (keyframes[i].t <= keyframes[i - 1].t) {
+          ctx.addIssue({ code: "custom", message: `track "${partId}" keyframes must have strictly increasing t`, path: ["tracks", partId, `${i}`, "t"] });
+        }
+      }
+    }
+  });
+
+export const RigPart = z.object({
+  id: z.string(),
+  // null = the rig's root part (exactly one part must be null — enforced below).
+  parent: z.string().nullable(),
+  // A procedural placeholder shape key (M6) — becomes a real forged
+  // alpha-plane asset path in M7/M8, same asset-reference field either way.
+  texture: z.string(),
+  // Where this part rotates around, in its OWN local (unrotated) pixel
+  // space — Pixi's sprite-pivot convention, e.g. an upper arm's pivot
+  // sits at its top-centre (the shoulder) so rotating it swings the
+  // whole arm from the shoulder, not from its geometric centre.
+  pivot: z.tuple([z.number(), z.number()]),
+  // Placeholder shape size in px — real forged art (M7+) will size
+  // itself from the source image instead.
+  size: z.tuple([z.number(), z.number()]),
+  // Static draw order across the WHOLE rig, independent of the parent
+  // chain above — a back leg needs to draw behind the torso and a front
+  // leg in front of it even though both are the torso's children for
+  // TRANSFORM purposes (rotating the torso must still carry both legs).
+  // See engine/scene/puppet/jointSolver.ts's header for why transform
+  // hierarchy and draw order are deliberately solved separately.
+  zOrder: z.number().int(),
+  rest: z.object({
+    // Position of `pivot` within the PARENT's local space (world space
+    // for the root part), at the clip-neutral rest pose.
+    x: z.number(),
+    y: z.number(),
+    rotation: z.number().default(0), // degrees; clip keyframes add a delta on top of this
+    scale: z.number().default(1),
+  }),
+});
+
+export const Rig = z
+  .object({
+    id: z.string(),
+    parts: z.array(RigPart).min(1),
+    clips: z.array(RigClip).min(1),
+  })
+  .superRefine((rig, ctx) => {
+    const ids = new Set<string>();
+    for (const part of rig.parts) {
+      if (ids.has(part.id)) {
+        ctx.addIssue({ code: "custom", message: `duplicate part id "${part.id}"`, path: ["parts"] });
+      }
+      ids.add(part.id);
+    }
+
+    const roots = rig.parts.filter((part) => part.parent === null);
+    if (roots.length !== 1) {
+      ctx.addIssue({ code: "custom", message: `rig must have exactly one root part (parent: null), found ${roots.length}`, path: ["parts"] });
+    }
+
+    for (const part of rig.parts) {
+      if (part.parent !== null && !ids.has(part.parent)) {
+        ctx.addIssue({ code: "custom", message: `part "${part.id}"'s parent "${part.parent}" does not exist`, path: ["parts"] });
+      }
+    }
+
+    // Cycle check: walk each part's ancestor chain; a well-formed tree
+    // reaches a root (parent: null) in at most `parts.length` hops.
+    const byId = new Map(rig.parts.map((part) => [part.id, part]));
+    for (const part of rig.parts) {
+      let current: typeof part | undefined = part;
+      let hops = 0;
+      while (current && current.parent !== null) {
+        current = byId.get(current.parent);
+        hops += 1;
+        if (hops > rig.parts.length) {
+          ctx.addIssue({ code: "custom", message: `part "${part.id}" has a cyclical ancestor chain`, path: ["parts"] });
+          break;
+        }
+      }
+    }
+
+    const clipIds = new Set<string>();
+    for (const clip of rig.clips) {
+      if (clipIds.has(clip.id)) {
+        ctx.addIssue({ code: "custom", message: `duplicate clip id "${clip.id}"`, path: ["clips"] });
+      }
+      clipIds.add(clip.id);
+      for (const partId of Object.keys(clip.tracks)) {
+        if (!ids.has(partId)) {
+          ctx.addIssue({ code: "custom", message: `clip "${clip.id}" tracks unknown part "${partId}"`, path: ["clips", clip.id, "tracks", partId] });
+        }
+      }
+    }
+  });
+
+export type RigKeyframe = z.infer<typeof RigKeyframe>;
+export type RigClip = z.infer<typeof RigClip>;
+export type RigPart = z.infer<typeof RigPart>;
+export type Rig = z.infer<typeof Rig>;
 
 // --- Question content -----------------------------------------------
 // PRD §7 gives the DB `question` table shape but not a content-authoring

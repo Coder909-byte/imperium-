@@ -246,6 +246,69 @@ test.describe("scene player — post chain, particles, shake, device tier (M5)",
   });
 });
 
+test.describe("scene player — puppets (M6)", () => {
+  function trackErrors(page: import("@playwright/test").Page): string[] {
+    const errors: string[] = [];
+    page.on("console", (msg) => {
+      if (msg.type() === "error") errors.push(msg.text());
+    });
+    page.on("pageerror", (err) => errors.push(err.message));
+    return errors;
+  }
+
+  test("the beat actors array drives what appears — a bare beat has none, a single-actor beat and a crowd beat each report their own actor set", async ({ page }) => {
+    const errors = trackErrors(page);
+    await page.goto("/scene/placeholder");
+    const player = page.getByTestId("scene-player");
+
+    await expect(player).toHaveAttribute("data-active-actors", ""); // beat 1: no actors
+    await page.getByRole("tab", { name: /Go to beat 2:/ }).click();
+    await expect(player).toHaveAttribute("data-active-actors", "legionary:march:1");
+    await page.getByRole("tab", { name: /Go to beat 3:/ }).click();
+    await expect(player).toHaveAttribute("data-active-actors", "");
+    await page.getByRole("tab", { name: /Go to beat 5:/ }).click();
+    await expect(player).toHaveAttribute("data-active-actors", "legionary:march:24");
+
+    expect(errors, `console errors: ${JSON.stringify(errors)}`).toHaveLength(0);
+  });
+
+  test("reduced motion plays an actor beat with zero console errors (puppets hold rest pose — see PuppetActor.test.ts for the pixel-level assertion)", async ({ page }) => {
+    const errors = trackErrors(page);
+    await page.emulateMedia({ reducedMotion: "reduce" });
+    await page.goto("/scene/placeholder");
+    await page.getByRole("tab", { name: /Go to beat 2:/ }).click();
+    await expect(page.getByTestId("scene-player")).toHaveAttribute("data-active-actors", "legionary:march:1");
+    expect(errors, `console errors: ${JSON.stringify(errors)}`).toHaveLength(0);
+  });
+
+  test("a dedicated stress beat — 40 individually-rigged puppets plus a 500-unit crowd — renders as exactly one canvas with zero console errors", async ({ page }) => {
+    const errors = trackErrors(page);
+    await page.goto("/scene/actor-stress");
+    await expect(page.getByTestId("scene-player")).toBeVisible();
+    await expect(page.locator("canvas")).toHaveCount(1);
+    await page.waitForTimeout(1500); // let a few ticks of 40 puppets + 500 crowd units actually run
+    expect(errors, `console errors: ${JSON.stringify(errors)}`).toHaveLength(0);
+  });
+
+  test("scene-lab rig inspector: every one of the legionary's six clips plays with zero console errors", async ({ page }) => {
+    const errors = trackErrors(page);
+    await page.goto("/dev/scene-lab");
+    await page.getByRole("button", { name: "Rig inspector" }).click();
+    await expect(page.getByTestId("rig-inspector-canvas").locator("canvas")).toHaveCount(1);
+
+    for (const clip of ["idle", "march", "brace", "thrust", "fall", "raise"]) {
+      await page.getByLabel("Clip:").selectOption(clip); // option value === clip id
+      await page.waitForTimeout(200);
+    }
+    // Scrubbing works mid-clip, not just at the ends.
+    await page.getByLabel("Scrub clip timeline").fill("500");
+    await page.waitForTimeout(100);
+    await expect(page.getByTestId("rig-inspector-canvas").locator("canvas")).toHaveCount(1);
+
+    expect(errors, `console errors: ${JSON.stringify(errors)}`).toHaveLength(0);
+  });
+});
+
 test.describe("scene player — WebGL lifecycle", () => {
   test("ten atlas<->scene round trips leave exactly one non-lost WebGL context and no runaway heap growth", async ({
     page,

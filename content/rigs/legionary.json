@@ -1,0 +1,95 @@
+{
+  "id": "legionary",
+  "parts": [
+    { "id": "torso", "parent": null, "texture": "torso", "pivot": [35, 120], "size": [70, 120], "zOrder": 6, "rest": { "x": 0, "y": 0 } },
+    { "id": "head", "parent": "torso", "texture": "head", "pivot": [25, 50], "size": [50, 50], "zOrder": 7, "rest": { "x": 0, "y": -120 } },
+
+    { "id": "upperArm_L", "parent": "torso", "texture": "limb", "pivot": [9, 0], "size": [18, 55], "zOrder": 4, "rest": { "x": -38, "y": -108 } },
+    { "id": "forearm_L", "parent": "upperArm_L", "texture": "limb", "pivot": [8, 0], "size": [16, 50], "zOrder": 5, "rest": { "x": 0, "y": 55 } },
+    { "id": "upperArm_R", "parent": "torso", "texture": "limb", "pivot": [9, 0], "size": [18, 55], "zOrder": 8, "rest": { "x": 38, "y": -108 } },
+    { "id": "forearm_R", "parent": "upperArm_R", "texture": "limb", "pivot": [8, 0], "size": [16, 50], "zOrder": 9, "rest": { "x": 0, "y": 55 } },
+
+    { "id": "thigh_L", "parent": "torso", "texture": "limb", "pivot": [11, 0], "size": [22, 60], "zOrder": 1, "rest": { "x": -18, "y": 0 } },
+    { "id": "shin_L", "parent": "thigh_L", "texture": "limb", "pivot": [9, 0], "size": [18, 55], "zOrder": 2, "rest": { "x": 0, "y": 60 } },
+    { "id": "foot_L", "parent": "shin_L", "texture": "foot", "pivot": [9, 0], "size": [26, 12], "zOrder": 3, "rest": { "x": 0, "y": 55 } },
+    { "id": "thigh_R", "parent": "torso", "texture": "limb", "pivot": [11, 0], "size": [22, 60], "zOrder": 10, "rest": { "x": 18, "y": 0 } },
+    { "id": "shin_R", "parent": "thigh_R", "texture": "limb", "pivot": [9, 0], "size": [18, 55], "zOrder": 11, "rest": { "x": 0, "y": 60 } },
+    { "id": "foot_R", "parent": "shin_R", "texture": "foot", "pivot": [9, 0], "size": [26, 12], "zOrder": 12, "rest": { "x": 0, "y": 55 } }
+  ],
+  "clips": [
+    {
+      "id": "idle",
+      "durationMs": 2400,
+      "loop": true,
+      "tracks": {
+        "torso": [{ "t": 0, "rot": 0, "ease": "sine.inOut" }, { "t": 0.5, "rot": 1.5, "ease": "sine.inOut" }, { "t": 1, "rot": 0, "ease": "sine.inOut" }],
+        "head": [{ "t": 0, "rot": 0, "ease": "sine.inOut" }, { "t": 0.5, "rot": 2, "ease": "sine.inOut" }, { "t": 1, "rot": 0, "ease": "sine.inOut" }],
+        "upperArm_L": [{ "t": 0, "rot": -5, "ease": "sine.inOut" }, { "t": 0.5, "rot": 5, "ease": "sine.inOut" }, { "t": 1, "rot": -5, "ease": "sine.inOut" }],
+        "upperArm_R": [{ "t": 0, "rot": 5, "ease": "sine.inOut" }, { "t": 0.5, "rot": -5, "ease": "sine.inOut" }, { "t": 1, "rot": 5, "ease": "sine.inOut" }]
+      }
+    },
+    {
+      "id": "march",
+      "durationMs": 800,
+      "loop": true,
+      "tracks": {
+        "torso": [{ "t": 0, "rot": -3 }, { "t": 0.5, "rot": 3 }, { "t": 1, "rot": -3 }],
+        "thigh_L": [{ "t": 0, "rot": -30 }, { "t": 0.5, "rot": 30 }, { "t": 1, "rot": -30 }],
+        "thigh_R": [{ "t": 0, "rot": 30 }, { "t": 0.5, "rot": -30 }, { "t": 1, "rot": 30 }],
+        "shin_L": [{ "t": 0, "rot": 10 }, { "t": 0.25, "rot": 60 }, { "t": 0.5, "rot": 10 }, { "t": 0.75, "rot": 0 }, { "t": 1, "rot": 10 }],
+        "shin_R": [{ "t": 0, "rot": 0 }, { "t": 0.25, "rot": 0 }, { "t": 0.5, "rot": 10 }, { "t": 0.75, "rot": 60 }, { "t": 1, "rot": 0 }],
+        "upperArm_L": [{ "t": 0, "rot": 30 }, { "t": 0.5, "rot": -30 }, { "t": 1, "rot": 30 }],
+        "upperArm_R": [{ "t": 0, "rot": -30 }, { "t": 0.5, "rot": 30 }, { "t": 1, "rot": -30 }]
+      }
+    },
+    {
+      "id": "brace",
+      "durationMs": 500,
+      "loop": false,
+      "tracks": {
+        "torso": [{ "t": 0, "rot": 0 }, { "t": 1, "rot": -5 }],
+        "thigh_L": [{ "t": 0, "rot": 0 }, { "t": 1, "rot": -10 }],
+        "thigh_R": [{ "t": 0, "rot": 0 }, { "t": 1, "rot": 10 }],
+        "upperArm_L": [{ "t": 0, "rot": 0 }, { "t": 1, "rot": -70 }],
+        "forearm_L": [{ "t": 0, "rot": 0 }, { "t": 1, "rot": -20 }],
+        "upperArm_R": [{ "t": 0, "rot": 0 }, { "t": 1, "rot": 25 }],
+        "forearm_R": [{ "t": 0, "rot": 0 }, { "t": 1, "rot": -30 }]
+      }
+    },
+    {
+      "id": "thrust",
+      "durationMs": 600,
+      "loop": false,
+      "tracks": {
+        "torso": [{ "t": 0, "rot": 0 }, { "t": 0.4, "rot": -8, "ease": "power3.out" }, { "t": 1, "rot": -4 }],
+        "thigh_R": [{ "t": 0, "rot": 0 }, { "t": 0.4, "rot": 15, "ease": "power3.out" }, { "t": 1, "rot": 10 }],
+        "upperArm_R": [{ "t": 0, "rot": 25 }, { "t": 0.4, "rot": -60, "ease": "power3.out" }, { "t": 1, "rot": -40 }],
+        "forearm_R": [{ "t": 0, "rot": -30 }, { "t": 0.4, "rot": 10, "ease": "power3.out" }, { "t": 1, "rot": 0 }]
+      }
+    },
+    {
+      "id": "fall",
+      "durationMs": 900,
+      "loop": false,
+      "tracks": {
+        "torso": [{ "t": 0, "rot": 0 }, { "t": 1, "rot": 80, "ease": "power2.in" }],
+        "head": [{ "t": 0, "rot": 0 }, { "t": 1, "rot": 20, "ease": "power2.in" }],
+        "upperArm_L": [{ "t": 0, "rot": 0 }, { "t": 1, "rot": 100, "ease": "power2.in" }],
+        "upperArm_R": [{ "t": 0, "rot": 0 }, { "t": 1, "rot": -90, "ease": "power2.in" }],
+        "thigh_L": [{ "t": 0, "rot": 0 }, { "t": 1, "rot": -40, "ease": "power2.in" }],
+        "thigh_R": [{ "t": 0, "rot": 0 }, { "t": 1, "rot": 50, "ease": "power2.in" }]
+      }
+    },
+    {
+      "id": "raise",
+      "durationMs": 700,
+      "loop": false,
+      "tracks": {
+        "torso": [{ "t": 0, "rot": 0 }, { "t": 1, "rot": -6, "ease": "power2.out" }],
+        "head": [{ "t": 0, "rot": 0 }, { "t": 1, "rot": -5, "ease": "power2.out" }],
+        "upperArm_R": [{ "t": 0, "rot": 0 }, { "t": 1, "rot": -160, "ease": "power2.out" }],
+        "forearm_R": [{ "t": 0, "rot": 0 }, { "t": 1, "rot": -30, "ease": "power2.out" }]
+      }
+    }
+  ]
+}

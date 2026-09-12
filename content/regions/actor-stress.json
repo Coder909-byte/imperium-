@@ -1,0 +1,523 @@
+{
+  "id": "actor-stress",
+  "name": "Actor Stress Test",
+  "latinName": "Probatio Onera",
+  "civilisation": "Test",
+  "mapCentroid": [
+    0,
+    0
+  ],
+  "heldFrom": 0,
+  "heldTo": null,
+  "scene": {
+    "lut": "cold_overcast",
+    "ambientBed": "none",
+    "planes": [
+      {
+        "id": "sky",
+        "asset": "placeholder/sky.webp",
+        "depth": 0.05,
+        "tint": "#eef0ec",
+        "blur": 0
+      },
+      {
+        "id": "far_hills",
+        "asset": "placeholder/far_hills.webp",
+        "depth": 0.25,
+        "tint": "#e6e2d4",
+        "blur": 1
+      },
+      {
+        "id": "mid_ground",
+        "asset": "placeholder/mid_ground.webp",
+        "depth": 0.55,
+        "tint": "#f2ecdc",
+        "blur": 0
+      },
+      {
+        "id": "foreground",
+        "asset": "placeholder/foreground.webp",
+        "depth": 0.9,
+        "tint": "#ded2b8",
+        "blur": 3
+      }
+    ]
+  },
+  "beats": [
+    {
+      "id": "stress",
+      "year": "M6",
+      "sortYear": 1,
+      "headline": "40 puppets + a 500-unit crowd, one beat",
+      "body": "Not narrative content — a dedicated performance fixture (CLAUDE.md M6 acceptance criterion): 40 individually-rigged legionaries marching in formation plus a separate 500-unit distant CrowdField, held on screen together with the camera static, so frame time under CPU throttle measures the actor system alone rather than being confounded by a camera tween or particle fx also running.",
+      "visibleLayers": [
+        "sky",
+        "far_hills",
+        "mid_ground",
+        "foreground"
+      ],
+      "camera": {
+        "x": 0,
+        "y": 0,
+        "scale": 1,
+        "durationMs": 1,
+        "ease": "none"
+      },
+      "fx": [],
+      "lightSource": false,
+      "actors": [
+        {
+          "rig": "legionary",
+          "clip": "march",
+          "x": -279,
+          "y": 40,
+          "scale": 0.355,
+          "count": 1,
+          "flip": true,
+          "phase": 120,
+          "depth": 0.55
+        },
+        {
+          "rig": "legionary",
+          "clip": "march",
+          "x": -192,
+          "y": 45,
+          "scale": 0.36,
+          "count": 1,
+          "flip": true,
+          "phase": 182,
+          "depth": 0.55
+        },
+        {
+          "rig": "legionary",
+          "clip": "march",
+          "x": -119,
+          "y": 45,
+          "scale": 0.355,
+          "count": 1,
+          "flip": true,
+          "phase": 525,
+          "depth": 0.55
+        },
+        {
+          "rig": "legionary",
+          "clip": "march",
+          "x": -37,
+          "y": 43,
+          "scale": 0.359,
+          "count": 1,
+          "flip": true,
+          "phase": 355,
+          "depth": 0.55
+        },
+        {
+          "rig": "legionary",
+          "clip": "march",
+          "x": 28,
+          "y": 42,
+          "scale": 0.34,
+          "count": 1,
+          "flip": false,
+          "phase": 280,
+          "depth": 0.55
+        },
+        {
+          "rig": "legionary",
+          "clip": "march",
+          "x": 106,
+          "y": 44,
+          "scale": 0.35,
+          "count": 1,
+          "flip": false,
+          "phase": 461,
+          "depth": 0.55
+        },
+        {
+          "rig": "legionary",
+          "clip": "march",
+          "x": 203,
+          "y": 34,
+          "scale": 0.382,
+          "count": 1,
+          "flip": true,
+          "phase": 772,
+          "depth": 0.55
+        },
+        {
+          "rig": "legionary",
+          "clip": "march",
+          "x": 294,
+          "y": 40,
+          "scale": 0.358,
+          "count": 1,
+          "flip": true,
+          "phase": 755,
+          "depth": 0.55
+        },
+        {
+          "rig": "legionary",
+          "clip": "march",
+          "x": -284,
+          "y": 68,
+          "scale": 0.349,
+          "count": 1,
+          "flip": false,
+          "phase": 622,
+          "depth": 0.55
+        },
+        {
+          "rig": "legionary",
+          "clip": "march",
+          "x": -192,
+          "y": 64,
+          "scale": 0.351,
+          "count": 1,
+          "flip": true,
+          "phase": 734,
+          "depth": 0.55
+        },
+        {
+          "rig": "legionary",
+          "clip": "march",
+          "x": -130,
+          "y": 60,
+          "scale": 0.361,
+          "count": 1,
+          "flip": true,
+          "phase": 644,
+          "depth": 0.55
+        },
+        {
+          "rig": "legionary",
+          "clip": "march",
+          "x": -54,
+          "y": 63,
+          "scale": 0.341,
+          "count": 1,
+          "flip": true,
+          "phase": 209,
+          "depth": 0.55
+        },
+        {
+          "rig": "legionary",
+          "clip": "march",
+          "x": 50,
+          "y": 61,
+          "scale": 0.342,
+          "count": 1,
+          "flip": true,
+          "phase": 193,
+          "depth": 0.55
+        },
+        {
+          "rig": "legionary",
+          "clip": "march",
+          "x": 125,
+          "y": 66,
+          "scale": 0.355,
+          "count": 1,
+          "flip": false,
+          "phase": 460,
+          "depth": 0.55
+        },
+        {
+          "rig": "legionary",
+          "clip": "march",
+          "x": 206,
+          "y": 61,
+          "scale": 0.344,
+          "count": 1,
+          "flip": false,
+          "phase": 781,
+          "depth": 0.55
+        },
+        {
+          "rig": "legionary",
+          "clip": "march",
+          "x": 289,
+          "y": 70,
+          "scale": 0.351,
+          "count": 1,
+          "flip": true,
+          "phase": 662,
+          "depth": 0.55
+        },
+        {
+          "rig": "legionary",
+          "clip": "march",
+          "x": -277,
+          "y": 92,
+          "scale": 0.369,
+          "count": 1,
+          "flip": true,
+          "phase": 422,
+          "depth": 0.55
+        },
+        {
+          "rig": "legionary",
+          "clip": "march",
+          "x": -202,
+          "y": 98,
+          "scale": 0.385,
+          "count": 1,
+          "flip": false,
+          "phase": 250,
+          "depth": 0.55
+        },
+        {
+          "rig": "legionary",
+          "clip": "march",
+          "x": -121,
+          "y": 92,
+          "scale": 0.344,
+          "count": 1,
+          "flip": true,
+          "phase": 765,
+          "depth": 0.55
+        },
+        {
+          "rig": "legionary",
+          "clip": "march",
+          "x": -31,
+          "y": 96,
+          "scale": 0.351,
+          "count": 1,
+          "flip": false,
+          "phase": 696,
+          "depth": 0.55
+        },
+        {
+          "rig": "legionary",
+          "clip": "march",
+          "x": 41,
+          "y": 93,
+          "scale": 0.345,
+          "count": 1,
+          "flip": false,
+          "phase": 571,
+          "depth": 0.55
+        },
+        {
+          "rig": "legionary",
+          "clip": "march",
+          "x": 120,
+          "y": 90,
+          "scale": 0.361,
+          "count": 1,
+          "flip": false,
+          "phase": 499,
+          "depth": 0.55
+        },
+        {
+          "rig": "legionary",
+          "clip": "march",
+          "x": 201,
+          "y": 94,
+          "scale": 0.388,
+          "count": 1,
+          "flip": true,
+          "phase": 578,
+          "depth": 0.55
+        },
+        {
+          "rig": "legionary",
+          "clip": "march",
+          "x": 286,
+          "y": 95,
+          "scale": 0.352,
+          "count": 1,
+          "flip": true,
+          "phase": 703,
+          "depth": 0.55
+        },
+        {
+          "rig": "legionary",
+          "clip": "march",
+          "x": -277,
+          "y": 118,
+          "scale": 0.376,
+          "count": 1,
+          "flip": true,
+          "phase": 649,
+          "depth": 0.55
+        },
+        {
+          "rig": "legionary",
+          "clip": "march",
+          "x": -190,
+          "y": 112,
+          "scale": 0.358,
+          "count": 1,
+          "flip": false,
+          "phase": 417,
+          "depth": 0.55
+        },
+        {
+          "rig": "legionary",
+          "clip": "march",
+          "x": -123,
+          "y": 115,
+          "scale": 0.343,
+          "count": 1,
+          "flip": false,
+          "phase": 315,
+          "depth": 0.55
+        },
+        {
+          "rig": "legionary",
+          "clip": "march",
+          "x": -42,
+          "y": 116,
+          "scale": 0.352,
+          "count": 1,
+          "flip": false,
+          "phase": 551,
+          "depth": 0.55
+        },
+        {
+          "rig": "legionary",
+          "clip": "march",
+          "x": 43,
+          "y": 119,
+          "scale": 0.382,
+          "count": 1,
+          "flip": false,
+          "phase": 778,
+          "depth": 0.55
+        },
+        {
+          "rig": "legionary",
+          "clip": "march",
+          "x": 120,
+          "y": 118,
+          "scale": 0.356,
+          "count": 1,
+          "flip": false,
+          "phase": 19,
+          "depth": 0.55
+        },
+        {
+          "rig": "legionary",
+          "clip": "march",
+          "x": 206,
+          "y": 120,
+          "scale": 0.379,
+          "count": 1,
+          "flip": false,
+          "phase": 359,
+          "depth": 0.55
+        },
+        {
+          "rig": "legionary",
+          "clip": "march",
+          "x": 270,
+          "y": 120,
+          "scale": 0.374,
+          "count": 1,
+          "flip": false,
+          "phase": 708,
+          "depth": 0.55
+        },
+        {
+          "rig": "legionary",
+          "clip": "march",
+          "x": -266,
+          "y": 151,
+          "scale": 0.358,
+          "count": 1,
+          "flip": true,
+          "phase": 774,
+          "depth": 0.55
+        },
+        {
+          "rig": "legionary",
+          "clip": "march",
+          "x": -213,
+          "y": 143,
+          "scale": 0.36,
+          "count": 1,
+          "flip": true,
+          "phase": 482,
+          "depth": 0.55
+        },
+        {
+          "rig": "legionary",
+          "clip": "march",
+          "x": -123,
+          "y": 146,
+          "scale": 0.349,
+          "count": 1,
+          "flip": false,
+          "phase": 792,
+          "depth": 0.55
+        },
+        {
+          "rig": "legionary",
+          "clip": "march",
+          "x": -35,
+          "y": 150,
+          "scale": 0.345,
+          "count": 1,
+          "flip": true,
+          "phase": 687,
+          "depth": 0.55
+        },
+        {
+          "rig": "legionary",
+          "clip": "march",
+          "x": 40,
+          "y": 138,
+          "scale": 0.343,
+          "count": 1,
+          "flip": false,
+          "phase": 515,
+          "depth": 0.55
+        },
+        {
+          "rig": "legionary",
+          "clip": "march",
+          "x": 110,
+          "y": 140,
+          "scale": 0.364,
+          "count": 1,
+          "flip": true,
+          "phase": 451,
+          "depth": 0.55
+        },
+        {
+          "rig": "legionary",
+          "clip": "march",
+          "x": 215,
+          "y": 146,
+          "scale": 0.387,
+          "count": 1,
+          "flip": true,
+          "phase": 503,
+          "depth": 0.55
+        },
+        {
+          "rig": "legionary",
+          "clip": "march",
+          "x": 290,
+          "y": 147,
+          "scale": 0.389,
+          "count": 1,
+          "flip": false,
+          "phase": 298,
+          "depth": 0.55
+        },
+        {
+          "rig": "legionary",
+          "clip": "march",
+          "x": 0,
+          "y": -40,
+          "scale": 0.16,
+          "count": 500,
+          "flip": false,
+          "phase": 0,
+          "depth": 0.28
+        }
+      ]
+    }
+  ]
+}

@@ -3,7 +3,7 @@
 import { readdirSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 import type { z } from "zod";
-import { Region, Question, Province, City, SeaLabel } from "../content/schema";
+import { Region, Question, Province, City, SeaLabel, Rig } from "../content/schema";
 
 interface Target {
   dir: string;
@@ -14,6 +14,7 @@ const targets: Target[] = [
   { dir: join(__dirname, "..", "content", "regions"), schema: Region },
   { dir: join(__dirname, "..", "content", "questions"), schema: Question },
   { dir: join(__dirname, "..", "content", "borders", "provinces"), schema: Province },
+  { dir: join(__dirname, "..", "content", "rigs"), schema: Rig },
 ];
 
 // City/sea-label content lives as one array per file rather than one file

@@ -37,7 +37,10 @@
       "visibleLayers": ["sky", "far_hills", "mid_ground"],
       "camera": { "x": 0.3, "y": -0.1, "scale": 1.05, "durationMs": 3200, "ease": "power1.inOut" },
       "fx": ["rain"],
-      "lightSource": false
+      "lightSource": false,
+      "actors": [
+        { "rig": "legionary", "clip": "march", "x": -80, "y": 90, "scale": 0.5, "count": 1, "flip": false, "phase": 0, "depth": 0.65 }
+      ]
     },
     {
       "id": "into-the-midground",
@@ -70,7 +73,10 @@
       "visibleLayers": ["sky", "far_hills", "mid_ground", "foreground"],
       "camera": { "x": 0, "y": 0, "scale": 0.92, "durationMs": 3000, "ease": "power2.inOut" },
       "fx": ["arrow_volley"],
-      "lightSource": false
+      "lightSource": false,
+      "actors": [
+        { "rig": "legionary", "clip": "march", "x": 0, "y": -150, "scale": 0.22, "count": 24, "flip": false, "phase": 0, "depth": 0.3 }
+      ]
     }
   ]
 }

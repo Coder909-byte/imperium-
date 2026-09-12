@@ -18,7 +18,7 @@
 import { useEffect, useRef, useState } from "react";
 import dynamic from "next/dynamic";
 import { buildSceneProps } from "@/app/scene/[regionId]/buildSceneProps";
-import type { Region } from "@/content/schema";
+import type { Region, Rig } from "@/content/schema";
 import type { DeviceTier } from "@/engine/scene/deviceTier";
 import { LUT_PRESETS } from "@/engine/scene/post/lut";
 import type { SceneRegion } from "@/engine/scene/types";
@@ -38,6 +38,7 @@ const POLL_MS = 1000;
 interface RegionContentResponse {
   ok: boolean;
   data?: Region;
+  rigs?: Rig[];
   error?: string;
 }
 
@@ -74,10 +75,10 @@ export function SceneLabClient({ regionIds, initialRegionId }: { regionIds: stri
         setError(body.error ?? "unknown error");
         return;
       }
-      const raw = JSON.stringify(body.data);
+      const raw = JSON.stringify({ data: body.data, rigs: body.rigs });
       if (raw === lastRawRef.current) return;
       lastRawRef.current = raw;
-      setRegion(buildSceneProps(body.data));
+      setRegion(buildSceneProps(body.data, body.rigs ?? []));
       setError(null);
       setVersion((v) => v + 1);
     }
