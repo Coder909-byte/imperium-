@@ -482,7 +482,7 @@ Enforced in CI. WebGL products die on mobile.
 | Metric | Budget |
 |---|---|
 | Atlas TTI | < 2.0s on 4G |
-| Scene first beat interactive | < 3.0s |
+| Scene first beat interactive | < 3.0s, decomposed: ~0.8–1.1s is a fixed GPU-side Pixi/WebGL `app.init()` floor (measured M5 post-split, flat across CPU throttle — not addressable by code-splitting or bundle size), leaving ≤ ~1.9–2.2s for bundle transfer/parse + scene-graph build. Measured 3.02–3.11s unthrottled against placeholder content as of M5 — over budget by design-intent but not yet by feel; recorded as a known gap (see CLAUDE.md Current State), revisit with real M8 art rather than restructuring init around it now. |
 | Scene frame time | < 16ms on Pixel 6a class |
 | Scene asset payload | < 2.5MB per region (painted colour planes; re-verify after M8 — heavier than the alpha-line-art estimate this budget was originally set against) |
 | Atlas route JS | < 180KB gzipped |
