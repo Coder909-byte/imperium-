@@ -31,6 +31,9 @@ export function adaptRig(rig: Rig): RigDef {
           keyframes.map((kf) => ({ t: kf.t, rot: kf.rot, dx: kf.dx, dy: kf.dy, ease: kf.ease })),
         ]),
       ),
+      locomotion: clip.locomotion,
+      midlineExemptParts: clip.midlineExemptParts,
+      symmetricPairs: clip.symmetricPairs,
     })),
   };
 }

@@ -307,6 +307,38 @@ test.describe("scene player — puppets (M6)", () => {
 
     expect(errors, `console errors: ${JSON.stringify(errors)}`).toHaveLength(0);
   });
+
+  test("rig inspector: rig-lint panel reports the legionary rig clean, live, without a validate run", async ({ page }) => {
+    await page.goto("/dev/scene-lab");
+    await page.getByRole("button", { name: "Rig inspector" }).click();
+    await expect(page.getByTestId("rig-inspector-canvas").locator("canvas")).toHaveCount(1);
+
+    // legionary.json passes npm run validate's rig-lint — the inspector
+    // should say so without anyone running validate.
+    await expect(page.getByTestId("rig-lint-panel")).toContainText("no issues");
+
+    // A hand-edit reintroducing the exact bug this tool was built to
+    // catch (an un-negated left/right pair) shows up live, on the
+    // currently-viewed clip, without a page reload.
+    const rigPath = join(process.cwd(), "content", "rigs", "legionary.json");
+    const original = readFileSync(rigPath, "utf-8");
+    try {
+      const rig = JSON.parse(original);
+      const marchClip = rig.clips.find((clip: { id: string }) => clip.id === "march");
+      // thigh_L/thigh_R's real asymmetric 60/40 gait shape (unlike a
+      // simple symmetric swing) makes "duplicate" and "genuine mirror"
+      // numerically distinct — see rigValidation.ts's own note on why a
+      // half-wave-symmetric curve can't be used to demonstrate this.
+      marchClip.tracks.thigh_R = marchClip.tracks.thigh_L; // duplicate, not mirrored
+      writeFileSync(rigPath, JSON.stringify(rig, null, 2));
+
+      await page.getByLabel("Clip:").selectOption("march");
+      await expect(page.getByTestId("rig-lint-current-clip")).toContainText("symmetry", { timeout: 3000 });
+      await expect(page.getByTestId("rig-lint-current-clip")).toContainText("thigh_L/thigh_R");
+    } finally {
+      writeFileSync(rigPath, original);
+    }
+  });
 });
 
 test.describe("scene player — WebGL lifecycle", () => {

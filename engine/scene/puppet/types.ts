@@ -27,6 +27,14 @@ export interface RigClipDef {
   durationMs: number;
   loop: boolean;
   tracks: Record<string, RigKeyframeDef[]>; // keyed by part id
+  // Rig-lint declarations (engine/scene/puppet/rigValidation.ts) —
+  // optional here for the same reason dx/dy is optional on
+  // RigKeyframeDef: hand-written RigDef fixtures in tests predate them.
+  // content/schema.ts's zod defaults always supply these once real
+  // content passes through adaptRig.
+  locomotion?: boolean;
+  midlineExemptParts?: string[];
+  symmetricPairs?: [string, string][];
 }
 
 export interface RigPartDef {
@@ -66,6 +74,12 @@ export interface LoadedClip {
   loop: boolean;
   /** Parallel to LoadedRig.parts — null for a part with no track in this clip. */
   trackByPartIndex: (LoadedTrack | null)[];
+  // Rig-lint declarations, resolved from RigClipDef (rigValidation.ts
+  // is the only reader) — a Set for midlineExemptParts since it's
+  // checked per-part-per-sample, everything else is a straight copy.
+  locomotion: boolean;
+  midlineExemptParts: Set<string>;
+  symmetricPairs: [string, string][];
 }
 
 export interface LoadedPart {

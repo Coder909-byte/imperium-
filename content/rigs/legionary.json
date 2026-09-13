@@ -10,10 +10,10 @@
     { "id": "upperArm_R", "parent": "chest", "texture": "limb", "pivot": [9, 0], "size": [18, 55], "zOrder": 9, "rest": { "x": 38, "y": -58 } },
     { "id": "forearm_R", "parent": "upperArm_R", "texture": "limb", "pivot": [8, 0], "size": [16, 50], "zOrder": 10, "rest": { "x": 0, "y": 55 } },
 
-    { "id": "thigh_L", "parent": "pelvis", "texture": "limb", "pivot": [11, 0], "size": [22, 60], "zOrder": 1, "rest": { "x": -18, "y": 0 } },
+    { "id": "thigh_L", "parent": "pelvis", "texture": "limb", "pivot": [11, 0], "size": [22, 60], "zOrder": 1, "rest": { "x": -26, "y": 0 } },
     { "id": "shin_L", "parent": "thigh_L", "texture": "limb", "pivot": [9, 0], "size": [18, 55], "zOrder": 2, "rest": { "x": 0, "y": 60 } },
     { "id": "foot_L", "parent": "shin_L", "texture": "foot", "pivot": [9, 0], "size": [26, 12], "zOrder": 3, "rest": { "x": 0, "y": 55 } },
-    { "id": "thigh_R", "parent": "pelvis", "texture": "limb", "pivot": [11, 0], "size": [22, 60], "zOrder": 11, "rest": { "x": 18, "y": 0 } },
+    { "id": "thigh_R", "parent": "pelvis", "texture": "limb", "pivot": [11, 0], "size": [22, 60], "zOrder": 11, "rest": { "x": 26, "y": 0 } },
     { "id": "shin_R", "parent": "thigh_R", "texture": "limb", "pivot": [9, 0], "size": [18, 55], "zOrder": 12, "rest": { "x": 0, "y": 60 } },
     { "id": "foot_R", "parent": "shin_R", "texture": "foot", "pivot": [9, 0], "size": [26, 12], "zOrder": 13, "rest": { "x": 0, "y": 55 } }
   ],
@@ -28,12 +28,15 @@
         "head": [{ "t": 0, "rot": 0, "ease": "sine.inOut" }, { "t": 0.5, "rot": 2, "ease": "sine.inOut" }, { "t": 1, "rot": 0, "ease": "sine.inOut" }],
         "upperArm_L": [{ "t": 0, "rot": -5, "ease": "sine.inOut" }, { "t": 0.5, "rot": 5, "ease": "sine.inOut" }, { "t": 1, "rot": -5, "ease": "sine.inOut" }],
         "upperArm_R": [{ "t": 0, "rot": 5, "ease": "sine.inOut" }, { "t": 0.5, "rot": -5, "ease": "sine.inOut" }, { "t": 1, "rot": 5, "ease": "sine.inOut" }]
-      }
+      },
+      "symmetricPairs": [["upperArm_L", "upperArm_R"]]
     },
     {
       "id": "march",
       "durationMs": 800,
       "loop": true,
+      "locomotion": true,
+      "symmetricPairs": [["thigh_L", "thigh_R"], ["shin_L", "shin_R"], ["upperArm_L", "upperArm_R"], ["forearm_L", "forearm_R"]],
       "tracks": {
         "pelvis": [
           { "t": 0, "rot": -3, "dy": 4 },
@@ -50,19 +53,19 @@
           { "t": 1, "rot": 4, "ease": "sine.inOut" }
         ],
         "thigh_L": [
-          { "t": 0, "rot": 34 },
-          { "t": 0.3, "rot": -4, "ease": "sine.inOut" },
-          { "t": 0.6, "rot": -34, "ease": "sine.inOut" },
-          { "t": 0.82, "rot": 18, "ease": "power2.out" },
-          { "t": 1, "rot": 34, "ease": "power2.in" }
+          { "t": 0, "rot": 22.1 },
+          { "t": 0.3, "rot": -2.6, "ease": "sine.inOut" },
+          { "t": 0.6, "rot": -22.1, "ease": "sine.inOut" },
+          { "t": 0.82, "rot": 11.7, "ease": "power2.out" },
+          { "t": 1, "rot": 22.1, "ease": "power2.in" }
         ],
         "thigh_R": [
-          { "t": 0, "rot": -24 },
-          { "t": 0.1, "rot": -34, "ease": "sine.inOut" },
-          { "t": 0.32, "rot": 18, "ease": "power2.out" },
-          { "t": 0.5, "rot": 34, "ease": "power2.in" },
-          { "t": 0.8, "rot": -4, "ease": "sine.inOut" },
-          { "t": 1, "rot": -24, "ease": "sine.inOut" }
+          { "t": 0, "rot": 15.6 },
+          { "t": 0.1, "rot": 22.1, "ease": "sine.inOut" },
+          { "t": 0.32, "rot": -11.7, "ease": "power2.out" },
+          { "t": 0.5, "rot": -22.1, "ease": "power2.in" },
+          { "t": 0.8, "rot": 2.6, "ease": "sine.inOut" },
+          { "t": 1, "rot": 15.6, "ease": "sine.inOut" }
         ],
         "shin_L": [
           { "t": 0, "rot": 10 },
@@ -73,13 +76,13 @@
           { "t": 1, "rot": 10, "ease": "power2.in" }
         ],
         "shin_R": [
-          { "t": 0, "rot": 12 },
-          { "t": 0.1, "rot": 15, "ease": "sine.inOut" },
-          { "t": 0.25, "rot": 70, "ease": "power2.out" },
-          { "t": 0.4, "rot": 20, "ease": "power2.in" },
-          { "t": 0.5, "rot": 10, "ease": "power2.in" },
-          { "t": 0.8, "rot": 5, "ease": "sine.inOut" },
-          { "t": 1, "rot": 12, "ease": "sine.inOut" }
+          { "t": 0, "rot": -12 },
+          { "t": 0.1, "rot": -15, "ease": "sine.inOut" },
+          { "t": 0.25, "rot": -70, "ease": "power2.out" },
+          { "t": 0.4, "rot": -20, "ease": "power2.in" },
+          { "t": 0.5, "rot": -10, "ease": "power2.in" },
+          { "t": 0.8, "rot": -5, "ease": "sine.inOut" },
+          { "t": 1, "rot": -12, "ease": "sine.inOut" }
         ],
         "upperArm_L": [{ "t": 0, "rot": -22 }, { "t": 0.5, "rot": 22 }, { "t": 1, "rot": -22 }],
         "forearm_L": [{ "t": 0, "rot": 21 }, { "t": 0.5, "rot": 2 }, { "t": 1, "rot": 21 }],
@@ -91,6 +94,7 @@
       "id": "brace",
       "durationMs": 500,
       "loop": false,
+      "midlineExemptParts": ["forearm_L", "foot_L"],
       "tracks": {
         "pelvis": [{ "t": 0, "rot": 0 }, { "t": 1, "rot": -2 }],
         "chest": [{ "t": 0, "rot": 0 }, { "t": 1, "rot": -3 }],
@@ -106,6 +110,7 @@
       "id": "thrust",
       "durationMs": 600,
       "loop": false,
+      "midlineExemptParts": ["foot_L"],
       "tracks": {
         "pelvis": [{ "t": 0, "rot": 0 }, { "t": 0.4, "rot": -10, "ease": "power3.out" }, { "t": 1, "rot": -5 }],
         "chest": [{ "t": 0, "rot": 0 }, { "t": 0.4, "rot": -4, "ease": "power2.out" }, { "t": 1, "rot": -3 }],
@@ -118,6 +123,7 @@
       "id": "fall",
       "durationMs": 900,
       "loop": false,
+      "midlineExemptParts": ["forearm_L", "forearm_R", "foot_L", "foot_R"],
       "tracks": {
         "pelvis": [
           { "t": 0, "rot": 0, "dx": 0, "dy": 0 },

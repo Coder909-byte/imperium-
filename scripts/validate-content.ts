@@ -4,6 +4,9 @@ import { readdirSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 import type { z } from "zod";
 import { Region, Question, Province, City, SeaLabel, Rig } from "../content/schema";
+import { adaptRig } from "../app/scene/[regionId]/buildSceneProps";
+import { loadRig } from "../engine/scene/puppet/rigLoader";
+import { lintRig } from "../engine/scene/puppet/rigValidation";
 
 interface Target {
   dir: string;
@@ -56,6 +59,24 @@ for (const { dir, schema } of targets) {
       console.error(`✗ ${path}`);
       for (const issue of result.error.issues) {
         console.error(`  ${issue.path.join(".") || "(root)"}: ${issue.message}`);
+      }
+      continue;
+    }
+
+    // Rig content gets a second pass beyond shape validity: rig-lint
+    // (engine/scene/puppet/rigValidation.ts) samples every clip and
+    // checks midline crossing, reach envelope, ground contact, L/R
+    // symmetry, and loop continuity — the same "malformed content fails
+    // the build, not the runtime" rule (CLAUDE.md hard rule #5), applied
+    // to animation quality a schema shape check alone can't see.
+    if (schema === Rig) {
+      const issues = lintRig(loadRig(adaptRig(result.data as z.infer<typeof Rig>)));
+      if (issues.length > 0) {
+        failures += 1;
+        console.error(`✗ ${path} — rig-lint`);
+        for (const issue of issues) {
+          console.error(`  [${issue.check}] clip "${issue.clipId}"${issue.partId ? ` (${issue.partId})` : ""}: ${issue.message}`);
+        }
       }
     }
   }

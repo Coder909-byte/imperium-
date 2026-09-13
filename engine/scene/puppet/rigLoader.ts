@@ -74,7 +74,15 @@ export function loadRig(def: RigDef): LoadedRig {
       }));
       trackByPartIndex[partIndex] = { partIndex, keyframes };
     }
-    clips.set(clipDef.id, { id: clipDef.id, durationMs: clipDef.durationMs, loop: clipDef.loop, trackByPartIndex });
+    clips.set(clipDef.id, {
+      id: clipDef.id,
+      durationMs: clipDef.durationMs,
+      loop: clipDef.loop,
+      trackByPartIndex,
+      locomotion: clipDef.locomotion ?? false,
+      midlineExemptParts: new Set(clipDef.midlineExemptParts ?? []),
+      symmetricPairs: clipDef.symmetricPairs ?? [],
+    });
   }
 
   return { id: def.id, parts, partIndexById: indexById, clips };

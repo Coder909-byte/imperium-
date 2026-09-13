@@ -12,13 +12,14 @@
 // once a second and only touches state when the rig's JSON actually
 // changed, so editing content/rigs/*.json by hand updates the preview
 // without a manual refresh.
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Graphics } from "pixi.js";
 import { adaptRig } from "@/app/scene/[regionId]/buildSceneProps";
 import type { Rig } from "@/content/schema";
 import { PuppetActor } from "@/engine/scene/layers/PuppetActor";
 import { buildPartTextureCache } from "@/engine/scene/layers/puppetTextures";
 import { loadRig } from "@/engine/scene/puppet/rigLoader";
+import { lintRig, type RigLintIssue } from "@/engine/scene/puppet/rigValidation";
 import { SceneRenderer } from "@/engine/scene/SceneRenderer";
 
 const POLL_MS = 1000;
@@ -77,6 +78,24 @@ export function RigInspectorClient({ rigIds }: { rigIds: string[] }) {
   // clip falls back to the first clip with no extra render pass.
   const effectiveClipId = rig?.clips.some((clip) => clip.id === clipId) ? clipId : (rig?.clips[0]?.id ?? "");
   const activeClip = rig?.clips.find((clip) => clip.id === effectiveClipId) ?? null;
+
+  // Recomputed only when the rig's actual content changes (not per
+  // frame, not per clip switch) — the same lint `npm run validate` runs
+  // at build time, run live here so a bad edit shows up while authoring
+  // instead of only at the next validate/CI run. adaptRig+loadRig can
+  // throw on a momentarily-invalid hand edit (see rigLoader.ts's own
+  // header comment on this exact hazard) — caught here rather than left
+  // to crash the inspector mid-edit.
+  const lintIssues = useMemo<RigLintIssue[]>(() => {
+    if (!rig) return [];
+    try {
+      return lintRig(loadRig(adaptRig(rig)));
+    } catch {
+      return [];
+    }
+  }, [rig]);
+  const currentClipIssues = lintIssues.filter((issue) => issue.clipId === effectiveClipId);
+  const otherClipIssues = lintIssues.filter((issue) => issue.clipId !== effectiveClipId);
 
   const containerRef = useRef<HTMLDivElement | null>(null);
   const actorRef = useRef<PuppetActor | null>(null);
@@ -282,6 +301,43 @@ export function RigInspectorClient({ rigIds }: { rigIds: string[] }) {
       </p>
       {error && <p className="text-sm text-red-600 mb-4">Error: {error}</p>}
       <div ref={containerRef} style={{ width: "100%", height: 420, background: "#111" }} data-testid="rig-inspector-canvas" />
+      <div className="mt-3" data-testid="rig-lint-panel">
+        {lintIssues.length === 0 ? (
+          <p className="text-sm text-green-700">Rig-lint: no issues across any clip.</p>
+        ) : (
+          <>
+            <p className="text-sm font-medium">
+              Rig-lint: {lintIssues.length} issue{lintIssues.length === 1 ? "" : "s"} — same checks as{" "}
+              <code>npm run validate</code>.
+            </p>
+            {currentClipIssues.length > 0 && (
+              <ul className="text-xs text-red-700 mt-1 pl-4 list-disc" data-testid="rig-lint-current-clip">
+                {currentClipIssues.map((issue, i) => (
+                  <li key={i}>
+                    <strong>[{issue.check}]</strong> {issue.partId ? `${issue.partId}: ` : ""}
+                    {issue.message}
+                  </li>
+                ))}
+              </ul>
+            )}
+            {otherClipIssues.length > 0 && (
+              <details className="text-xs text-neutral-500 mt-1">
+                <summary>
+                  {otherClipIssues.length} more in other clip{otherClipIssues.length === 1 ? "" : "s"}
+                </summary>
+                <ul className="pl-4 list-disc mt-1">
+                  {otherClipIssues.map((issue, i) => (
+                    <li key={i}>
+                      clip &quot;{issue.clipId}&quot; <strong>[{issue.check}]</strong> {issue.partId ? `${issue.partId}: ` : ""}
+                      {issue.message}
+                    </li>
+                  ))}
+                </ul>
+              </details>
+            )}
+          </>
+        )}
+      </div>
     </div>
   );
 }

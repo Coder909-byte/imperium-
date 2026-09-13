@@ -147,6 +147,32 @@ export const RigClip = z
     // Keyed by part id. A part absent here holds its rest rotation for
     // this clip's whole duration.
     tracks: z.record(z.string(), z.array(RigKeyframe).min(1)),
+
+    // --- rig lint declarations (engine/scene/puppet/rigValidation.ts) ---
+    // All three are explicit authorial opt-ins/opt-outs, not inferred
+    // from the clip's id or its tracks — the whole point (per the ADR
+    // this session's rig-lint tooling was built to enforce) is that a
+    // clip's intent is stated once, here, rather than guessed at.
+
+    // Marks this a walking/running clip for the ground-contact check —
+    // at least one grounded extremity must stay near the rig's own
+    // rest-pose ground line throughout. A pose-hold clip (brace, raise)
+    // or an attack (thrust) isn't locomotion and shouldn't be checked.
+    locomotion: z.boolean().default(false),
+
+    // Part ids allowed to cross the body midline in THIS clip without
+    // failing the midline-crossing check. A thrust or a raised arm
+    // legitimately reaches across; a march never should — crossing is
+    // always a decision an author states here, never an accident the
+    // linter silently allows.
+    midlineExemptParts: z.array(z.string()).default([]),
+
+    // Left/right part-id pairs expected to mirror each other in this
+    // clip (e.g. ["thigh_L","thigh_R"]) — checked for a genuine mirror
+    // relationship (rig-lint's symmetry check), not merely "both move".
+    // Declared per clip because not every clip is symmetric (thrust
+    // only moves the striking arm) even on a rig whose idle/march are.
+    symmetricPairs: z.array(z.tuple([z.string(), z.string()])).default([]),
   })
   .superRefine((clip, ctx) => {
     for (const [partId, keyframes] of Object.entries(clip.tracks)) {
@@ -247,6 +273,19 @@ export const Rig = z
       for (const partId of Object.keys(clip.tracks)) {
         if (!ids.has(partId)) {
           ctx.addIssue({ code: "custom", message: `clip "${clip.id}" tracks unknown part "${partId}"`, path: ["clips", clip.id, "tracks", partId] });
+        }
+      }
+      for (const partId of clip.midlineExemptParts) {
+        if (!ids.has(partId)) {
+          ctx.addIssue({ code: "custom", message: `clip "${clip.id}" midlineExemptParts references unknown part "${partId}"`, path: ["clips", clip.id, "midlineExemptParts"] });
+        }
+      }
+      for (const [left, right] of clip.symmetricPairs) {
+        if (!ids.has(left)) {
+          ctx.addIssue({ code: "custom", message: `clip "${clip.id}" symmetricPairs references unknown part "${left}"`, path: ["clips", clip.id, "symmetricPairs"] });
+        }
+        if (!ids.has(right)) {
+          ctx.addIssue({ code: "custom", message: `clip "${clip.id}" symmetricPairs references unknown part "${right}"`, path: ["clips", clip.id, "symmetricPairs"] });
         }
       }
     }
