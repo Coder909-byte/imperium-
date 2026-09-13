@@ -19,11 +19,18 @@ function localRotations(...values: number[]): Float32Array {
   return Float32Array.from(values);
 }
 
+// Every existing test cares only about rotation — a zeroed translation
+// buffer keeps them exercising exactly what they did before ADR 007
+// added the dx/dy params.
+function zeroTranslation(rig: ReturnType<typeof loadRig>): Float32Array {
+  return new Float32Array(rig.parts.length);
+}
+
 describe("computeWorldTransforms", () => {
   it("places the root at the actor's placement plus its own rest offset", () => {
     const rig = loadRig(CHAIN);
     const out = createTransformBuffer(rig);
-    computeWorldTransforms(rig, localRotations(0, 0, 0), { x: 5, y: 7, scale: 1, flip: false }, out);
+    computeWorldTransforms(rig, localRotations(0, 0, 0), zeroTranslation(rig), zeroTranslation(rig), { x: 5, y: 7, scale: 1, flip: false }, out);
     // root.rest = (100, 200); placement adds (5, 7).
     expect(out[0].x).toBeCloseTo(105);
     expect(out[0].y).toBeCloseTo(207);
@@ -33,8 +40,8 @@ describe("computeWorldTransforms", () => {
     const rig = loadRig(CHAIN);
     const out = createTransformBuffer(rig);
     const atRest = createTransformBuffer(rig);
-    computeWorldTransforms(rig, localRotations(0, 0, 0), { x: 0, y: 0, scale: 1, flip: false }, atRest);
-    computeWorldTransforms(rig, localRotations(Math.PI / 2, 0, 0), { x: 0, y: 0, scale: 1, flip: false }, out);
+    computeWorldTransforms(rig, localRotations(0, 0, 0), zeroTranslation(rig), zeroTranslation(rig), { x: 0, y: 0, scale: 1, flip: false }, atRest);
+    computeWorldTransforms(rig, localRotations(Math.PI / 2, 0, 0), zeroTranslation(rig), zeroTranslation(rig), { x: 0, y: 0, scale: 1, flip: false }, out);
 
     // Child's world position must move (carried by the parent's
     // rotation), not stay pinned where it was at rest.
@@ -50,7 +57,7 @@ describe("computeWorldTransforms", () => {
   it("a grandchild inherits rotation from both its parent and grandparent", () => {
     const rig = loadRig(CHAIN);
     const out = createTransformBuffer(rig);
-    computeWorldTransforms(rig, localRotations(0.3, 0.4, 0.1), { x: 0, y: 0, scale: 1, flip: false }, out);
+    computeWorldTransforms(rig, localRotations(0.3, 0.4, 0.1), zeroTranslation(rig), zeroTranslation(rig), { x: 0, y: 0, scale: 1, flip: false }, out);
     expect(out[2].rotation).toBeCloseTo(0.3 + 0.4 + 0.1);
   });
 
@@ -62,8 +69,8 @@ describe("computeWorldTransforms", () => {
     const rig = loadRig(zeroedRoot);
     const unflipped = createTransformBuffer(rig);
     const flipped = createTransformBuffer(rig);
-    computeWorldTransforms(rig, localRotations(0, 0, 0), { x: 0, y: 0, scale: 1, flip: false }, unflipped);
-    computeWorldTransforms(rig, localRotations(0, 0, 0), { x: 0, y: 0, scale: 1, flip: true }, flipped);
+    computeWorldTransforms(rig, localRotations(0, 0, 0), zeroTranslation(rig), zeroTranslation(rig), { x: 0, y: 0, scale: 1, flip: false }, unflipped);
+    computeWorldTransforms(rig, localRotations(0, 0, 0), zeroTranslation(rig), zeroTranslation(rig), { x: 0, y: 0, scale: 1, flip: true }, flipped);
     // child.rest = (0, 10) — a pure y offset, so flip (which only
     // negates x) shouldn't move it sideways at rest...
     expect(flipped[1].x).toBeCloseTo(unflipped[1].x);
@@ -72,8 +79,8 @@ describe("computeWorldTransforms", () => {
     // carry the child to the mirror-image position of the unflipped case.
     const unflippedRotated = createTransformBuffer(rig);
     const flippedRotated = createTransformBuffer(rig);
-    computeWorldTransforms(rig, localRotations(0.5, 0, 0), { x: 0, y: 0, scale: 1, flip: false }, unflippedRotated);
-    computeWorldTransforms(rig, localRotations(0.5, 0, 0), { x: 0, y: 0, scale: 1, flip: true }, flippedRotated);
+    computeWorldTransforms(rig, localRotations(0.5, 0, 0), zeroTranslation(rig), zeroTranslation(rig), { x: 0, y: 0, scale: 1, flip: false }, unflippedRotated);
+    computeWorldTransforms(rig, localRotations(0.5, 0, 0), zeroTranslation(rig), zeroTranslation(rig), { x: 0, y: 0, scale: 1, flip: true }, flippedRotated);
     expect(flippedRotated[1].x).toBeCloseTo(-unflippedRotated[1].x);
   });
 
@@ -81,7 +88,34 @@ describe("computeWorldTransforms", () => {
     const rig = loadRig(CHAIN);
     const out = createTransformBuffer(rig);
     const refs = out.map((t) => t);
-    computeWorldTransforms(rig, localRotations(0.1, 0.2, 0.3), { x: 1, y: 2, scale: 1, flip: false }, out);
+    computeWorldTransforms(rig, localRotations(0.1, 0.2, 0.3), zeroTranslation(rig), zeroTranslation(rig), { x: 1, y: 2, scale: 1, flip: false }, out);
     out.forEach((t, i) => expect(t).toBe(refs[i]));
+  });
+
+  // --- dx/dy translation channel (ADR 007) ------------------------------
+
+  it("adds a root's dx/dy directly to its world position — the bob/collapse use case", () => {
+    const rig = loadRig(CHAIN);
+    const out = createTransformBuffer(rig);
+    computeWorldTransforms(rig, localRotations(0, 0, 0), Float32Array.from([15, 0, 0]), Float32Array.from([-6, 0, 0]), { x: 0, y: 0, scale: 1, flip: false }, out);
+    // root.rest = (100, 200); no rotation on the root, so dx/dy add unrotated.
+    expect(out[0].x).toBeCloseTo(115);
+    expect(out[0].y).toBeCloseTo(194);
+  });
+
+  it("a child's dx/dy is expressed in the PARENT's local space — rotated and scaled by the parent, same as rest.x/y", () => {
+    const rig = loadRig(CHAIN);
+    const withoutOffset = createTransformBuffer(rig);
+    const withOffset = createTransformBuffer(rig);
+    // Parent rotated 90deg, no translation on it — isolates the CHILD's
+    // own dx/dy being carried through the parent's rotation.
+    computeWorldTransforms(rig, localRotations(Math.PI / 2, 0, 0), zeroTranslation(rig), zeroTranslation(rig), { x: 0, y: 0, scale: 1, flip: false }, withoutOffset);
+    computeWorldTransforms(rig, localRotations(Math.PI / 2, 0, 0), Float32Array.from([0, 10, 0]), Float32Array.from([0, 0, 0]), { x: 0, y: 0, scale: 1, flip: false }, withOffset);
+    // child.dx of 10 in the parent's (rotated 90deg) local space becomes
+    // a world Y shift, not an X shift — the same rotation that already
+    // maps child.rest's local (0,10) to a world X offset (see the
+    // rotating-parent test above) must map local (10,0) to a world Y offset.
+    expect(withOffset[1].x).toBeCloseTo(withoutOffset[1].x);
+    expect(withOffset[1].y).toBeCloseTo(withoutOffset[1].y + 10);
   });
 });

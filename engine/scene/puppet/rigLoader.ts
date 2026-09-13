@@ -68,6 +68,8 @@ export function loadRig(def: RigDef): LoadedRig {
       const keyframes: LoadedKeyframe[] = keyframeDefs.map((kf) => ({
         t: kf.t,
         rotRad: kf.rot * DEG_TO_RAD,
+        dx: kf.dx ?? 0,
+        dy: kf.dy ?? 0,
         easeFn: gsap.parseEase(kf.ease),
       }));
       trackByPartIndex[partIndex] = { partIndex, keyframes };

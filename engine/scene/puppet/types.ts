@@ -12,6 +12,13 @@
 export interface RigKeyframeDef {
   t: number; // 0..1
   rot: number; // degrees, delta from the part's rest rotation
+  // Translation channel (ADR 007) — pixels, delta from the part's rest
+  // x/y. Optional here (unlike content/schema.ts's zod field, which
+  // always emits a default) so the hand-written RigDef fixtures every
+  // puppet test already has don't all need touching: rigLoader.ts
+  // treats a missing dx/dy as 0, same value the zod default produces.
+  dx?: number;
+  dy?: number;
   ease: string; // GSAP core ease name
 }
 
@@ -43,6 +50,8 @@ export interface RigDef {
 export interface LoadedKeyframe {
   t: number;
   rotRad: number;
+  dx: number; // pixels, delta from rest — 0 for a keyframe authored before ADR 007
+  dy: number;
   easeFn: (progress: number) => number;
 }
 

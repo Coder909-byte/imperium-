@@ -62,7 +62,7 @@ describe("loadRig", () => {
           id: "wave",
           durationMs: 1000,
           loop: true,
-          tracks: { root: [{ t: 0, rot: 0, ease: "power1.inOut" }, { t: 1, rot: 45, ease: "power1.inOut" }] },
+          tracks: { root: [{ t: 0, rot: 0, ease: "power1.inOut" }, { t: 1, rot: 45, dx: 12, dy: -3, ease: "power1.inOut" }] },
         },
       ],
     };
@@ -73,6 +73,12 @@ describe("loadRig", () => {
     expect(typeof track.keyframes[0].easeFn).toBe("function");
     expect(track.keyframes[0].easeFn(0.5)).toBeGreaterThan(0);
     expect(track.keyframes[1].rotRad).toBeCloseTo((45 * Math.PI) / 180);
+    // dx/dy pass through as plain pixels (no unit conversion, unlike rot).
+    expect(track.keyframes[1].dx).toBe(12);
+    expect(track.keyframes[1].dy).toBe(-3);
+    // A keyframe that omits dx/dy (every clip authored before ADR 007) loads as 0.
+    expect(track.keyframes[0].dx).toBe(0);
+    expect(track.keyframes[0].dy).toBe(0);
   });
 
   it("throws a clear error for a clip track referencing an unknown part", () => {

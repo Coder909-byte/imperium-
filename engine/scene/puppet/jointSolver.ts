@@ -69,12 +69,20 @@ export interface ActorPlacement {
  * `rig.parts`, same index). `out` is caller-allocated and reused every
  * frame (see PuppetActor.tick) — this function never allocates.
  * `localRotations` is parallel to `rig.parts` too: each entry is the
- * part's current local rotation in radians (rest + clip delta),
- * already computed by clipPlayer.evaluateClipRotations.
+ * part's current local rotation in radians (rest + clip delta), and
+ * `localDx`/`localDy` are each part's current translation delta from
+ * rest (ADR 007) — all three already computed by
+ * clipPlayer.evaluateClipPose. The delta is added to the part's own
+ * rest x/y BEFORE composing with the parent (see composeChild's
+ * `localX`/`localY` params) — same local space, so a keyframe's dx/dy
+ * behaves exactly like an authored change to `rest.x`/`rest.y` would,
+ * just animated instead of static.
  */
 export function computeWorldTransforms(
   rig: LoadedRig,
   localRotations: Float32Array,
+  localDx: Float32Array,
+  localDy: Float32Array,
   placement: ActorPlacement,
   out: WorldTransform[],
 ): void {
@@ -95,7 +103,7 @@ export function computeWorldTransforms(
     const parentRotation = part.parentIndex === -1 ? 0 : out[part.parentIndex].rotation;
     const parentScaleX = part.parentIndex === -1 ? rootScaleX : out[part.parentIndex].scaleX;
     const parentScaleY = part.parentIndex === -1 ? rootScaleY : out[part.parentIndex].scaleY;
-    composeChild(parentX, parentY, parentRotation, parentScaleX, parentScaleY, part.restX, part.restY, localRotation, part.restScale, out[i]);
+    composeChild(parentX, parentY, parentRotation, parentScaleX, parentScaleY, part.restX + localDx[i], part.restY + localDy[i], localRotation, part.restScale, out[i]);
   }
 }
 

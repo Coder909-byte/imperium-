@@ -28,7 +28,7 @@ export function adaptRig(rig: Rig): RigDef {
       tracks: Object.fromEntries(
         Object.entries(clip.tracks).map(([partId, keyframes]) => [
           partId,
-          keyframes.map((kf) => ({ t: kf.t, rot: kf.rot, ease: kf.ease })),
+          keyframes.map((kf) => ({ t: kf.t, rot: kf.rot, dx: kf.dx, dy: kf.dy, ease: kf.ease })),
         ]),
       ),
     })),

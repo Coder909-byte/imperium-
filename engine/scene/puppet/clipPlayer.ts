@@ -28,14 +28,20 @@ export function resolveClipTimeMs(clip: LoadedClip, elapsedMs: number): number {
 }
 
 /**
- * Writes each part's current LOCAL rotation (radians) into `out`,
- * parallel to `rig.parts`. Parts with no track in this clip keep
- * whatever `out` already holds — callers reset `out` to rest rotations
+ * Writes each part's current LOCAL pose — rotation (radians) into
+ * `outRot`, translation (pixels, delta from rest) into `outDx`/`outDy`
+ * — parallel to `rig.parts`. Parts with no track in this clip keep
+ * whatever the `out` buffers already hold — callers reset them to rest
  * once when the active clip changes (see PuppetActor), not every frame,
  * since a part untracked by the new clip should fall back to rest, but
  * one still tracked has no need to be touched twice in the same tick.
+ *
+ * rot and dx/dy share one segment search and one eased progress value
+ * (ADR 007: "interpolated like rot" means riding the same curve, not a
+ * second independent one) — computed together in one pass rather than
+ * two, since this runs for every part of every actor every frame.
  */
-export function evaluateClipRotations(rig: LoadedRig, clip: LoadedClip, elapsedMs: number, out: Float32Array): void {
+export function evaluateClipPose(rig: LoadedRig, clip: LoadedClip, elapsedMs: number, outRot: Float32Array, outDx: Float32Array, outDy: Float32Array): void {
   const timeMs = resolveClipTimeMs(clip, elapsedMs);
   const fraction = clip.durationMs > 0 ? timeMs / clip.durationMs : 0;
 
@@ -43,14 +49,20 @@ export function evaluateClipRotations(rig: LoadedRig, clip: LoadedClip, elapsedM
     const track = clip.trackByPartIndex[i];
     if (!track) continue;
     const keyframes = track.keyframes;
+    const restRotationRad = rig.parts[i].restRotationRad;
 
     if (fraction <= keyframes[0].t) {
-      out[i] = rig.parts[i].restRotationRad + keyframes[0].rotRad;
+      const first = keyframes[0];
+      outRot[i] = restRotationRad + first.rotRad;
+      outDx[i] = first.dx;
+      outDy[i] = first.dy;
       continue;
     }
     const last = keyframes[keyframes.length - 1];
     if (fraction >= last.t) {
-      out[i] = rig.parts[i].restRotationRad + last.rotRad;
+      outRot[i] = restRotationRad + last.rotRad;
+      outDx[i] = last.dx;
+      outDy[i] = last.dy;
       continue;
     }
 
@@ -64,13 +76,20 @@ export function evaluateClipRotations(rig: LoadedRig, clip: LoadedClip, elapsedM
     const span = to.t - from.t;
     const segProgress = span > 0 ? (fraction - from.t) / span : 1;
     const eased = to.easeFn(segProgress);
-    out[i] = rig.parts[i].restRotationRad + lerp(from.rotRad, to.rotRad, eased);
+    outRot[i] = restRotationRad + lerp(from.rotRad, to.rotRad, eased);
+    outDx[i] = lerp(from.dx, to.dx, eased);
+    outDy[i] = lerp(from.dy, to.dy, eased);
   }
 }
 
-/** Resets `out` to every part's rest rotation — call once when an
- *  actor's active clip changes, before per-frame evaluation resumes, so
- *  a part the new clip doesn't track doesn't keep the old clip's pose. */
-export function resetToRestRotations(rig: LoadedRig, out: Float32Array): void {
-  for (let i = 0; i < rig.parts.length; i++) out[i] = rig.parts[i].restRotationRad;
+/** Resets the pose buffers to every part's rest pose — rotation to
+ *  restRotationRad, translation delta to 0 — call once when an actor's
+ *  active clip changes, before per-frame evaluation resumes, so a part
+ *  the new clip doesn't track doesn't keep the old clip's pose. */
+export function resetToRestPose(rig: LoadedRig, outRot: Float32Array, outDx: Float32Array, outDy: Float32Array): void {
+  for (let i = 0; i < rig.parts.length; i++) {
+    outRot[i] = rig.parts[i].restRotationRad;
+    outDx[i] = 0;
+    outDy[i] = 0;
+  }
 }

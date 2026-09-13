@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { evaluateClipRotations, resetToRestRotations, resolveClipTimeMs } from "./clipPlayer";
+import { evaluateClipPose, resetToRestPose, resolveClipTimeMs } from "./clipPlayer";
 import { loadRig } from "./rigLoader";
 import type { RigDef } from "./types";
 
@@ -14,7 +14,13 @@ const RIG: RigDef = {
       id: "swing",
       durationMs: 1000,
       loop: true,
-      tracks: { root: [{ t: 0, rot: 0, ease: "none" }, { t: 0.5, rot: 90, ease: "none" }, { t: 1, rot: 0, ease: "none" }] },
+      tracks: {
+        root: [
+          { t: 0, rot: 0, dx: 0, dy: 0, ease: "none" },
+          { t: 0.5, rot: 90, dx: 8, dy: -4, ease: "none" },
+          { t: 1, rot: 0, dx: 0, dy: 0, ease: "none" },
+        ],
+      },
     },
     {
       id: "settle",
@@ -42,48 +48,82 @@ describe("resolveClipTimeMs", () => {
   });
 });
 
-describe("evaluateClipRotations", () => {
-  it("interpolates a tracked part between its surrounding keyframes", () => {
+function buffers(rig: ReturnType<typeof loadRig>) {
+  return {
+    rot: new Float32Array(rig.parts.length),
+    dx: new Float32Array(rig.parts.length),
+    dy: new Float32Array(rig.parts.length),
+  };
+}
+
+describe("evaluateClipPose", () => {
+  it("interpolates a tracked part's rotation between its surrounding keyframes", () => {
     const rig = loadRig(RIG);
     const clip = rig.clips.get("swing")!;
-    const out = new Float32Array(rig.parts.length);
-    evaluateClipRotations(rig, clip, 250, out); // halfway through the first segment (0 -> 500ms)
+    const { rot, dx, dy } = buffers(rig);
+    evaluateClipPose(rig, clip, 250, rot, dx, dy); // halfway through the first segment (0 -> 500ms)
     // rest(10deg) + halfway between 0 and 90 = rest + 45deg
-    expect(out[0]).toBeCloseTo((10 + 45) * DEG, 2);
+    expect(rot[0]).toBeCloseTo((10 + 45) * DEG, 2);
   });
 
-  it("leaves an untracked part's entry untouched", () => {
+  it("interpolates a tracked part's dx/dy translation the same way as rot — same segment, same eased progress (ADR 007)", () => {
     const rig = loadRig(RIG);
     const clip = rig.clips.get("swing")!;
-    const out = new Float32Array(rig.parts.length);
-    out[1] = 12345; // a sentinel — untracked part must not be overwritten
-    evaluateClipRotations(rig, clip, 250, out);
-    expect(out[1]).toBe(12345);
+    const { rot, dx, dy } = buffers(rig);
+    evaluateClipPose(rig, clip, 250, rot, dx, dy); // halfway between (dx:0,dy:0) and (dx:8,dy:-4)
+    expect(dx[0]).toBeCloseTo(4, 2);
+    expect(dy[0]).toBeCloseTo(-2, 2);
+  });
+
+  it("defaults dx/dy to 0 for a keyframe that omits them — a clip authored before ADR 007 plays back unchanged", () => {
+    const rig = loadRig(RIG);
+    const clip = rig.clips.get("settle")!;
+    const { rot, dx, dy } = buffers(rig);
+    evaluateClipPose(rig, clip, 250, rot, dx, dy);
+    expect(dx[0]).toBe(0);
+    expect(dy[0]).toBe(0);
+  });
+
+  it("leaves an untracked part's entries untouched", () => {
+    const rig = loadRig(RIG);
+    const clip = rig.clips.get("swing")!;
+    const { rot, dx, dy } = buffers(rig);
+    rot[1] = 12345; // a sentinel — untracked part must not be overwritten
+    dx[1] = 12345;
+    evaluateClipPose(rig, clip, 250, rot, dx, dy);
+    expect(rot[1]).toBe(12345);
+    expect(dx[1]).toBe(12345);
   });
 
   it("holds a non-looping clip's final pose past its own duration", () => {
     const rig = loadRig(RIG);
     const clip = rig.clips.get("settle")!;
-    const out = new Float32Array(rig.parts.length);
-    evaluateClipRotations(rig, clip, 5000, out);
-    expect(out[0]).toBeCloseTo((10 + 60) * DEG, 2);
+    const { rot, dx, dy } = buffers(rig);
+    evaluateClipPose(rig, clip, 5000, rot, dx, dy);
+    expect(rot[0]).toBeCloseTo((10 + 60) * DEG, 2);
   });
 
   it("loops a looping clip's pose back toward its start past its duration", () => {
     const rig = loadRig(RIG);
     const clip = rig.clips.get("swing")!;
-    const out = new Float32Array(rig.parts.length);
-    evaluateClipRotations(rig, clip, 1000 + 250, out); // one full loop plus 250ms
-    expect(out[0]).toBeCloseTo((10 + 45) * DEG, 2);
+    const { rot, dx, dy } = buffers(rig);
+    evaluateClipPose(rig, clip, 1000 + 250, rot, dx, dy); // one full loop plus 250ms
+    expect(rot[0]).toBeCloseTo((10 + 45) * DEG, 2);
+    expect(dx[0]).toBeCloseTo(4, 2);
   });
 });
 
-describe("resetToRestRotations", () => {
-  it("writes every part's rest rotation, overwriting whatever was there", () => {
+describe("resetToRestPose", () => {
+  it("writes every part's rest rotation and zeroes translation, overwriting whatever was there", () => {
     const rig = loadRig(RIG);
-    const out = new Float32Array(rig.parts.length).fill(999);
-    resetToRestRotations(rig, out);
-    expect(out[0]).toBeCloseTo(10 * DEG);
-    expect(out[1]).toBeCloseTo(-5 * DEG);
+    const { rot, dx, dy } = buffers(rig);
+    rot.fill(999);
+    dx.fill(999);
+    dy.fill(999);
+    resetToRestPose(rig, rot, dx, dy);
+    expect(rot[0]).toBeCloseTo(10 * DEG);
+    expect(rot[1]).toBeCloseTo(-5 * DEG);
+    expect(dx[0]).toBe(0);
+    expect(dy[0]).toBe(0);
   });
 });

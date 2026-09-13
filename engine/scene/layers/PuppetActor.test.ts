@@ -111,6 +111,21 @@ describe("PuppetActor", () => {
     expect(actor.container.children[2].y).toBeCloseTo(fresh.container.children[2].y, 4);
   });
 
+  it("a keyframe's dx/dy translates the sprite on top of rotation (ADR 007) — the whole clipPlayer->jointSolver pipeline, not just the math in isolation", () => {
+    const rigWithBob: RigDef = {
+      ...RIG,
+      clips: [
+        ...RIG.clips,
+        { id: "bob", durationMs: 1000, loop: true, tracks: { root: [{ t: 0, rot: 0, dx: 0, dy: 0, ease: "none" }, { t: 0.5, rot: 0, dx: 0, dy: -20, ease: "none" }, { t: 1, rot: 0, dx: 0, dy: 0, ease: "none" }] } },
+      ],
+    };
+    const rig = loadRig(rigWithBob);
+    const actor = new PuppetActor({ rig, textures: makeTextures(rig), clipId: "bob", x: 0, y: 100, scale: 1, flip: false, phaseMs: 0 });
+    const atStart = actor.container.children[0].y;
+    actor.tick(500); // exactly the bob's peak (t: 0.5)
+    expect(actor.container.children[0].y).toBeCloseTo(atStart - 20);
+  });
+
   it("destroy() doesn't throw and leaves the container destroyed", () => {
     const rig = loadRig(RIG);
     const actor = new PuppetActor({ rig, textures: makeTextures(rig), clipId: "wave", x: 0, y: 0, scale: 1, flip: false, phaseMs: 0 });

@@ -112,9 +112,30 @@ export type Region = z.infer<typeof Region>;
 export const RigKeyframe = z.object({
   t: z.number().min(0).max(1), // normalized position within the clip's duration
   rot: z.number(), // degrees, delta from the part's rest rotation
+  // Translation channel (ADR 007), pixels, delta from the part's rest
+  // x/y — same local space as RigPart.rest.x/y, applied before that
+  // rest offset is composed with the parent's transform. Defaults to 0
+  // so every clip authored before this channel existed still validates
+  // and plays back byte-identical.
+  //
+  // This is for ROOT-LEVEL MOTION ONLY: a walk cycle's vertical bob, a
+  // collapse's actual downward/sideways displacement, a recoil. It is
+  // NOT a substitute for rotating a joint correctly. A limb reaching
+  // toward a target by translating rather than rotating its shoulder/
+  // elbow will look right at exactly the keyframed pose and wrong at
+  // every pose in between — the whole visual logic of a cutout rig is
+  // that a limb's silhouette sweeps an arc around its joint, and dx/dy
+  // on anything but the root (or a rare, deliberate secondary offset)
+  // breaks that. See ADR 007 for the full argument.
+  dx: z.number().default(0),
+  dy: z.number().default(0),
   // Eases the transition *into* this keyframe from the previous one —
   // a GSAP core ease name (gsap.parseEase), resolved once at rig-load
   // time (engine/scene/puppet/rigLoader.ts), never re-parsed per frame.
+  // Governs rot AND dx/dy identically — one shared curve per segment,
+  // not an independent ease per channel (no authored clip has needed
+  // to stagger them, and a shared curve is what "interpolated like rot"
+  // means: the translation rides the same eased timing as the rotation).
   ease: z.string().default("power1.inOut"),
 });
 

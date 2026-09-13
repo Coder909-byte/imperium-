@@ -12,7 +12,7 @@
 // header for why transform hierarchy and draw order are solved
 // separately rather than both falling out of Pixi's own nesting.
 import { Container, Sprite, type Texture } from "pixi.js";
-import { evaluateClipRotations, resetToRestRotations, resolveClipTimeMs } from "../puppet/clipPlayer";
+import { evaluateClipPose, resetToRestPose, resolveClipTimeMs } from "../puppet/clipPlayer";
 import { computeWorldTransforms, createTransformBuffer } from "../puppet/jointSolver";
 import type { LoadedRig, WorldTransform } from "../puppet/types";
 
@@ -46,6 +46,8 @@ export class PuppetActor {
   private clip: ReturnType<LoadedRig["clips"]["get"]>;
   private elapsedMs: number;
   private readonly localRotations: Float32Array;
+  private readonly localDx: Float32Array;
+  private readonly localDy: Float32Array;
   private readonly transforms: WorldTransform[];
   private readonly placement: { x: number; y: number; scale: number; flip: boolean };
   private reducedMotion: boolean;
@@ -56,6 +58,8 @@ export class PuppetActor {
     this.placement = { x: options.x, y: options.y, scale: options.scale, flip: options.flip };
     this.reducedMotion = options.reducedMotion ?? false;
     this.localRotations = new Float32Array(options.rig.parts.length);
+    this.localDx = new Float32Array(options.rig.parts.length);
+    this.localDy = new Float32Array(options.rig.parts.length);
     this.transforms = createTransformBuffer(options.rig);
     this.clip = options.rig.clips.get(options.clipId);
 
@@ -73,7 +77,7 @@ export class PuppetActor {
       return sprite;
     });
 
-    resetToRestRotations(this.rig, this.localRotations);
+    resetToRestPose(this.rig, this.localRotations, this.localDx, this.localDy);
     this.applyTransforms();
   }
 
@@ -82,7 +86,7 @@ export class PuppetActor {
     if (!next || next === this.clip) return;
     this.clip = next;
     this.elapsedMs = 0;
-    resetToRestRotations(this.rig, this.localRotations);
+    resetToRestPose(this.rig, this.localRotations, this.localDx, this.localDy);
     // Without this, the actor's sprites keep showing the PREVIOUS
     // clip's last pose until the next tick() happens to come along —
     // caught by a unit test asserting setClip's result immediately,
@@ -94,7 +98,7 @@ export class PuppetActor {
     if (reduced === this.reducedMotion) return;
     this.reducedMotion = reduced;
     if (reduced) {
-      resetToRestRotations(this.rig, this.localRotations);
+      resetToRestPose(this.rig, this.localRotations, this.localDx, this.localDy);
       this.applyTransforms();
     }
   }
@@ -112,7 +116,7 @@ export class PuppetActor {
   tick(dtMs: number): void {
     if (this.reducedMotion) return;
     this.elapsedMs += dtMs;
-    if (this.clip) evaluateClipRotations(this.rig, this.clip, this.elapsedMs, this.localRotations);
+    if (this.clip) evaluateClipPose(this.rig, this.clip, this.elapsedMs, this.localRotations, this.localDx, this.localDy);
     this.applyTransforms();
   }
 
@@ -121,7 +125,7 @@ export class PuppetActor {
   seek(timeMs: number): void {
     if (this.clip) {
       const resolved = resolveClipTimeMs(this.clip, timeMs);
-      evaluateClipRotations(this.rig, this.clip, resolved, this.localRotations);
+      evaluateClipPose(this.rig, this.clip, resolved, this.localRotations, this.localDx, this.localDy);
     }
     this.applyTransforms();
   }
@@ -133,7 +137,7 @@ export class PuppetActor {
   }
 
   private applyTransforms(): void {
-    computeWorldTransforms(this.rig, this.localRotations, this.placement, this.transforms);
+    computeWorldTransforms(this.rig, this.localRotations, this.localDx, this.localDy, this.placement, this.transforms);
     for (let i = 0; i < this.sprites.length; i++) {
       const sprite = this.sprites[i];
       const t = this.transforms[i];
