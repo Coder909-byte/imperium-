@@ -33,5 +33,19 @@
     "licence": "GSAP Standard \"No Charge\" License — https://gsap.com/standard-license",
     "retrieved": "2026-08-30",
     "notes": "gsap@3.15.0, used for engine/atlas/MorphBorders.ts (M2). Not an art/audio asset — a code dependency; recorded here per CLAUDE.md's licence-verification instinct, at the user's explicit request. Confirmed free for commercial use, including MorphSVGPlugin — historically a paid Club GreenSock bonus plugin — directly from the installed package's own files, not from memory: node_modules/gsap/package.json's license field points to the standard-license URL, and node_modules/gsap/README.md (bundled in the npm package) states \"GSAP is now 100% FREE including ALL of the bonus plugins like SplitText, MorphSVG... even for commercial use\", per Webflow's April 2025 sponsorship (webflow.com/blog/gsap-becomes-free)."
+  },
+  {
+    "file": "content/assets/planes/alma-tadema-roses-of-heliogabalus.webp",
+    "source": "https://commons.wikimedia.org/wiki/File:The_Roses_of_Heliogabalus.jpg",
+    "licence": "Public domain",
+    "retrieved": "2026-09-13",
+    "artist": "Lawrence Alma-Tadema",
+    "institution": "unknown",
+    "settings": {
+      "matte": false,
+      "quality": 78,
+      "resizeWidth": 1920
+    },
+    "notes": "M7 tools/forge acceptance run — real painting -> real WebP plane in one command, per CLAUDE.md M7. Not yet referenced by any region JSON (M8 hasn't sourced Gallia's real planes yet); kept as a genuine, working example of the pipeline rather than a placeholder. Source: 6000x3694 JPEG, downloaded directly from Wikimedia Commons for this session and NOT committed to the repo (multi-MB raw scan, not needed once forged) — see docs/art-pipeline.md for the full budget-measurement session this run was part of."
   }
 ]

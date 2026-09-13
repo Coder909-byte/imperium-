@@ -435,3 +435,42 @@ export const SeaLabel = z.object({
 
 export type City = z.infer<typeof City>;
 export type SeaLabel = z.infer<typeof SeaLabel>;
+
+// --- Asset manifest (M7, tools/forge) ----------------------------------
+// content/assets/manifest.json — one row per asset that entered the repo
+// (CLAUDE.md hard rule #3). The file predates this schema and already
+// held rows for non-art provenance (a converted GeoJSON source, a code
+// dependency's licence) that have no `artist`/`institution`/`settings` —
+// those stay valid here: only `file`/`source`/`licence`/`retrieved` are
+// universally required. `artist`/`institution`/`settings` are what
+// `tools/forge`'s CLI always supplies for an actual art asset, and are
+// each non-empty *if present* so a hand-edit can't blank one back to ""
+// without failing `npm run validate` — the CLI guards the write path,
+// this schema guards the file afterward (a hand-edit or a merge
+// conflict is a different failure mode than a bad CLI invocation, and
+// needs a different guard).
+export const ManifestEntry = z.object({
+  file: z.string().min(1), // repo-relative path, e.g. "content/assets/planes/gallia-sky.webp"
+  source: z.string().url(),
+  licence: z.string().min(1),
+  retrieved: z.string().min(1), // ISO date the asset was pulled, e.g. "2026-09-13"
+  // Deliberately optional rather than defaulted — `tools/forge` requires
+  // its own --artist/--institution flags be typed explicitly (accepting
+  // a literal "unknown" for a genuinely unattributed historical work,
+  // never silently filled in), but a pre-M7 non-art row never had them
+  // and stays valid without them.
+  artist: z.string().min(1).optional(),
+  institution: z.string().min(1).optional(),
+  settings: z
+    .object({
+      matte: z.boolean(),
+      quality: z.number().int().min(1).max(100),
+      resizeWidth: z.number().int().positive().optional(),
+      crop: z.string().optional(), // "left,top,width,height" — stored as authored, not parsed back
+      tint: z.string().optional(),
+    })
+    .optional(),
+  notes: z.string().optional(),
+});
+
+export type ManifestEntry = z.infer<typeof ManifestEntry>;

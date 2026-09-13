@@ -3,7 +3,7 @@
 import { readdirSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 import type { z } from "zod";
-import { Region, Question, Province, City, SeaLabel, Rig } from "../content/schema";
+import { Region, Question, Province, City, SeaLabel, Rig, ManifestEntry } from "../content/schema";
 import { adaptRig } from "../app/scene/[regionId]/buildSceneProps";
 import { loadRig } from "../engine/scene/puppet/rigLoader";
 import { lintRig } from "../engine/scene/puppet/rigValidation";
@@ -30,6 +30,10 @@ interface ArrayFileTarget {
 const arrayFileTargets: ArrayFileTarget[] = [
   { file: join(__dirname, "..", "content", "borders", "cities.json"), itemSchema: City },
   { file: join(__dirname, "..", "content", "borders", "seas.json"), itemSchema: SeaLabel },
+  // tools/forge's CLI guards the write path (refuses to write a blank
+  // licence); this guards the file afterward — a hand-edit or a merge
+  // conflict reintroducing a blank licence fails the build here.
+  { file: join(__dirname, "..", "content", "assets", "manifest.json"), itemSchema: ManifestEntry },
 ];
 
 let failures = 0;
