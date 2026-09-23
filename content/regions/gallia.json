@@ -3,62 +3,675 @@
   "name": "Gaul",
   "latinName": "Gallia",
   "civilisation": "Rome",
-  "mapCentroid": [2.5, 46.6],
+  "mapCentroid": [
+    2.5,
+    46.6
+  ],
   "heldFrom": -58,
   "heldTo": 486,
   "scene": {
-    "lut": "engraving_dust",
+    "lut": "cold_overcast",
     "ambientBed": "wind_plains",
     "planes": [
       {
-        "id": "far_hills",
-        "asset": "gallia/far_hills.webp",
-        "depth": 0.1,
-        "tint": "#8a7a63",
+        "id": "sky",
+        "asset": "gallia/sky.webp",
+        "depth": 0.02,
+        "tint": "#ffffff",
+        "blur": 0
+      },
+      {
+        "id": "far_ridge",
+        "asset": "gallia/far_ridge.webp",
+        "depth": 0.18,
+        "tint": "#ffffff",
         "blur": 2
       },
       {
-        "id": "character_stage",
-        "asset": "gallia/character_stage.webp",
-        "depth": 0.6,
-        "tint": "#3a2f22"
+        "id": "hillfort",
+        "asset": "gallia/hillfort.webp",
+        "depth": 0.3,
+        "tint": "#ffffff",
+        "blur": 1
+      },
+      {
+        "id": "mid_ground",
+        "asset": "gallia/mid_ground.webp",
+        "depth": 0.42,
+        "tint": "#ffffff",
+        "blur": 0
+      },
+      {
+        "id": "inner_wall",
+        "asset": "gallia/inner_wall.webp",
+        "depth": 0.52,
+        "tint": "#ffffff",
+        "blur": 0
+      },
+      {
+        "id": "outer_wall",
+        "asset": "gallia/outer_wall.webp",
+        "depth": 0.68,
+        "tint": "#ffffff",
+        "blur": 0
+      },
+      {
+        "id": "foreground",
+        "asset": "gallia/foreground.webp",
+        "depth": 0.9,
+        "tint": "#ffffff",
+        "blur": 3
       }
     ]
   },
   "beats": [
     {
-      "id": "alesia-second-wall",
+      "id": "the-hill",
       "year": "52 BC",
       "sortYear": -52,
-      "headline": "The wall that faces both ways",
-      "body": "Caesar's army had Vercingetorix's forty thousand men boxed in at Alesia behind eleven miles of siegeworks. Then word came that a Gallic relief force, Caesar's own account puts it at a quarter of a million, was marching to break the siege from outside. He built a second wall, facing outward, so his own army was besieging and besieged at the same time.",
-      "visibleLayers": ["far_hills", "character_stage"],
+      "headline": "The hill",
+      "body": "Vercingetorix has done what no Gaul managed before: united tribes that spent generations raiding each other, then refused to fight Rome in the open. He burns his own countryside instead, starving the legions out of a land they cannot forage. When a cavalry engagement goes wrong he withdraws to Alesia, a hill fort of the Mandubii, with eighty thousand men. He expects to be besieged. He has already sent riders to every tribe in Gaul.",
+      "visibleLayers": [
+        "sky",
+        "far_ridge",
+        "hillfort",
+        "mid_ground",
+        "foreground"
+      ],
       "camera": {
-        "x": 0,
-        "y": 0,
-        "scale": 1.05,
-        "durationMs": 2800,
-        "ease": "power2.inOut"
+        "x": 0.12,
+        "y": -0.08,
+        "scale": 0.86,
+        "durationMs": 9000,
+        "ease": "sine.inOut"
       },
-      "fx": ["dust"],
+      "fx": [
+        "smoke",
+        "embers"
+      ],
+      "lightSource": false,
       "actors": [
         {
           "rig": "legionary",
           "clip": "march",
-          "x": 0.3,
-          "y": 0.7,
-          "count": 12,
-          "phase": 0.2
+          "x": -470,
+          "y": -118,
+          "scale": 0.13,
+          "count": 14,
+          "flip": false,
+          "phase": 0,
+          "depth": 0.45
+        },
+        {
+          "rig": "legionary",
+          "clip": "march",
+          "x": -370,
+          "y": -116,
+          "scale": 0.13,
+          "count": 14,
+          "flip": false,
+          "phase": 0,
+          "depth": 0.45
+        },
+        {
+          "rig": "legionary",
+          "clip": "march",
+          "x": -270,
+          "y": -119,
+          "scale": 0.13,
+          "count": 14,
+          "flip": false,
+          "phase": 0,
+          "depth": 0.45
         }
       ],
       "audio": {
-        "cue": "wind_plains_swell",
-        "bedIntensity": 0.4
+        "bedIntensity": 0.35
       },
       "sources": [
         {
-          "label": "Caesar, Commentarii de Bello Gallico, Book VII",
+          "label": "Caesar, Bellum Gallicum VII.4 — Vercingetorix raises the tribes",
           "url": "https://www.perseus.tufts.edu/hopper/text?doc=Perseus%3Atext%3A1999.02.0002"
+        },
+        {
+          "label": "Caesar, Bellum Gallicum VII.14 — the plan to burn the countryside and starve the legions",
+          "url": "https://www.perseus.tufts.edu/hopper/text?doc=Perseus%3Atext%3A1999.02.0002"
+        },
+        {
+          "label": "Caesar, Bellum Gallicum VII.67–68 — the failed cavalry engagement and the withdrawal to Alesia",
+          "url": "https://www.perseus.tufts.edu/hopper/text?doc=Perseus%3Atext%3A1999.02.0002"
+        },
+        {
+          "label": "Caesar, Bellum Gallicum VII.71 — eighty thousand men; cavalry sent out to raise Gaul",
+          "url": "https://www.perseus.tufts.edu/hopper/text?doc=Perseus%3Atext%3A1999.02.0002"
+        }
+      ]
+    },
+    {
+      "id": "eighteen-kilometres",
+      "year": "52 BC",
+      "sortYear": -52,
+      "headline": "Eighteen kilometres of wall",
+      "body": "Caesar does not assault the hill. He encircles it. Rampart, ditch and timber tower, built while under attack. In front of it: trenches, a channel flooded from the rivers, rows of sharpened branches, pits with fire-hardened stakes at the bottom, iron hooks set in blocks and buried in the ground. The legionaries called the pits lilies. These are not soldiers who can dig. They are engineers who happen to fight.",
+      "visibleLayers": [
+        "sky",
+        "far_ridge",
+        "hillfort",
+        "mid_ground",
+        "inner_wall",
+        "foreground"
+      ],
+      "camera": {
+        "x": -0.3,
+        "y": 0,
+        "scale": 1.1,
+        "durationMs": 21000,
+        "ease": "power1.inOut"
+      },
+      "fx": [
+        "dust"
+      ],
+      "lightSource": false,
+      "actors": [
+        {
+          "rig": "legionary",
+          "clip": "march",
+          "x": -120,
+          "y": -103,
+          "scale": 0.14,
+          "count": 16,
+          "flip": false,
+          "phase": 0,
+          "depth": 0.54
+        },
+        {
+          "rig": "legionary",
+          "clip": "march",
+          "x": 60,
+          "y": -101,
+          "scale": 0.14,
+          "count": 16,
+          "flip": true,
+          "phase": 0,
+          "depth": 0.54
+        },
+        {
+          "rig": "legionary",
+          "clip": "brace",
+          "x": 280,
+          "y": -88,
+          "scale": 0.22,
+          "count": 1,
+          "flip": false,
+          "phase": 0,
+          "depth": 0.56
+        },
+        {
+          "rig": "legionary",
+          "clip": "brace",
+          "x": 330,
+          "y": -86,
+          "scale": 0.22,
+          "count": 1,
+          "flip": false,
+          "phase": 120,
+          "depth": 0.56
+        },
+        {
+          "rig": "legionary",
+          "clip": "brace",
+          "x": 380,
+          "y": -89,
+          "scale": 0.22,
+          "count": 1,
+          "flip": false,
+          "phase": 60,
+          "depth": 0.56
+        }
+      ],
+      "audio": {
+        "bedIntensity": 0.45
+      },
+      "sources": [
+        {
+          "label": "Caesar, Bellum Gallicum VII.69 — the circuit of the siege works",
+          "url": "https://www.perseus.tufts.edu/hopper/text?doc=Perseus%3Atext%3A1999.02.0002"
+        },
+        {
+          "label": "Caesar, Bellum Gallicum VII.72 — ditches, the flooded channel, rampart and towers",
+          "url": "https://www.perseus.tufts.edu/hopper/text?doc=Perseus%3Atext%3A1999.02.0002"
+        },
+        {
+          "label": "Caesar, Bellum Gallicum VII.73 — branches, the pits the soldiers called lilies, the iron hooks",
+          "url": "https://www.perseus.tufts.edu/hopper/text?doc=Perseus%3Atext%3A1999.02.0002"
+        }
+      ]
+    },
+    {
+      "id": "second-wall",
+      "year": "52 BC",
+      "sortYear": -52,
+      "headline": "Then a second wall, facing outward",
+      "body": "The riders begin to work. A relief army is coming — tribes converging from across Gaul. Caesar's answer is to build the whole thing again, facing the other way. Twenty-one more kilometres, a complete second ring enclosing the first. His army now holds a corridor between two walls, besieging a fortress while itself besieged. Caesar writes that a quarter of a million men are marching toward him. Historians think far fewer. More, certainly, than he could meet in the open.",
+      "visibleLayers": [
+        "sky",
+        "far_ridge",
+        "hillfort",
+        "mid_ground",
+        "inner_wall",
+        "outer_wall",
+        "foreground"
+      ],
+      "camera": {
+        "x": 0,
+        "y": -0.25,
+        "scale": 0.86,
+        "durationMs": 24000,
+        "ease": "sine.inOut"
+      },
+      "fx": [
+        "dust"
+      ],
+      "lightSource": false,
+      "actors": [
+        {
+          "rig": "legionary",
+          "clip": "march",
+          "x": -200,
+          "y": -47,
+          "scale": 0.13,
+          "count": 16,
+          "flip": false,
+          "phase": 0,
+          "depth": 0.6
+        },
+        {
+          "rig": "legionary",
+          "clip": "march",
+          "x": 220,
+          "y": -44,
+          "scale": 0.13,
+          "count": 16,
+          "flip": true,
+          "phase": 0,
+          "depth": 0.6
+        },
+        {
+          "rig": "legionary",
+          "clip": "march",
+          "x": -560,
+          "y": -238,
+          "scale": 0.08,
+          "count": 20,
+          "flip": false,
+          "phase": 0,
+          "depth": 0.22
+        },
+        {
+          "rig": "legionary",
+          "clip": "march",
+          "x": -330,
+          "y": -236,
+          "scale": 0.08,
+          "count": 20,
+          "flip": false,
+          "phase": 0,
+          "depth": 0.22
+        },
+        {
+          "rig": "legionary",
+          "clip": "march",
+          "x": 330,
+          "y": -238,
+          "scale": 0.08,
+          "count": 20,
+          "flip": true,
+          "phase": 0,
+          "depth": 0.22
+        },
+        {
+          "rig": "legionary",
+          "clip": "march",
+          "x": 560,
+          "y": -236,
+          "scale": 0.08,
+          "count": 20,
+          "flip": true,
+          "phase": 0,
+          "depth": 0.22
+        }
+      ],
+      "audio": {
+        "bedIntensity": 0.5
+      },
+      "sources": [
+        {
+          "label": "Caesar, Bellum Gallicum VII.74 — the second line, fourteen miles, facing outward",
+          "url": "https://www.perseus.tufts.edu/hopper/text?doc=Perseus%3Atext%3A1999.02.0002"
+        },
+        {
+          "label": "Caesar, Bellum Gallicum VII.75–76 — the relief army's muster and Caesar's count of it",
+          "url": "https://www.perseus.tufts.edu/hopper/text?doc=Perseus%3Atext%3A1999.02.0002"
+        }
+      ]
+    },
+    {
+      "id": "the-mandubii",
+      "year": "52 BC",
+      "sortYear": -52,
+      "headline": "The Mandubii",
+      "body": "The food inside runs out first. Vercingetorix expels the Mandubii — the people whose town it is, the ones not fighting. Women, children and the old walk down to the Roman lines and ask to be let through. Caesar refuses. They cannot go back up and they cannot come forward, so they stay in the open ground between the walls, where both armies can see them, and starve. Caesar records this in one sentence and moves on.",
+      "visibleLayers": [
+        "sky",
+        "hillfort",
+        "mid_ground",
+        "inner_wall",
+        "outer_wall"
+      ],
+      "camera": {
+        "x": 0.04,
+        "y": 0.33,
+        "scale": 1.24,
+        "durationMs": 24000,
+        "ease": "none"
+      },
+      "fx": [],
+      "lightSource": false,
+      "actors": [
+        {
+          "rig": "legionary",
+          "clip": "idle",
+          "x": 100,
+          "y": -113,
+          "scale": 0.2,
+          "count": 1,
+          "flip": false,
+          "phase": 0,
+          "depth": 0.54
+        },
+        {
+          "rig": "legionary",
+          "clip": "idle",
+          "x": 160,
+          "y": -111,
+          "scale": 0.2,
+          "count": 1,
+          "flip": false,
+          "phase": 700,
+          "depth": 0.54
+        },
+        {
+          "rig": "legionary",
+          "clip": "idle",
+          "x": 220,
+          "y": -114,
+          "scale": 0.2,
+          "count": 1,
+          "flip": false,
+          "phase": 1500,
+          "depth": 0.54
+        },
+        {
+          "rig": "legionary",
+          "clip": "idle",
+          "x": 280,
+          "y": -112,
+          "scale": 0.2,
+          "count": 1,
+          "flip": false,
+          "phase": 400,
+          "depth": 0.54
+        },
+        {
+          "rig": "legionary",
+          "clip": "idle",
+          "x": 340,
+          "y": -113,
+          "scale": 0.2,
+          "count": 1,
+          "flip": false,
+          "phase": 1900,
+          "depth": 0.54
+        }
+      ],
+      "audio": {
+        "bedIntensity": 0.15
+      },
+      "sources": [
+        {
+          "label": "Caesar, Bellum Gallicum VII.78 — the expulsion of the Mandubii",
+          "url": "https://www.perseus.tufts.edu/hopper/text?doc=Perseus%3Atext%3A1999.02.0002"
+        }
+      ]
+    },
+    {
+      "id": "two-battles",
+      "year": "52 BC",
+      "sortYear": -52,
+      "headline": "Two battles in one day",
+      "body": "The relief force arrives and attacks both walls at once. Vercassivellaunus finds the single place the fortifications could not follow the ground — a slope on the northwest where the line runs wrong — and throws sixty thousand men at it. Labienus is sent with what can be spared. Caesar takes cavalry out through his own lines and comes around behind the attackers, in a red cloak, deliberately visible, so that both armies know exactly where he is.",
+      "visibleLayers": [
+        "sky",
+        "far_ridge",
+        "hillfort",
+        "mid_ground",
+        "inner_wall",
+        "outer_wall",
+        "foreground"
+      ],
+      "camera": {
+        "x": 0.32,
+        "y": -0.54,
+        "scale": 1.08,
+        "durationMs": 22000,
+        "ease": "power1.inOut"
+      },
+      "fx": [
+        "arrow_volley",
+        "dust",
+        "smoke",
+        "shake"
+      ],
+      "lightSource": false,
+      "actors": [
+        {
+          "rig": "legionary",
+          "clip": "march",
+          "x": -440,
+          "y": 21,
+          "scale": 0.15,
+          "count": 40,
+          "flip": true,
+          "phase": 0,
+          "depth": 0.78
+        },
+        {
+          "rig": "legionary",
+          "clip": "march",
+          "x": -300,
+          "y": 24,
+          "scale": 0.15,
+          "count": 40,
+          "flip": true,
+          "phase": 0,
+          "depth": 0.78
+        },
+        {
+          "rig": "legionary",
+          "clip": "march",
+          "x": -160,
+          "y": 20,
+          "scale": 0.15,
+          "count": 40,
+          "flip": true,
+          "phase": 0,
+          "depth": 0.78
+        },
+        {
+          "rig": "legionary",
+          "clip": "march",
+          "x": -120,
+          "y": -123,
+          "scale": 0.1,
+          "count": 30,
+          "flip": false,
+          "phase": 0,
+          "depth": 0.46
+        },
+        {
+          "rig": "legionary",
+          "clip": "brace",
+          "x": 80,
+          "y": -30,
+          "scale": 0.2,
+          "count": 1,
+          "flip": false,
+          "phase": 0,
+          "depth": 0.7
+        },
+        {
+          "rig": "legionary",
+          "clip": "brace",
+          "x": 130,
+          "y": -28,
+          "scale": 0.2,
+          "count": 1,
+          "flip": false,
+          "phase": 90,
+          "depth": 0.7
+        },
+        {
+          "rig": "legionary",
+          "clip": "brace",
+          "x": 180,
+          "y": -31,
+          "scale": 0.2,
+          "count": 1,
+          "flip": false,
+          "phase": 200,
+          "depth": 0.7
+        },
+        {
+          "rig": "legionary",
+          "clip": "fall",
+          "x": 40,
+          "y": -28,
+          "scale": 0.2,
+          "count": 1,
+          "flip": false,
+          "phase": 150,
+          "depth": 0.7
+        },
+        {
+          "rig": "legionary",
+          "clip": "fall",
+          "x": 230,
+          "y": -29,
+          "scale": 0.2,
+          "count": 1,
+          "flip": false,
+          "phase": 300,
+          "depth": 0.7
+        }
+      ],
+      "audio": {
+        "bedIntensity": 0.85
+      },
+      "sources": [
+        {
+          "label": "Caesar, Bellum Gallicum VII.83–85 — Vercassivellaunus and the weak point on the north-west slope",
+          "url": "https://www.perseus.tufts.edu/hopper/text?doc=Perseus%3Atext%3A1999.02.0002"
+        },
+        {
+          "label": "Caesar, Bellum Gallicum VII.86–88 — Labienus sent to the breach; Caesar's cloak seen by both sides",
+          "url": "https://www.perseus.tufts.edu/hopper/text?doc=Perseus%3Atext%3A1999.02.0002"
+        }
+      ]
+    },
+    {
+      "id": "rides-out-alone",
+      "year": "52 BC",
+      "sortYear": -52,
+      "headline": "He rides out alone",
+      "body": "The relief army breaks and scatters in the night. The next morning Vercingetorix surrenders. Caesar gives it one flat sentence. Plutarch, writing a century and a half later, adds the full armour, the circle on horseback, the weapons laid at Caesar's feet. Vercingetorix is kept alive in a Roman cell for six years, walked through Rome in Caesar's triumph, and strangled.",
+      "visibleLayers": [
+        "sky",
+        "far_ridge",
+        "hillfort",
+        "mid_ground",
+        "inner_wall",
+        "outer_wall"
+      ],
+      "camera": {
+        "x": 0,
+        "y": 0.34,
+        "scale": 1.32,
+        "durationMs": 19000,
+        "ease": "power2.inOut"
+      },
+      "fx": [
+        "smoke"
+      ],
+      "lightSource": true,
+      "actors": [
+        {
+          "rig": "legionary",
+          "clip": "idle",
+          "x": -140,
+          "y": -143,
+          "scale": 0.18,
+          "count": 1,
+          "flip": false,
+          "phase": 0,
+          "depth": 0.44
+        },
+        {
+          "rig": "legionary",
+          "clip": "idle",
+          "x": -85,
+          "y": -141,
+          "scale": 0.18,
+          "count": 1,
+          "flip": false,
+          "phase": 900,
+          "depth": 0.44
+        },
+        {
+          "rig": "legionary",
+          "clip": "idle",
+          "x": 85,
+          "y": -141,
+          "scale": 0.18,
+          "count": 1,
+          "flip": true,
+          "phase": 300,
+          "depth": 0.44
+        },
+        {
+          "rig": "legionary",
+          "clip": "idle",
+          "x": 140,
+          "y": -143,
+          "scale": 0.18,
+          "count": 1,
+          "flip": true,
+          "phase": 1600,
+          "depth": 0.44
+        }
+      ],
+      "audio": {
+        "bedIntensity": 0.25
+      },
+      "sources": [
+        {
+          "label": "Caesar, Bellum Gallicum VII.89 — the surrender",
+          "url": "https://www.perseus.tufts.edu/hopper/text?doc=Perseus%3Atext%3A1999.02.0002"
+        },
+        {
+          "label": "Plutarch, Life of Caesar 27 — the armour, the ride around the tribunal, the weapons at Caesar's feet"
+        },
+        {
+          "label": "Cassius Dio 43.19 — Vercingetorix led in the triumph of 46 BC and put to death"
         }
       ]
     }

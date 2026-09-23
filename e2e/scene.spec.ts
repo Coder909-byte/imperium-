@@ -4,8 +4,8 @@ import { expect, test } from "@playwright/test";
 
 // M4 — scene engine core. content/regions/placeholder.json (5 beats,
 // varying camera moves/visibleLayers/body lengths) exercises the
-// engine end to end; gallia.json (1 beat, real Alesia content) is left
-// alone for e2e/transition.spec.ts's exit-button test.
+// engine end to end; gallia.json (6 beats, real Alesia content on
+// placeholder planes) is used by e2e/transition.spec.ts's exit-button test.
 
 test.describe("scene player — beat playback", () => {
   test("plays through beats with correct captions, camera-move framing, and pip state", async ({ page }) => {
