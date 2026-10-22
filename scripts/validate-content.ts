@@ -118,7 +118,7 @@ for (const { file, itemSchema } of arrayFileTargets) {
 for (const rig of rigs) {
   const assetIssues = rig.parts.filter((part) => !["torso", "head", "limb", "foot"].includes(part.texture)).flatMap((part) => {
     const file = assetFile(part.texture);
-    return approvedAssetUrl(part.texture, manifest) && file && existsSync(join(__dirname, "..", file)) ? [] : [`${part.id}: missing or unapproved texture "${part.texture}"`];
+    return approvedAssetUrl(part.texture, manifest, rig.draft ? "character-draft" : "asset") && file && existsSync(join(__dirname, "..", file)) ? [] : [`${part.id}: missing or unapproved texture "${part.texture}"`];
   });
   if (assetIssues.length > 0) {
     failures += 1;

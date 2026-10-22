@@ -11,8 +11,9 @@ export function SceneArtDiagnostics({ region, beat, planes }: { region: SceneReg
           {plane.id}: {active.has(plane.id) ? "visible" : "hidden"}; {plane.assetUrl ?? "procedural placeholder"}{plane.draft ? " (provisional structure draft)" : ""}
         </li>)}
       </ul>
-      <p>Actor entries: {beat.actors.filter((actor) => actor.count === 1).length} puppets, {beat.actors.filter((actor) => actor.count > 1).length} crowd groups. Crowds still use the generic procedural march atlas.</p>
+      <p>Actor entries: {beat.actors.filter((actor) => actor.count === 1).length} puppets, {beat.actors.filter((actor) => actor.count > 1).length} crowd groups. Fully painted rigs bake their own four-pose atlas; procedural rigs retain the generic march atlas.</p>
       <p>Rig parts: {region.rigs.flatMap((rig) => rig.parts).filter((part) => !part.texture.startsWith("/assets/")).length} procedural placeholders.</p>
+      <p>Provisional personnel: {region.rigs.filter((rig) => rig.draft).map((rig) => rig.id).join(", ") || "none"}.</p>
     </details>
   );
 }

@@ -175,7 +175,7 @@ try {
     viewport: contextOptions.viewport,
     reducedMotion: contextOptions.reducedMotion,
     userAgent: await page.evaluate(() => navigator.userAgent),
-    art: 'Approved AI-assisted atmospheric sky and ground plus synthesized wind; remaining historical planes, character rigs and crowds are procedural previews',
+    art: 'Approved atmospheric sky/ground/foreground, provisional Motte-derived siege walls, three provisional painted infantry rigs and rig-baked instanced crowds, synthesized wind and two Kenney cues. Hillfort/far ridge and civilian/cavalry roles remain unfinished. See docs/m8-personnel-review.md.',
     definitions: {
       bundles: 'Real HTTP response-body bytes with Accept-Encoding: gzip for the exact served script src tags, deduplicated and excluding noModule. Lazy scene/audio chunks are excluded unless present in those tags.',
       loads: 'Fresh Gallia document navigation time origin to each mark. One context is reused across direct loads, so later samples may use warm caches.',

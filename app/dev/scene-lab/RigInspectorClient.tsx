@@ -20,6 +20,7 @@ import { loadTextures, destroyTextures } from "@/engine/scene/loadTextures";
 import { PuppetActor } from "@/engine/scene/layers/PuppetActor";
 import { buildPartTextureCache } from "@/engine/scene/layers/puppetTextures";
 import { loadRig } from "@/engine/scene/puppet/rigLoader";
+import { measurePoseBounds } from "@/engine/scene/puppet/poseBounds";
 import { lintRig, type RigLintIssue } from "@/engine/scene/puppet/rigValidation";
 import { SceneRenderer } from "@/engine/scene/SceneRenderer";
 
@@ -182,18 +183,7 @@ export function RigInspectorClient({ rigIds }: { rigIds: string[] }) {
       const textures = buildPartTextureCache(loaded, ownedTextures);
       for (const [id, texture] of textures) ownedTextures.set(id, texture);
       const stage = renderer.getStageSize();
-      // Unlike ScenePlayer's Camera (which centres cameraContainer on the
-      // stage as part of its own beat/drift math), this inspector never
-      // constructs a Camera — cameraContainer starts at its Pixi default
-      // (0,0), i.e. the canvas's top-left corner. Centre it by hand so
-      // an actor placed at world (0,0) actually lands mid-canvas instead
-      // of at the top-left edge with half the rig clipped off-screen.
-      // The legionary rig's hip (root pivot) sits well above its own
-      // vertical midpoint — torso+head extend ~170px above it, legs
-      // ~127px below — so centring on the hip needs the origin placed
-      // somewhat below canvas-centre, not at it, for the whole figure
-      // (head included) to fit the visible height.
-      renderer.cameraContainer.position.set(stage.width / 2, stage.height * 0.58);
+      renderer.cameraContainer.position.set(stage.width / 2, stage.height / 2);
       const initialClip = loaded.clips.has(effectiveClipId) ? effectiveClipId : (rig.clips[0]?.id ?? "idle");
       const actor = new PuppetActor({
         rig: loaded,
@@ -201,14 +191,22 @@ export function RigInspectorClient({ rigIds }: { rigIds: string[] }) {
         clipId: initialClip,
         x: 0,
         y: 0,
-        scale: (Math.min(stage.width, stage.height) / 480) * 1.25,
+        scale: 1,
         flip: false,
         phaseMs: 0,
       });
+      // Fit the actual painted extent. The old hip-centred assumption
+      // clipped the heads of the new foot-grounded infantry rigs.
+      const bounds = measurePoseBounds(loaded, [actor.getWorldTransforms()]);
+      const fit = 0.8 * Math.min(stage.width / bounds.width, stage.height / bounds.height);
+      actor.container.scale.set(fit);
+      actor.container.position.set(-(bounds.x + bounds.width / 2) * fit, -(bounds.y + bounds.height / 2) * fit);
       renderer.cameraContainer.addChild(actor.container);
       actorRef.current = actor;
 
       const overlay = new Graphics();
+      overlay.scale.set(fit);
+      overlay.position.copyFrom(actor.container.position);
       renderer.cameraContainer.addChild(overlay);
       overlayRef.current = overlay;
 

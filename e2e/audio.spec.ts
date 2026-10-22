@@ -90,7 +90,7 @@ test("audio needs a trusted gesture, recovers from a failed load, and stops its 
   });
   const data = Region.parse(gallia);
   data.scene.planes.forEach((plane) => { plane.placeholder = true; });
-  data.beats.forEach((beat) => { delete beat.audio.cue; delete beat.audio.cueVolume; });
+  data.beats.forEach((beat) => { delete beat.audio.cue; delete beat.audio.cueVolume; beat.actors = []; });
   data.scene.audioAssets = { wind_plains: "audio/recovery-bed.wav" };
   data.scene.audioPlaceholder = false;
   const manifest = [{

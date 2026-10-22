@@ -1,0 +1,286 @@
+{
+  "recordedAt": "2026-10-22T21:59:30.824Z",
+  "baseURL": "http://localhost:3002",
+  "environment": "Headless desktop Chrome; local production HTTP; CDP CPU throttling is a desktop proxy, not a mobile GPU or 4G test",
+  "viewport": {
+    "width": 1280,
+    "height": 800
+  },
+  "reducedMotion": "no-preference",
+  "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/150.0.0.0 Safari/537.36",
+  "art": "Approved atmospheric sky/ground/foreground, provisional Motte-derived siege walls, three provisional painted infantry rigs and rig-baked instanced crowds, synthesized wind and two Kenney cues. Hillfort/far ridge and civilian/cavalry roles remain unfinished. See docs/m8-personnel-review.md.",
+  "definitions": {
+    "bundles": "Real HTTP response-body bytes with Accept-Encoding: gzip for the exact served script src tags, deduplicated and excluding noModule. Lazy scene/audio chunks are excluded unless present in those tags.",
+    "loads": "Fresh Gallia document navigation time origin to each mark. One context is reused across direct loads, so later samples may use warm caches.",
+    "atlasEntries": "Capture-phase trusted preview-button click to each mark on the same atlas document performance clock, with the normal cloud sweep and no reduced motion. Each sample has a fresh browser context; atlas boot time is outside this interval.",
+    "preRenderTicker": "imperium:scene-first-frame is the legacy ticker callback before rendering; it is neither visible scene presentation nor interactive readiness.",
+    "scenePresented": "imperium:scene-presented runs in Pixi postrender after the first visible beat composition: render-command submission, not GPU completion, display scanout, or the historic first-beat-interactive metric.",
+    "observedDOM": "MutationObserver timestamps follow React DOM changes: scene-route observation, data-engine-ready, and cloud data-active. They are observations, not internal router/cloud readiness marks. A negative cloudEndMinusScenePresentedMs means clouds ended before the scene render submission.",
+    "frames": "Three-second requestAnimationFrame timestamp-gap window on beat 5 after a three-second lead-in following its selection. Includes display scheduling and missed frames; not isolated CPU/GPU render duration. Tier is natural, never forced, and recorded before/after each window.",
+    "audio": "No scene-local activation gesture is sent during load timing; approved audio may remain gated. This does not measure a finished audible mix.",
+    "comparison": "Do not compare the new scene-presented or Atlas-click intervals to older pre-render ticker/first-beat-interactive claims as equivalent endpoints. A 16.7ms rAF median does not pass a strict less-than-16ms mobile render budget."
+  },
+  "bundles": {
+    "/atlas": {
+      "bytes": 140433,
+      "chunks": [
+        {
+          "src": "/_next/static/chunks/11jq0c2_zavac.js",
+          "bytes": 8504,
+          "encoding": "gzip"
+        },
+        {
+          "src": "/_next/static/chunks/3byuobrkyz9bj.js",
+          "bytes": 71628,
+          "encoding": "gzip"
+        },
+        {
+          "src": "/_next/static/chunks/2h8mq2n9nn_uc.js",
+          "bytes": 42739,
+          "encoding": "gzip"
+        },
+        {
+          "src": "/_next/static/chunks/turbopack-1omqh5338s00v.js",
+          "bytes": 3851,
+          "encoding": "gzip"
+        },
+        {
+          "src": "/_next/static/chunks/278axw9oxgjty.js",
+          "bytes": 5717,
+          "encoding": "gzip"
+        },
+        {
+          "src": "/_next/static/chunks/02ikrwu3kyil4.js",
+          "bytes": 4422,
+          "encoding": "gzip"
+        },
+        {
+          "src": "/_next/static/chunks/3mc6dra1m0098.js",
+          "bytes": 3572,
+          "encoding": "gzip"
+        }
+      ]
+    },
+    "/scene/gallia": {
+      "bytes": 138178,
+      "chunks": [
+        {
+          "src": "/_next/static/chunks/11jq0c2_zavac.js",
+          "bytes": 8504,
+          "encoding": "gzip"
+        },
+        {
+          "src": "/_next/static/chunks/3byuobrkyz9bj.js",
+          "bytes": 71628,
+          "encoding": "gzip"
+        },
+        {
+          "src": "/_next/static/chunks/2h8mq2n9nn_uc.js",
+          "bytes": 42739,
+          "encoding": "gzip"
+        },
+        {
+          "src": "/_next/static/chunks/turbopack-1omqh5338s00v.js",
+          "bytes": 3851,
+          "encoding": "gzip"
+        },
+        {
+          "src": "/_next/static/chunks/278axw9oxgjty.js",
+          "bytes": 5717,
+          "encoding": "gzip"
+        },
+        {
+          "src": "/_next/static/chunks/08c7_ajoqlve1.js",
+          "bytes": 2167,
+          "encoding": "gzip"
+        },
+        {
+          "src": "/_next/static/chunks/3mc6dra1m0098.js",
+          "bytes": 3572,
+          "encoding": "gzip"
+        }
+      ]
+    }
+  },
+  "loads": [
+    {
+      "rate": 1,
+      "timeOrigin": 1792706268415.1,
+      "navigationToPreRenderTickerMs": 1501.8999999985099,
+      "navigationToScenePresentedMs": 1942.699999999255,
+      "pixiInitMs": 273.7000000011176,
+      "sceneGraphMs": 314.09999999962747,
+      "graphToScenePresentedMs": 527.5,
+      "naturalTier": "low"
+    },
+    {
+      "rate": 1,
+      "timeOrigin": 1792706292556,
+      "navigationToPreRenderTickerMs": 833.5,
+      "navigationToScenePresentedMs": 1031,
+      "pixiInitMs": 141.90000000037253,
+      "sceneGraphMs": 300,
+      "graphToScenePresentedMs": 219.5,
+      "naturalTier": "low"
+    },
+    {
+      "rate": 1,
+      "timeOrigin": 1792706293794.2,
+      "navigationToPreRenderTickerMs": 594.5999999996275,
+      "navigationToScenePresentedMs": 766.6999999992549,
+      "pixiInitMs": 65,
+      "sceneGraphMs": 219,
+      "graphToScenePresentedMs": 180.69999999925494,
+      "naturalTier": "low"
+    },
+    {
+      "rate": 4,
+      "timeOrigin": 1792706294655.5,
+      "navigationToPreRenderTickerMs": 874,
+      "navigationToScenePresentedMs": 1143.0999999996275,
+      "pixiInitMs": 230.5,
+      "sceneGraphMs": 283.7000000011176,
+      "graphToScenePresentedMs": 320.8999999985099,
+      "naturalTier": "low"
+    },
+    {
+      "rate": 6,
+      "timeOrigin": 1792706296017.1,
+      "navigationToPreRenderTickerMs": 1357.1000000014901,
+      "navigationToScenePresentedMs": 1740.6000000014901,
+      "pixiInitMs": 439.40000000037253,
+      "sceneGraphMs": 491.69999999925494,
+      "graphToScenePresentedMs": 384.2000000011176,
+      "naturalTier": "low"
+    }
+  ],
+  "atlasEntries": [
+    {
+      "rate": 1,
+      "cache": "Fresh browser context; normal atlas prefetch permitted",
+      "timeOrigin": 1792706298284.8,
+      "navigationToPreRenderTickerMs": 3671.300000000745,
+      "navigationToScenePresentedMs": 4330.60000000149,
+      "pixiInitMs": 374.69999999925494,
+      "sceneGraphMs": 592.1000000014901,
+      "graphToScenePresentedMs": 814,
+      "naturalTier": "low",
+      "clickAtDocumentMs": 1289.7000000011176,
+      "clickToPreRenderTickerMs": 2381.5999999996275,
+      "clickToScenePresentedMs": 3040.9000000003725,
+      "clickToSceneRouteDOMObservedMs": 959.7999999988824,
+      "clickToEngineReadyDOMObservedMs": null,
+      "clickToCloudActiveDOMObservedMs": 6.400000000372529,
+      "clickToCloudEndDOMObservedMs": 2133.199999999255,
+      "cloudEndMinusScenePresentedMs": -907.7000000011176
+    },
+    {
+      "rate": 1,
+      "cache": "Fresh browser context; normal atlas prefetch permitted",
+      "timeOrigin": 1792706303395.2,
+      "navigationToPreRenderTickerMs": 3803.199999999255,
+      "navigationToScenePresentedMs": 4445.800000000745,
+      "pixiInitMs": 634.6000000014901,
+      "sceneGraphMs": 363.09999999962747,
+      "graphToScenePresentedMs": 796.4000000003725,
+      "naturalTier": "low",
+      "clickAtDocumentMs": 1377.300000000745,
+      "clickToPreRenderTickerMs": 2425.89999999851,
+      "clickToScenePresentedMs": 3068.5,
+      "clickToSceneRouteDOMObservedMs": 919.6999999992549,
+      "clickToEngineReadyDOMObservedMs": null,
+      "clickToCloudActiveDOMObservedMs": 7.099999999627471,
+      "clickToCloudEndDOMObservedMs": 2184.89999999851,
+      "cloudEndMinusScenePresentedMs": -883.6000000014901
+    },
+    {
+      "rate": 1,
+      "cache": "Fresh browser context; normal atlas prefetch permitted",
+      "timeOrigin": 1792706308563.1,
+      "navigationToPreRenderTickerMs": 3535.9000000003725,
+      "navigationToScenePresentedMs": 3968.60000000149,
+      "pixiInitMs": 280.69999999925494,
+      "sceneGraphMs": 467.5,
+      "graphToScenePresentedMs": 551.7000000011176,
+      "naturalTier": "low",
+      "clickAtDocumentMs": 1352.5,
+      "clickToPreRenderTickerMs": 2183.4000000003725,
+      "clickToScenePresentedMs": 2616.10000000149,
+      "clickToSceneRouteDOMObservedMs": 1007.1000000014901,
+      "clickToEngineReadyDOMObservedMs": 2464.2000000011176,
+      "clickToCloudActiveDOMObservedMs": 8.900000000372529,
+      "clickToCloudEndDOMObservedMs": 2641.7000000011176,
+      "cloudEndMinusScenePresentedMs": 25.59999999962747
+    },
+    {
+      "rate": 4,
+      "cache": "Fresh browser context; normal atlas prefetch permitted",
+      "timeOrigin": 1792706313791.3,
+      "navigationToPreRenderTickerMs": 8854.300000000745,
+      "navigationToScenePresentedMs": 10662.700000001118,
+      "pixiInitMs": 1192.5,
+      "sceneGraphMs": 727.5999999996275,
+      "graphToScenePresentedMs": 2287.800000000745,
+      "naturalTier": "low",
+      "clickAtDocumentMs": 3591.2000000011176,
+      "clickToPreRenderTickerMs": 5263.0999999996275,
+      "clickToScenePresentedMs": 7071.5,
+      "clickToSceneRouteDOMObservedMs": 1624.9000000003725,
+      "clickToEngineReadyDOMObservedMs": null,
+      "clickToCloudActiveDOMObservedMs": 230,
+      "clickToCloudEndDOMObservedMs": 3496.9000000003725,
+      "cloudEndMinusScenePresentedMs": -3574.5999999996275
+    },
+    {
+      "rate": 6,
+      "cache": "Fresh browser context; normal atlas prefetch permitted",
+      "timeOrigin": 1792706326054.4,
+      "navigationToPreRenderTickerMs": 14772.300000000745,
+      "navigationToScenePresentedMs": 17150.900000000373,
+      "pixiInitMs": 1818.699999999255,
+      "sceneGraphMs": 1251.300000000745,
+      "graphToScenePresentedMs": 4112.5999999996275,
+      "naturalTier": "low",
+      "clickAtDocumentMs": 5616.300000000745,
+      "clickToPreRenderTickerMs": 9156,
+      "clickToScenePresentedMs": 11534.599999999627,
+      "clickToSceneRouteDOMObservedMs": 2691.7999999988824,
+      "clickToEngineReadyDOMObservedMs": null,
+      "clickToCloudActiveDOMObservedMs": 227.59999999962747,
+      "clickToCloudEndDOMObservedMs": 4762.699999999255,
+      "cloudEndMinusScenePresentedMs": -6771.9000000003725
+    }
+  ],
+  "frames": [
+    {
+      "rate": 1,
+      "beat": "two-battles",
+      "tierBeforeWindow": "low",
+      "tierAfterWindow": "low",
+      "count": 91,
+      "medianMs": 33.30000000000018,
+      "p95Ms": 33.400000000000546,
+      "maxMs": 33.400000000000546
+    },
+    {
+      "rate": 4,
+      "beat": "two-battles",
+      "tierBeforeWindow": "low",
+      "tierAfterWindow": "low",
+      "count": 88,
+      "medianMs": 33.30000000000109,
+      "p95Ms": 33.400000000001455,
+      "maxMs": 66.70000000000073
+    },
+    {
+      "rate": 6,
+      "beat": "two-battles",
+      "tierBeforeWindow": "low",
+      "tierAfterWindow": "low",
+      "count": 76,
+      "medianMs": 33.30000000000018,
+      "p95Ms": 66.70000000000073,
+      "maxMs": 133.39999999999964
+    }
+  ]
+}

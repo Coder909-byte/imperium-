@@ -10,7 +10,7 @@ export function assetFile(asset: string): string | null {
     ? `public/assets/${asset}` : null;
 }
 
-export function approvedAssetUrl(asset: string, manifest: readonly ManifestEntry[], usage: "asset" | "atmosphere" | "structure-draft" = "asset"): string | undefined {
+export function approvedAssetUrl(asset: string, manifest: readonly ManifestEntry[], usage: "asset" | "atmosphere" | "structure-draft" | "character-draft" = "asset"): string | undefined {
   const file = assetFile(asset);
   const entry = manifest.find((row) => row.file === file);
   if (!file || !entry?.approval) return undefined;
@@ -20,7 +20,9 @@ export function approvedAssetUrl(asset: string, manifest: readonly ManifestEntry
     // from silently becoming permission for historical reconstruction.
     const scoped = entry.derivation.kind === "ai-assisted-atmosphere"
       ? usage === "atmosphere" && entry.approval.scope === "atmospheric-derivative"
-      : usage === "structure-draft" && entry.approval.scope === "structural-draft";
+      : entry.derivation.kind === "ai-assisted-structure-draft"
+        ? usage === "structure-draft" && entry.approval.scope === "structural-draft"
+        : usage === "character-draft" && entry.approval.scope === "character-draft";
     if (!scoped || !file.endsWith(".webp")
       || !source?.approval || source.derivation || !/^(CC0|Public domain)$/i.test(source.licence)) return undefined;
   } else if (!/^(CC0|Public domain)$/i.test(entry.licence)) return undefined;

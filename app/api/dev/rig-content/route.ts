@@ -9,7 +9,7 @@ import { Rig } from "@/content/schema";
 import { loadManifest } from "@/app/scene/[regionId]/loadManifest";
 
 const RIGS_DIR = join(process.cwd(), "content", "rigs");
-const VALID_ID = /^[a-z0-9-]+$/;
+const VALID_ID = /^[a-z0-9_-]+$/;
 
 export async function GET(request: NextRequest) {
   if (process.env.NODE_ENV !== "development") {

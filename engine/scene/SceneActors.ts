@@ -21,7 +21,10 @@
 import type { Container, Texture } from "pixi.js";
 import type { FrameTicker } from "./deviceTier";
 import { createCrowdMarchFrames } from "./layers/crowdTexture";
-import { CrowdField, type CrowdUnitState } from "./layers/CrowdField";
+import { bakeCrowdFrames, type BakedCrowdFrames } from "./layers/bakeCrowdFrames";
+import { CrowdField } from "./layers/CrowdField";
+import { batchAdjacentActors, placeCrowdUnit } from "./layers/crowdPlacement";
+import { mulberry32 } from "./prng";
 import { PuppetActor } from "./layers/PuppetActor";
 import { buildPartTextureCache } from "./layers/puppetTextures";
 import { loadRig } from "./puppet/rigLoader";
@@ -30,12 +33,6 @@ import type { SceneActor } from "./types";
 
 const MAX_TICK_MS = 100; // same stall-clamp rationale as SceneEffects' MAX_TICK_SECONDS
 const DEFAULT_CROWD_CYCLE_MS = 800;
-// A distant crowd's scatter footprint, scaled by the actor entry's own
-// `scale` — tuned by eye against the placeholder region, not measured
-// (same honesty as HANDHELD_DRIFT/PARALLAX_STRENGTH_PX: expect this to
-// move once real art gives a real sense of "distant" scale to judge against).
-const CROWD_SPREAD_X = 260;
-const CROWD_SPREAD_Y = 70;
 
 interface RigEntry {
   rig: LoadedRig;
@@ -60,6 +57,7 @@ export class SceneActors {
   private readonly layersContainer: Container;
   private readonly rigs = new Map<string, RigEntry>();
   private readonly crowdFrames = createCrowdMarchFrames();
+  private readonly paintedCrowds = new Map<string, BakedCrowdFrames>();
   private puppets: PuppetActor[] = [];
   private crowds: CrowdField[] = [];
   private reducedMotion = false;
@@ -98,8 +96,9 @@ export class SceneActors {
     this.puppets = [];
     this.crowds = [];
 
-    for (const authored of actors) {
-      const actor = { ...authored, x: authored.x * this.placementScale, y: authored.y * this.placementScale, scale: authored.scale * this.placementScale };
+    const placed = actors.map((actor) => ({ ...actor, x: actor.x * this.placementScale, y: actor.y * this.placementScale, scale: actor.scale * this.placementScale }));
+    for (const batch of batchAdjacentActors(placed)) {
+      const actor = batch[0];
       const entry = this.rigs.get(actor.rig);
       if (!entry) {
         if (process.env.NODE_ENV !== "production") {
@@ -109,7 +108,7 @@ export class SceneActors {
       }
 
       if (actor.count > 1) {
-        this.crowds.push(this.buildCrowd(actor, entry));
+        this.crowds.push(this.buildCrowd(batch, entry));
       } else {
         const puppet = new PuppetActor({
           rig: entry.rig,
@@ -129,20 +128,23 @@ export class SceneActors {
     }
   }
 
-  private buildCrowd(actor: SceneActor, entry: RigEntry): CrowdField {
+  private buildCrowd(actors: readonly SceneActor[], entry: RigEntry): CrowdField {
+    const actor = actors[0];
     const cycleMs = entry.rig.clips.get(actor.clip)?.durationMs ?? DEFAULT_CROWD_CYCLE_MS;
-    const spreadX = CROWD_SPREAD_X * actor.scale;
-    const spreadY = CROWD_SPREAD_Y * actor.scale;
-    const spawn = (rand: () => number): CrowdUnitState => ({
-      x: actor.x + (rand() - 0.5) * 2 * spreadX,
-      y: actor.y + (rand() - 0.5) * 2 * spreadY,
-      scale: actor.scale * (0.85 + rand() * 0.3),
-      // Seeded, per-unit, NOT derived from the unit's index — a
-      // `phase = index / count` ramp reads as a Mexican wave rippling
-      // through the crowd rather than independently-marching units.
-      phaseMs: rand() * cycleMs,
+    const painted = entry.rig.parts.every((part) => part.texture.startsWith("/assets/"));
+    const key = `${actor.rig}:${actor.clip}`;
+    let atlas = this.paintedCrowds.get(key);
+    if (painted && !atlas) {
+      atlas = bakeCrowdFrames(entry.rig, entry.textures, actor.clip);
+      this.paintedCrowds.set(key, atlas);
+    }
+    const units = actors.flatMap((formation) => {
+      const seed = [...`${formation.rig}:${formation.x}:${formation.y}:${formation.phase}`].reduce((value, character) => Math.imul(value, 31) + character.charCodeAt(0) | 0, 17);
+      const rand = mulberry32(seed);
+      return Array.from({ length: formation.count }, (_, index) => placeCrowdUnit(formation, index, rand, cycleMs, atlas?.scale));
     });
-    const crowd = new CrowdField({ frames: this.crowdFrames, count: actor.count, cycleMs, flip: actor.flip, spawn });
+    const spawn = (_rand: () => number, index: number) => units[index];
+    const crowd = new CrowdField({ frames: atlas?.frames ?? this.crowdFrames, anchorX: atlas?.anchorX, anchorY: atlas?.anchorY, count: units.length, cycleMs, flip: actor.flip, spawn });
     crowd.setReducedMotion(this.reducedMotion);
     crowd.container.zIndex = actor.depth;
     this.layersContainer.addChild(crowd.container);
@@ -164,9 +166,8 @@ export class SceneActors {
     for (const crowd of this.crowds) crowd.destroy();
     this.puppets = [];
     this.crowds = [];
-    // Part/crowd textures are tiny procedural canvases (like M5's
-    // particle textures) — left for SceneRenderer's whole-context
-    // `removeView: true` teardown to reclaim rather than destroyed
-    // individually here, same precedent ParticleField.destroy() set.
+    // ParticleContainer retains shader bindings until renderer teardown.
+    // Release atlas references here; its context teardown owns GPU disposal.
+    this.paintedCrowds.clear();
   }
 }

@@ -1,6 +1,9 @@
 import { describe, expect, it } from "vitest";
 import galliaJson from "./regions/gallia.json";
 import legionaryJson from "./rigs/legionary.json";
+import romanJson from "./rigs/roman_infantry.json";
+import gallicJson from "./rigs/gaul_warrior.json";
+import gallicBlueJson from "./rigs/gaul_warrior_blue.json";
 import { ManifestEntry, Region, Rig } from "./schema";
 import manifestJson from "./assets/manifest.json";
 import { validateSceneReferences } from "./sceneValidation";
@@ -12,10 +15,19 @@ import { validateAssetReferences } from "./assetReferences";
 import { existsSync } from "node:fs";
 
 const gallia = () => Region.parse(structuredClone(galliaJson));
-const rigs = [Rig.parse(legionaryJson)];
+const rigs = [legionaryJson, romanJson, gallicJson, gallicBlueJson].map((rig) => Rig.parse(rig));
 const manifest = manifestJson.map((row) => ManifestEntry.parse(row));
 
 describe("Gallia's review sequence", () => {
+  it("uses painted provisional military rigs throughout and keeps 150 battle crowd units instanced", () => {
+    const region = gallia();
+    const props = buildSceneProps(region, rigs, manifest);
+    expect(props.rigs.every((rig) => rig.draft && rig.parts.every((part) => part.texture.startsWith("/assets/")))).toBe(true);
+    expect(region.beats[4].actors.filter((actor) => actor.count > 1).reduce((sum, actor) => sum + actor.count, 0)).toBe(150);
+    expect(new Set(region.beats[4].actors.map((actor) => actor.rig))).toEqual(new Set(["roman_infantry", "gaul_warrior", "gaul_warrior_blue"]));
+    expect(props.beats[4].camera.from).toEqual(region.beats[4].camera.from);
+    expect(cameraForBeat(props.beats[4]).from).toEqual(region.beats[4].camera.from);
+  });
   it("passes approved quiet work and cloth cues through to the player, leaving the Mandubii without a cue", () => {
     const region = gallia();
     expect(validateAssetReferences(region, manifest, existsSync)).toEqual([]);
@@ -94,8 +106,8 @@ describe("Gallia's review sequence", () => {
     region.beats[0].actors[1].clip = "unknown";
     expect(validateSceneReferences(region, rigs)).toEqual(expect.arrayContaining([
       'unknown LUT "typo"', 'the-hill: unknown rig "missing"',
-      'the-hill: unknown clip "unknown" on rig "legionary"',
-      'the-hill: crowds support only the march clip',
+      'the-hill: unknown clip "unknown" on rig "roman_infantry"',
+      'the-hill: crowds require march or a painted looping clip',
     ]));
   });
 });

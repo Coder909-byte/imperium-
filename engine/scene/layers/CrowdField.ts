@@ -35,6 +35,8 @@ export interface CrowdFieldOptions {
   count: number;
   cycleMs: number;
   flip: boolean;
+  anchorX?: number;
+  anchorY?: number;
   spawn: (rand: () => number, index: number) => CrowdUnitState;
   /** Testing/determinism seam — defaults to Math.random, same
    *  convention as ParticleField. */
@@ -69,7 +71,7 @@ export class CrowdField {
 
     for (let i = 0; i < options.count; i++) {
       const state = options.spawn(rand, i);
-      const particle = new Particle({ texture: this.frames[0], x: state.x, y: state.y, scaleX: this.flip ? -state.scale : state.scale, scaleY: state.scale, anchorX: 0.5, anchorY: 1 });
+      const particle = new Particle({ texture: this.frames[0], x: state.x, y: state.y, scaleX: this.flip ? -state.scale : state.scale, scaleY: state.scale, anchorX: options.anchorX ?? 0.5, anchorY: options.anchorY ?? 1 });
       this.container.addParticle(particle);
       this.slots.push({ particle, state, frameIndex: 0 });
     }

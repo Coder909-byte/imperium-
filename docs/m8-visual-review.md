@@ -29,23 +29,23 @@ For a fresh screenshot audit: `node scripts/audit-gallia-visuals.mjs http://loca
 
 ## Remaining per-beat placeholders and omissions
 
-| Beat | Plane placeholders still authored | Characters/crowds still procedural or absent |
+| Beat | Plane placeholders still authored | Personnel treatment and missing roles |
 |---|---|---|
-| 1 — The hill | `gallia/hillfort.webp`, `gallia/far_ridge.webp` | Three generic march groups, 42 units total; no real Gallic costume art. |
-| 2 — Eighteen kilometres | `gallia/hillfort.webp`, `gallia/far_ridge.webp` | Three procedural legionary puppets, two generic crowd groups (32 units); no finished engineer/costume art. Inner wall is a provisional painted draft. Outer wall stays hidden. |
-| 3 — Second wall | `gallia/hillfort.webp`, `gallia/far_ridge.webp` | Six generic crowd groups (112 units); distinct Gallic relief art absent. Both walls are provisional draft placements. |
-| 4 — Mandubii | `gallia/hillfort.webp` | Five procedural guards; civilians entirely missing. Both walls are provisional. No ridge/foreground is authored here. |
-| 5 — Two battles | `gallia/hillfort.webp`, `gallia/far_ridge.webp` | Five procedural puppets, four generic crowd groups (150 units); Gallic/cavalry roles missing. Both walls provisional. |
-| 6 — Rides out alone | `gallia/hillfort.webp`, `gallia/far_ridge.webp` | Four procedural guards; horse/rider and surrendered Vercingetorix absent. Both walls provisional. |
+| 1 — The hill | `gallia/hillfort.webp`, `gallia/far_ridge.webp` | Three painted provisional Roman march groups, 42 instanced figures. |
+| 2 — Eighteen kilometres | `gallia/hillfort.webp`, `gallia/far_ridge.webp` | Three painted provisional Roman puppets and 32 instanced troops. Dedicated engineers/tools still absent. Inner wall provisional; outer wall correctly hidden. |
+| 3 — Second wall | `gallia/hillfort.webp`, `gallia/far_ridge.webp` | 32 painted Roman and 80 painted Gallic instanced troops; both walls provisional. |
+| 4 — Mandubii | `gallia/hillfort.webp` | Five painted provisional Roman guards; expelled civilian people/crowds entirely absent. |
+| 5 — Two battles | `gallia/hillfort.webp`, `gallia/far_ridge.webp` | Five painted key infantry (three Roman, two Gallic), 150 painted instanced troops. Caesar, horses and flanking cavalry absent. Both walls provisional. |
+| 6 — Rides out alone | `gallia/hillfort.webp`, `gallia/far_ridge.webp` | Four painted provisional Roman guards; Vercingetorix and his horse entirely absent. |
 
-Every individual puppet still resolves all thirteen legionary parts to procedural textures. Crowd groups share `engine/scene/layers/crowdTexture.ts`, not an approved painted costume atlas. Low tier omits the optional ridge and foreground but retains the hill/inner/outer logical layers and merged atmospheric ground. Missing-art labels remain inspectable in scene-lab. The public preview's absence of labels is not proof that the missing art exists.
+Gallia now references three painted provisional infantry rigs and their own cached four-pose crowd atlases. None of its personnel uses the old procedural legionary or generic crowd art. This does not fill the missing civilian/cavalry roles. Low tier retains the merged atmosphere plus hill/inner/outer logical layers within four physical sprites. The public unfinished-art notice remains. See `docs/m8-personnel-review.md` for the 2026-10-23 personnel increment and evidence.
 
 The new foreground is 60,650 bytes and the shared rampart is 78,338 bytes; no duplicate payload is counted for its second placement. Total referenced payload is 851,692 bytes across seven files. Staged source scans are not shipped or counted as scene transfers.
 
 ## Exact remaining blockers
 
 - A suitable source and preparation decision for the Alesia hill/oppidum. Motte approval covers the tower/rampart study; it does not authorize inventing hillfort details. The USMA [siege map](https://commons.wikimedia.org/wiki/File:Siege_of_Alesia,_52_BC.gif) was located as a possible future topographic reference, with a public-domain federal-work notice. It is not painted art, has not been approved/downloaded into the repo and does not establish how buildings or ramparts looked.
-- A finished distant-ridge cut, real legionary/Gallic/civilian/cavalry art and corresponding crowd frames; current silhouettes/guards do not tell the Mandubii or surrender story visually.
+- A finished distant-ridge cut, civilian people/crowds for beat 4, mounted cavalry/Caesar for beat 5 and Vercingetorix/horse for beat 6. The new infantry remains provisional pending art/history review; guards do not tell the Mandubii or surrender story by themselves.
 - Historical and art review of the provisional Motte wall construction, repeated/mirrored staging, straight foundation edge and missing ditch/trap detail. It is not a final engineered reconstruction. Composition/LUT/effect/pacing review against final art remains open.
 - Audible mix approval and Safari/Pixel-class/network/frame-time checks, followed by the actual M8 end-to-end viewer acceptance criterion. Desktop captures and tests do not replace those checks.
 

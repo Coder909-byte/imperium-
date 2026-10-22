@@ -41,7 +41,7 @@ test("approved plane and audio references use real loaders, and missing artwork 
     const body = z.object({ ok: z.boolean(), data: Region, rigs: z.array(Rig) }).parse(await response.json());
     const data = Region.parse(body.data);
     data.scene.planes.forEach((plane) => { plane.placeholder = true; });
-    data.beats.forEach((beat) => { delete beat.audio.cue; delete beat.audio.cueVolume; });
+    data.beats.forEach((beat) => { delete beat.audio.cue; delete beat.audio.cueVolume; beat.actors = []; });
     const skyAsset = broken ? "gallia/broken-sky.webp" : "gallia/test-sky.webp";
     data.scene.planes[0].asset = skyAsset;
     data.scene.planes[0].placeholder = false;
@@ -52,7 +52,7 @@ test("approved plane and audio references use real loaders, and missing artwork 
       file: `public/assets/${asset}`, source: "https://example.com/test", licence: "CC0", retrieved: "2026-10-22",
       approval: { by: "synthetic test fixture", at: "2026-10-22", rightsUrl: "https://example.com/test", rightsStatement: "Synthetic test fixture only" },
     }));
-    await route.fulfill({ json: { ...body, data, manifest } });
+    await route.fulfill({ json: { ...body, data, rigs: [], manifest } });
   });
   await page.emulateMedia({ reducedMotion: "reduce" });
   await page.goto("/dev/scene-lab");

@@ -278,7 +278,7 @@ export function ScenePlayer({ region, onExit, forcedTier, forcedLut, forcedChain
       <div ref={containerRef} className={styles.canvasHost} />
       {renderError && <p role="alert" className={styles.renderError}>{renderError}</p>}
       <div className={styles.topBar} />
-      {(region.planes.some((plane) => !plane.assetUrl || plane.draft) || region.rigs.some((rig) => rig.parts.some((part) => !part.texture.startsWith("/assets/")))
+      {(region.planes.some((plane) => !plane.assetUrl || plane.draft) || region.rigs.some((rig) => rig.draft || rig.parts.some((part) => !part.texture.startsWith("/assets/")))
         || region.beats.some((beat) => beat.actors.some((actor) => actor.count > 1))) && <span className={styles.artStatus}>Artwork in progress</span>}
 
       <button type="button" className={styles.exitButton} onClick={exitScene}>

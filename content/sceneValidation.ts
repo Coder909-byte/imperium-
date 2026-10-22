@@ -14,9 +14,11 @@ export function validateSceneReferences(region: Region, rigs: readonly Rig[]): s
       else if (!rig.clips.some((clip) => clip.id === actor.clip)) {
         issues.push(`${beat.id}: unknown clip "${actor.clip}" on rig "${actor.rig}"`);
       }
-      // CrowdField currently has one march atlas; accepting other clips
-      // here would silently substitute a march for the authored action.
-      if (actor.count > 1 && actor.clip !== "march") issues.push(`${beat.id}: crowds support only the march clip`);
+      // Painted crowds bake the authored loop; procedural crowds still
+      // have only their explicit generic march atlas.
+      const paintedLoop = rig && rig.parts.every((part) => part.texture.endsWith(".webp"))
+        && rig.clips.some((clip) => clip.id === actor.clip && clip.loop);
+      if (actor.count > 1 && actor.clip !== "march" && !paintedLoop) issues.push(`${beat.id}: crowds require march or a painted looping clip`);
     }
   }
   return issues;

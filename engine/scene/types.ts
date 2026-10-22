@@ -22,6 +22,7 @@ export type { RigDef } from "./puppet/types";
 export type FxKind = "dust" | "smoke" | "embers" | "rain" | "arrow_volley" | "fire" | "shake" | "flash";
 
 export interface SceneCamera {
+  from?: { x: number; y: number; scale: number };
   /** Pan target, as a fraction of the current stage size — e.g. 0.3 pans
    *  30% of the stage width. Not pixels: recomputed against the live
    *  stage size at the start of every beat, so it stays sane across a
@@ -70,6 +71,8 @@ export interface SceneActor {
    *  ignored (SceneActors assigns each crowd unit its own seeded-random
    *  phase instead — see CrowdField's phaseMs comment for why). */
   phase: number;
+  /** Spacing in rig pixels, scaled with the formation's actor scale. */
+  formation?: { columns: number; spacing: [number, number]; jitter: number };
   /** Where this actor sits in the plane depth stack (PRD §3's
    *  "character stage" slot) — same 0..1 range as ScenePlane.depth,
    *  compared against it directly for draw order (Container.zIndex). */

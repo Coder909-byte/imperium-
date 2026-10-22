@@ -49,6 +49,7 @@ export interface RigPartDef {
 
 export interface RigDef {
   id: string;
+  draft?: boolean;
   parts: RigPartDef[];
   clips: RigClipDef[];
 }

@@ -12,11 +12,12 @@ import type { RigDef, SceneRegion } from "@/engine/scene/types";
 export function adaptRig(rig: Rig, manifest?: ManifestEntry[]): RigDef {
   return {
     id: rig.id,
+    draft: rig.draft,
     parts: rig.parts.map((part) => ({
       id: part.id,
       parent: part.parent,
       texture: !manifest || ["torso", "head", "limb", "foot"].includes(part.texture) ? part.texture : (() => {
-        const url = approvedAssetUrl(part.texture, manifest);
+        const url = approvedAssetUrl(part.texture, manifest, rig.draft ? "character-draft" : "asset");
         if (!url) throw new Error(`Unapproved rig texture: ${part.texture}`);
         return url;
       })(),
@@ -72,6 +73,7 @@ export function buildSceneProps(region: Region, rigs: Rig[] = [], manifest: Mani
       body: beat.body,
       visibleLayers: beat.visibleLayers,
       camera: {
+        from: beat.camera.from,
         x: beat.camera.x,
         y: beat.camera.y,
         scale: beat.camera.scale,
@@ -92,6 +94,7 @@ export function buildSceneProps(region: Region, rigs: Rig[] = [], manifest: Mani
         count: actor.count,
         flip: actor.flip,
         phase: actor.phase,
+        formation: actor.formation,
         depth: actor.depth,
       })),
     })),

@@ -1,8 +1,8 @@
 import { describe, expect, it } from "vitest";
-import { ManifestEntry, Region } from "./schema";
+import { ManifestEntry, Region, Rig } from "./schema";
 import { approvedAssetUrl, assetFile, measureRegionAssets, SCENE_ASSET_BUDGET_BYTES, validateAssetReferences } from "./assetReferences";
 import galliaJson from "./regions/gallia.json";
-import { buildSceneProps } from "../app/scene/[regionId]/buildSceneProps";
+import { adaptRig, buildSceneProps } from "../app/scene/[regionId]/buildSceneProps";
 
 // Synthetic approval fixture; never written to the production manifest.
 const row = ManifestEntry.parse({ file: "public/assets/gallia/sky.webp", source: "https://example.com/source", licence: "Public domain", retrieved: "2026-10-22" });
@@ -17,6 +17,23 @@ const isolatedRegion = () => {
 };
 
 describe("approved asset boundary", () => {
+  it("keeps character-draft permission separate from scenery, structures and final rig art", () => {
+    const source = ManifestEntry.parse({ ...approved, file: "content/assets/staging/helmet.jpg" });
+    const draft = ManifestEntry.parse({ ...approved, licence: "Owner-approved provisional AI-assisted personnel",
+      approval: { ...approved.approval, scope: "character-draft" },
+      derivation: { kind: "ai-assisted-character-draft", sourceFile: source.file, modifications: "Interpretive infantry, not documentary reconstruction" },
+    });
+    const manifest = [source, draft];
+    expect(approvedAssetUrl("gallia/sky.webp", manifest, "character-draft")).toBe("/assets/gallia/sky.webp");
+    for (const usage of ["asset", "atmosphere", "structure-draft"] as const) expect(approvedAssetUrl("gallia/sky.webp", manifest, usage)).toBeUndefined();
+    const rig = Rig.parse({ id: "fixture", draft: true,
+      parts: [{ id: "body", parent: null, texture: "gallia/sky.webp", size: [10, 10], pivot: [5, 10], zOrder: 0, rest: { x: 0, y: 0 } }],
+      clips: [{ id: "idle", durationMs: 1000, loop: true, tracks: {} }],
+    });
+    expect(adaptRig(rig, manifest).parts[0].texture).toBe("/assets/gallia/sky.webp");
+    expect(() => adaptRig({ ...rig, draft: false }, manifest)).toThrow("Unapproved rig texture");
+    expect(approvedAssetUrl("gallia/sky.webp", [{ ...draft, approval: { ...draft.approval!, scope: "structural-draft" } }, source], "character-draft")).toBeUndefined();
+  });
   it("requires separate explicit structure-draft approval and never promotes it to final art or figure/audio use", () => {
     const source = ManifestEntry.parse({ ...approved, file: "content/assets/staging/motte.jpg" });
     const draft = ManifestEntry.parse({ ...approved, licence: "Owner-approved provisional AI-assisted structure draft",

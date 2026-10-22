@@ -11,6 +11,7 @@ export const Beat = z.object({
   body: z.string().min(180).max(700),
   visibleLayers: z.array(z.string()),
   camera: z.object({
+    from: z.object({ x: z.number(), y: z.number(), scale: z.number().positive() }).optional(),
     x: z.number().default(0),
     y: z.number().default(0),
     scale: z.number().positive().default(1),
@@ -40,6 +41,11 @@ export const Beat = z.object({
         count: z.number().int().positive().default(1), // >1 → instanced crowd
         flip: z.boolean().default(false),
         phase: z.number().default(0), // animation time offset
+        formation: z.object({
+          columns: z.number().int().min(1).max(64),
+          spacing: z.tuple([z.number().positive(), z.number().positive()]),
+          jitter: z.number().min(0).max(0.5).default(0.15),
+        }).optional(),
         // Where this actor sits in the plane depth stack (PRD §3's
         // "character stage" slot sits between mid and near terrain).
         // Defaulted rather than required so no existing beat needs
@@ -270,6 +276,7 @@ export const RigPart = z.object({
 export const Rig = z
   .object({
     id: z.string(),
+    draft: z.boolean().default(false),
     parts: z.array(RigPart).min(1),
     clips: z.array(RigClip).min(1),
   })
@@ -517,14 +524,14 @@ export const ManifestEntry = z.object({
     .optional(),
   notes: z.string().optional(),
   derivation: z.object({
-    kind: z.enum(["ai-assisted-atmosphere", "ai-assisted-structure-draft"]),
+    kind: z.enum(["ai-assisted-atmosphere", "ai-assisted-structure-draft", "ai-assisted-character-draft"]),
     sourceFile: z.string().min(1),
     modifications: z.string().min(1),
   }).optional(),
   // Set only after human review of the specific reproduction's rights.
   // Forge records provenance, never grants approval on the user's behalf.
   approval: z.object({
-    scope: z.enum(["asset", "atmospheric-derivative", "structural-draft"]).default("asset"),
+    scope: z.enum(["asset", "atmospheric-derivative", "structural-draft", "character-draft"]).default("asset"),
     by: z.string().min(1),
     at: z.iso.date(),
     rightsUrl: z.string().url(),

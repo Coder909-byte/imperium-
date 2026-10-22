@@ -1,5 +1,7 @@
 # Gallia asset decisions and preparation — 2026-10-22
 
+**Personnel approval update — 2026-10-23:** the owner explicitly approved provisional AI-assisted Roman/Gallic infantry references, transparent parts and shared crowd atlases, including routine variations. The sole photographic input is the specific [Met Montefortino-family helmet image](https://www.metmuseum.org/art/collection/search/684492), explicitly marked “Public Domain”; its earlier Etruscan date and modern cheekpieces are not evidence for Alesia equipment. This permission is separate from the NGA atmospheric and Motte structure approvals. Generated assets remain provisional, never public domain. Source rights, research, preparation and limitations are recorded in `docs/m8-personnel-review.md` and the manifest; civilians, horses/riders and the hillfort are outside this infantry preparation approval.
+
 ## Visual continuation — 2026-10-23
 
 The existing atmospheric approval now also supplies `public/assets/gallia/foreground.webp` (60,650 bytes), prepared through built-in imagegen and forge from the same exact NGA source. It is a full-colour alpha cut of near grass/earth banks with an open centre. This is atmospheric preparation; it introduces no structures or figures.

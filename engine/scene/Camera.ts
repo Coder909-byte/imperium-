@@ -198,6 +198,9 @@ export class Camera {
    *  camera still has to land on the beat's framing. */
   animateTo(camera: SceneCamera, options: { shakeActive?: boolean } = {}): void {
     this.tween?.kill();
+    // An authored establishing cut keeps both battlefronts in frame
+    // before the reading-time travel, regardless of the previous beat.
+    if (camera.from) Object.assign(this.beatTarget, camera.from);
     const target = { x: camera.x, y: camera.y, scale: camera.scale };
     const duration = this.reducedMotion ? 0 : camera.durationMs / 1000;
     this.tween = gsap.to(this.beatTarget, { ...target, duration, ease: camera.ease });

@@ -296,6 +296,7 @@ test.describe("scene player — puppets (M6)", () => {
     const errors = trackErrors(page);
     await page.goto("/dev/scene-lab");
     await page.getByRole("button", { name: "Rig inspector" }).click();
+    await page.getByLabel("Rig:").selectOption("legionary");
     await expect(page.getByTestId("rig-inspector-canvas").locator("canvas")).toHaveCount(1);
 
     for (const clip of ["idle", "march", "brace", "thrust", "fall", "raise"]) {
@@ -313,6 +314,7 @@ test.describe("scene player — puppets (M6)", () => {
   test("rig inspector: rig-lint panel reports the legionary rig clean, live, without a validate run", async ({ page }) => {
     await page.goto("/dev/scene-lab");
     await page.getByRole("button", { name: "Rig inspector" }).click();
+    await page.getByLabel("Rig:").selectOption("legionary");
     await expect(page.getByTestId("rig-inspector-canvas").locator("canvas")).toHaveCount(1);
 
     // legionary.json passes npm run validate's rig-lint — the inspector

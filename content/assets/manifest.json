@@ -310,5 +310,576 @@
       "sourceFile": "content/assets/staging/gallia/motte-siege-source.jpg",
       "modifications": "Built-in imagegen interpreted the source timber tower and earth/timber rampart in full colour matching the approved atmospheric palette, removed figures/weapons/sky and supplied alpha. A second edit reduced the tower and restored registered canvas margins. Forge proportional export 1920px wide, quality 78. Provisional 19th-century-source adaptation, not a verified Roman construction or final historical acceptance. Scene uses the same draft twice, mirrored and offset for the second wall; that layout is illustrative, not a surveyed reconstruction."
     }
+  },
+  {
+    "file": "content/assets/staging/gallia/met-montefortino-source.jpg",
+    "source": "https://www.metmuseum.org/art/collection/search/684492",
+    "licence": "Public domain",
+    "retrieved": "2026-10-23",
+    "artist": "unknown",
+    "institution": "The Metropolitan Museum of Art, 2015.758.1",
+    "notes": "Owner approved 2026-10-23 for provisional infantry preparation. Exact object image label: Public Domain. Earlier Etruscan helmet, late 4th–early 3rd century BCE; cheekpieces modern. General helmet-family form only; modern cheekpieces must not be reproduced as evidence for 52 BC. Download https://collectionapi.metmuseum.org/api/collection/v1/iiif/684492/1587456/main-image . Research/review input, never a scene texture.",
+    "approval": {
+      "by": "Project owner (chat approval 2026-10-23)",
+      "at": "2026-10-23",
+      "rightsUrl": "https://www.metmuseum.org/art/collection/search/684492",
+      "rightsStatement": "Public Domain",
+      "scope": "asset"
+    }
+  },
+  {
+    "file": "content/assets/staging/gallia/infantry-reference-pair.png",
+    "source": "https://www.metmuseum.org/art/collection/search/684492",
+    "licence": "Owner-approved provisional AI-assisted character draft",
+    "retrieved": "2026-10-23",
+    "artist": "AI-assisted preparation (built-in image generator)",
+    "institution": "Imperium project",
+    "derivation": {
+      "kind": "ai-assisted-character-draft",
+      "sourceFile": "content/assets/staging/gallia/met-montefortino-source.jpg",
+      "modifications": "Original interpretive painted Roman/Gallic reference pair, research and prompt brief in docs/m8-personnel-review.md; only photographic input the approved earlier Met helmet family reference. Modern cheekpieces excluded as evidence."
+    },
+    "notes": "Provisional, not public domain. Owner-approved 2026-10-23 for military beats, transparent rig parts and shared crowd atlases. No documentary likeness, colour, shield-unit insignia or archaeological certainty is claimed. Generated image tool output exec-1266a852-7d61-4cae-b10b-bdf592969b66.png. Review reference only, not scene payload.",
+    "approval": {
+      "scope": "character-draft",
+      "by": "Project owner (chat approval 2026-10-23)",
+      "at": "2026-10-23",
+      "rightsUrl": "https://www.metmuseum.org/art/collection/search/684492",
+      "rightsStatement": "Owner approves provisional AI-assisted infantry preparation; generated provenance is separate from source image Public Domain status. Historical review required."
+    }
+  },
+  {
+    "file": "content/assets/staging/gallia/roman-parts-sheet.png",
+    "source": "https://www.metmuseum.org/art/collection/search/684492",
+    "licence": "Owner-approved provisional AI-assisted character draft",
+    "retrieved": "2026-10-23",
+    "artist": "AI-assisted preparation (built-in image generator)",
+    "institution": "Imperium project",
+    "derivation": {
+      "kind": "ai-assisted-character-draft",
+      "sourceFile": "content/assets/staging/gallia/met-montefortino-source.jpg",
+      "modifications": "AI-prepared separated roman infantry parts, based on infantry-reference-pair.png and the documented equipment brief; interpretation, not evidence."
+    },
+    "notes": "Provisional generated six-cell cutout parts, derived from owner-approved reference pair. Original output exec-d769af44-33f3-4c17-85cc-c0e053c8577b.png. Full-colour alpha, no luminance matte; preparation and limitations in docs/m8-personnel-review.md. Not public domain.",
+    "approval": {
+      "scope": "character-draft",
+      "by": "Project owner (chat approval 2026-10-23)",
+      "at": "2026-10-23",
+      "rightsUrl": "https://www.metmuseum.org/art/collection/search/684492",
+      "rightsStatement": "Owner approves provisional AI-assisted infantry preparation; generated provenance is separate from source image Public Domain status. Historical review required."
+    }
+  },
+  {
+    "file": "content/assets/staging/gallia/gallic-parts-sheet.png",
+    "source": "https://www.metmuseum.org/art/collection/search/684492",
+    "licence": "Owner-approved provisional AI-assisted character draft",
+    "retrieved": "2026-10-23",
+    "artist": "AI-assisted preparation (built-in image generator)",
+    "institution": "Imperium project",
+    "derivation": {
+      "kind": "ai-assisted-character-draft",
+      "sourceFile": "content/assets/staging/gallia/met-montefortino-source.jpg",
+      "modifications": "AI-prepared separated gallic infantry parts, based on infantry-reference-pair.png and the documented equipment brief; interpretation, not evidence."
+    },
+    "notes": "Provisional generated six-cell cutout parts, derived from owner-approved reference pair. Original output exec-ce47d966-a876-4ebf-8b82-99b1fd62d5bc.png. Full-colour alpha, no luminance matte; preparation and limitations in docs/m8-personnel-review.md. Not public domain.",
+    "approval": {
+      "scope": "character-draft",
+      "by": "Project owner (chat approval 2026-10-23)",
+      "at": "2026-10-23",
+      "rightsUrl": "https://www.metmuseum.org/art/collection/search/684492",
+      "rightsStatement": "Owner approves provisional AI-assisted infantry preparation; generated provenance is separate from source image Public Domain status. Historical review required."
+    }
+  },
+  {
+    "file": "public/assets/gallia/roman-infantry/body.webp",
+    "source": "https://www.metmuseum.org/art/collection/search/684492",
+    "licence": "Owner-approved provisional AI-assisted character draft",
+    "retrieved": "2026-10-22",
+    "artist": "AI-assisted preparation (built-in image generator)",
+    "institution": "Imperium project",
+    "settings": {
+      "matte": false,
+      "quality": 88
+    },
+    "notes": "Provisional generated painted cutout; source rights separately recorded, not public domain. See docs/m8-personnel-review.md. Owner approved character preparation 2026-10-23.",
+    "approval": {
+      "scope": "character-draft",
+      "by": "Project owner (chat approval 2026-10-23)",
+      "at": "2026-10-23",
+      "rightsUrl": "https://www.metmuseum.org/art/collection/search/684492",
+      "rightsStatement": "Owner approves provisional AI-assisted infantry preparation; generated provenance is separate from source image Public Domain status. Historical review required."
+    },
+    "derivation": {
+      "kind": "ai-assisted-character-draft",
+      "sourceFile": "content/assets/staging/gallia/met-montefortino-source.jpg",
+      "modifications": "Provisional roman_infantry painted part. AI sheet → alpha-bounded proportional crop → full-colour forge WebP; no luminance matte. See docs/m8-personnel-review.md for source limits and crop geometry."
+    }
+  },
+  {
+    "file": "public/assets/gallia/roman-infantry/head.webp",
+    "source": "https://www.metmuseum.org/art/collection/search/684492",
+    "licence": "Owner-approved provisional AI-assisted character draft",
+    "retrieved": "2026-10-22",
+    "artist": "AI-assisted preparation (built-in image generator)",
+    "institution": "Imperium project",
+    "settings": {
+      "matte": false,
+      "quality": 88
+    },
+    "notes": "Provisional generated painted cutout; source rights separately recorded, not public domain. See docs/m8-personnel-review.md. Owner approved character preparation 2026-10-23.",
+    "approval": {
+      "scope": "character-draft",
+      "by": "Project owner (chat approval 2026-10-23)",
+      "at": "2026-10-23",
+      "rightsUrl": "https://www.metmuseum.org/art/collection/search/684492",
+      "rightsStatement": "Owner approves provisional AI-assisted infantry preparation; generated provenance is separate from source image Public Domain status. Historical review required."
+    },
+    "derivation": {
+      "kind": "ai-assisted-character-draft",
+      "sourceFile": "content/assets/staging/gallia/met-montefortino-source.jpg",
+      "modifications": "Provisional roman_infantry painted part. AI sheet → alpha-bounded proportional crop → full-colour forge WebP; no luminance matte. See docs/m8-personnel-review.md for source limits and crop geometry."
+    }
+  },
+  {
+    "file": "public/assets/gallia/roman-infantry/leg_far.webp",
+    "source": "https://www.metmuseum.org/art/collection/search/684492",
+    "licence": "Owner-approved provisional AI-assisted character draft",
+    "retrieved": "2026-10-22",
+    "artist": "AI-assisted preparation (built-in image generator)",
+    "institution": "Imperium project",
+    "settings": {
+      "matte": false,
+      "quality": 88
+    },
+    "notes": "Provisional generated painted cutout; source rights separately recorded, not public domain. See docs/m8-personnel-review.md. Owner approved character preparation 2026-10-23.",
+    "approval": {
+      "scope": "character-draft",
+      "by": "Project owner (chat approval 2026-10-23)",
+      "at": "2026-10-23",
+      "rightsUrl": "https://www.metmuseum.org/art/collection/search/684492",
+      "rightsStatement": "Owner approves provisional AI-assisted infantry preparation; generated provenance is separate from source image Public Domain status. Historical review required."
+    },
+    "derivation": {
+      "kind": "ai-assisted-character-draft",
+      "sourceFile": "content/assets/staging/gallia/met-montefortino-source.jpg",
+      "modifications": "Provisional roman_infantry painted part. AI sheet → alpha-bounded proportional crop → full-colour forge WebP; no luminance matte. See docs/m8-personnel-review.md for source limits and crop geometry."
+    }
+  },
+  {
+    "file": "public/assets/gallia/roman-infantry/leg_near.webp",
+    "source": "https://www.metmuseum.org/art/collection/search/684492",
+    "licence": "Owner-approved provisional AI-assisted character draft",
+    "retrieved": "2026-10-22",
+    "artist": "AI-assisted preparation (built-in image generator)",
+    "institution": "Imperium project",
+    "settings": {
+      "matte": false,
+      "quality": 88
+    },
+    "notes": "Provisional generated painted cutout; source rights separately recorded, not public domain. See docs/m8-personnel-review.md. Owner approved character preparation 2026-10-23.",
+    "approval": {
+      "scope": "character-draft",
+      "by": "Project owner (chat approval 2026-10-23)",
+      "at": "2026-10-23",
+      "rightsUrl": "https://www.metmuseum.org/art/collection/search/684492",
+      "rightsStatement": "Owner approves provisional AI-assisted infantry preparation; generated provenance is separate from source image Public Domain status. Historical review required."
+    },
+    "derivation": {
+      "kind": "ai-assisted-character-draft",
+      "sourceFile": "content/assets/staging/gallia/met-montefortino-source.jpg",
+      "modifications": "Provisional roman_infantry painted part. AI sheet → alpha-bounded proportional crop → full-colour forge WebP; no luminance matte. See docs/m8-personnel-review.md for source limits and crop geometry."
+    }
+  },
+  {
+    "file": "public/assets/gallia/roman-infantry/shield.webp",
+    "source": "https://www.metmuseum.org/art/collection/search/684492",
+    "licence": "Owner-approved provisional AI-assisted character draft",
+    "retrieved": "2026-10-22",
+    "artist": "AI-assisted preparation (built-in image generator)",
+    "institution": "Imperium project",
+    "settings": {
+      "matte": false,
+      "quality": 88
+    },
+    "notes": "Provisional generated painted cutout; source rights separately recorded, not public domain. See docs/m8-personnel-review.md. Owner approved character preparation 2026-10-23.",
+    "approval": {
+      "scope": "character-draft",
+      "by": "Project owner (chat approval 2026-10-23)",
+      "at": "2026-10-23",
+      "rightsUrl": "https://www.metmuseum.org/art/collection/search/684492",
+      "rightsStatement": "Owner approves provisional AI-assisted infantry preparation; generated provenance is separate from source image Public Domain status. Historical review required."
+    },
+    "derivation": {
+      "kind": "ai-assisted-character-draft",
+      "sourceFile": "content/assets/staging/gallia/met-montefortino-source.jpg",
+      "modifications": "Provisional roman_infantry painted part. AI sheet → alpha-bounded proportional crop → full-colour forge WebP; no luminance matte. See docs/m8-personnel-review.md for source limits and crop geometry."
+    }
+  },
+  {
+    "file": "public/assets/gallia/roman-infantry/weapon.webp",
+    "source": "https://www.metmuseum.org/art/collection/search/684492",
+    "licence": "Owner-approved provisional AI-assisted character draft",
+    "retrieved": "2026-10-22",
+    "artist": "AI-assisted preparation (built-in image generator)",
+    "institution": "Imperium project",
+    "settings": {
+      "matte": false,
+      "quality": 88
+    },
+    "notes": "Provisional generated painted cutout; source rights separately recorded, not public domain. See docs/m8-personnel-review.md. Owner approved character preparation 2026-10-23.",
+    "approval": {
+      "scope": "character-draft",
+      "by": "Project owner (chat approval 2026-10-23)",
+      "at": "2026-10-23",
+      "rightsUrl": "https://www.metmuseum.org/art/collection/search/684492",
+      "rightsStatement": "Owner approves provisional AI-assisted infantry preparation; generated provenance is separate from source image Public Domain status. Historical review required."
+    },
+    "derivation": {
+      "kind": "ai-assisted-character-draft",
+      "sourceFile": "content/assets/staging/gallia/met-montefortino-source.jpg",
+      "modifications": "Provisional roman_infantry painted part. AI sheet → alpha-bounded proportional crop → full-colour forge WebP; no luminance matte. See docs/m8-personnel-review.md for source limits and crop geometry."
+    }
+  },
+  {
+    "file": "public/assets/gallia/gallic-infantry/body.webp",
+    "source": "https://www.metmuseum.org/art/collection/search/684492",
+    "licence": "Owner-approved provisional AI-assisted character draft",
+    "retrieved": "2026-10-22",
+    "artist": "AI-assisted preparation (built-in image generator)",
+    "institution": "Imperium project",
+    "settings": {
+      "matte": false,
+      "quality": 88
+    },
+    "notes": "Provisional generated painted cutout; source rights separately recorded, not public domain. See docs/m8-personnel-review.md. Owner approved character preparation 2026-10-23.",
+    "approval": {
+      "scope": "character-draft",
+      "by": "Project owner (chat approval 2026-10-23)",
+      "at": "2026-10-23",
+      "rightsUrl": "https://www.metmuseum.org/art/collection/search/684492",
+      "rightsStatement": "Owner approves provisional AI-assisted infantry preparation; generated provenance is separate from source image Public Domain status. Historical review required."
+    },
+    "derivation": {
+      "kind": "ai-assisted-character-draft",
+      "sourceFile": "content/assets/staging/gallia/met-montefortino-source.jpg",
+      "modifications": "Provisional gaul_warrior painted part. AI sheet → alpha-bounded proportional crop → full-colour forge WebP; no luminance matte. See docs/m8-personnel-review.md for source limits and crop geometry."
+    }
+  },
+  {
+    "file": "public/assets/gallia/gallic-infantry/head.webp",
+    "source": "https://www.metmuseum.org/art/collection/search/684492",
+    "licence": "Owner-approved provisional AI-assisted character draft",
+    "retrieved": "2026-10-22",
+    "artist": "AI-assisted preparation (built-in image generator)",
+    "institution": "Imperium project",
+    "settings": {
+      "matte": false,
+      "quality": 88
+    },
+    "notes": "Provisional generated painted cutout; source rights separately recorded, not public domain. See docs/m8-personnel-review.md. Owner approved character preparation 2026-10-23.",
+    "approval": {
+      "scope": "character-draft",
+      "by": "Project owner (chat approval 2026-10-23)",
+      "at": "2026-10-23",
+      "rightsUrl": "https://www.metmuseum.org/art/collection/search/684492",
+      "rightsStatement": "Owner approves provisional AI-assisted infantry preparation; generated provenance is separate from source image Public Domain status. Historical review required."
+    },
+    "derivation": {
+      "kind": "ai-assisted-character-draft",
+      "sourceFile": "content/assets/staging/gallia/met-montefortino-source.jpg",
+      "modifications": "Provisional gaul_warrior painted part. AI sheet → alpha-bounded proportional crop → full-colour forge WebP; no luminance matte. See docs/m8-personnel-review.md for source limits and crop geometry."
+    }
+  },
+  {
+    "file": "public/assets/gallia/gallic-infantry/leg_far.webp",
+    "source": "https://www.metmuseum.org/art/collection/search/684492",
+    "licence": "Owner-approved provisional AI-assisted character draft",
+    "retrieved": "2026-10-22",
+    "artist": "AI-assisted preparation (built-in image generator)",
+    "institution": "Imperium project",
+    "settings": {
+      "matte": false,
+      "quality": 88
+    },
+    "notes": "Provisional generated painted cutout; source rights separately recorded, not public domain. See docs/m8-personnel-review.md. Owner approved character preparation 2026-10-23.",
+    "approval": {
+      "scope": "character-draft",
+      "by": "Project owner (chat approval 2026-10-23)",
+      "at": "2026-10-23",
+      "rightsUrl": "https://www.metmuseum.org/art/collection/search/684492",
+      "rightsStatement": "Owner approves provisional AI-assisted infantry preparation; generated provenance is separate from source image Public Domain status. Historical review required."
+    },
+    "derivation": {
+      "kind": "ai-assisted-character-draft",
+      "sourceFile": "content/assets/staging/gallia/met-montefortino-source.jpg",
+      "modifications": "Provisional gaul_warrior painted part. AI sheet → alpha-bounded proportional crop → full-colour forge WebP; no luminance matte. See docs/m8-personnel-review.md for source limits and crop geometry."
+    }
+  },
+  {
+    "file": "public/assets/gallia/gallic-infantry/leg_near.webp",
+    "source": "https://www.metmuseum.org/art/collection/search/684492",
+    "licence": "Owner-approved provisional AI-assisted character draft",
+    "retrieved": "2026-10-22",
+    "artist": "AI-assisted preparation (built-in image generator)",
+    "institution": "Imperium project",
+    "settings": {
+      "matte": false,
+      "quality": 88
+    },
+    "notes": "Provisional generated painted cutout; source rights separately recorded, not public domain. See docs/m8-personnel-review.md. Owner approved character preparation 2026-10-23.",
+    "approval": {
+      "scope": "character-draft",
+      "by": "Project owner (chat approval 2026-10-23)",
+      "at": "2026-10-23",
+      "rightsUrl": "https://www.metmuseum.org/art/collection/search/684492",
+      "rightsStatement": "Owner approves provisional AI-assisted infantry preparation; generated provenance is separate from source image Public Domain status. Historical review required."
+    },
+    "derivation": {
+      "kind": "ai-assisted-character-draft",
+      "sourceFile": "content/assets/staging/gallia/met-montefortino-source.jpg",
+      "modifications": "Provisional gaul_warrior painted part. AI sheet → alpha-bounded proportional crop → full-colour forge WebP; no luminance matte. See docs/m8-personnel-review.md for source limits and crop geometry."
+    }
+  },
+  {
+    "file": "public/assets/gallia/gallic-infantry/shield.webp",
+    "source": "https://www.metmuseum.org/art/collection/search/684492",
+    "licence": "Owner-approved provisional AI-assisted character draft",
+    "retrieved": "2026-10-22",
+    "artist": "AI-assisted preparation (built-in image generator)",
+    "institution": "Imperium project",
+    "settings": {
+      "matte": false,
+      "quality": 88
+    },
+    "notes": "Provisional generated painted cutout; source rights separately recorded, not public domain. See docs/m8-personnel-review.md. Owner approved character preparation 2026-10-23.",
+    "approval": {
+      "scope": "character-draft",
+      "by": "Project owner (chat approval 2026-10-23)",
+      "at": "2026-10-23",
+      "rightsUrl": "https://www.metmuseum.org/art/collection/search/684492",
+      "rightsStatement": "Owner approves provisional AI-assisted infantry preparation; generated provenance is separate from source image Public Domain status. Historical review required."
+    },
+    "derivation": {
+      "kind": "ai-assisted-character-draft",
+      "sourceFile": "content/assets/staging/gallia/met-montefortino-source.jpg",
+      "modifications": "Provisional gaul_warrior painted part. AI sheet → alpha-bounded proportional crop → full-colour forge WebP; no luminance matte. See docs/m8-personnel-review.md for source limits and crop geometry."
+    }
+  },
+  {
+    "file": "content/assets/staging/gallia/gallic-blue-parts-sheet.png",
+    "source": "https://www.metmuseum.org/art/collection/search/684492",
+    "licence": "Owner-approved provisional AI-assisted character draft",
+    "retrieved": "2026-10-23",
+    "artist": "AI-assisted preparation (built-in image generator)",
+    "institution": "Imperium project",
+    "derivation": {
+      "kind": "ai-assisted-character-draft",
+      "sourceFile": "content/assets/staging/gallia/met-montefortino-source.jpg",
+      "modifications": "Derived from the provisional Gallic parts sheet: alternate muted tunic/trousers/shield palette and tied hair. No additional photographic source."
+    },
+    "notes": "Owner-approved routine provisional character variation/correction, generated output exec-ed763ce5-b3ec-4b9a-b21e-4a16fc37e123.png. Interpretation only, not public domain; built-in image generator. See docs/m8-personnel-review.md.",
+    "approval": {
+      "scope": "character-draft",
+      "by": "Project owner (chat approval 2026-10-23)",
+      "at": "2026-10-23",
+      "rightsUrl": "https://www.metmuseum.org/art/collection/search/684492",
+      "rightsStatement": "Owner approves provisional AI-assisted infantry preparation; generated provenance is separate from source image Public Domain status. Historical review required."
+    }
+  },
+  {
+    "file": "content/assets/staging/gallia/gallic-long-spear.png",
+    "source": "https://www.metmuseum.org/art/collection/search/684492",
+    "licence": "Owner-approved provisional AI-assisted character draft",
+    "retrieved": "2026-10-23",
+    "artist": "AI-assisted preparation (built-in image generator)",
+    "institution": "Imperium project",
+    "derivation": {
+      "kind": "ai-assisted-character-draft",
+      "sourceFile": "content/assets/staging/gallia/met-montefortino-source.jpg",
+      "modifications": "Derived from the provisional Gallic parts sheet: corrected continuous full-length spear and arm. No additional photographic source."
+    },
+    "notes": "Owner-approved routine provisional character variation/correction, generated output exec-1dd17373-4742-4932-b6d4-38ffca2755e1.png. Interpretation only, not public domain; built-in image generator. See docs/m8-personnel-review.md.",
+    "approval": {
+      "scope": "character-draft",
+      "by": "Project owner (chat approval 2026-10-23)",
+      "at": "2026-10-23",
+      "rightsUrl": "https://www.metmuseum.org/art/collection/search/684492",
+      "rightsStatement": "Owner approves provisional AI-assisted infantry preparation; generated provenance is separate from source image Public Domain status. Historical review required."
+    }
+  },
+  {
+    "file": "public/assets/gallia/gallic-infantry-blue/body.webp",
+    "source": "https://www.metmuseum.org/art/collection/search/684492",
+    "licence": "Owner-approved provisional AI-assisted character draft",
+    "retrieved": "2026-10-22",
+    "artist": "AI-assisted preparation (built-in image generator)",
+    "institution": "Imperium project",
+    "settings": {
+      "matte": false,
+      "quality": 88
+    },
+    "notes": "Owner-approved routine Gallic clothing variation. Provisional generated painted cutout; not public domain. See docs/m8-personnel-review.md.",
+    "approval": {
+      "scope": "character-draft",
+      "by": "Project owner (chat approval 2026-10-23)",
+      "at": "2026-10-23",
+      "rightsUrl": "https://www.metmuseum.org/art/collection/search/684492",
+      "rightsStatement": "Owner approves provisional AI-assisted infantry preparation; generated provenance is separate from source image Public Domain status. Historical review required."
+    },
+    "derivation": {
+      "kind": "ai-assisted-character-draft",
+      "sourceFile": "content/assets/staging/gallia/met-montefortino-source.jpg",
+      "modifications": "Provisional gaul_warrior_blue painted part. AI sheet → alpha-bounded proportional crop → full-colour forge WebP; no luminance matte. See docs/m8-personnel-review.md for source limits and crop geometry."
+    }
+  },
+  {
+    "file": "public/assets/gallia/gallic-infantry-blue/head.webp",
+    "source": "https://www.metmuseum.org/art/collection/search/684492",
+    "licence": "Owner-approved provisional AI-assisted character draft",
+    "retrieved": "2026-10-22",
+    "artist": "AI-assisted preparation (built-in image generator)",
+    "institution": "Imperium project",
+    "settings": {
+      "matte": false,
+      "quality": 88
+    },
+    "notes": "Owner-approved routine Gallic clothing variation. Provisional generated painted cutout; not public domain. See docs/m8-personnel-review.md.",
+    "approval": {
+      "scope": "character-draft",
+      "by": "Project owner (chat approval 2026-10-23)",
+      "at": "2026-10-23",
+      "rightsUrl": "https://www.metmuseum.org/art/collection/search/684492",
+      "rightsStatement": "Owner approves provisional AI-assisted infantry preparation; generated provenance is separate from source image Public Domain status. Historical review required."
+    },
+    "derivation": {
+      "kind": "ai-assisted-character-draft",
+      "sourceFile": "content/assets/staging/gallia/met-montefortino-source.jpg",
+      "modifications": "Provisional gaul_warrior_blue painted part. AI sheet → alpha-bounded proportional crop → full-colour forge WebP; no luminance matte. See docs/m8-personnel-review.md for source limits and crop geometry."
+    }
+  },
+  {
+    "file": "public/assets/gallia/gallic-infantry-blue/leg_far.webp",
+    "source": "https://www.metmuseum.org/art/collection/search/684492",
+    "licence": "Owner-approved provisional AI-assisted character draft",
+    "retrieved": "2026-10-22",
+    "artist": "AI-assisted preparation (built-in image generator)",
+    "institution": "Imperium project",
+    "settings": {
+      "matte": false,
+      "quality": 88
+    },
+    "notes": "Owner-approved routine Gallic clothing variation. Provisional generated painted cutout; not public domain. See docs/m8-personnel-review.md.",
+    "approval": {
+      "scope": "character-draft",
+      "by": "Project owner (chat approval 2026-10-23)",
+      "at": "2026-10-23",
+      "rightsUrl": "https://www.metmuseum.org/art/collection/search/684492",
+      "rightsStatement": "Owner approves provisional AI-assisted infantry preparation; generated provenance is separate from source image Public Domain status. Historical review required."
+    },
+    "derivation": {
+      "kind": "ai-assisted-character-draft",
+      "sourceFile": "content/assets/staging/gallia/met-montefortino-source.jpg",
+      "modifications": "Provisional gaul_warrior_blue painted part. AI sheet → alpha-bounded proportional crop → full-colour forge WebP; no luminance matte. See docs/m8-personnel-review.md for source limits and crop geometry."
+    }
+  },
+  {
+    "file": "public/assets/gallia/gallic-infantry-blue/leg_near.webp",
+    "source": "https://www.metmuseum.org/art/collection/search/684492",
+    "licence": "Owner-approved provisional AI-assisted character draft",
+    "retrieved": "2026-10-22",
+    "artist": "AI-assisted preparation (built-in image generator)",
+    "institution": "Imperium project",
+    "settings": {
+      "matte": false,
+      "quality": 88
+    },
+    "notes": "Owner-approved routine Gallic clothing variation. Provisional generated painted cutout; not public domain. See docs/m8-personnel-review.md.",
+    "approval": {
+      "scope": "character-draft",
+      "by": "Project owner (chat approval 2026-10-23)",
+      "at": "2026-10-23",
+      "rightsUrl": "https://www.metmuseum.org/art/collection/search/684492",
+      "rightsStatement": "Owner approves provisional AI-assisted infantry preparation; generated provenance is separate from source image Public Domain status. Historical review required."
+    },
+    "derivation": {
+      "kind": "ai-assisted-character-draft",
+      "sourceFile": "content/assets/staging/gallia/met-montefortino-source.jpg",
+      "modifications": "Provisional gaul_warrior_blue painted part. AI sheet → alpha-bounded proportional crop → full-colour forge WebP; no luminance matte. See docs/m8-personnel-review.md for source limits and crop geometry."
+    }
+  },
+  {
+    "file": "public/assets/gallia/gallic-infantry-blue/shield.webp",
+    "source": "https://www.metmuseum.org/art/collection/search/684492",
+    "licence": "Owner-approved provisional AI-assisted character draft",
+    "retrieved": "2026-10-22",
+    "artist": "AI-assisted preparation (built-in image generator)",
+    "institution": "Imperium project",
+    "settings": {
+      "matte": false,
+      "quality": 88
+    },
+    "notes": "Owner-approved routine Gallic clothing variation. Provisional generated painted cutout; not public domain. See docs/m8-personnel-review.md.",
+    "approval": {
+      "scope": "character-draft",
+      "by": "Project owner (chat approval 2026-10-23)",
+      "at": "2026-10-23",
+      "rightsUrl": "https://www.metmuseum.org/art/collection/search/684492",
+      "rightsStatement": "Owner approves provisional AI-assisted infantry preparation; generated provenance is separate from source image Public Domain status. Historical review required."
+    },
+    "derivation": {
+      "kind": "ai-assisted-character-draft",
+      "sourceFile": "content/assets/staging/gallia/met-montefortino-source.jpg",
+      "modifications": "Provisional gaul_warrior_blue painted part. AI sheet → alpha-bounded proportional crop → full-colour forge WebP; no luminance matte. See docs/m8-personnel-review.md for source limits and crop geometry."
+    }
+  },
+  {
+    "file": "public/assets/gallia/gallic-infantry-blue/weapon.webp",
+    "source": "https://www.metmuseum.org/art/collection/search/684492",
+    "licence": "Owner-approved provisional AI-assisted character draft",
+    "retrieved": "2026-10-22",
+    "artist": "AI-assisted preparation (built-in image generator)",
+    "institution": "Imperium project",
+    "settings": {
+      "matte": false,
+      "quality": 88
+    },
+    "notes": "Owner-approved routine Gallic clothing variation. Provisional generated painted cutout; not public domain. See docs/m8-personnel-review.md.",
+    "approval": {
+      "scope": "character-draft",
+      "by": "Project owner (chat approval 2026-10-23)",
+      "at": "2026-10-23",
+      "rightsUrl": "https://www.metmuseum.org/art/collection/search/684492",
+      "rightsStatement": "Owner approves provisional AI-assisted infantry preparation; generated provenance is separate from source image Public Domain status. Historical review required."
+    },
+    "derivation": {
+      "kind": "ai-assisted-character-draft",
+      "sourceFile": "content/assets/staging/gallia/met-montefortino-source.jpg",
+      "modifications": "Provisional gaul_warrior_blue painted part. AI sheet → alpha-bounded proportional crop → full-colour forge WebP; no luminance matte. See docs/m8-personnel-review.md for source limits and crop geometry."
+    }
+  },
+  {
+    "file": "public/assets/gallia/gallic-infantry/weapon.webp",
+    "source": "https://www.metmuseum.org/art/collection/search/684492",
+    "licence": "Owner-approved provisional AI-assisted character draft",
+    "retrieved": "2026-10-22",
+    "artist": "AI-assisted preparation (built-in image generator)",
+    "institution": "Imperium project",
+    "settings": {
+      "matte": false,
+      "quality": 88
+    },
+    "notes": "Corrected continuous spear and arm; provisional AI character draft, not public domain. See docs/m8-personnel-review.md.",
+    "approval": {
+      "scope": "character-draft",
+      "by": "Project owner (chat approval 2026-10-23)",
+      "at": "2026-10-23",
+      "rightsUrl": "https://www.metmuseum.org/art/collection/search/684492",
+      "rightsStatement": "Owner approves provisional AI-assisted infantry preparation; generated provenance is separate from source image Public Domain status. Historical review required."
+    },
+    "derivation": {
+      "kind": "ai-assisted-character-draft",
+      "sourceFile": "content/assets/staging/gallia/met-montefortino-source.jpg",
+      "modifications": "Provisional gaul_warrior painted part. AI sheet → alpha-bounded proportional crop → full-colour forge WebP; no luminance matte. See docs/m8-personnel-review.md for source limits and crop geometry."
+    }
   }
 ]

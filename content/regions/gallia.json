@@ -123,37 +123,61 @@
       "lightSource": false,
       "actors": [
         {
-          "rig": "legionary",
+          "rig": "roman_infantry",
           "clip": "march",
           "x": -470,
           "y": 60,
-          "scale": 0.13,
+          "scale": 0.035,
           "count": 14,
           "flip": false,
           "phase": 0,
-          "depth": 0.45
+          "depth": 0.45,
+          "formation": {
+            "columns": 8,
+            "spacing": [
+              180,
+              85
+            ],
+            "jitter": 0.2
+          }
         },
         {
-          "rig": "legionary",
+          "rig": "roman_infantry",
           "clip": "march",
           "x": -370,
           "y": 63,
-          "scale": 0.13,
+          "scale": 0.035,
           "count": 14,
           "flip": false,
-          "phase": 0,
-          "depth": 0.45
+          "phase": 619,
+          "depth": 0.45,
+          "formation": {
+            "columns": 8,
+            "spacing": [
+              180,
+              85
+            ],
+            "jitter": 0.2
+          }
         },
         {
-          "rig": "legionary",
+          "rig": "roman_infantry",
           "clip": "march",
           "x": -270,
           "y": 60,
-          "scale": 0.13,
+          "scale": 0.035,
           "count": 14,
           "flip": false,
-          "phase": 0,
-          "depth": 0.45
+          "phase": 1238,
+          "depth": 0.45,
+          "formation": {
+            "columns": 8,
+            "spacing": [
+              180,
+              85
+            ],
+            "jitter": 0.2
+          }
         }
       ],
       "audio": {
@@ -206,58 +230,74 @@
       "lightSource": false,
       "actors": [
         {
-          "rig": "legionary",
+          "rig": "roman_infantry",
           "clip": "march",
           "x": -120,
           "y": 65,
-          "scale": 0.14,
+          "scale": 0.045,
           "count": 16,
           "flip": false,
-          "phase": 0,
-          "depth": 0.54
+          "phase": 167,
+          "depth": 0.46,
+          "formation": {
+            "columns": 8,
+            "spacing": [
+              180,
+              85
+            ],
+            "jitter": 0.2
+          }
         },
         {
-          "rig": "legionary",
+          "rig": "roman_infantry",
           "clip": "march",
           "x": 60,
           "y": 68,
-          "scale": 0.14,
+          "scale": 0.045,
           "count": 16,
           "flip": true,
-          "phase": 0,
-          "depth": 0.54
+          "phase": 786,
+          "depth": 0.46,
+          "formation": {
+            "columns": 8,
+            "spacing": [
+              180,
+              85
+            ],
+            "jitter": 0.2
+          }
         },
         {
-          "rig": "legionary",
+          "rig": "roman_infantry",
           "clip": "brace",
           "x": 280,
           "y": 180,
-          "scale": 0.22,
+          "scale": 0.155,
           "count": 1,
           "flip": false,
-          "phase": 0,
+          "phase": 1405,
           "depth": 0.56
         },
         {
-          "rig": "legionary",
+          "rig": "roman_infantry",
           "clip": "brace",
           "x": 330,
           "y": 177,
-          "scale": 0.22,
+          "scale": 0.155,
           "count": 1,
           "flip": false,
-          "phase": 120,
+          "phase": 2024,
           "depth": 0.56
         },
         {
-          "rig": "legionary",
+          "rig": "roman_infantry",
           "clip": "brace",
           "x": 380,
           "y": 181,
-          "scale": 0.22,
+          "scale": 0.155,
           "count": 1,
           "flip": false,
-          "phase": 60,
+          "phase": 143,
           "depth": 0.56
         }
       ],
@@ -310,70 +350,118 @@
       "lightSource": false,
       "actors": [
         {
-          "rig": "legionary",
+          "rig": "roman_infantry",
           "clip": "march",
           "x": -200,
-          "y": 80,
-          "scale": 0.13,
+          "y": 113,
+          "scale": 0.05,
           "count": 16,
           "flip": false,
-          "phase": 0,
-          "depth": 0.6
+          "phase": 334,
+          "depth": 0.56,
+          "formation": {
+            "columns": 8,
+            "spacing": [
+              180,
+              85
+            ],
+            "jitter": 0.2
+          }
         },
         {
-          "rig": "legionary",
+          "rig": "roman_infantry",
           "clip": "march",
           "x": 220,
-          "y": 83,
-          "scale": 0.13,
+          "y": 115,
+          "scale": 0.05,
           "count": 16,
           "flip": true,
-          "phase": 0,
-          "depth": 0.6
+          "phase": 953,
+          "depth": 0.56,
+          "formation": {
+            "columns": 8,
+            "spacing": [
+              180,
+              85
+            ],
+            "jitter": 0.2
+          }
         },
         {
-          "rig": "legionary",
+          "rig": "gaul_warrior",
           "clip": "march",
           "x": -560,
           "y": 49,
-          "scale": 0.08,
+          "scale": 0.034,
           "count": 20,
           "flip": false,
-          "phase": 0,
-          "depth": 0.44
+          "phase": 1572,
+          "depth": 0.44,
+          "formation": {
+            "columns": 10,
+            "spacing": [
+              195,
+              100
+            ],
+            "jitter": 0.3
+          }
         },
         {
-          "rig": "legionary",
+          "rig": "gaul_warrior_blue",
           "clip": "march",
           "x": -330,
           "y": 45,
-          "scale": 0.08,
+          "scale": 0.034,
           "count": 20,
           "flip": false,
-          "phase": 0,
-          "depth": 0.44
+          "phase": 2191,
+          "depth": 0.44,
+          "formation": {
+            "columns": 10,
+            "spacing": [
+              195,
+              100
+            ],
+            "jitter": 0.3
+          }
         },
         {
-          "rig": "legionary",
+          "rig": "gaul_warrior",
           "clip": "march",
           "x": 330,
           "y": 47,
-          "scale": 0.08,
+          "scale": 0.034,
           "count": 20,
           "flip": true,
-          "phase": 0,
-          "depth": 0.44
+          "phase": 310,
+          "depth": 0.44,
+          "formation": {
+            "columns": 10,
+            "spacing": [
+              195,
+              100
+            ],
+            "jitter": 0.3
+          }
         },
         {
-          "rig": "legionary",
+          "rig": "gaul_warrior_blue",
           "clip": "march",
           "x": 560,
           "y": 49,
-          "scale": 0.08,
+          "scale": 0.034,
           "count": 20,
           "flip": true,
-          "phase": 0,
-          "depth": 0.44
+          "phase": 929,
+          "depth": 0.44,
+          "formation": {
+            "columns": 10,
+            "spacing": [
+              195,
+              100
+            ],
+            "jitter": 0.3
+          }
         }
       ],
       "audio": {
@@ -415,58 +503,58 @@
       "lightSource": false,
       "actors": [
         {
-          "rig": "legionary",
+          "rig": "roman_infantry",
           "clip": "idle",
           "x": 100,
           "y": 180,
-          "scale": 0.2,
+          "scale": 0.155,
           "count": 1,
           "flip": false,
-          "phase": 0,
+          "phase": 501,
           "depth": 0.6
         },
         {
-          "rig": "legionary",
+          "rig": "roman_infantry",
           "clip": "idle",
           "x": 160,
           "y": 183,
-          "scale": 0.2,
+          "scale": 0.155,
           "count": 1,
           "flip": false,
-          "phase": 700,
+          "phase": 1120,
           "depth": 0.6
         },
         {
-          "rig": "legionary",
+          "rig": "roman_infantry",
           "clip": "idle",
           "x": 220,
           "y": 180,
-          "scale": 0.2,
+          "scale": 0.155,
           "count": 1,
           "flip": false,
-          "phase": 1500,
+          "phase": 1739,
           "depth": 0.6
         },
         {
-          "rig": "legionary",
+          "rig": "roman_infantry",
           "clip": "idle",
           "x": 280,
           "y": 183,
-          "scale": 0.2,
+          "scale": 0.155,
           "count": 1,
           "flip": false,
-          "phase": 400,
+          "phase": 2358,
           "depth": 0.6
         },
         {
-          "rig": "legionary",
+          "rig": "roman_infantry",
           "clip": "idle",
           "x": 340,
           "y": 180,
-          "scale": 0.2,
+          "scale": 0.155,
           "count": 1,
           "flip": false,
-          "phase": 1900,
+          "phase": 477,
           "depth": 0.6
         }
       ],
@@ -497,11 +585,16 @@
       ],
       "camera": {
         "x": 0.32,
-        "y": -0.54,
+        "y": -0.62,
         "scale": 1.08,
         "durationMs": 22000,
         "durationMode": "dwell",
-        "ease": "none"
+        "ease": "none",
+        "from": {
+          "x": 0.1,
+          "y": -0.6,
+          "scale": 1.08
+        }
       },
       "fx": [
         "arrow_volley",
@@ -512,103 +605,211 @@
       "lightSource": false,
       "actors": [
         {
-          "rig": "legionary",
+          "rig": "gaul_warrior",
           "clip": "march",
-          "x": -440,
-          "y": 145,
-          "scale": 0.15,
-          "count": 40,
-          "flip": true,
-          "phase": 0,
-          "depth": 0.78
-        },
-        {
-          "rig": "legionary",
-          "clip": "march",
-          "x": -300,
-          "y": 148,
-          "scale": 0.15,
-          "count": 40,
-          "flip": true,
-          "phase": 0,
-          "depth": 0.78
-        },
-        {
-          "rig": "legionary",
-          "clip": "march",
-          "x": -160,
-          "y": 151,
-          "scale": 0.15,
-          "count": 40,
-          "flip": true,
-          "phase": 0,
-          "depth": 0.78
-        },
-        {
-          "rig": "legionary",
-          "clip": "march",
-          "x": -120,
-          "y": 65,
-          "scale": 0.1,
-          "count": 30,
+          "x": -290,
+          "y": 62,
+          "scale": 0.043,
+          "count": 20,
           "flip": false,
-          "phase": 0,
-          "depth": 0.46
+          "phase": 1224,
+          "depth": 0.46,
+          "formation": {
+            "columns": 10,
+            "spacing": [
+              190,
+              90
+            ],
+            "jitter": 0.3
+          }
         },
         {
-          "rig": "legionary",
+          "rig": "gaul_warrior_blue",
+          "clip": "march",
+          "x": -90,
+          "y": 66,
+          "scale": 0.044,
+          "count": 20,
+          "flip": false,
+          "phase": 228,
+          "depth": 0.46,
+          "formation": {
+            "columns": 10,
+            "spacing": [
+              190,
+              90
+            ],
+            "jitter": 0.3
+          }
+        },
+        {
+          "rig": "roman_infantry",
           "clip": "brace",
-          "x": 80,
-          "y": 180,
-          "scale": 0.2,
-          "count": 1,
-          "flip": false,
-          "phase": 0,
-          "depth": 0.6
+          "x": -95,
+          "y": 113,
+          "scale": 0.06,
+          "count": 20,
+          "flip": true,
+          "phase": 583,
+          "depth": 0.56,
+          "formation": {
+            "columns": 10,
+            "spacing": [
+              190,
+              90
+            ],
+            "jitter": 0.12
+          }
         },
         {
-          "rig": "legionary",
+          "rig": "roman_infantry",
           "clip": "brace",
           "x": 130,
-          "y": 180,
-          "scale": 0.2,
-          "count": 1,
-          "flip": false,
-          "phase": 90,
-          "depth": 0.6
+          "y": 115,
+          "scale": 0.06,
+          "count": 20,
+          "flip": true,
+          "phase": 2132,
+          "depth": 0.56,
+          "formation": {
+            "columns": 10,
+            "spacing": [
+              190,
+              90
+            ],
+            "jitter": 0.12
+          }
         },
         {
-          "rig": "legionary",
+          "rig": "roman_infantry",
           "clip": "brace",
-          "x": 180,
-          "y": 180,
-          "scale": 0.2,
+          "x": -200,
+          "y": 207,
+          "scale": 0.082,
+          "count": 20,
+          "flip": false,
+          "phase": 1291,
+          "depth": 0.6,
+          "formation": {
+            "columns": 10,
+            "spacing": [
+              190,
+              90
+            ],
+            "jitter": 0.12
+          }
+        },
+        {
+          "rig": "roman_infantry",
+          "clip": "brace",
+          "x": 80,
+          "y": 212,
+          "scale": 0.082,
+          "count": 20,
+          "flip": false,
+          "phase": 916,
+          "depth": 0.6,
+          "formation": {
+            "columns": 10,
+            "spacing": [
+              190,
+              90
+            ],
+            "jitter": 0.12
+          }
+        },
+        {
+          "rig": "gaul_warrior",
+          "clip": "march",
+          "x": -330,
+          "y": 320,
+          "scale": 0.068,
+          "count": 15,
+          "flip": false,
+          "phase": 256,
+          "depth": 0.78,
+          "formation": {
+            "columns": 8,
+            "spacing": [
+              190,
+              90
+            ],
+            "jitter": 0.3
+          }
+        },
+        {
+          "rig": "gaul_warrior_blue",
+          "clip": "march",
+          "x": -90,
+          "y": 322,
+          "scale": 0.068,
+          "count": 15,
+          "flip": false,
+          "phase": 1988,
+          "depth": 0.78,
+          "formation": {
+            "columns": 8,
+            "spacing": [
+              190,
+              90
+            ],
+            "jitter": 0.3
+          }
+        },
+        {
+          "rig": "roman_infantry",
+          "clip": "brace",
+          "x": 45,
+          "y": 217,
+          "scale": 0.16,
           "count": 1,
           "flip": false,
-          "phase": 200,
+          "phase": 370,
           "depth": 0.6
         },
         {
-          "rig": "legionary",
-          "clip": "fall",
-          "x": 40,
-          "y": 180,
-          "scale": 0.2,
+          "rig": "roman_infantry",
+          "clip": "thrust",
+          "x": 155,
+          "y": 222,
+          "scale": 0.165,
           "count": 1,
-          "flip": false,
-          "phase": 150,
+          "flip": true,
+          "phase": 1190,
           "depth": 0.6
         },
         {
-          "rig": "legionary",
-          "clip": "fall",
-          "x": 230,
-          "y": 180,
-          "scale": 0.2,
+          "rig": "roman_infantry",
+          "clip": "brace",
+          "x": 270,
+          "y": 218,
+          "scale": 0.15,
           "count": 1,
           "flip": false,
-          "phase": 300,
+          "phase": 2030,
           "depth": 0.6
+        },
+        {
+          "rig": "gaul_warrior",
+          "clip": "thrust",
+          "x": -220,
+          "y": 322,
+          "scale": 0.16,
+          "count": 1,
+          "flip": false,
+          "phase": 430,
+          "depth": 0.78
+        },
+        {
+          "rig": "gaul_warrior_blue",
+          "clip": "brace",
+          "x": 60,
+          "y": 324,
+          "scale": 0.155,
+          "count": 1,
+          "flip": true,
+          "phase": 1770,
+          "depth": 0.78
         }
       ],
       "audio": {
@@ -653,47 +854,47 @@
       "lightSource": false,
       "actors": [
         {
-          "rig": "legionary",
+          "rig": "roman_infantry",
           "clip": "idle",
           "x": -140,
           "y": 180,
-          "scale": 0.18,
+          "scale": 0.14,
           "count": 1,
           "flip": false,
-          "phase": 0,
+          "phase": 835,
           "depth": 0.6
         },
         {
-          "rig": "legionary",
+          "rig": "roman_infantry",
           "clip": "idle",
           "x": -85,
           "y": 183,
-          "scale": 0.18,
+          "scale": 0.14,
           "count": 1,
           "flip": false,
-          "phase": 900,
+          "phase": 1454,
           "depth": 0.6
         },
         {
-          "rig": "legionary",
+          "rig": "roman_infantry",
           "clip": "idle",
           "x": 85,
           "y": 180,
-          "scale": 0.18,
+          "scale": 0.14,
           "count": 1,
           "flip": true,
-          "phase": 300,
+          "phase": 2073,
           "depth": 0.6
         },
         {
-          "rig": "legionary",
+          "rig": "roman_infantry",
           "clip": "idle",
           "x": 140,
           "y": 183,
-          "scale": 0.18,
+          "scale": 0.14,
           "count": 1,
           "flip": true,
-          "phase": 1600,
+          "phase": 192,
           "depth": 0.6
         }
       ],

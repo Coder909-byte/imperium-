@@ -1,0 +1,448 @@
+{
+  "id": "roman_infantry",
+  "draft": true,
+  "parts": [
+    {
+      "id": "body",
+      "texture": "gallia/roman-infantry/body.webp",
+      "size": [
+        150,
+        180
+      ],
+      "pivot": [
+        75,
+        180
+      ],
+      "parent": null,
+      "rest": {
+        "x": 0,
+        "y": -180
+      },
+      "zOrder": 3
+    },
+    {
+      "id": "head",
+      "texture": "gallia/roman-infantry/head.webp",
+      "size": [
+        72,
+        95
+      ],
+      "pivot": [
+        34.56,
+        90
+      ],
+      "parent": "body",
+      "rest": {
+        "x": 8,
+        "y": -166
+      },
+      "zOrder": 4
+    },
+    {
+      "id": "weapon",
+      "texture": "gallia/roman-infantry/weapon.webp",
+      "size": [
+        176,
+        210
+      ],
+      "pivot": [
+        140.8,
+        14
+      ],
+      "parent": "body",
+      "rest": {
+        "x": -56,
+        "y": -150
+      },
+      "zOrder": 5
+    },
+    {
+      "id": "shield",
+      "texture": "gallia/roman-infantry/shield.webp",
+      "size": [
+        146,
+        245
+      ],
+      "pivot": [
+        20,
+        25
+      ],
+      "parent": "body",
+      "rest": {
+        "x": 48,
+        "y": -150
+      },
+      "zOrder": 6
+    },
+    {
+      "id": "leg_near",
+      "texture": "gallia/roman-infantry/leg_near.webp",
+      "size": [
+        101,
+        190
+      ],
+      "pivot": [
+        46.46,
+        5
+      ],
+      "parent": "body",
+      "rest": {
+        "x": 24,
+        "y": -5
+      },
+      "zOrder": 2
+    },
+    {
+      "id": "leg_far",
+      "texture": "gallia/roman-infantry/leg_far.webp",
+      "size": [
+        118,
+        190
+      ],
+      "pivot": [
+        42.48,
+        5
+      ],
+      "parent": "body",
+      "rest": {
+        "x": -46,
+        "y": -5
+      },
+      "zOrder": 1
+    }
+  ],
+  "clips": [
+    {
+      "id": "idle",
+      "durationMs": 3100,
+      "loop": true,
+      "midlineExemptParts": [
+        "weapon",
+        "shield"
+      ],
+      "tracks": {
+        "body": [
+          {
+            "t": 0,
+            "rot": 0,
+            "ease": "sine.inOut"
+          },
+          {
+            "t": 0.5,
+            "rot": 0.18,
+            "ease": "sine.inOut"
+          },
+          {
+            "t": 1,
+            "rot": 0,
+            "ease": "sine.inOut"
+          }
+        ],
+        "head": [
+          {
+            "t": 0,
+            "rot": -0.3,
+            "ease": "sine.inOut"
+          },
+          {
+            "t": 0.6,
+            "rot": 0.8,
+            "ease": "sine.inOut"
+          },
+          {
+            "t": 1,
+            "rot": -0.3,
+            "ease": "sine.inOut"
+          }
+        ],
+        "weapon": [
+          {
+            "t": 0,
+            "rot": -0.4,
+            "ease": "sine.inOut"
+          },
+          {
+            "t": 0.45,
+            "rot": 0.4,
+            "ease": "sine.inOut"
+          },
+          {
+            "t": 1,
+            "rot": -0.4,
+            "ease": "sine.inOut"
+          }
+        ]
+      }
+    },
+    {
+      "id": "brace",
+      "durationMs": 2770,
+      "loop": true,
+      "midlineExemptParts": [
+        "weapon",
+        "shield"
+      ],
+      "tracks": {
+        "body": [
+          {
+            "t": 0,
+            "rot": 0,
+            "ease": "sine.inOut"
+          },
+          {
+            "t": 0.4,
+            "rot": -0.25,
+            "ease": "sine.inOut"
+          },
+          {
+            "t": 1,
+            "rot": 0,
+            "ease": "sine.inOut"
+          }
+        ],
+        "weapon": [
+          {
+            "t": 0,
+            "rot": 0,
+            "ease": "sine.inOut"
+          },
+          {
+            "t": 0.55,
+            "rot": -2.2,
+            "ease": "sine.inOut"
+          },
+          {
+            "t": 1,
+            "rot": 0,
+            "ease": "sine.inOut"
+          }
+        ],
+        "shield": [
+          {
+            "t": 0,
+            "rot": 0,
+            "ease": "sine.inOut"
+          },
+          {
+            "t": 0.45,
+            "rot": 0.7,
+            "ease": "sine.inOut"
+          },
+          {
+            "t": 1,
+            "rot": 0,
+            "ease": "sine.inOut"
+          }
+        ],
+        "head": [
+          {
+            "t": 0,
+            "rot": 0,
+            "ease": "sine.inOut"
+          },
+          {
+            "t": 0.7,
+            "rot": 0.8,
+            "ease": "sine.inOut"
+          },
+          {
+            "t": 1,
+            "rot": 0,
+            "ease": "sine.inOut"
+          }
+        ]
+      }
+    },
+    {
+      "id": "thrust",
+      "durationMs": 2130,
+      "loop": true,
+      "midlineExemptParts": [
+        "weapon",
+        "shield"
+      ],
+      "tracks": {
+        "weapon": [
+          {
+            "t": 0,
+            "rot": 0,
+            "ease": "sine.inOut"
+          },
+          {
+            "t": 0.3,
+            "rot": -7,
+            "ease": "sine.inOut"
+          },
+          {
+            "t": 0.55,
+            "rot": -1,
+            "ease": "sine.inOut"
+          },
+          {
+            "t": 1,
+            "rot": 0,
+            "ease": "sine.inOut"
+          }
+        ],
+        "body": [
+          {
+            "t": 0,
+            "rot": 0,
+            "ease": "sine.inOut"
+          },
+          {
+            "t": 0.3,
+            "rot": -0.45,
+            "ease": "sine.inOut"
+          },
+          {
+            "t": 1,
+            "rot": 0,
+            "ease": "sine.inOut"
+          }
+        ],
+        "shield": [
+          {
+            "t": 0,
+            "rot": 0,
+            "ease": "sine.inOut"
+          },
+          {
+            "t": 0.4,
+            "rot": -0.5,
+            "ease": "sine.inOut"
+          },
+          {
+            "t": 1,
+            "rot": 0,
+            "ease": "sine.inOut"
+          }
+        ]
+      }
+    },
+    {
+      "id": "march",
+      "durationMs": 1570,
+      "loop": true,
+      "midlineExemptParts": [
+        "weapon",
+        "shield"
+      ],
+      "locomotion": true,
+      "symmetricPairs": [
+        [
+          "leg_near",
+          "leg_far"
+        ]
+      ],
+      "tracks": {
+        "leg_near": [
+          {
+            "t": 0,
+            "rot": -1.5,
+            "ease": "sine.inOut"
+          },
+          {
+            "t": 0.5,
+            "rot": 1.5,
+            "ease": "sine.inOut"
+          },
+          {
+            "t": 1,
+            "rot": -1.5,
+            "ease": "sine.inOut"
+          }
+        ],
+        "leg_far": [
+          {
+            "t": 0,
+            "rot": 1.5,
+            "ease": "sine.inOut"
+          },
+          {
+            "t": 0.5,
+            "rot": -1.5,
+            "ease": "sine.inOut"
+          },
+          {
+            "t": 1,
+            "rot": 1.5,
+            "ease": "sine.inOut"
+          }
+        ],
+        "weapon": [
+          {
+            "t": 0,
+            "rot": -0.4,
+            "ease": "sine.inOut"
+          },
+          {
+            "t": 0.5,
+            "rot": 0.8,
+            "ease": "sine.inOut"
+          },
+          {
+            "t": 1,
+            "rot": -0.4,
+            "ease": "sine.inOut"
+          }
+        ]
+      }
+    },
+    {
+      "id": "raise",
+      "durationMs": 3300,
+      "loop": true,
+      "midlineExemptParts": [
+        "weapon",
+        "shield"
+      ],
+      "tracks": {
+        "weapon": [
+          {
+            "t": 0,
+            "rot": 0,
+            "ease": "sine.inOut"
+          },
+          {
+            "t": 0.5,
+            "rot": -5,
+            "ease": "sine.inOut"
+          },
+          {
+            "t": 1,
+            "rot": 0,
+            "ease": "sine.inOut"
+          }
+        ]
+      }
+    },
+    {
+      "id": "fall",
+      "durationMs": 1200,
+      "loop": false,
+      "midlineExemptParts": [
+        "weapon",
+        "shield",
+        "head",
+        "leg_near",
+        "leg_far"
+      ],
+      "tracks": {
+        "body": [
+          {
+            "t": 0,
+            "rot": 0
+          },
+          {
+            "t": 1,
+            "rot": 82,
+            "dx": 40,
+            "dy": 170,
+            "ease": "power2.in"
+          }
+        ]
+      }
+    }
+  ]
+}
