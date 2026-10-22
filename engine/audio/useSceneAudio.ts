@@ -30,13 +30,14 @@ export function useSceneAudio(region: SceneRegion, beat: SceneBeat) {
   useEffect(() => { directorRef.current?.applyBeat(beat.id, beat.audio); }, [beat]);
   useEffect(() => { directorRef.current?.setMuted(muted); }, [muted]);
 
-  const toggleMute = () => {
+  const toggleMute = (event: { isTrusted: boolean }) => {
     const next = !muted;
     try { localStorage.setItem(MUTE_STORAGE_KEY, String(next)); } catch { /* Storage may be disabled. */ }
     setMuted(next);
+    if (!next) setFailed(false);
     // The click is itself a gesture, including keyboard activation.
     directorRef.current?.setMuted(next);
-    directorRef.current?.activate();
+    if (event.isTrusted) directorRef.current?.activate();
   };
   const stop = useCallback(() => directorRef.current?.destroy(), []);
   return { muted, toggleMute, stop, failed, available: Object.keys(region.audio?.assets ?? {}).length > 0 };

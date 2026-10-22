@@ -1,15 +1,22 @@
-/* Layout only — colour, type and the letterbox box itself come from
-   engine/scene/ScenePlayer.module.css (.player/.captionBlock/.eyebrow/
-   .headline/.body), reused as-is so this state reads as the same
-   cinematic shell the real player renders into, not a different page. */
+/* Keep the scene's typography, with document-flow layout so an
+   unavailable campaign needs no canvas height to remain readable. */
+
+.shell {
+  width: 100%;
+  max-width: 1280px;
+  min-height: min(70dvh, 640px);
+  margin: 0 auto;
+  background: radial-gradient(ellipse at 50% 35%, #30261a, #0a0806 75%);
+  border: 1px solid #665037;
+  font-family: Georgia, "Times New Roman", serif;
+}
 
 .center {
-  position: absolute;
-  inset: 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 2rem;
+  min-height: inherit;
+  padding: clamp(1.25rem, 5vw, 4rem);
   text-align: center;
 }
 

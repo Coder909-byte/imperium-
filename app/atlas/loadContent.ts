@@ -4,7 +4,8 @@
 // module hands it to anything else, per "no any — use unknown and narrow".
 import { readFileSync, readdirSync } from "node:fs";
 import { join } from "node:path";
-import { Province, City, SeaLabel } from "@/content/schema";
+import { Province, City, SeaLabel, type Region } from "@/content/schema";
+import { loadRegionContent } from "../scene/[regionId]/loadContent";
 
 const CONTENT_ROOT = join(process.cwd(), "content", "borders");
 
@@ -16,6 +17,7 @@ export interface AtlasContent {
     lakes: GeoJSON.FeatureCollection;
   };
   provinces: Province[];
+  regions: Region[];
   cities: City[];
   seas: SeaLabel[];
 }
@@ -59,5 +61,12 @@ export function loadAtlasContent(): AtlasContent {
   const cities = readJSONArray(join(CONTENT_ROOT, "cities.json")).map((c) => City.parse(c));
   const seas = readJSONArray(join(CONTENT_ROOT, "seas.json")).map((s) => SeaLabel.parse(s));
 
-  return { physical, provinces, cities, seas };
+  // Only atlas provinces enter the preview catalog; engine/stress
+  // fixtures remain reachable through their existing development paths.
+  const regions = provinces.flatMap((province) => {
+    const region = loadRegionContent(province.id);
+    return region ? [region] : [];
+  });
+
+  return { physical, provinces, regions, cities, seas };
 }

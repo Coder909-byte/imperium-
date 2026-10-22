@@ -49,31 +49,11 @@
   opacity: 0.75;
 }
 
-/* Three stacked paths per province, not one — the province group used to
-   be a single filtered <path> whose fill-opacity/stroke-opacity animated
-   directly for both hover and held/unheld, and a real Chrome trace
-   (invalidationTracking, not assumed) showed both cases forcing a
-   repaint of the *entire* inkEdges-filtered <g> — all 24 provinces plus
-   the physical layers — on every tick: fill-opacity/stroke-opacity are
-   paint properties, feeding what the SVG filter rasterizes, and Blink
-   repaints a filtered group as one unit when anything inside it changes.
-   Hover alone cost 18 Paint events per interaction; the era-switch morph
-   (GSAP, ~60fps, ~900ms) cost 130 — essentially every single frame.
-
-   The fix, same shape both times: keep each layer's *own* fill-opacity/
-   stroke-opacity constant, and animate only *outer* opacity (+ scale) —
-   both post-filter compositing operations, not paint input, so once a
-   layer is promoted (will-change) toggling it is compositor-only. Confirmed
-   the same way: Paint events per hover dropped 18 -> ~2; see
-   MorphBorders.ts and the e2e regression tests for the per-frame case.
-
-     .provinceBase   always the "unheld" look (faint outline) — owns
-                     click/hover/keyboard. Never animates fill/stroke.
-     .heldOverlay    always the "held" look at fixed alpha, MorphBorders
-                     (M2) fades it 0<->1 for era switches — never touches
-                     its own fill-opacity/stroke-opacity, just opacity.
-     .hoverFill      the hover brighten-up, unchanged from before — still
-                     stacks on top of .heldOverlay, not .provinceBase. */
+/* Three paths keep fill/stroke paint constant inside inkEdges. Animating
+   those paint properties used to repaint the whole filtered group every
+   frame (18 paints per hover, 130 per era change in the original trace).
+   Only overlay opacity changes now; the base owns hit-testing. See the
+   CDP regression checks in e2e/atlas.spec.ts. */
 .provinceBase {
   fill: none;
   stroke: #3a2510;
@@ -118,6 +98,61 @@
 .heldOverlayActive {
   opacity: 1;
 }
+
+.previewOverlay {
+  stroke: #754817;
+  stroke-width: 2.4;
+}
+
+.comingSoonOverlay {
+  stroke-dasharray: 3 2;
+}
+
+.catalog {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 1.25rem;
+  background: #17120e;
+  color: #f4ede0;
+}
+
+.catalogTitle {
+  margin: 0;
+  font-family: var(--font-cinzel), serif;
+  font-size: 1.1rem;
+}
+
+.catalogIntro {
+  margin: 0.4rem 0 0;
+  font-family: var(--font-garamond), serif;
+  color: #dcd2bf;
+}
+
+.previewList { display: flex; flex-wrap: wrap; gap: 0.6rem; }
+.previewButton {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.2rem;
+  min-height: 44px;
+  padding: 0.7rem 1rem;
+  border: 1px solid #c9a876;
+  background: #2c2115;
+  color: #f4ede0;
+  cursor: pointer;
+  font-family: var(--font-cinzel), serif;
+}
+.previewButton:hover { background: #46321e; }
+.previewButton:focus-visible { outline: 2px solid #f2e2b8; outline-offset: 3px; }
+.previewDetail { font-family: var(--font-garamond), serif; font-size: 0.9rem; color: #dcd2bf; }
+.legend { display: flex; flex-wrap: wrap; justify-content: center; gap: 1.25rem; padding: 0.5rem; background: #e2d4b7; color: #241708; font-size: 0.85rem; }
+.legend span { display: inline-flex; align-items: center; gap: 0.4rem; }
+.legend i { display: inline-block; width: 1.4rem; height: 0.8rem; background: #c48d75; }
+.previewKey { border: 2px solid #754817; }
+.comingSoonKey { border: 1px dashed #3a2510; }
 
 /* Solving 0.85 = 0.55 + x*(1-0.55) for x: two same-color layers stacked
    with alpha "over" compositing combine as top + bottom*(1-top), not by
@@ -233,6 +268,8 @@
 
 .teaser {
   min-height: 1.4em;
+  padding: 0.4rem;
+  background: #e2d4b7;
   font-family: var(--font-garamond), "EB Garamond", serif;
   font-style: italic;
   color: #241708;

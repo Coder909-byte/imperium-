@@ -12,16 +12,17 @@
   "scene": {
     "lut": "cold_overcast",
     "ambientBed": "wind_plains",
-    "audioPlaceholder": true,
+    "audioPlaceholder": false,
     "planes": [
       {
         "id": "sky",
         "asset": "gallia/sky.webp",
         "essential": true,
-        "placeholder": true,
+        "placeholder": false,
         "depth": 0.02,
         "tint": "#ffffff",
-        "blur": 0
+        "blur": 0,
+        "role": "atmosphere"
       },
       {
         "id": "far_ridge",
@@ -43,10 +44,11 @@
       {
         "id": "mid_ground",
         "asset": "gallia/mid_ground.webp",
-        "placeholder": true,
+        "placeholder": false,
         "depth": 0.42,
         "tint": "#ffffff",
-        "blur": 0
+        "blur": 0,
+        "role": "atmosphere"
       },
       {
         "id": "inner_wall",
@@ -74,7 +76,10 @@
         "tint": "#ffffff",
         "blur": 3
       }
-    ]
+    ],
+    "audioAssets": {
+      "wind_plains": "gallia/audio/wind-plains.wav"
+    }
   },
   "beats": [
     {
@@ -630,7 +635,7 @@
       "fx": [
         "smoke"
       ],
-      "lightSource": true,
+      "lightSource": false,
       "actors": [
         {
           "rig": "legionary",

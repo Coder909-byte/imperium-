@@ -13,6 +13,7 @@ export interface ProjectedProvince {
   latinName: string;
   heldFrom: number;
   heldTo: number | null;
+  scene: { beatCount: number; year: string } | null;
   d: string; // SVG path, in the shared viewport's coordinate space
   labelX: number;
   labelY: number;

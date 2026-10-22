@@ -49,7 +49,7 @@ export function buildSceneProps(region: Region, rigs: Rig[] = [], manifest: Mani
     name: region.name,
     lut: region.scene.lut,
     planes: region.scene.planes.map((plane) => {
-      const assetUrl = plane.placeholder ? undefined : approvedAssetUrl(plane.asset, manifest);
+      const assetUrl = plane.placeholder ? undefined : approvedAssetUrl(plane.asset, manifest, plane.role === "atmosphere" ? "atmosphere" : "asset");
       if (!plane.placeholder && !assetUrl) throw new Error(`Unapproved scene plane: ${plane.asset}`);
       return {
         id: plane.id,

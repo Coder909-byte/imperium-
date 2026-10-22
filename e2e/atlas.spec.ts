@@ -7,9 +7,9 @@ test.describe("atlas", () => {
 
   test("350 BC shows only Latium held — the near-empty-map edge case", async ({ page }) => {
     await expect(page.getByText("350 BC", { exact: true })).toBeVisible();
-    const held = page.locator('path[aria-label$="open scene"]');
+    const held = page.locator('path[role="button"][data-region-id]');
     await expect(held).toHaveCount(1);
-    await expect(held).toHaveAttribute("aria-label", "Latium — open scene");
+    await expect(held).toHaveAttribute("aria-label", "Latium — coming soon");
   });
 
   test("clicking an inset swaps it with the main map and updates the era label", async ({ page }) => {
@@ -22,7 +22,7 @@ test.describe("atlas", () => {
 
     // Main map is now 117 AD — held-region count jumps to 23 (all but
     // Latium, absorbed into Italia by 272 BC).
-    await expect(page.locator('path[aria-label$="open scene"]')).toHaveCount(23);
+    await expect(page.locator('path[role="button"][data-region-id]')).toHaveCount(23);
     await expect(page.getByText("117 AD", { exact: true }).first()).toBeVisible();
 
     // 350 BC now lives in the inset that 117 AD vacated.
@@ -38,7 +38,7 @@ test.describe("atlas", () => {
     // toggled on :hover). Checking any one path's own fillOpacity no
     // longer proves anything on its own — this computes the actual
     // combined rendered result the same way a viewer's eye would see it.
-    const latium = page.locator('path[aria-label="Latium — open scene"]');
+    const latium = page.locator('path[aria-label="Latium — coming soon"]');
     const heldOverlay = page.locator('path[data-held-overlay="latium"]');
     const hoverOverlay = page.locator('path[data-hover-fill="latium"]');
 
@@ -70,8 +70,8 @@ test.describe("atlas", () => {
     await expect(page.locator('[aria-live="polite"]')).toContainText("Ager Romanus");
   });
 
-  test("clicking a held region routes to its scene stub", async ({ page }) => {
-    await page.locator('path[aria-label="Latium — open scene"]').click();
+  test("clicking a held region opens an intentional Coming soon state", async ({ page }) => {
+    await page.locator('path[aria-label="Latium — coming soon"]').click();
     await page.waitForURL("**/scene/latium");
     await expect(page.locator("h1")).toHaveText("Latium");
   });
@@ -101,7 +101,7 @@ test.describe("atlas — border morphing", () => {
     const inset117 = page.locator('g[aria-label="Switch main map to 117 AD"]');
     await inset117.click();
 
-    await expect(page.locator('path[aria-label$="open scene"]')).toHaveCount(23);
+    await expect(page.locator('path[role="button"][data-region-id]')).toHaveCount(23);
     await expect(page.getByText("117 AD", { exact: true }).first()).toBeVisible();
 
     // Interactivity (aria-label, click affordance) updates instantly —
@@ -138,8 +138,8 @@ test.describe("atlas — border morphing", () => {
 
     // Settles on the *last* click's target, not a queued or blended state.
     await expect(page.getByText("486 AD", { exact: true }).first()).toBeVisible();
-    await expect(page.locator('path[aria-label$="open scene"]')).toHaveCount(9);
-    await expect(page.locator('path[aria-label="Aegyptus — open scene"]')).toBeVisible();
+    await expect(page.locator('path[role="button"][data-region-id]')).toHaveCount(9);
+    await expect(page.locator('path[aria-label="Aegyptus — coming soon"]')).toBeVisible();
 
     const dValues = await page.locator("path").evaluateAll((els) => els.map((el) => el.getAttribute("d")));
     for (const d of dValues) {
@@ -234,7 +234,7 @@ test.describe("atlas — hover and morph performance", () => {
   test("hovering a province is compositor-only, not a full-group repaint", async ({ page, browserName }) => {
     test.skip(browserName !== "chromium", "CDP tracing is Chromium-only");
     await page.goto("/atlas");
-    const latium = page.locator('path[aria-label="Latium — open scene"]');
+    const latium = page.locator('path[aria-label="Latium — coming soon"]');
     await latium.waitFor();
     await page.waitForTimeout(300);
 

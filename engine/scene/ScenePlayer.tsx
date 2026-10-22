@@ -11,6 +11,7 @@ import { BeatDirector } from "./BeatDirector";
 import { useSceneAudio } from "../audio/useSceneAudio";
 import { SceneCaptions } from "./SceneCaptions";
 import { cameraForBeat, LAYER_REVEAL_MS } from "./beatTiming";
+import { SCENE_SPACE } from "./sceneSpace";
 import { Camera } from "./Camera";
 import { detectStartingTier, readNavigatorSignals, type DeviceTier } from "./deviceTier";
 import type { SceneActors } from "./SceneActors";
@@ -107,7 +108,7 @@ export function ScenePlayer({ region, onExit, forcedTier, forcedLut, forcedChain
       // whole time — caught by literally dumping live particle state via
       // console.log mid-tick, not by reasoning about the math again.
       // Read fresh every call so a resize stays correct on the next frame.
-      const getBounds = () => renderer.getStageSize();
+      const getBounds = () => SCENE_SPACE;
 
       // Planes are built and added to cameraContainer *before*
       // SceneEffects is constructed, deliberately — SceneEffects' own
@@ -123,9 +124,8 @@ export function ScenePlayer({ region, onExit, forcedTier, forcedLut, forcedChain
       // and deterministic; only the controller actually constructed
       // below owns the live snapshot/runtime monitor/console log.
       const initialTierGuess = forcedTier ?? detectStartingTier(readNavigatorSignals());
-      const stage = renderer.getStageSize();
       const planeDefs = selectPlanesForTier(region.planes, initialTierGuess);
-      await layers.init(planeDefs, region.rigs, renderer.getTicker(), stage);
+      await layers.init(planeDefs, region.rigs, renderer.getTicker());
       if (cancelled) { layers.destroy(); return; }
       renderer.cameraContainer.addChild(layers.container);
       planesRef.current = layers.planes;
@@ -166,6 +166,9 @@ export function ScenePlayer({ region, onExit, forcedTier, forcedLut, forcedChain
       setEngineReady(true);
     }).catch(() => {
       layers.destroy();
+      cameraRef.current?.destroy();
+      cameraRef.current = null;
+      renderer.destroy();
       if (!cancelled) setRenderError("Scene artwork could not load. Reload to retry; the text and sources remain available.");
     });
 
@@ -212,7 +215,7 @@ export function ScenePlayer({ region, onExit, forcedTier, forcedLut, forcedChain
     const renderer = rendererRef.current;
     if (!camera || !renderer) return;
 
-    camera.animateTo(cameraForBeat(beat), renderer.getStageSize(), { shakeActive: beat.fx.includes("shake") });
+    camera.animateTo(cameraForBeat(beat), { shakeActive: beat.fx.includes("shake") });
     effectsRef.current?.applyBeat(beat.fx, beat.lightSource);
     // Reduced-motion is NOT passed here — SceneActors tracks it via its
     // own setReducedMotion() (the effect above, which fires on the same
@@ -226,6 +229,7 @@ export function ScenePlayer({ region, onExit, forcedTier, forcedLut, forcedChain
     for (const [id, plane] of planesRef.current) {
       plane.setVisible(visible.has(id), fadeMs);
     }
+    if (!hasAppliedBeatRef.current) renderer.afterNextRender(() => performance.mark("imperium:scene-presented"));
     hasAppliedBeatRef.current = true;
   }, [engineReady, beat, reducedMotion]);
 
@@ -284,7 +288,8 @@ export function ScenePlayer({ region, onExit, forcedTier, forcedLut, forcedChain
       <div ref={containerRef} className={styles.canvasHost} />
       {renderError && <p role="alert" className={styles.renderError}>{renderError}</p>}
       <div className={styles.topBar} />
-      {region.planes.some((plane) => !plane.assetUrl) && <span className={styles.artStatus}>Placeholder artwork</span>}
+      {(region.planes.some((plane) => !plane.assetUrl) || region.rigs.some((rig) => rig.parts.some((part) => !part.texture.startsWith("/assets/")))
+        || region.beats.some((beat) => beat.actors.some((actor) => actor.count > 1))) && <span className={styles.artStatus}>Artwork in progress</span>}
 
       <button type="button" className={styles.exitButton} onClick={exitScene}>
         ← Return to the map

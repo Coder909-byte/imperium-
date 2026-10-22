@@ -339,6 +339,7 @@ quizAnswer      id, sessionId, questionId, chosenOptionId,
 - Framed period map: ornate double border, corner rules, title cartouche with aquila.
 - Three inset mini-maps in the corners *are* the era switcher. Click an inset, it swaps with the main map. The control and the reference are the same object — no extra UI.
 - Held regions fill vermilion; labels fade in. Hover raises opacity and shows a one-line teaser.
+- Historical held status and scene availability are separate (ADR 010). Authored campaigns are labelled scene previews with solid outlines; unauthored provinces use dashed outlines and named Coming soon destinations. A dated preview catalog makes available campaigns discoverable from every map era.
 - Borders morph between eras via MorphSVG over ~900ms. Lost regions fade out, gained regions fade in.
 - Completed regions carry a small gold wreath mark.
 - **Real GeoJSON, not hand-drawn paths.** Candidates: `aourednik/historical-basemaps` (GitHub), Digital Atlas of the Roman Empire (Lund), Pleiades for place coordinates. **Verify licences before M1.**

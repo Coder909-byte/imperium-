@@ -96,7 +96,8 @@ test.describe("scene player — unauthored region fallback", () => {
     await expect(page.getByTestId("not-yet-written")).toBeVisible();
     await expect(page.locator("h1")).toHaveText("Latium");
     await expect(page.getByText("Ager Romanus")).toBeVisible(); // Latin name, pulled from content/borders/provinces/
-    await expect(page.getByText(/hasn.t been written yet/)).toBeVisible();
+    await expect(page.getByText("Coming soon", { exact: true })).toBeVisible();
+    await expect(page.getByText(/doesn.t have a scene yet/)).toBeVisible();
     await expect(page.getByTestId("scene-player")).toHaveCount(0);
     await expect(page.locator("canvas")).toHaveCount(0);
 

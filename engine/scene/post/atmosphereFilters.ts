@@ -24,7 +24,7 @@ export interface AtmosphereFilters {
 export function createAtmosphereFilters(): AtmosphereFilters {
   // Thresholds tuned for "fire, sun, metal" (PRD §4) — a subtle bloom
   // on ordinary painted colour, not a glow-everything effect.
-  const bloom = new AdvancedBloomFilter({ threshold: 0.55, bloomScale: 1.1, brightness: 1.0, blur: 6, quality: 4 });
+  const bloom = new AdvancedBloomFilter({ threshold: 0.85, bloomScale: 0.25, brightness: 1.0, blur: 4, quality: 4 });
 
   const godray = new GodrayFilter({ angle: 25, gain: 0.4, lacunarity: 2.3, alpha: 0.35, parallel: true });
 

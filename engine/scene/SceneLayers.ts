@@ -6,6 +6,7 @@ import { ParallaxPlane } from "./layers/ParallaxPlane";
 import { computePlaceholderBand } from "./layers/placeholderBand";
 import { createPlaceholderTexture } from "./layers/placeholderTexture";
 import { destroyTextures, loadTextures } from "./loadTextures";
+import { SCENE_SPACE, SCENE_OVERSCAN } from "./sceneSpace";
 
 /** Textures belong to one scene, never Pixi's global Assets cache.
  * A later scene mount cannot accidentally reuse a destroyed texture. */
@@ -16,7 +17,7 @@ export class SceneLayers {
   private textures = new Map<string, Texture>();
   private destroyed = false;
 
-  async init(defs: readonly ScenePlane[], rigs: readonly RigDef[], ticker: FrameTicker, stage: { width: number; height: number }): Promise<void> {
+  async init(defs: readonly ScenePlane[], rigs: readonly RigDef[], ticker: FrameTicker): Promise<void> {
     const urls = new Set([
       ...defs.flatMap((plane) => plane.assetUrl ? [plane.assetUrl] : []),
       ...rigs.flatMap((rig) => rig.parts.map((part) => part.texture).filter((texture) => texture.startsWith("/assets/"))),
@@ -24,11 +25,11 @@ export class SceneLayers {
     this.textures = await loadTextures(urls);
     if (this.destroyed) { this.destroy(); return; }
     this.container.sortableChildren = true;
-    const width = stage.width * 1.35;
-    const height = stage.height * 1.35;
+    const width = SCENE_SPACE.width * SCENE_OVERSCAN;
+    const height = SCENE_SPACE.height * SCENE_OVERSCAN;
     defs.forEach((def, index) => {
       const band = computePlaceholderBand(def.depth, width, height);
-      const texture = def.assetUrl ? this.textures.get(def.assetUrl)! : createPlaceholderTexture({ id: def.id, depth: def.depth, index, width: band.width, height: band.height });
+      const texture = def.assetUrl ? this.textures.get(def.assetUrl)! : createPlaceholderTexture({ id: def.id, depth: def.depth, index, width: band.width, height: band.height, translucent: defs.some((plane) => plane.assetUrl) });
       const plane = new ParallaxPlane({ ...def, texture, ownsTexture: !def.assetUrl });
       // Real cut layers share a registered full scene canvas. Never
       // stretch them into the depth bands used only for placeholders.
@@ -38,7 +39,7 @@ export class SceneLayers {
       this.container.addChild(plane.container);
       this.planes.set(def.id, plane);
     });
-    this.actors = new SceneActors({ layersContainer: this.container, ticker, rigDefs: rigs, textures: this.textures, placementScale: stage.width / 1280 });
+    this.actors = new SceneActors({ layersContainer: this.container, ticker, rigDefs: rigs, textures: this.textures });
   }
 
   destroy(): void {

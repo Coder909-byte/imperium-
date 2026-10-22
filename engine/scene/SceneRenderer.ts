@@ -32,6 +32,8 @@ export class SceneRenderer {
   readonly cameraContainer = new Container();
   private status: SceneRendererStatus = "idle";
   private app: Application | null = null;
+  private resizeObserver: ResizeObserver | null = null;
+  private readonly renderCallbacks = new Set<{ postrender: () => void }>();
 
   constructor(private readonly hostElement: HTMLDivElement) {}
 
@@ -81,6 +83,12 @@ export class SceneRenderer {
     this.app = app;
     app.stage.addChild(this.cameraContainer);
     this.hostElement.appendChild(app.canvas);
+    // Pixi's resizeTo listens to window resize; a sources drawer or a
+    // wrapping caption can resize the stage without a window event.
+    this.resizeObserver = new ResizeObserver(() => {
+      if (this.status === "ready") app.resize();
+    });
+    this.resizeObserver.observe(this.hostElement);
     performance.mark("imperium:pixi-canvas-attached");
     this.status = "ready";
   }
@@ -100,7 +108,19 @@ export class SceneRenderer {
 
   getStageSize(): { width: number; height: number } {
     if (!this.app) return { width: 0, height: 0 };
-    return { width: this.app.renderer.width, height: this.app.renderer.height };
+    return { width: this.app.screen.width, height: this.app.screen.height };
+  }
+
+  afterNextRender(callback: () => void): void {
+    const app = this.app;
+    if (!app) return;
+    const listener = { postrender: () => {
+      app.renderer.runners.postrender.remove(listener);
+      this.renderCallbacks.delete(listener);
+      if (this.status === "ready") callback();
+    } };
+    this.renderCallbacks.add(listener);
+    app.renderer.runners.postrender.add(listener);
   }
 
   destroy(): void {
@@ -108,6 +128,10 @@ export class SceneRenderer {
     const app = this.app;
     this.status = "destroyed";
     this.app = null;
+    this.resizeObserver?.disconnect();
+    this.resizeObserver = null;
+    if (app) for (const callback of this.renderCallbacks) app.renderer.runners.postrender.remove(callback);
+    this.renderCallbacks.clear();
     app?.destroy({ removeView: true }, DESTROY_OPTIONS);
   }
 }

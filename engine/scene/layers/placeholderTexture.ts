@@ -15,6 +15,8 @@ export interface PlaceholderTextureOptions {
   index: number;
   width: number;
   height: number;
+  /** Missing structures must not cover the approved painted scenery. */
+  translucent?: boolean;
 }
 
 export function createPlaceholderTexture(options: PlaceholderTextureOptions): Texture {
@@ -26,8 +28,10 @@ export function createPlaceholderTexture(options: PlaceholderTextureOptions): Te
   if (!ctx) return Texture.WHITE;
 
   const color = pickPlaceholderColor(depth, index);
+  ctx.globalAlpha = options.translucent ? 0.08 : 1;
   ctx.fillStyle = color.css;
   ctx.fillRect(0, 0, canvas.width, canvas.height);
+  ctx.globalAlpha = 1;
 
   // A coarse diagonal hatch, density tied to depth, so adjacent planes
   // remain distinguishable even for a viewer who can't easily judge
@@ -36,7 +40,7 @@ export function createPlaceholderTexture(options: PlaceholderTextureOptions): Te
   const spacing = 40 - depth * 24; // near planes (depth->1) get a tighter hatch
   ctx.strokeStyle = "rgba(0, 0, 0, 0.18)";
   ctx.lineWidth = 2;
-  for (let x = -canvas.height; x < canvas.width; x += spacing) {
+  for (let x = -canvas.height; !options.translucent && x < canvas.width; x += spacing) {
     ctx.beginPath();
     ctx.moveTo(x, 0);
     ctx.lineTo(x + canvas.height, canvas.height);
@@ -49,10 +53,12 @@ export function createPlaceholderTexture(options: PlaceholderTextureOptions): Te
 
   ctx.textAlign = "center";
   ctx.fillStyle = "rgba(255, 255, 255, 0.92)";
-  ctx.font = "bold 28px sans-serif";
-  ctx.fillText(`PLACEHOLDER — ${id}`, canvas.width / 2, canvas.height / 2 - 16);
-  ctx.font = "20px sans-serif";
-  ctx.fillText(`depth ${depth.toFixed(2)}`, canvas.width / 2, canvas.height / 2 + 16);
+  ctx.font = "18px sans-serif";
+  const labelY = options.translucent ? 26 : canvas.height / 2 - 16;
+  ctx.fillStyle = "rgba(8, 10, 10, 0.8)";
+  ctx.fillRect(canvas.width / 2 - 150, labelY - 21, 300, 30);
+  ctx.fillStyle = "#e2dfd5";
+  ctx.fillText(`PLACEHOLDER — ${id}`, canvas.width / 2, labelY);
 
   return Texture.from(canvas);
 }

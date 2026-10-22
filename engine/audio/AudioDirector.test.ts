@@ -2,7 +2,7 @@ import { afterEach, describe, expect, it, vi } from "vitest";
 import { AudioDirector, AUDIO_FADE_MS } from "./AudioDirector";
 
 const { instances } = vi.hoisted(() => ({ instances: [] as {
-  options: { src: string[]; loop: boolean }; play: ReturnType<typeof vi.fn>;
+  options: { src: string[]; loop: boolean; onloaderror: () => void; onplayerror: () => void }; play: ReturnType<typeof vi.fn>;
   stop: ReturnType<typeof vi.fn>; unload: ReturnType<typeof vi.fn>;
   fade: ReturnType<typeof vi.fn>; mute: ReturnType<typeof vi.fn>;
 }[] }));
@@ -14,7 +14,7 @@ vi.mock("howler", () => ({
     active = false;
     volume = vi.fn(() => 0.5);
     playing = () => this.active;
-    constructor(public options: { src: string[]; loop: boolean }) { instances.push(this); }
+    constructor(public options: { src: string[]; loop: boolean; onloaderror: () => void; onplayerror: () => void }) { instances.push(this); }
   },
 }));
 afterEach(() => { instances.length = 0; vi.useRealTimers(); });
@@ -71,5 +71,46 @@ describe("scene audio lifecycle", () => {
     director.activate();
     expect(instances).toHaveLength(0);
     director.destroy();
+  });
+
+  it.each(["onloaderror", "onplayerror"] as const)("retries a failed sound only after an explicit unmute (%s)", (event) => {
+    const onError = vi.fn();
+    const director = new AudioDirector(assets, "wind", false, onError);
+    director.applyBeat("one", { bedIntensity: 0.2 });
+    director.activate();
+    const failed = instances[0];
+    failed.options[event]();
+    expect(onError).toHaveBeenCalledOnce();
+    expect(failed.stop).toHaveBeenCalledOnce();
+    expect(failed.unload).toHaveBeenCalledOnce();
+    director.applyBeat("two", { bedIntensity: 0.6 });
+    expect(instances).toHaveLength(1);
+    director.setMuted(true);
+    director.setMuted(false);
+    expect(instances).toHaveLength(2);
+    expect(instances[1].play).toHaveBeenCalledOnce();
+    expect(instances[1].fade).toHaveBeenLastCalledWith(0.5, 0.6, AUDIO_FADE_MS);
+    // Late callbacks from the discarded Howl cannot poison the retry.
+    failed.options[event]();
+    expect(onError).toHaveBeenCalledOnce();
+    expect(instances[1].unload).not.toHaveBeenCalled();
+    director.destroy();
+    instances[1].options[event]();
+    expect(onError).toHaveBeenCalledOnce();
+  });
+
+  it("cancels crossfade stops and unloads both beds when exiting mid-transition", () => {
+    vi.useFakeTimers();
+    const director = new AudioDirector(assets, "wind");
+    director.activate();
+    director.applyBeat("battle", { bed: "battle", bedIntensity: 0.8 });
+    expect(vi.getTimerCount()).toBe(1);
+    director.destroy();
+    expect(vi.getTimerCount()).toBe(0);
+    vi.advanceTimersByTime(AUDIO_FADE_MS);
+    for (const sound of instances) {
+      expect(sound.stop).toHaveBeenCalledOnce();
+      expect(sound.unload).toHaveBeenCalledOnce();
+    }
   });
 });

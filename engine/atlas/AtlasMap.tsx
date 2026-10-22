@@ -1,22 +1,14 @@
 "use client";
 
-// The interactive atlas SVG. Held regions are a pure function of the
-// selected year (PRD §8.1) — there is no per-era snapshot state, just a
-// `heldIds` set recomputed from `eraOrder[0]`'s year on every render.
-// No content imports — everything arrives as props (engine/ hard rule).
-//
-// Era switches animate via MorphBorders (M2) — GSAP + MorphSVGPlugin,
-// lazy-loaded on idle after mount so it never lands in the initial atlas
-// bundle (PRD §11 / CLAUDE.md budget). `eraOrder` itself still updates
-// synchronously on click: insets and interactivity (aria-label, click,
-// keyboard) cut instantly, per PRD §8.1 — only the main map's *visual*
-// fill/stroke/scale/opacity/path is owned by the transition, and only
-// for its ~900ms (or 150ms under prefers-reduced-motion) duration.
+// Historical interactivity updates immediately; only appearance waits
+// for the lazy MorphBorders animation. Scene availability arrives from
+// app/ as props and never changes which provinces the selected era holds.
 import { useEffect, useMemo, useRef, useState, type KeyboardEvent } from "react";
 import { useRouter } from "next/navigation";
 import { AtlasFilters } from "./AtlasFilters";
 import { AtlasFrame } from "./AtlasFrame";
 import { AtlasInsets } from "./AtlasInsets";
+import { AtlasSceneCatalog } from "./AtlasSceneCatalog";
 import { isHeld } from "./heldRegions";
 import type { AtlasMapProps } from "./types";
 import type { BorderMorph, ProvinceMorphElement } from "./MorphBorders";
@@ -156,14 +148,15 @@ export function AtlasMap({ width, height, physical, provinces, cities, seas, era
 
   const hovered = hoveredId ? (provinces.find((p) => p.id === hoveredId) ?? null) : null;
   const teaser = hovered
-    ? `${hovered.latinName} — held ${formatYear(hovered.heldFrom)} to ${
+    ? `${hovered.latinName} — ${hovered.scene ? `Scene preview: ${hovered.scene.year}` : "Coming soon"} · held ${formatYear(hovered.heldFrom)} to ${
         hovered.heldTo === null ? "at least 486 AD" : formatYear(hovered.heldTo)
       }`
-    : "";
+    : "Choose a province to see its scene status.";
 
   return (
     <div className={styles.wrap}>
-      <svg viewBox={`0 0 ${width} ${height}`} className={styles.svg} role="img" aria-label={`Roman Empire, ${mainEra.label}`}>
+      <AtlasSceneCatalog provinces={provinces} onSelect={goToScene} />
+      <svg viewBox={`0 0 ${width} ${height}`} className={styles.svg} role="group" aria-label={`Roman Empire, ${mainEra.label}`}>
         <AtlasFilters />
         <rect x={0} y={0} width={width} height={height} fill="url(#parchmentBase)" filter="url(#paperGrain)" />
 
@@ -183,13 +176,8 @@ export function AtlasMap({ width, height, physical, provinces, cities, seas, era
         </g>
 
         <g filter="url(#inkEdges)">
-          {/* .provinceBase is *always* the faint "unheld" look (fill:none,
-              stroke-opacity:0.25, constant) and owns all interactivity.
-              It never animates fill-opacity/stroke-opacity itself — see
-              AtlasMap.module.css's comment on why that used to force a
-              full repaint of this whole filtered group, both here and in
-              MorphBorders.ts. Whether a province currently *reads* as
-              held is entirely the two overlays below. */}
+          {/* Keep paint properties constant inside this filtered group;
+              held/hover animation belongs to the overlays' opacity. */}
           {provinces.map((province) => {
             const held = heldIds.has(province.id);
             return (
@@ -200,22 +188,22 @@ export function AtlasMap({ width, height, physical, provinces, cities, seas, era
                   else pathRefs.current.delete(province.id);
                 }}
                 d={province.d}
+                data-region-id={province.id}
+                data-scene-status={province.scene ? "preview" : "coming-soon"}
                 className={[styles.provinceBase, held ? styles.provinceInteractive : ""].filter(Boolean).join(" ")}
                 role={held ? "button" : undefined}
                 tabIndex={held ? 0 : undefined}
-                aria-label={held ? `${province.name} — open scene` : undefined}
+                aria-label={held ? `${province.name} — ${province.scene ? "open scene preview" : "coming soon"}` : undefined}
                 onMouseEnter={held ? () => handleProvinceHover(province.id) : undefined}
                 onMouseLeave={held ? () => setHoveredId(null) : undefined}
+                onFocus={held ? () => handleProvinceHover(province.id) : undefined}
+                onBlur={held ? () => setHoveredId(null) : undefined}
                 onClick={held ? () => goToScene(province.id) : undefined}
                 onKeyDown={held ? (event) => handleProvinceKeyDown(event, province.id) : undefined}
               />
             );
           })}
-          {/* Always mounted for all 24 provinces (like the labels below),
-              not conditional on `held` — MorphBorders needs a stable ref
-              to fade this in/out for gained/lost provinces, and an
-              element that might not exist yet on the very render it's
-              needed is exactly the kind of edge case worth not having. */}
+          {/* MorphBorders needs stable refs for gained/lost provinces. */}
           {provinces.map((province) => (
             <path
               key={`held-overlay-${province.id}`}
@@ -225,15 +213,16 @@ export function AtlasMap({ width, height, physical, provinces, cities, seas, era
               }}
               d={province.d}
               data-held-overlay={province.id}
-              className={[styles.heldOverlay, heldIds.has(province.id) ? styles.heldOverlayActive : ""].filter(Boolean).join(" ")}
+              className={[
+                styles.heldOverlay,
+                province.scene ? styles.previewOverlay : styles.comingSoonOverlay,
+                heldIds.has(province.id) ? styles.heldOverlayActive : "",
+              ].filter(Boolean).join(" ")}
               aria-hidden="true"
               pointerEvents="none"
             />
           ))}
-          {/* Hover brightening — stacks on .heldOverlay, not .provinceBase
-              (see AtlasMap.module.css's .hoverFill comment for the exact
-              math). Same fix, same reason: constant own fill-opacity,
-              only outer opacity toggles. */}
+          {/* Hover also animates outer opacity, never filtered paint. */}
           {provinces.map((province) => (
             <path
               key={`hover-fill-${province.id}`}
@@ -296,6 +285,11 @@ export function AtlasMap({ width, height, physical, provinces, cities, seas, era
         <AtlasFrame width={width} height={height} eraLabel={mainEra.label} eraLabelRef={eraLabelRef} />
         <rect x={0} y={0} width={width} height={height} fill="url(#vignette)" pointerEvents="none" />
       </svg>
+
+      <div className={styles.legend} aria-label="Scene status legend">
+        <span><i className={styles.previewKey} aria-hidden="true" />Scene preview</span>
+        <span><i className={styles.comingSoonKey} aria-hidden="true" />Coming soon</span>
+      </div>
 
       <div className={styles.teaser} aria-live="polite">
         {teaser}

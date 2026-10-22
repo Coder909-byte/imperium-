@@ -11,7 +11,7 @@ test.describe("cloud transition", () => {
     const overlay = page.getByTestId("cloud-sweep");
     await expect(overlay).toHaveAttribute("data-active", "false");
 
-    await page.locator('path[aria-label="Latium — open scene"]').click();
+    await page.locator('path[aria-label="Latium — coming soon"]').click();
 
     // Covers before the route swaps...
     await expect(overlay).toHaveAttribute("data-active", "true");
@@ -41,7 +41,7 @@ test.describe("cloud transition", () => {
     // only the plain crossfade panel.
     await expect(page.locator('[class*="mass"]')).toHaveCount(0);
 
-    await page.locator('path[aria-label="Latium — open scene"]').click();
+    await page.locator('path[aria-label="Latium — coming soon"]').click();
     // 200ms cross-fade total uncontended — comfortably settled well
     // inside the ~1.2s+ the full sweep would still be mid-flight for.
     // This suite runs with 2 Playwright workers, and real CPU
@@ -57,7 +57,7 @@ test.describe("cloud transition", () => {
     await page.goto("/atlas");
 
     const overlay = page.getByTestId("cloud-sweep");
-    await page.locator('path[aria-label="Latium — open scene"]').click();
+    await page.locator('path[aria-label="Latium — coming soon"]').click();
 
     // Well inside the 820ms in-phase — the forward sweep to /scene/latium
     // is still covering the screen, hasn't reached full occlusion yet.
@@ -92,7 +92,7 @@ test.describe("cloud transition", () => {
       }).observe({ type: "layout-shift", buffered: true });
     });
 
-    await page.locator('path[aria-label="Latium — open scene"]').click();
+    await page.locator('path[aria-label="Latium — coming soon"]').click();
     await page.waitForURL("**/scene/latium");
     await page.getByTestId("cloud-sweep").waitFor({ state: "attached" });
     await expect(page.getByTestId("cloud-sweep")).toHaveAttribute("data-active", "false", { timeout: 3000 });

@@ -7,7 +7,7 @@ interface SceneCaptionsProps {
   beat: SceneBeat;
   index: number;
   autoplay: boolean;
-  audio: { muted: boolean; failed: boolean; available: boolean; toggleMute: () => void };
+  audio: { muted: boolean; failed: boolean; available: boolean; toggleMute: (event: { isTrusted: boolean }) => void };
   previous: () => void;
   next: () => void;
   jumpTo: (index: number) => void;

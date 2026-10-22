@@ -47,5 +47,200 @@
       "resizeWidth": 1920
     },
     "notes": "M7 tools/forge acceptance run — real painting -> real WebP plane in one command, per CLAUDE.md M7. Not yet referenced by any region JSON (M8 hasn't sourced Gallia's real planes yet); kept as a genuine, working example of the pipeline rather than a placeholder. Source: 6000x3694 JPEG, downloaded directly from Wikimedia Commons for this session and NOT committed to the repo (multi-MB raw scan, not needed once forged) — see docs/art-pipeline.md for the full budget-measurement session this run was part of."
+  },
+  {
+    "file": "content/assets/staging/gallia/daubigny-source.jpg",
+    "source": "https://www.nga.gov/artworks/177919-landscape-distant-village",
+    "licence": "Public domain",
+    "retrieved": "2026-10-22",
+    "artist": "Charles-François Daubigny",
+    "institution": "National Gallery of Art, Washington (Corcoran Collection, 2015.19.10)",
+    "notes": "OWNER-APPROVED SOURCE, STAGING COPY. Exact object-page rights: “This object’s media is free and in the public domain.” Download: https://api.nga.gov/iiif/35295bb4-6f47-432f-9253-f1c2e6fa4ce4/full/!2560,2560/0/default.jpg . Technical review derivative, not the full-resolution original. No public route or region references this file. See docs/m8-asset-candidates.md for mismatches and approval scope. SHA-256 85bd438f41acef3675c6d76d38a5ba558ff9613e0b3595afe3803dc1eec45212 Owner approval is limited to this NGA reproduction and AI-assisted atmospheric sky/ground preparation. It does not approve depicting Alesia architecture, fortifications, period equipment, figures or any Royer reproduction.",
+    "approval": {
+      "by": "Project owner (chat approval 2026-10-22)",
+      "at": "2026-10-22",
+      "rightsUrl": "https://www.nga.gov/artworks/177919-landscape-distant-village",
+      "rightsStatement": "This object’s media is free and in the public domain.",
+      "scope": "asset"
+    }
+  },
+  {
+    "file": "content/assets/staging/gallia/audio/kenney-cloth1.ogg",
+    "source": "https://kenney.nl/assets/rpg-audio",
+    "licence": "CC0",
+    "retrieved": "2026-10-22",
+    "artist": "Kenney Vleugels",
+    "institution": "Kenney.nl",
+    "notes": "Owner explicitly approved this Kenney cue for Gallia in the 2026-10-22 conversation. Original official archive member Audio/cloth1.ogg, unchanged. Included License.txt exact rights label: “License (Creative Commons Zero, CC0)”. Exact download: https://kenney.nl/media/pages/assets/rpg-audio/8e99002d76-1677590336/kenney_rpg-audio.zip . SHA-256 ddb93a3671233f95da0e0b10367f082f7eb42fa6caaddcf776410aa8833c747d. Approval permits use; no audible level/timing/mix judgement is claimed. Availability does not require a beat cue mapping. Staging provenance copy, not a public route.",
+    "approval": {
+      "by": "Project owner",
+      "at": "2026-10-22",
+      "rightsUrl": "https://kenney.nl/assets/rpg-audio",
+      "rightsStatement": "License (Creative Commons Zero, CC0)"
+    }
+  },
+  {
+    "file": "content/assets/staging/gallia/audio/kenney-chop.ogg",
+    "source": "https://kenney.nl/assets/rpg-audio",
+    "licence": "CC0",
+    "retrieved": "2026-10-22",
+    "artist": "Kenney Vleugels",
+    "institution": "Kenney.nl",
+    "notes": "Owner explicitly approved this Kenney cue for Gallia in the 2026-10-22 conversation. Original official archive member Audio/chop.ogg, unchanged. Included License.txt exact rights label: “License (Creative Commons Zero, CC0)”. Exact download: https://kenney.nl/media/pages/assets/rpg-audio/8e99002d76-1677590336/kenney_rpg-audio.zip . SHA-256 d00c2b3c9fff07e376145c8c8c45c90e5084ec192f6ce0387db233f7b86f1486. Approval permits use; no audible level/timing/mix judgement is claimed. Availability does not require a beat cue mapping. Staging provenance copy, not a public route.",
+    "approval": {
+      "by": "Project owner",
+      "at": "2026-10-22",
+      "rightsUrl": "https://kenney.nl/assets/rpg-audio",
+      "rightsStatement": "License (Creative Commons Zero, CC0)"
+    }
+  },
+  {
+    "file": "content/assets/staging/gallia/daubigny-sky-draft.webp",
+    "source": "https://www.nga.gov/artworks/177919-landscape-distant-village",
+    "licence": "Owner-approved AI-assisted derivative of Public domain source",
+    "retrieved": "2026-10-22",
+    "artist": "Charles-François Daubigny; AI-assisted sky restoration using OpenAI imagegen",
+    "institution": "National Gallery of Art, Washington (source reproduction)",
+    "settings": {
+      "matte": false,
+      "quality": 75,
+      "resizeWidth": 1440
+    },
+    "notes": "OWNER-APPROVED ATMOSPHERIC PREPARATION; STAGING DRAFT. AI-assisted removal of terrain, trees, village, figures and road; continuation of the source sky. Source-specific rights statement: This object’s media is free and in the public domain. Generated output is not assumed public domain or source-pixel-faithful. No production references in this staging row. Prompt and inspection notes in docs/m8-asset-candidates.md. Owner explicitly accepted AI-assisted sky and ground preparation for atmospheric scenery only. This approval does not declare generated pixels public domain, approve Alesia structures/figures, or establish final composition/historical acceptance. Source rightsStatement records the NGA reproduction; derivative status remains explicit in licence.",
+    "approval": {
+      "by": "Project owner (chat approval 2026-10-22)",
+      "at": "2026-10-22",
+      "rightsUrl": "https://www.nga.gov/artworks/177919-landscape-distant-village",
+      "rightsStatement": "This object’s media is free and in the public domain.",
+      "scope": "atmospheric-derivative"
+    },
+    "derivation": {
+      "kind": "ai-assisted-atmosphere",
+      "sourceFile": "content/assets/staging/gallia/daubigny-source.jpg",
+      "modifications": "Built-in imagegen edit removed land, trees, village roofs, people, animals and road; restored continuous full-colour overcast sky and adapted framing to 21:9. Generated brushwork changes source details; not a source-pixel-preserving cut. Forged to 1440x617 WebP at quality 75."
+    }
+  },
+  {
+    "file": "content/assets/staging/gallia/daubigny-mid-ground-draft.webp",
+    "source": "https://www.nga.gov/artworks/177919-landscape-distant-village",
+    "licence": "Owner-approved AI-assisted derivative of Public domain source",
+    "retrieved": "2026-10-22",
+    "artist": "Charles-François Daubigny; AI-assisted terrain separation using OpenAI imagegen",
+    "institution": "National Gallery of Art, Washington (source reproduction)",
+    "settings": {
+      "matte": false,
+      "quality": 78,
+      "resizeWidth": 1920
+    },
+    "notes": "OWNER-APPROVED ATMOSPHERIC PREPARATION; STAGING DRAFT. AI-assisted terrain separation and removal/reconstruction of sky, trees, village, figures and cart. Source-specific rights: This object’s media is free and in the public domain. Generated detail and alpha require human art review; this is not an exact source-pixel cut. No production references in this staging row. See docs/m8-asset-candidates.md. Owner explicitly accepted AI-assisted sky and ground preparation for atmospheric scenery only. This approval does not declare generated pixels public domain, approve Alesia structures/figures, or establish final composition/historical acceptance. Source rightsStatement records the NGA reproduction; derivative status remains explicit in licence.",
+    "approval": {
+      "by": "Project owner (chat approval 2026-10-22)",
+      "at": "2026-10-22",
+      "rightsUrl": "https://www.nga.gov/artworks/177919-landscape-distant-village",
+      "rightsStatement": "This object’s media is free and in the public domain.",
+      "scope": "atmospheric-derivative"
+    },
+    "derivation": {
+      "kind": "ai-assisted-atmosphere",
+      "sourceFile": "content/assets/staging/gallia/daubigny-source.jpg",
+      "modifications": "Built-in imagegen edit extracted grassy terrain and dirt corridor with true alpha, removed sky, trees, village, figures, cart and animal, and reconstructed ground. Framing adapted to 21:9. Generated detail changes source; horizon is provisional and a distant smudge needs review. Forged to 1920x823 WebP at quality 78."
+    }
+  },
+  {
+    "file": "public/assets/gallia/audio/wind-plains.wav",
+    "source": "https://opengameart.org/content/wind1",
+    "licence": "CC0",
+    "retrieved": "2026-10-22",
+    "artist": "Luke.RUSTLTD",
+    "institution": "OpenGameArt contributor",
+    "approval": {
+      "by": "Project owner",
+      "at": "2026-10-22",
+      "rightsUrl": "https://opengameart.org/content/wind1",
+      "rightsStatement": "CC0"
+    },
+    "notes": "Owner explicitly approved synthesized candidate E wind1 and Gallia loop preparation in the 2026-10-22 conversation. Exact source rights label: “CC0”, linked to https://creativecommons.org/publicdomain/zero/1.0/ . Exact download: https://opengameart.org/sites/default/files/wind1.wav . Source describes PureData synthesis; this is not a field recording. Original: mono 44100 Hz/16-bit PCM, 59.998912s; SHA-256 a2856f794fbf77e05f8241dc4adeade7f62fa21c3c9dc49f7725b6c6218060c3. Prepared reproducibly with scripts/prepare-gallia-wind.py: first 14s resampled 2:1 using a 63-tap Blackman-windowed sinc (cutoff 0.225 cycles/source sample), then 2s equal-power cyclic crossfade into a 12s loop, +9.376796dB to provisional -30dBFS RMS. Output: mono 22050 Hz/16-bit WAV, 529244 bytes, RMS -30.000002dBFS, peak -13.083091dBFS, 0 clipped samples; wrap step 294 PCM units versus maximum internal step 2143. Output SHA-256 b9d942447175b4b7978e2396ae493d907177005a23fb27e88c855a0719cfcb2b. Numerical seam/level checks and local playback execution are not an audible mix approval; human/device review remains required."
+  },
+  {
+    "file": "public/assets/gallia/audio/kenney-cloth1.ogg",
+    "source": "https://kenney.nl/assets/rpg-audio",
+    "licence": "CC0",
+    "retrieved": "2026-10-22",
+    "artist": "Kenney Vleugels",
+    "institution": "Kenney.nl",
+    "approval": {
+      "by": "Project owner",
+      "at": "2026-10-22",
+      "rightsUrl": "https://kenney.nl/assets/rpg-audio",
+      "rightsStatement": "License (Creative Commons Zero, CC0)"
+    },
+    "notes": "Owner explicitly approved this Kenney cue for Gallia in the 2026-10-22 conversation. Original official archive member Audio/cloth1.ogg, unchanged. Included License.txt exact rights label: “License (Creative Commons Zero, CC0)”. Exact download: https://kenney.nl/media/pages/assets/rpg-audio/8e99002d76-1677590336/kenney_rpg-audio.zip . SHA-256 ddb93a3671233f95da0e0b10367f082f7eb42fa6caaddcf776410aa8833c747d. Approval permits use; no audible level/timing/mix judgement is claimed. Availability does not require a beat cue mapping."
+  },
+  {
+    "file": "public/assets/gallia/audio/kenney-chop.ogg",
+    "source": "https://kenney.nl/assets/rpg-audio",
+    "licence": "CC0",
+    "retrieved": "2026-10-22",
+    "artist": "Kenney Vleugels",
+    "institution": "Kenney.nl",
+    "approval": {
+      "by": "Project owner",
+      "at": "2026-10-22",
+      "rightsUrl": "https://kenney.nl/assets/rpg-audio",
+      "rightsStatement": "License (Creative Commons Zero, CC0)"
+    },
+    "notes": "Owner explicitly approved this Kenney cue for Gallia in the 2026-10-22 conversation. Original official archive member Audio/chop.ogg, unchanged. Included License.txt exact rights label: “License (Creative Commons Zero, CC0)”. Exact download: https://kenney.nl/media/pages/assets/rpg-audio/8e99002d76-1677590336/kenney_rpg-audio.zip . SHA-256 d00c2b3c9fff07e376145c8c8c45c90e5084ec192f6ce0387db233f7b86f1486. Approval permits use; no audible level/timing/mix judgement is claimed. Availability does not require a beat cue mapping."
+  },
+  {
+    "file": "public/assets/gallia/sky.webp",
+    "source": "https://www.nga.gov/artworks/177919-landscape-distant-village",
+    "licence": "Owner-approved AI-assisted derivative of Public domain source",
+    "retrieved": "2026-10-22",
+    "artist": "Charles-François Daubigny; AI-assisted sky restoration using OpenAI imagegen",
+    "institution": "National Gallery of Art, Washington (source reproduction)",
+    "settings": {
+      "matte": false,
+      "quality": 75,
+      "resizeWidth": 1440
+    },
+    "notes": "OWNER-APPROVED ATMOSPHERIC PREPARATION; STAGING DRAFT. AI-assisted removal of terrain, trees, village, figures and road; continuation of the source sky. Source-specific rights statement: This object’s media is free and in the public domain. Generated output is not assumed public domain or source-pixel-faithful. No production references in this staging row. Prompt and inspection notes in docs/m8-asset-candidates.md. Owner explicitly accepted AI-assisted sky and ground preparation for atmospheric scenery only. This approval does not declare generated pixels public domain, approve Alesia structures/figures, or establish final composition/historical acceptance. Source rightsStatement records the NGA reproduction; derivative status remains explicit in licence. Production atmospheric plane; owner-approved scope only, not an archaeological reconstruction. Remaining Alesia structures and figures are placeholders.",
+    "approval": {
+      "by": "Project owner (chat approval 2026-10-22)",
+      "at": "2026-10-22",
+      "rightsUrl": "https://www.nga.gov/artworks/177919-landscape-distant-village",
+      "rightsStatement": "This object’s media is free and in the public domain.",
+      "scope": "atmospheric-derivative"
+    },
+    "derivation": {
+      "kind": "ai-assisted-atmosphere",
+      "sourceFile": "content/assets/staging/gallia/daubigny-source.jpg",
+      "modifications": "Built-in imagegen edit removed land, trees, village roofs, people, animals and road; restored continuous full-colour overcast sky and adapted framing to 21:9. Generated brushwork changes source details; not a source-pixel-preserving cut. Forged to 1440x617 WebP at quality 75."
+    }
+  },
+  {
+    "file": "public/assets/gallia/mid_ground.webp",
+    "source": "https://www.nga.gov/artworks/177919-landscape-distant-village",
+    "licence": "Owner-approved AI-assisted derivative of Public domain source",
+    "retrieved": "2026-10-22",
+    "artist": "Charles-François Daubigny; AI-assisted terrain separation using OpenAI imagegen",
+    "institution": "National Gallery of Art, Washington (source reproduction)",
+    "settings": {
+      "matte": false,
+      "quality": 78,
+      "resizeWidth": 1920
+    },
+    "notes": "OWNER-APPROVED ATMOSPHERIC PREPARATION; STAGING DRAFT. AI-assisted terrain separation and removal/reconstruction of sky, trees, village, figures and cart. Source-specific rights: This object’s media is free and in the public domain. Generated detail and alpha require human art review; this is not an exact source-pixel cut. No production references in this staging row. See docs/m8-asset-candidates.md. Owner explicitly accepted AI-assisted sky and ground preparation for atmospheric scenery only. This approval does not declare generated pixels public domain, approve Alesia structures/figures, or establish final composition/historical acceptance. Source rightsStatement records the NGA reproduction; derivative status remains explicit in licence. Production atmospheric plane; owner-approved scope only, not an archaeological reconstruction. Remaining Alesia structures and figures are placeholders.",
+    "approval": {
+      "by": "Project owner (chat approval 2026-10-22)",
+      "at": "2026-10-22",
+      "rightsUrl": "https://www.nga.gov/artworks/177919-landscape-distant-village",
+      "rightsStatement": "This object’s media is free and in the public domain.",
+      "scope": "atmospheric-derivative"
+    },
+    "derivation": {
+      "kind": "ai-assisted-atmosphere",
+      "sourceFile": "content/assets/staging/gallia/daubigny-source.jpg",
+      "modifications": "Built-in imagegen edit extracted grassy terrain and dirt corridor with true alpha, removed sky, trees, village, figures, cart and animal, and reconstructed ground. Framing adapted to 21:9. Generated detail changes source; horizon is provisional and a distant smudge needs review. Forged to 1920x823 WebP at quality 78."
+    }
   }
 ]

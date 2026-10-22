@@ -46,6 +46,7 @@ export function buildAtlasProps(content: AtlasContent): AtlasMapProps {
     const d = projectGeometry(province.geometry, projection);
     const label = projection(province.labelCentroid);
     if (!d || !label) return [];
+    const region = content.regions.find((region) => region.id === province.id);
     return [
       {
         id: province.id,
@@ -53,6 +54,7 @@ export function buildAtlasProps(content: AtlasContent): AtlasMapProps {
         latinName: province.latinName,
         heldFrom: province.heldFrom,
         heldTo: province.heldTo,
+        scene: region ? { beatCount: region.beats.length, year: region.beats[0].year } : null,
         d,
         labelX: label[0],
         labelY: label[1],

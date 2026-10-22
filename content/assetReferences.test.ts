@@ -7,8 +7,27 @@ import { buildSceneProps } from "../app/scene/[regionId]/buildSceneProps";
 // Synthetic approval fixture; never written to the production manifest.
 const row = ManifestEntry.parse({ file: "public/assets/gallia/sky.webp", source: "https://example.com/source", licence: "Public domain", retrieved: "2026-10-22" });
 const approved = ManifestEntry.parse({ ...row, approval: { by: "test fixture", at: "2026-10-22", rightsUrl: "https://example.com/rights", rightsStatement: "Synthetic test rights statement" } });
+const isolatedRegion = () => {
+  const region = Region.parse(galliaJson);
+  region.scene.planes.forEach((plane) => { plane.placeholder = true; });
+  region.scene.audioAssets = {};
+  region.scene.audioPlaceholder = true;
+  return region;
+};
 
 describe("approved asset boundary", () => {
+  it("limits owner-approved AI scenery to atmospheric planes with approved source provenance", () => {
+    const source = ManifestEntry.parse({ ...approved, file: "content/assets/staging/source.jpg" });
+    const edited = ManifestEntry.parse({ ...approved,
+      licence: "Owner-approved AI-assisted derivative of Public domain source",
+      approval: { ...approved.approval, scope: "atmospheric-derivative" },
+      derivation: { kind: "ai-assisted-atmosphere", sourceFile: source.file, modifications: "Sky restoration only" },
+    });
+    expect(approvedAssetUrl("gallia/sky.webp", [edited, source], "atmosphere")).toBe("/assets/gallia/sky.webp");
+    expect(approvedAssetUrl("gallia/sky.webp", [edited, source])).toBeUndefined();
+    expect(approvedAssetUrl("gallia/sky.webp", [edited], "atmosphere")).toBeUndefined();
+    expect(approvedAssetUrl("gallia/sky.webp", [edited, { ...source, approval: undefined }], "atmosphere")).toBeUndefined();
+  });
   it("requires explicit human approval and refuses copyleft and unsafe paths", () => {
     expect(approvedAssetUrl("gallia/sky.webp", [row])).toBeUndefined();
     expect(approvedAssetUrl("gallia/sky.webp", [approved])).toBe("/assets/gallia/sky.webp");
@@ -17,7 +36,7 @@ describe("approved asset boundary", () => {
   });
 
   it("fails a missing real plane instead of disguising it with placeholder art", () => {
-    const region = Region.parse(galliaJson);
+    const region = isolatedRegion();
     region.scene.planes[0].placeholder = false;
     expect(validateAssetReferences(region, [], () => false)).toHaveLength(2);
     expect(() => buildSceneProps(region)).toThrow("Unapproved scene plane");
@@ -25,7 +44,7 @@ describe("approved asset boundary", () => {
   });
 
   it("requires audio mappings when audio is no longer declared a placeholder", () => {
-    const region = Region.parse(galliaJson);
+    const region = isolatedRegion();
     region.scene.audioPlaceholder = false;
     region.beats[0].audio.cue = "horn";
     expect(validateAssetReferences(region, [], () => false)).toEqual([
@@ -34,7 +53,7 @@ describe("approved asset boundary", () => {
   });
 
   it("counts shared assets once and fails at the unchanged strict region budget", () => {
-    const region = Region.parse(galliaJson);
+    const region = isolatedRegion();
     region.scene.planes[0].placeholder = false;
     region.scene.planes[1].placeholder = false;
     region.scene.planes[1].asset = region.scene.planes[0].asset;

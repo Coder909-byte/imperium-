@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { notFound } from "next/navigation";
 import { NotYetWritten } from "./NotYetWritten";
 import { ScenePlayerClient } from "./ScenePlayerClient";
 import { buildSceneProps } from "./buildSceneProps";
@@ -7,13 +8,6 @@ import { loadProvinceMeta } from "./loadProvince";
 import { loadRigs } from "./loadRigs";
 import { loadManifest } from "./loadManifest";
 
-// M4: regions with authored content/regions/{id}.json get the real
-// scene player. A region the atlas can route to but nobody has written
-// content for yet (22 of 24 provinces, still — see content/regions/)
-// gets NotYetWritten instead — same scene shell, real province name and
-// Latin name pulled from content/borders/provinces/ (which exists for
-// every province regardless of whether its campaign is written), not a
-// blank canvas or a bare fallback page.
 function titleCase(slug: string): string {
   return slug
     .split(/[-_]/)
@@ -34,9 +28,10 @@ export default async function ScenePage(props: PageProps<"/scene/[regionId]">) {
 
   if (!region) {
     const province = loadProvinceMeta(regionId);
+    if (!province) notFound();
     return (
       <main className="p-6">
-        <NotYetWritten name={province?.name ?? titleCase(regionId)} latinName={province?.latinName ?? null} />
+        <NotYetWritten name={province.name} latinName={province.latinName} />
       </main>
     );
   }

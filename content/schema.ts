@@ -92,6 +92,7 @@ export const Region = z.object({
         // silent fallback that makes a broken asset look integrated.
         placeholder: z.boolean().default(false),
         essential: z.boolean().default(false),
+        role: z.enum(["structure", "atmosphere"]).default("structure"),
         depth: z.number().min(0).max(1),
         tint: z.string().regex(/^#[0-9a-fA-F]{6}$/),
         blur: z.number().nonnegative().default(0),
@@ -496,9 +497,15 @@ export const ManifestEntry = z.object({
     })
     .optional(),
   notes: z.string().optional(),
+  derivation: z.object({
+    kind: z.literal("ai-assisted-atmosphere"),
+    sourceFile: z.string().min(1),
+    modifications: z.string().min(1),
+  }).optional(),
   // Set only after human review of the specific reproduction's rights.
   // Forge records provenance, never grants approval on the user's behalf.
   approval: z.object({
+    scope: z.enum(["asset", "atmospheric-derivative"]).default("asset"),
     by: z.string().min(1),
     at: z.iso.date(),
     rightsUrl: z.string().url(),

@@ -12,6 +12,7 @@ import { gsap } from "gsap";
 import type { Container } from "pixi.js";
 import { createNoise1D } from "./noise";
 import type { SceneCamera } from "./types";
+import { frameSceneCamera } from "./sceneSpace";
 
 // Tuned by eye against the placeholder region, not measured — PRD §4
 // gives 0.4Hz / 3–6px / 0.2° as estimates, not a spec to hit exactly.
@@ -167,9 +168,10 @@ export class Camera {
     // it means a resize is correct on the very next frame with no
     // separate resize listener/plumbing needed.
     const stage = this.getStageSize();
-    this.container.x = stage.width / 2 + this.beatTarget.x + drift.x + shake.x;
-    this.container.y = stage.height / 2 + this.beatTarget.y + drift.y + shake.y;
-    this.container.scale.set(this.beatTarget.scale);
+    const frame = frameSceneCamera(this.beatTarget, stage);
+    this.container.x = stage.width / 2 + frame.x + drift.x + shake.x;
+    this.container.y = stage.height / 2 + frame.y + drift.y + shake.y;
+    this.container.scale.set(frame.scale);
     this.container.rotation = (drift.rotationDeg + shake.rotationDeg) * DEG_TO_RAD;
   };
 
@@ -194,9 +196,9 @@ export class Camera {
   /** Moves to a beat's camera target. Reduced motion makes this an
    *  instant cut (duration 0) rather than skipping the move — the
    *  camera still has to land on the beat's framing. */
-  animateTo(camera: SceneCamera, stage: StageSize, options: { shakeActive?: boolean } = {}): void {
+  animateTo(camera: SceneCamera, options: { shakeActive?: boolean } = {}): void {
     this.tween?.kill();
-    const target = computeCameraTarget(camera, stage);
+    const target = { x: camera.x, y: camera.y, scale: camera.scale };
     const duration = this.reducedMotion ? 0 : camera.durationMs / 1000;
     this.tween = gsap.to(this.beatTarget, { ...target, duration, ease: camera.ease });
     this.setShakeActive(options.shakeActive ?? false);

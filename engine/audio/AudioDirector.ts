@@ -14,6 +14,7 @@ export const MUTE_STORAGE_KEY = "imperium:audio-muted";
 export class AudioDirector {
   private readonly sounds = new Map<string, Howl>();
   private readonly stopTimers = new Map<string, ReturnType<typeof setTimeout>>();
+  private readonly failedSounds = new Set<string>();
   private activated = false;
   private destroyed = false;
   private muted: boolean;
@@ -55,24 +56,41 @@ export class AudioDirector {
     if (muted) {
       if (this.currentCue) this.sounds.get(this.currentCue)?.stop();
       this.currentCue = undefined;
-    } else if (this.activated) this.playCurrent(false);
+    } else {
+      this.failedSounds.clear();
+      if (this.activated) this.playCurrent(false);
+    }
   }
 
   private getSound(id: string, loop: boolean): Howl | undefined {
     const url = this.assets[id];
-    if (!url) return undefined;
+    if (!url || this.failedSounds.has(id)) return undefined;
     let sound = this.sounds.get(id);
     if (!sound) {
       sound = new Howl({
         src: [url], loop, volume: 0, autoplay: false,
-        onloaderror: this.onError,
+        onloaderror: () => this.failSound(id, sound),
         // No retry loop that might escape the gesture policy or play a
         // stale cue. A later explicit sound toggle can retry the bed.
-        onplayerror: () => { this.onError(); sound?.stop(); },
+        onplayerror: () => this.failSound(id, sound),
       });
       this.sounds.set(id, sound);
     }
     return sound;
+  }
+
+  private failSound(id: string, sound: Howl | undefined): void {
+    if (this.destroyed || !sound || this.sounds.get(id) !== sound) return;
+    this.failedSounds.add(id);
+    const timer = this.stopTimers.get(id);
+    if (timer) clearTimeout(timer);
+    this.stopTimers.delete(id);
+    // Howler can remain in "loading" after HTTP/decoding errors. Reusing
+    // it queues play forever, so a later explicit unmute needs a new Howl.
+    sound.stop();
+    sound.unload();
+    this.sounds.delete(id);
+    this.onError();
   }
 
   private playCurrent(playCue: boolean): void {
