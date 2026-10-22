@@ -5,6 +5,7 @@ import type { ScenePlane, RigDef } from "./types";
 import { ParallaxPlane } from "./layers/ParallaxPlane";
 import { computePlaceholderBand } from "./layers/placeholderBand";
 import { createPlaceholderTexture } from "./layers/placeholderTexture";
+import { compositeAtmosphere } from "./layers/compositeAtmosphere";
 import { destroyTextures, loadTextures } from "./loadTextures";
 import { SCENE_SPACE, SCENE_OVERSCAN } from "./sceneSpace";
 
@@ -16,30 +17,55 @@ export class SceneLayers {
   actors: SceneActors | undefined;
   private textures = new Map<string, Texture>();
   private destroyed = false;
+  private debugArt = false;
 
-  async init(defs: readonly ScenePlane[], rigs: readonly RigDef[], ticker: FrameTicker): Promise<void> {
+  async init(defs: readonly ScenePlane[], rigs: readonly RigDef[], ticker: FrameTicker, debugArt = false): Promise<void> {
+    this.debugArt = debugArt;
     const urls = new Set([
-      ...defs.flatMap((plane) => plane.assetUrl ? [plane.assetUrl] : []),
+      ...defs.flatMap((plane) => (plane.compositeSources ?? [plane]).flatMap((source) => source.assetUrl ? [source.assetUrl] : [])),
       ...rigs.flatMap((rig) => rig.parts.map((part) => part.texture).filter((texture) => texture.startsWith("/assets/"))),
     ]);
     this.textures = await loadTextures(urls);
     if (this.destroyed) { this.destroy(); return; }
     this.container.sortableChildren = true;
-    const width = SCENE_SPACE.width * SCENE_OVERSCAN;
-    const height = SCENE_SPACE.height * SCENE_OVERSCAN;
     defs.forEach((def, index) => {
-      const band = computePlaceholderBand(def.depth, width, height);
-      const texture = def.assetUrl ? this.textures.get(def.assetUrl)! : createPlaceholderTexture({ id: def.id, depth: def.depth, index, width: band.width, height: band.height, translucent: defs.some((plane) => plane.assetUrl) });
-      const plane = new ParallaxPlane({ ...def, texture, ownsTexture: !def.assetUrl });
-      // Real cut layers share a registered full scene canvas. Never
-      // stretch them into the depth bands used only for placeholders.
-      const fit = Math.max(width / texture.width, height / texture.height);
-      plane.setSize(def.assetUrl ? texture.width * fit : band.width, def.assetUrl ? texture.height * fit : band.height, def.assetUrl ? 0 : band.baseOffsetY);
-      plane.container.zIndex = def.depth;
-      this.container.addChild(plane.container);
-      this.planes.set(def.id, plane);
+      this.addPlane(def, index, defs.some((plane) => plane.assetUrl));
     });
     this.actors = new SceneActors({ layersContainer: this.container, ticker, rigDefs: rigs, textures: this.textures });
+  }
+
+  /** Reuses decoded sources when the frame monitor downgrades a high
+   * scene. Dropping the ground before baking it would recreate the bug. */
+  applyLowTier(defs: readonly ScenePlane[]): void {
+    const allowed = new Set(defs.map((def) => def.id));
+    defs.forEach((def, index) => {
+      if (!def.compositeSources) return;
+      const old = this.planes.get(def.id);
+      const visible = old?.getVisible() ?? false;
+      old?.destroy();
+      this.addPlane(def, index, true).setVisible(visible, 0);
+    });
+    for (const [id, plane] of this.planes) if (!allowed.has(id)) {
+      plane.destroy();
+      this.planes.delete(id);
+    }
+  }
+
+  private addPlane(def: ScenePlane, index: number, hasArt: boolean): ParallaxPlane {
+    const width = SCENE_SPACE.width * SCENE_OVERSCAN;
+    const height = SCENE_SPACE.height * SCENE_OVERSCAN;
+    const band = computePlaceholderBand(def.depth, width, height);
+    const texture = def.compositeSources ? compositeAtmosphere(def.compositeSources, this.textures)
+      : def.assetUrl ? this.textures.get(def.assetUrl)! : createPlaceholderTexture({ id: def.id, depth: def.depth, index, width: band.width, height: band.height, translucent: hasArt, debugLabels: this.debugArt });
+    const plane = new ParallaxPlane({ ...def, texture, ownsTexture: !!def.compositeSources || !def.assetUrl });
+    // Real cut layers share a registered full scene canvas. Never
+    // stretch them into the depth bands used only for placeholders.
+    const fit = Math.max(width / texture.width, height / texture.height);
+    plane.setSize(def.assetUrl ? texture.width * fit : band.width, def.assetUrl ? texture.height * fit : band.height, (def.assetUrl ? 0 : band.baseOffsetY) + (def.offsetY ?? 0), def.offsetX ?? 0);
+    plane.container.zIndex = def.depth;
+    this.container.addChild(plane.container);
+    this.planes.set(def.id, plane);
+    return plane;
   }
 
   destroy(): void {

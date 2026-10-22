@@ -1,11 +1,5 @@
-// Procedural placeholder plane art (M4 — "no real art exists yet...
-// clearly labelled as placeholders"). Draws directly to an
-// HTMLCanvasElement and wraps it as a Pixi Texture; there is
-// deliberately no asset fetch here at all — `ScenePlane.asset` in real
-// content will name a forged (M7) WebP file, but until that pipeline
-// exists every plane, regardless of what `asset` says, renders as one
-// of these. Needs a real DOM canvas, so unlike placeholderColor.ts this
-// isn't unit-tested — verified visually (dev/scene-lab) and in e2e.
+// Explicit missing-art previews. Labels and bounds belong to scene-lab;
+// the public player retains its separate artwork-in-progress notice.
 import { Texture } from "pixi.js";
 import { pickPlaceholderColor } from "./placeholderColor";
 
@@ -17,6 +11,7 @@ export interface PlaceholderTextureOptions {
   height: number;
   /** Missing structures must not cover the approved painted scenery. */
   translucent?: boolean;
+  debugLabels?: boolean;
 }
 
 export function createPlaceholderTexture(options: PlaceholderTextureOptions): Texture {
@@ -47,18 +42,20 @@ export function createPlaceholderTexture(options: PlaceholderTextureOptions): Te
     ctx.stroke();
   }
 
-  ctx.strokeStyle = "rgba(255, 255, 255, 0.5)";
-  ctx.lineWidth = 3;
-  ctx.strokeRect(1.5, 1.5, canvas.width - 3, canvas.height - 3);
+  if (options.debugLabels) {
+    ctx.strokeStyle = "rgba(255, 255, 255, 0.5)";
+    ctx.lineWidth = 3;
+    ctx.strokeRect(1.5, 1.5, canvas.width - 3, canvas.height - 3);
 
-  ctx.textAlign = "center";
-  ctx.fillStyle = "rgba(255, 255, 255, 0.92)";
-  ctx.font = "18px sans-serif";
-  const labelY = options.translucent ? 26 : canvas.height / 2 - 16;
-  ctx.fillStyle = "rgba(8, 10, 10, 0.8)";
-  ctx.fillRect(canvas.width / 2 - 150, labelY - 21, 300, 30);
-  ctx.fillStyle = "#e2dfd5";
-  ctx.fillText(`PLACEHOLDER — ${id}`, canvas.width / 2, labelY);
+    ctx.textAlign = "center";
+    ctx.fillStyle = "rgba(255, 255, 255, 0.92)";
+    ctx.font = "18px sans-serif";
+    const labelY = options.translucent ? 26 : canvas.height / 2 - 16;
+    ctx.fillStyle = "rgba(8, 10, 10, 0.8)";
+    ctx.fillRect(canvas.width / 2 - 150, labelY - 21, 300, 30);
+    ctx.fillStyle = "#e2dfd5";
+    ctx.fillText(`PLACEHOLDER — ${id}`, canvas.width / 2, labelY);
+  }
 
   return Texture.from(canvas);
 }

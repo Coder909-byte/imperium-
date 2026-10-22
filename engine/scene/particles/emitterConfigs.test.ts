@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { EMITTER_CONFIGS, fadeEnvelope, resolveParticleCount, spawnAtRandomAge } from "./emitterConfigs";
-import type { EmitterBounds } from "./types";
+import { PARTICLE_TEXTURE_DIMENSIONS, type EmitterBounds } from "./types";
 
 const BOUNDS: EmitterBounds = { width: 1280, height: 720 };
 
@@ -55,6 +55,15 @@ describe("resolveParticleCount", () => {
 });
 
 describe("EMITTER_CONFIGS", () => {
+  it("keeps embers as small sparks and arrow streaks below 36 logical pixels", () => {
+    for (const value of [0, 0.5, 1]) {
+      const ember = EMITTER_CONFIGS.embers.spawn(BOUNDS, () => value);
+      const arrow = EMITTER_CONFIGS.arrow_volley.spawn(BOUNDS, () => value);
+      expect(ember.scale * PARTICLE_TEXTURE_DIMENSIONS["soft-dot"].width).toBeLessThan(5);
+      expect(arrow.scale * PARTICLE_TEXTURE_DIMENSIONS.streak.width).toBeLessThan(36);
+      expect(arrow.scale * PARTICLE_TEXTURE_DIMENSIONS.streak.height).toBeLessThan(6);
+    }
+  });
   const kinds = Object.keys(EMITTER_CONFIGS) as (keyof typeof EMITTER_CONFIGS)[];
 
   it("covers all six required fx kinds", () => {

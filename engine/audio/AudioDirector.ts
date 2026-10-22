@@ -2,6 +2,7 @@ import { Howl } from "howler";
 
 export interface BeatAudio {
   cue?: string;
+  cueVolume?: number;
   bed?: string;
   bedIntensity: number;
 }
@@ -119,7 +120,7 @@ export class AudioDirector {
       if (cue) {
         this.currentCue = this.audio.cue;
         cue.mute(false);
-        cue.volume(1);
+        cue.volume(this.audio.cueVolume ?? 1);
         cue.play();
       }
     }

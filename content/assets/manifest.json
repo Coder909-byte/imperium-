@@ -242,5 +242,73 @@
       "sourceFile": "content/assets/staging/gallia/daubigny-source.jpg",
       "modifications": "Built-in imagegen edit extracted grassy terrain and dirt corridor with true alpha, removed sky, trees, village, figures, cart and animal, and reconstructed ground. Framing adapted to 21:9. Generated detail changes source; horizon is provisional and a distant smudge needs review. Forged to 1920x823 WebP at quality 78."
     }
+  },
+  {
+    "file": "public/assets/gallia/foreground.webp",
+    "source": "https://www.nga.gov/artworks/177919-landscape-distant-village",
+    "licence": "Owner-approved AI-assisted derivative of Public domain source",
+    "retrieved": "2026-10-22",
+    "artist": "Charles-Francois Daubigny; AI-assisted foreground separation using OpenAI imagegen",
+    "institution": "National Gallery of Art, Washington (source reproduction)",
+    "settings": {
+      "matte": false,
+      "quality": 78,
+      "resizeWidth": 1920
+    },
+    "notes": "Atmospheric grass/earth banks only, prepared within the existing 2026-10-22 owner approval. No historical structures or figures. AI-assisted source reconstruction; generated pixels are not labelled public domain. Source and derivation approval linkage added in the same preparation step.",
+    "approval": {
+      "by": "Project owner (chat approval 2026-10-22)",
+      "at": "2026-10-22",
+      "rightsUrl": "https://www.nga.gov/artworks/177919-landscape-distant-village",
+      "rightsStatement": "This object’s media is free and in the public domain.",
+      "scope": "atmospheric-derivative"
+    },
+    "derivation": {
+      "kind": "ai-assisted-atmosphere",
+      "sourceFile": "content/assets/staging/gallia/daubigny-source.jpg",
+      "modifications": "Built-in imagegen separated the approved source near grass/earth banks onto transparent canvas, reconstructed their edges and removed all sky, distant land, buildings, trees, cart, people and animals. Generated detail is atmospheric, not archaeological. Forge resized proportionally to 1920x825 WebP at quality 78. Prepared on 2026-10-23 under the existing 2026-10-22 atmospheric-derivative approval; no approval for historical structures or figures is inferred."
+    }
+  },
+  {
+    "file": "content/assets/staging/gallia/motte-siege-source.jpg",
+    "source": "https://commons.wikimedia.org/wiki/File:Motte_Le_si%C3%A8ge_d%27Al%C3%A9sia_(carte_postale_noir_et_blanc).jpg",
+    "licence": "Public domain",
+    "retrieved": "2026-10-23",
+    "artist": "Henri-Paul Motte; contemporary postcard reproduction; scan by Ancient Art Admirer",
+    "institution": "Wikimedia Commons; original painting acquired by Societe des Sciences de Semur",
+    "notes": "Exact source scan reviewed in browser and downloaded outside repo before owner approval. Owner explicitly approved a provisional AI-assisted siege tower/rampart draft in chat on 2026-10-23. Monochrome reproduction of a later interpretation, not archaeological evidence or approval of period costume, an Alesia hillfort, or final art. Specific scan rights and jurisdictional limitations on its Commons file page were reviewed; generated derivatives are not labelled Public domain.",
+    "approval": {
+      "by": "Project owner (chat approval 2026-10-23)",
+      "at": "2026-10-23",
+      "rightsUrl": "https://commons.wikimedia.org/wiki/File:Motte_Le_si%C3%A8ge_d%27Al%C3%A9sia_(carte_postale_noir_et_blanc).jpg",
+      "rightsStatement": "This file has been identified as being free of known restrictions under copyright law, including all related and neighboring rights.",
+      "scope": "asset"
+    }
+  },
+  {
+    "file": "public/assets/gallia/siege-rampart-draft.webp",
+    "source": "https://commons.wikimedia.org/wiki/File:Motte_Le_si%C3%A8ge_d%27Al%C3%A9sia_(carte_postale_noir_et_blanc).jpg",
+    "licence": "Owner-approved provisional AI-assisted structure draft",
+    "retrieved": "2026-10-22",
+    "artist": "Henri-Paul Motte; AI-assisted painted tower and rampart study using OpenAI imagegen",
+    "institution": "Wikimedia Commons (specific postcard scan)",
+    "settings": {
+      "matte": false,
+      "quality": 78,
+      "resizeWidth": 1920
+    },
+    "notes": "Owner approved provisional source-based siege tower/rampart AI draft on 2026-10-23. Later interpretation, not archaeology. Source and draft-specific approval linkage added in this same preparation step. Not final art; no figure or hillfort permission inferred.",
+    "approval": {
+      "by": "Project owner (chat approval 2026-10-23)",
+      "at": "2026-10-23",
+      "rightsUrl": "https://commons.wikimedia.org/wiki/File:Motte_Le_si%C3%A8ge_d%27Al%C3%A9sia_(carte_postale_noir_et_blanc).jpg",
+      "rightsStatement": "This file has been identified as being free of known restrictions under copyright law, including all related and neighboring rights.",
+      "scope": "structural-draft"
+    },
+    "derivation": {
+      "kind": "ai-assisted-structure-draft",
+      "sourceFile": "content/assets/staging/gallia/motte-siege-source.jpg",
+      "modifications": "Built-in imagegen interpreted the source timber tower and earth/timber rampart in full colour matching the approved atmospheric palette, removed figures/weapons/sky and supplied alpha. A second edit reduced the tower and restored registered canvas margins. Forge proportional export 1920px wide, quality 78. Provisional 19th-century-source adaptation, not a verified Roman construction or final historical acceptance. Scene uses the same draft twice, mirrored and offset for the second wall; that layout is illustrative, not a surveyed reconstruction."
+    }
   }
 ]

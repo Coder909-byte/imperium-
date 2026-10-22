@@ -7,6 +7,21 @@ function plane(id: string, depth: number): ScenePlane {
 }
 
 describe("selectPlanesForTier", () => {
+  it("keeps approved sky and ground together without displacing either essential wall", () => {
+    const planes = [
+      { ...plane("sky", 0.02), assetUrl: "/assets/sky.webp", lowTierGroup: "base", essential: true },
+      { ...plane("hill", 0.3), essential: true },
+      { ...plane("ground", 0.42), assetUrl: "/assets/ground.webp", lowTierGroup: "base" },
+      { ...plane("inner", 0.52), essential: true },
+      { ...plane("outer", 0.68), essential: true }, plane("front", 0.9),
+    ];
+    const low = selectPlanesForTier(planes, "low");
+    expect(low.map((p) => p.id)).toEqual(["sky", "hill", "inner", "outer"]);
+    expect(low[0].compositeSources?.map((p) => p.id)).toEqual(["sky", "ground"]);
+    expect(selectPlanesForTier(planes, "high")).toEqual(planes);
+    expect(planes[0]).not.toHaveProperty("compositeSources");
+  });
+
   it("keeps every plane on high tier regardless of count", () => {
     const planes = [plane("a", 0), plane("b", 0.3), plane("c", 0.6), plane("d", 0.8), plane("e", 1)];
     expect(selectPlanesForTier(planes, "high")).toHaveLength(5);

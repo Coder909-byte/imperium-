@@ -34,6 +34,7 @@ export interface ParallaxPlaneOptions {
   /** Blur strength in px. Omitted or 0 skips the filter — a no-op filter
    *  still costs a render pass. */
   blur?: number;
+  flipX?: boolean;
 }
 
 export class ParallaxPlane {
@@ -55,11 +56,14 @@ export class ParallaxPlane {
   // depth-scaled parallax impossible to actually see). Pointer offset
   // adds on top of this rather than replacing it.
   private baseOffsetY = 0;
+  private baseOffsetX = 0;
+  private readonly flipX: boolean;
 
   constructor(options: ParallaxPlaneOptions) {
     this.id = options.id;
     this.depth = options.depth;
     this.ownsTexture = options.ownsTexture ?? true;
+    this.flipX = options.flipX ?? false;
     this.sprite = new Sprite(options.texture);
     this.sprite.anchor.set(0.5);
 
@@ -83,16 +87,19 @@ export class ParallaxPlane {
    *  (0 = centred; positive = shifted down, for a bottom-anchored band).
    *  Real forged art (M7) will size itself from the source image
    *  instead, at baseOffsetY 0. */
-  setSize(width: number, height: number, baseOffsetY = 0): void {
+  setSize(width: number, height: number, baseOffsetY = 0, baseOffsetX = 0): void {
     this.sprite.width = width;
     this.sprite.height = height;
+    this.sprite.scale.x = Math.abs(this.sprite.scale.x) * (this.flipX ? -1 : 1);
     this.baseOffsetY = baseOffsetY;
+    this.baseOffsetX = baseOffsetX;
     this.sprite.y = baseOffsetY;
+    this.sprite.x = baseOffsetX;
   }
 
   setPointerOffset(pointerX: number, pointerY: number): void {
     const offset = computeParallaxOffset(this.depth, pointerX, pointerY);
-    this.sprite.x = offset.x;
+    this.sprite.x = this.baseOffsetX + offset.x;
     this.sprite.y = this.baseOffsetY + offset.y;
   }
 
@@ -108,6 +115,8 @@ export class ParallaxPlane {
     this.fadeTween?.kill();
     this.fadeTween = gsap.to(this.container, { alpha: visible ? 1 : 0, duration: durationMs / 1000, ease: "power1.inOut" });
   }
+
+  getVisible(): boolean { return this.visible; }
 
   destroy(): void {
     this.fadeTween?.kill();

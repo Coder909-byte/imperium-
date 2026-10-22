@@ -61,6 +61,7 @@ test.describe("scene player — keyboard navigation", () => {
     await page.goto("/atlas");
     await page.goto("/scene/placeholder");
     await expect(page.getByTestId("scene-player")).toBeVisible();
+    await expect(page.getByTestId("scene-player")).toHaveAttribute("data-engine-ready", "true", { timeout: 20_000 });
 
     await page.keyboard.press("ArrowRight");
     await expect(page.getByText("Day 2", { exact: true })).toBeVisible();

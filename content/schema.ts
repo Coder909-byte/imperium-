@@ -53,6 +53,7 @@ export const Beat = z.object({
   audio: z
     .object({
       cue: z.string().optional(),
+      cueVolume: z.number().min(0).max(1).optional(),
       bed: z.string().optional(),
       bedIntensity: z.number().min(0).max(1).default(0.5),
     })
@@ -91,8 +92,13 @@ export const Region = z.object({
         // Missing art must be an explicit authoring choice, never a
         // silent fallback that makes a broken asset look integrated.
         placeholder: z.boolean().default(false),
+        draft: z.boolean().default(false),
         essential: z.boolean().default(false),
         role: z.enum(["structure", "atmosphere"]).default("structure"),
+        lowTierGroup: z.string().min(1).optional(),
+        offsetY: z.number().default(0),
+        offsetX: z.number().default(0),
+        flipX: z.boolean().default(false),
         depth: z.number().min(0).max(1),
         tint: z.string().regex(/^#[0-9a-fA-F]{6}$/),
         blur: z.number().nonnegative().default(0),
@@ -105,11 +111,24 @@ export const Region = z.object({
     ctx.addIssue({ code: "custom", path: ["scene", "planes"], message: "at most four planes may be essential on low tier" });
   }
   const planeIds = new Set<string>();
+  const groups = new Map<string, typeof region.scene.planes>();
   region.scene.planes.forEach((plane, index) => {
+    if (plane.lowTierGroup) {
+      if (plane.role !== "atmosphere" || plane.placeholder || plane.tint !== "#ffffff" || plane.blur !== 0 || plane.offsetY !== 0 || plane.offsetX !== 0 || plane.flipX) {
+        ctx.addIssue({ code: "custom", path: ["scene", "planes", index, "lowTierGroup"], message: "low-tier groups require real, untinted, unblurred atmospheric art" });
+      }
+      groups.set(plane.lowTierGroup, [...(groups.get(plane.lowTierGroup) ?? []), plane]);
+    }
     if (planeIds.has(plane.id)) ctx.addIssue({ code: "custom", path: ["scene", "planes", index, "id"], message: `duplicate plane id "${plane.id}"` });
     planeIds.add(plane.id);
   });
   const beatIds = new Set<string>();
+  for (const group of groups.values()) for (const beat of region.beats) {
+    const visibleCount = group.filter((plane) => beat.visibleLayers.includes(plane.id)).length;
+    if (visibleCount > 0 && visibleCount !== group.length) {
+      ctx.addIssue({ code: "custom", path: ["scene", "planes"], message: `${beat.id}: grouped atmosphere must share beat visibility` });
+    }
+  }
   region.beats.forEach((beat, index) => {
     if (beatIds.has(beat.id)) ctx.addIssue({ code: "custom", path: ["beats", index, "id"], message: `duplicate beat id "${beat.id}"` });
     beatIds.add(beat.id);
@@ -498,14 +517,14 @@ export const ManifestEntry = z.object({
     .optional(),
   notes: z.string().optional(),
   derivation: z.object({
-    kind: z.literal("ai-assisted-atmosphere"),
+    kind: z.enum(["ai-assisted-atmosphere", "ai-assisted-structure-draft"]),
     sourceFile: z.string().min(1),
     modifications: z.string().min(1),
   }).optional(),
   // Set only after human review of the specific reproduction's rights.
   // Forge records provenance, never grants approval on the user's behalf.
   approval: z.object({
-    scope: z.enum(["asset", "atmospheric-derivative"]).default("asset"),
+    scope: z.enum(["asset", "atmospheric-derivative", "structural-draft"]).default("asset"),
     by: z.string().min(1),
     at: z.iso.date(),
     rightsUrl: z.string().url(),

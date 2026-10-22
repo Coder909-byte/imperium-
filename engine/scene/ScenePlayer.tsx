@@ -10,6 +10,7 @@ import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import { BeatDirector } from "./BeatDirector";
 import { useSceneAudio } from "../audio/useSceneAudio";
 import { SceneCaptions } from "./SceneCaptions";
+import { SceneArtDiagnostics } from "./SceneArtDiagnostics";
 import { cameraForBeat, LAYER_REVEAL_MS } from "./beatTiming";
 import { SCENE_SPACE } from "./sceneSpace";
 import { Camera } from "./Camera";
@@ -33,9 +34,10 @@ export interface ScenePlayerProps {
   forcedTier?: DeviceTier;
   forcedLut?: string;
   forcedChainEnabled?: boolean;
+  debugArt?: boolean;
 }
 
-export function ScenePlayer({ region, onExit, forcedTier, forcedLut, forcedChainEnabled }: ScenePlayerProps) {
+export function ScenePlayer({ region, onExit, forcedTier, forcedLut, forcedChainEnabled, debugArt = false }: ScenePlayerProps) {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const rendererRef = useRef<SceneRenderer | null>(null);
   const cameraRef = useRef<Camera | null>(null);
@@ -44,6 +46,7 @@ export function ScenePlayer({ region, onExit, forcedTier, forcedLut, forcedChain
   const planesRef = useRef<Map<string, ParallaxPlane>>(new Map());
   const hasAppliedBeatRef = useRef(false);
   const [tier, setTier] = useState<DeviceTier>(forcedTier ?? "high");
+  const [renderedPlanes, setRenderedPlanes] = useState<SceneRegion["planes"]>([]);
   // A lazy useState initializer, not a ref: the linter (correctly) forbids
   // reading a ref's `.current` during render — a `useState` value that's
   // never actually re-set is the sanctioned way to construct one
@@ -110,22 +113,12 @@ export function ScenePlayer({ region, onExit, forcedTier, forcedLut, forcedChain
       // Read fresh every call so a resize stays correct on the next frame.
       const getBounds = () => SCENE_SPACE;
 
-      // Planes are built and added to cameraContainer *before*
-      // SceneEffects is constructed, deliberately — SceneEffects' own
-      // constructor adds particle containers to the same cameraContainer,
-      // and Pixi renders children in add-order. Building this the other
-      // way round once put particles first, planes second, which put
-      // every particle permanently behind an opaque plane rectangle —
-      // confirmed invisible via an actual chain-on/chain-off screenshot,
-      // not caught by any test (nothing asserts pixel content). The tier
-      // used to pick which planes to build at all (PRD §11's 4-plane cap)
-      // is computed here with the same pure heuristic SceneEffects'
-      // DeviceTierController uses internally — calling it twice is free
-      // and deterministic; only the controller actually constructed
-      // below owns the live snapshot/runtime monitor/console log.
+      // Effects must follow planes in Pixi draw order, otherwise opaque
+      // art hides particles. Pick the tier before either is constructed.
       const initialTierGuess = forcedTier ?? detectStartingTier(readNavigatorSignals());
       const planeDefs = selectPlanesForTier(region.planes, initialTierGuess);
-      await layers.init(planeDefs, region.rigs, renderer.getTicker());
+      setRenderedPlanes(planeDefs);
+      await layers.init(planeDefs, region.rigs, renderer.getTicker(), debugArt);
       if (cancelled) { layers.destroy(); return; }
       renderer.cameraContainer.addChild(layers.container);
       planesRef.current = layers.planes;
@@ -147,20 +140,15 @@ export function ScenePlayer({ region, onExit, forcedTier, forcedLut, forcedChain
       performance.mark("imperium:scene-graph-built");
       renderer.getTicker().addOnce(() => performance.mark("imperium:scene-first-frame"));
 
-      // Tier only ever downgrades at runtime, never upgrades (deviceTier.ts) —
-      // so this only ever needs to shrink the live plane set, never rebuild
-      // dropped planes back in.
+      // A downgrade must bake approved ground before removing its old
+      // independent sprite, as well as shrink the optional plane set.
       unsubscribeTier = effects.deviceTier.subscribe(() => {
         const snapshot = effects.deviceTier.getSnapshot();
         setTier(snapshot.tier);
         if (snapshot.tier !== "low") return;
-        const allowedIds = new Set(selectPlanesForTier(region.planes, "low").map((p) => p.id));
-        for (const [id, plane] of planesRef.current) {
-          if (!allowedIds.has(id)) {
-            plane.destroy();
-            planesRef.current.delete(id);
-          }
-        }
+        const lowDefs = selectPlanesForTier(region.planes, "low");
+        layers.applyLowTier(lowDefs);
+        setRenderedPlanes(lowDefs);
       });
 
       setEngineReady(true);
@@ -284,11 +272,13 @@ export function ScenePlayer({ region, onExit, forcedTier, forcedLut, forcedChain
       data-device-tier={tier}
       data-active-fx={beat.fx.join(",")}
       data-active-actors={beat.actors.map((a) => `${a.rig}:${a.clip}:${a.count}`).join(",")}
+      data-debug-art={debugArt}
+      data-visible-planes={renderedPlanes.filter((plane) => beat.visibleLayers.includes(plane.id)).flatMap((plane) => (plane.compositeSources ?? [plane]).map((source) => source.id)).join(",")}
     >
       <div ref={containerRef} className={styles.canvasHost} />
       {renderError && <p role="alert" className={styles.renderError}>{renderError}</p>}
       <div className={styles.topBar} />
-      {(region.planes.some((plane) => !plane.assetUrl) || region.rigs.some((rig) => rig.parts.some((part) => !part.texture.startsWith("/assets/")))
+      {(region.planes.some((plane) => !plane.assetUrl || plane.draft) || region.rigs.some((rig) => rig.parts.some((part) => !part.texture.startsWith("/assets/")))
         || region.beats.some((beat) => beat.actors.some((actor) => actor.count > 1))) && <span className={styles.artStatus}>Artwork in progress</span>}
 
       <button type="button" className={styles.exitButton} onClick={exitScene}>
@@ -298,6 +288,7 @@ export function ScenePlayer({ region, onExit, forcedTier, forcedLut, forcedChain
       <SceneCaptions region={region} beat={beat} index={beatState.index} autoplay={beatState.autoplay} audio={audio}
         previous={() => beatDirector.previous()} next={() => beatDirector.next()} jumpTo={(index) => beatDirector.jumpTo(index)}
         toggleAutoplay={() => beatDirector.setAutoplay(!beatState.autoplay)} />
+      {debugArt && <SceneArtDiagnostics region={region} beat={beat} planes={renderedPlanes} />}
     </div>
   );
 }

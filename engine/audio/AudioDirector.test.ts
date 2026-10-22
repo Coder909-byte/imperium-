@@ -5,6 +5,7 @@ const { instances } = vi.hoisted(() => ({ instances: [] as {
   options: { src: string[]; loop: boolean; onloaderror: () => void; onplayerror: () => void }; play: ReturnType<typeof vi.fn>;
   stop: ReturnType<typeof vi.fn>; unload: ReturnType<typeof vi.fn>;
   fade: ReturnType<typeof vi.fn>; mute: ReturnType<typeof vi.fn>;
+  volume: ReturnType<typeof vi.fn>;
 }[] }));
 vi.mock("howler", () => ({
   Howl: class {
@@ -21,6 +22,27 @@ afterEach(() => { instances.length = 0; vi.useRealTimers(); });
 const assets = { wind: "/assets/audio/wind.mp3", battle: "/assets/audio/battle.mp3", horn: "/assets/audio/horn.mp3" };
 
 describe("scene audio lifecycle", () => {
+  it("plays cues at their authored level once per beat entry and never replays one on unmute", () => {
+    const director = new AudioDirector(assets, "wind");
+    const audio = { cue: "horn", cueVolume: 0.18, bedIntensity: 0.45 };
+    director.applyBeat("work", audio);
+    director.activate();
+    const cue = instances[1];
+    expect(cue.options.loop).toBe(false);
+    expect(cue.volume).toHaveBeenLastCalledWith(0.18);
+    expect(cue.play).toHaveBeenCalledOnce();
+    director.applyBeat("work", audio);
+    director.setMuted(true);
+    director.setMuted(false);
+    expect(cue.play).toHaveBeenCalledOnce();
+    director.applyBeat("quiet", { bedIntensity: 0.15 });
+    director.applyBeat("work", audio);
+    expect(cue.play).toHaveBeenCalledTimes(2);
+    director.destroy();
+    expect(cue.stop).toHaveBeenCalled();
+    expect(cue.unload).toHaveBeenCalledOnce();
+  });
+
   it("does not load or play before activation; starts the latest beat only", () => {
     const director = new AudioDirector(assets, "wind");
     director.applyBeat("one", { cue: "horn", bedIntensity: 0.1 });

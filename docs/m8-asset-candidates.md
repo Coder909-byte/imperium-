@@ -1,10 +1,22 @@
 # Gallia asset decisions and preparation — 2026-10-22
 
+## Visual continuation — 2026-10-23
+
+The existing atmospheric approval now also supplies `public/assets/gallia/foreground.webp` (60,650 bytes), prepared through built-in imagegen and forge from the same exact NGA source. It is a full-colour alpha cut of near grass/earth banks with an open centre. This is atmospheric preparation; it introduces no structures or figures.
+
+**New explicit owner approval:** the exact [Motte postcard scan](https://commons.wikimedia.org/wiki/File:Motte_Le_si%C3%A8ge_d%27Al%C3%A9sia_(carte_postale_noir_et_blanc).jpg) for an AI-assisted **provisional siege tower/rampart draft**, granted in chat on 2026-10-23. The specific-file rights statement is recorded verbatim in the manifest; the Commons page identifies the reproduction as public domain, with jurisdictional qualifications. `content/assets/staging/gallia/motte-siege-source.jpg` retains the source; `public/assets/gallia/siege-rampart-draft.webp` (78,338 bytes) retains distinct AI-derivative provenance and structural-draft scope. The second image edit corrected an oversized first result into a registered wide cut (1920×823 after forge). Scene reuse mirrors and lowers the same draft for the outer wall; neither geometry nor layout is a verified reconstruction. No final art, hillfort or figure approval was inferred.
+
+The source's existing monochrome scan was interpreted in colour; generated colour/details are not labelled public domain. This draft does not resolve the missing Alesia hill/oppidum, detailed obstacles or period-character art. Candidate B/C costume reservations still stand. See `docs/m8-visual-review.md` for remaining per-beat gaps.
+
 The owner explicitly approved **candidate A's exact NGA reproduction and AI-assisted sky/ground preparation for atmospheric scenery only**, plus **candidate E's synthesized wind and candidate F's exact Kenney cloth/chop cues**, in chat on 2026-10-22. The source and atmospheric staging rows now record that approval. Audio integration owns the approved audio records and final encodes. Candidates B/C/D remain unapproved and unused.
 
 Approval does not extend to Alesia's hill/oppidum, fortifications, period equipment, figures or Royer reproductions. It does not establish final composition, a finished mix or historical acceptance. The AI-assisted derivatives remain explicitly identified; **generated pixels are not labelled public domain** merely because the NGA source reproduction is public domain. Their manifest approval quotes that source's exact rights statement and records the owner as reviewer; the derivative licence stays distinct. Production copies must retain the source linkage and approval limits.
 
 The scoped integration record uses `derivation.kind: "ai-assisted-atmosphere"`, `sourceFile` pointing to the approved NGA source row, and an explicit account of the edits in `modifications`. Its approval scope is `atmospheric-derivative`; the source's scope is `asset`. The loading boundary must require both approvals and a plane authored as `role: "atmosphere"`. Structure planes, rig textures and audio cannot acquire approval through this derivative branch.
+
+## Integration update — 2026-10-23
+
+The approved atmospheric sky/terrain and synthesized wind were integrated at checkpoint `06f67dc`. The two unchanged approved Kenney files are now mapped as beat-entry cues: timber work in beat 2 at .18 gain; cloth movement in beat 6 at .12. The Mandubii beat has no cue. Levels and loop preparation are provisional pending listening review. Combined referenced payload is 712,704 bytes across five files. The source/preparation notes below record earlier stages; they do not override the production mappings or approval records in the manifest. Five historical planes, all real character/crowd art and final art/history/device acceptance remain open.
 
 ## Compact source list
 

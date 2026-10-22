@@ -152,6 +152,7 @@ export function SceneLabClient({ regionIds, initialRegionId }: { regionIds: stri
       {error && <p className="text-sm text-red-600 mb-4">Error: {error}</p>}
       {region && (
         <ScenePlayer
+          debugArt
           key={`${regionId}-${version}-${tierOverride}-${chainOverride}`}
           region={region}
           onExit={() => {}}

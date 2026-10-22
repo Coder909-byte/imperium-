@@ -17,6 +17,10 @@ export function isParticleFxKind(value: string): value is ParticleFxKind {
  *  variety comes from each config's own scale/tint/motion, not from a
  *  bespoke texture per fx kind (no raster assets, procedural only). */
 export type ParticleTextureKind = "soft-dot" | "streak";
+export const PARTICLE_TEXTURE_DIMENSIONS = {
+  "soft-dot": { width: 64, height: 64 },
+  streak: { width: 192, height: 32 },
+} as const;
 
 export interface EmitterBounds {
   width: number;

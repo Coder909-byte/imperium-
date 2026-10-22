@@ -49,12 +49,17 @@ export function buildSceneProps(region: Region, rigs: Rig[] = [], manifest: Mani
     name: region.name,
     lut: region.scene.lut,
     planes: region.scene.planes.map((plane) => {
-      const assetUrl = plane.placeholder ? undefined : approvedAssetUrl(plane.asset, manifest, plane.role === "atmosphere" ? "atmosphere" : "asset");
+      const assetUrl = plane.placeholder ? undefined : approvedAssetUrl(plane.asset, manifest, plane.role === "atmosphere" ? "atmosphere" : plane.draft ? "structure-draft" : "asset");
       if (!plane.placeholder && !assetUrl) throw new Error(`Unapproved scene plane: ${plane.asset}`);
       return {
         id: plane.id,
         assetUrl,
         essential: plane.essential,
+        draft: plane.draft,
+        offsetY: plane.offsetY,
+        offsetX: plane.offsetX,
+        flipX: plane.flipX,
+        lowTierGroup: plane.lowTierGroup,
         depth: plane.depth,
         tint: plane.tint,
         blur: plane.blur,

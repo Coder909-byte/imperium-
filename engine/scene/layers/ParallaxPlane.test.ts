@@ -31,6 +31,15 @@ describe("computeParallaxOffset", () => {
 // never call .destroy() on a plane built from it (that would tear down
 // the shared texture for every other consumer, including other tests).
 describe("ParallaxPlane", () => {
+  it("keeps an authored mirrored cut and registered vertical offset while pointer parallax moves it", () => {
+    const plane = new ParallaxPlane({ id: "outer", depth: 0.68, texture: Texture.WHITE, ownsTexture: false, flipX: true });
+    plane.setSize(1280, 548, 140, 100);
+    expect(plane.container.children[0].scale.x).toBeLessThan(0);
+    plane.setPointerOffset(0, 1);
+    expect(plane.container.children[0].x).toBe(100);
+    expect(plane.container.children[0].y).toBeCloseTo(140 + 0.68 * PARALLAX_STRENGTH_PX);
+    plane.destroy();
+  });
   function makePlane(overrides: Partial<{ depth: number; tint: string; blur: number }> = {}) {
     return new ParallaxPlane({ id: "test-plane", depth: 0.5, texture: Texture.WHITE, ...overrides });
   }

@@ -10,15 +10,18 @@ export function assetFile(asset: string): string | null {
     ? `public/assets/${asset}` : null;
 }
 
-export function approvedAssetUrl(asset: string, manifest: readonly ManifestEntry[], usage: "asset" | "atmosphere" = "asset"): string | undefined {
+export function approvedAssetUrl(asset: string, manifest: readonly ManifestEntry[], usage: "asset" | "atmosphere" | "structure-draft" = "asset"): string | undefined {
   const file = assetFile(asset);
   const entry = manifest.find((row) => row.file === file);
   if (!file || !entry?.approval) return undefined;
   if (entry.derivation) {
     const source = manifest.find((row) => row.file === entry.derivation?.sourceFile);
-    // The owner's explicit atmospheric-edit permission never grants
-    // permission to reconstruct architecture, costume or historical actors.
-    if (usage !== "atmosphere" || !file.endsWith(".webp") || entry.approval.scope !== "atmospheric-derivative"
+    // Separate source/derivative approvals prevent scenery permission
+    // from silently becoming permission for historical reconstruction.
+    const scoped = entry.derivation.kind === "ai-assisted-atmosphere"
+      ? usage === "atmosphere" && entry.approval.scope === "atmospheric-derivative"
+      : usage === "structure-draft" && entry.approval.scope === "structural-draft";
+    if (!scoped || !file.endsWith(".webp")
       || !source?.approval || source.derivation || !/^(CC0|Public domain)$/i.test(source.licence)) return undefined;
   } else if (!/^(CC0|Public domain)$/i.test(entry.licence)) return undefined;
   return `/assets/${asset}`;
@@ -26,14 +29,14 @@ export function approvedAssetUrl(asset: string, manifest: readonly ManifestEntry
 
 export function validateAssetReferences(region: Region, manifest: readonly ManifestEntry[], exists: (file: string) => boolean): string[] {
   const issues: string[] = [];
-  const check = (asset: string, usage: "asset" | "atmosphere" = "asset") => {
+  const check = (asset: string, usage: "asset" | "atmosphere" | "structure-draft" = "asset") => {
     const file = assetFile(asset);
     if (!approvedAssetUrl(asset, manifest, usage)) issues.push(`asset "${asset}" needs a safe path and a human-approved rights/provenance entry for its use`);
     if (!file || !exists(file)) issues.push(`missing asset "${asset}"`);
   };
   for (const plane of region.scene.planes) if (!plane.placeholder) {
     if (!plane.asset.endsWith(".webp")) issues.push(`plane "${plane.id}" requires a WebP image`);
-    check(plane.asset, plane.role === "atmosphere" ? "atmosphere" : "asset");
+    check(plane.asset, plane.role === "atmosphere" ? "atmosphere" : plane.draft ? "structure-draft" : "asset");
   }
   for (const asset of Object.values(region.scene.audioAssets)) {
     if (!/\.(mp3|ogg|wav)$/.test(asset)) issues.push(`audio "${asset}" requires MP3, OGG or WAV`);

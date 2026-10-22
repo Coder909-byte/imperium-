@@ -6,8 +6,58 @@ import legionary from "../content/rigs/legionary.json";
 declare global {
   interface Window {
     __imperiumAudioProbe: { starts: number; active: number };
+    __imperiumCueProbe: { durations: number[]; loops: number };
   }
 }
+
+test("Gallia's real approved cues decode and play only on their beat entries", async ({ page }) => {
+  test.setTimeout(90_000);
+  await page.addInitScript(() => {
+    const probe = { durations: [] as number[], loops: 0 };
+    window.__imperiumCueProbe = probe;
+    const activeLoops = new Set<AudioBufferSourceNode>();
+    const start = AudioBufferSourceNode.prototype.start;
+    const stop = AudioBufferSourceNode.prototype.stop;
+    AudioBufferSourceNode.prototype.start = function (...args: Parameters<typeof start>) {
+      start.apply(this, args);
+      if (this.loop) activeLoops.add(this);
+      else if (this.buffer && this.buffer.duration > 0.1) probe.durations.push(this.buffer.duration);
+      probe.loops = activeLoops.size;
+    };
+    AudioBufferSourceNode.prototype.stop = function (...args: Parameters<typeof stop>) {
+      stop.apply(this, args);
+      activeLoops.delete(this);
+      probe.loops = activeLoops.size;
+    };
+  });
+  const audioRequests: string[] = [];
+  page.on("request", (request) => {
+    if (request.url().includes("/assets/gallia/audio/")) audioRequests.push(request.url());
+  });
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await page.goto("/scene/gallia");
+  await expect(page.getByTestId("scene-player")).toHaveAttribute("data-engine-ready", "true");
+  expect(audioRequests).toEqual([]);
+  await page.getByRole("heading", { name: "The hill", exact: true }).click();
+  await expect.poll(() => page.evaluate(() => window.__imperiumCueProbe.loops)).toBe(1);
+  await page.getByRole("tab", { name: /^Go to beat 2:/ }).click();
+  await expect.poll(() => page.evaluate(() => window.__imperiumCueProbe.durations.length)).toBe(1);
+  expect(await page.evaluate(() => window.__imperiumCueProbe.durations[0])).toBeCloseTo(0.24025, 2);
+  await page.getByRole("tab", { name: /^Go to beat 4:/ }).click();
+  await expect(page.getByRole("heading", { name: "The Mandubii", exact: true })).toBeVisible();
+  expect(await page.evaluate(() => window.__imperiumCueProbe.durations.length)).toBe(1);
+  await page.getByRole("button", { name: "Mute", exact: true }).click();
+  await page.getByRole("tab", { name: /^Go to beat 6:/ }).click();
+  await page.getByRole("button", { name: "Unmute", exact: true }).click();
+  await page.getByRole("tab", { name: /^Go to beat 1:/ }).click();
+  expect(await page.evaluate(() => window.__imperiumCueProbe.durations.length)).toBe(1);
+  await page.getByRole("tab", { name: /^Go to beat 6:/ }).click();
+  await expect.poll(() => page.evaluate(() => window.__imperiumCueProbe.durations.length)).toBe(2);
+  expect(await page.evaluate(() => window.__imperiumCueProbe.durations[1])).toBeCloseTo(0.66104, 2);
+  await expect(page.getByRole("status").filter({ hasText: "Audio unavailable" })).toHaveCount(0);
+  await page.keyboard.press("Escape");
+  await expect.poll(() => page.evaluate(() => window.__imperiumCueProbe.loops)).toBe(0);
+});
 
 test("audio needs a trusted gesture, recovers from a failed load, and stops its loop on exit", async ({ page }) => {
   test.setTimeout(90_000);
@@ -39,6 +89,8 @@ test("audio needs a trusted gesture, recovers from a failed load, and stops its 
     return route.fulfill({ status: allowLoad ? 200 : 503, contentType: "audio/wav", body: allowLoad ? wave : "unavailable" });
   });
   const data = Region.parse(gallia);
+  data.scene.planes.forEach((plane) => { plane.placeholder = true; });
+  data.beats.forEach((beat) => { delete beat.audio.cue; delete beat.audio.cueVolume; });
   data.scene.audioAssets = { wind_plains: "audio/recovery-bed.wav" };
   data.scene.audioPlaceholder = false;
   const manifest = [{

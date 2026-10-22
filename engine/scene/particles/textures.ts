@@ -9,9 +9,9 @@
 // ParticleTextureKind comment): each config differentiates itself with
 // scale/tint/motion, not a bespoke texture per fx kind.
 import { Texture } from "pixi.js";
-import type { ParticleTextureKind } from "./types";
+import { PARTICLE_TEXTURE_DIMENSIONS, type ParticleTextureKind } from "./types";
 
-const SIZE = 64;
+const SIZE = PARTICLE_TEXTURE_DIMENSIONS["soft-dot"].width;
 
 function createSoftDotCanvas(): HTMLCanvasElement {
   const canvas = document.createElement("canvas");
@@ -32,8 +32,7 @@ function createStreakCanvas(): HTMLCanvasElement {
   // Wide canvas, narrow bright core — a horizontal streak. Particle
   // rotation (set per-instance by each emitter config) angles it to
   // whatever direction that emitter travels.
-  const width = SIZE * 3;
-  const height = SIZE / 2;
+  const { width, height } = PARTICLE_TEXTURE_DIMENSIONS.streak;
   const canvas = document.createElement("canvas");
   canvas.width = width;
   canvas.height = height;

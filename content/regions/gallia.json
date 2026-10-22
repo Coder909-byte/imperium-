@@ -22,7 +22,8 @@
         "depth": 0.02,
         "tint": "#ffffff",
         "blur": 0,
-        "role": "atmosphere"
+        "role": "atmosphere",
+        "lowTierGroup": "painted-atmosphere"
       },
       {
         "id": "far_ridge",
@@ -48,37 +49,49 @@
         "depth": 0.42,
         "tint": "#ffffff",
         "blur": 0,
-        "role": "atmosphere"
+        "role": "atmosphere",
+        "lowTierGroup": "painted-atmosphere"
       },
       {
         "id": "inner_wall",
-        "asset": "gallia/inner_wall.webp",
+        "asset": "gallia/siege-rampart-draft.webp",
         "essential": true,
-        "placeholder": true,
+        "placeholder": false,
         "depth": 0.52,
         "tint": "#ffffff",
-        "blur": 0
+        "blur": 0,
+        "draft": true,
+        "offsetY": 0,
+        "flipX": false,
+        "offsetX": -220
       },
       {
         "id": "outer_wall",
-        "asset": "gallia/outer_wall.webp",
+        "asset": "gallia/siege-rampart-draft.webp",
         "essential": true,
-        "placeholder": true,
+        "placeholder": false,
         "depth": 0.68,
         "tint": "#ffffff",
-        "blur": 0
+        "blur": 0,
+        "draft": true,
+        "offsetY": 140,
+        "flipX": true,
+        "offsetX": 220
       },
       {
         "id": "foreground",
         "asset": "gallia/foreground.webp",
-        "placeholder": true,
+        "placeholder": false,
         "depth": 0.9,
         "tint": "#ffffff",
-        "blur": 3
+        "blur": 0,
+        "role": "atmosphere"
       }
     ],
     "audioAssets": {
-      "wind_plains": "gallia/audio/wind-plains.wav"
+      "wind_plains": "gallia/audio/wind-plains.wav",
+      "timber_work": "gallia/audio/kenney-chop.ogg",
+      "cloth_movement": "gallia/audio/kenney-cloth1.ogg"
     }
   },
   "beats": [
@@ -113,7 +126,7 @@
           "rig": "legionary",
           "clip": "march",
           "x": -470,
-          "y": -118,
+          "y": 60,
           "scale": 0.13,
           "count": 14,
           "flip": false,
@@ -124,7 +137,7 @@
           "rig": "legionary",
           "clip": "march",
           "x": -370,
-          "y": -116,
+          "y": 63,
           "scale": 0.13,
           "count": 14,
           "flip": false,
@@ -135,7 +148,7 @@
           "rig": "legionary",
           "clip": "march",
           "x": -270,
-          "y": -119,
+          "y": 60,
           "scale": 0.13,
           "count": 14,
           "flip": false,
@@ -196,7 +209,7 @@
           "rig": "legionary",
           "clip": "march",
           "x": -120,
-          "y": -103,
+          "y": 65,
           "scale": 0.14,
           "count": 16,
           "flip": false,
@@ -207,7 +220,7 @@
           "rig": "legionary",
           "clip": "march",
           "x": 60,
-          "y": -101,
+          "y": 68,
           "scale": 0.14,
           "count": 16,
           "flip": true,
@@ -218,7 +231,7 @@
           "rig": "legionary",
           "clip": "brace",
           "x": 280,
-          "y": -88,
+          "y": 180,
           "scale": 0.22,
           "count": 1,
           "flip": false,
@@ -229,7 +242,7 @@
           "rig": "legionary",
           "clip": "brace",
           "x": 330,
-          "y": -86,
+          "y": 177,
           "scale": 0.22,
           "count": 1,
           "flip": false,
@@ -240,7 +253,7 @@
           "rig": "legionary",
           "clip": "brace",
           "x": 380,
-          "y": -89,
+          "y": 181,
           "scale": 0.22,
           "count": 1,
           "flip": false,
@@ -249,7 +262,9 @@
         }
       ],
       "audio": {
-        "bedIntensity": 0.45
+        "bedIntensity": 0.45,
+        "cue": "timber_work",
+        "cueVolume": 0.18
       },
       "sources": [
         {
@@ -298,7 +313,7 @@
           "rig": "legionary",
           "clip": "march",
           "x": -200,
-          "y": -47,
+          "y": 80,
           "scale": 0.13,
           "count": 16,
           "flip": false,
@@ -309,7 +324,7 @@
           "rig": "legionary",
           "clip": "march",
           "x": 220,
-          "y": -44,
+          "y": 83,
           "scale": 0.13,
           "count": 16,
           "flip": true,
@@ -320,45 +335,45 @@
           "rig": "legionary",
           "clip": "march",
           "x": -560,
-          "y": -238,
+          "y": 49,
           "scale": 0.08,
           "count": 20,
           "flip": false,
           "phase": 0,
-          "depth": 0.22
+          "depth": 0.44
         },
         {
           "rig": "legionary",
           "clip": "march",
           "x": -330,
-          "y": -236,
+          "y": 45,
           "scale": 0.08,
           "count": 20,
           "flip": false,
           "phase": 0,
-          "depth": 0.22
+          "depth": 0.44
         },
         {
           "rig": "legionary",
           "clip": "march",
           "x": 330,
-          "y": -238,
+          "y": 47,
           "scale": 0.08,
           "count": 20,
           "flip": true,
           "phase": 0,
-          "depth": 0.22
+          "depth": 0.44
         },
         {
           "rig": "legionary",
           "clip": "march",
           "x": 560,
-          "y": -236,
+          "y": 49,
           "scale": 0.08,
           "count": 20,
           "flip": true,
           "phase": 0,
-          "depth": 0.22
+          "depth": 0.44
         }
       ],
       "audio": {
@@ -403,56 +418,56 @@
           "rig": "legionary",
           "clip": "idle",
           "x": 100,
-          "y": -113,
+          "y": 180,
           "scale": 0.2,
           "count": 1,
           "flip": false,
           "phase": 0,
-          "depth": 0.54
+          "depth": 0.6
         },
         {
           "rig": "legionary",
           "clip": "idle",
           "x": 160,
-          "y": -111,
+          "y": 183,
           "scale": 0.2,
           "count": 1,
           "flip": false,
           "phase": 700,
-          "depth": 0.54
+          "depth": 0.6
         },
         {
           "rig": "legionary",
           "clip": "idle",
           "x": 220,
-          "y": -114,
+          "y": 180,
           "scale": 0.2,
           "count": 1,
           "flip": false,
           "phase": 1500,
-          "depth": 0.54
+          "depth": 0.6
         },
         {
           "rig": "legionary",
           "clip": "idle",
           "x": 280,
-          "y": -112,
+          "y": 183,
           "scale": 0.2,
           "count": 1,
           "flip": false,
           "phase": 400,
-          "depth": 0.54
+          "depth": 0.6
         },
         {
           "rig": "legionary",
           "clip": "idle",
           "x": 340,
-          "y": -113,
+          "y": 180,
           "scale": 0.2,
           "count": 1,
           "flip": false,
           "phase": 1900,
-          "depth": 0.54
+          "depth": 0.6
         }
       ],
       "audio": {
@@ -500,7 +515,7 @@
           "rig": "legionary",
           "clip": "march",
           "x": -440,
-          "y": 21,
+          "y": 145,
           "scale": 0.15,
           "count": 40,
           "flip": true,
@@ -511,7 +526,7 @@
           "rig": "legionary",
           "clip": "march",
           "x": -300,
-          "y": 24,
+          "y": 148,
           "scale": 0.15,
           "count": 40,
           "flip": true,
@@ -522,7 +537,7 @@
           "rig": "legionary",
           "clip": "march",
           "x": -160,
-          "y": 20,
+          "y": 151,
           "scale": 0.15,
           "count": 40,
           "flip": true,
@@ -533,7 +548,7 @@
           "rig": "legionary",
           "clip": "march",
           "x": -120,
-          "y": -123,
+          "y": 65,
           "scale": 0.1,
           "count": 30,
           "flip": false,
@@ -544,56 +559,56 @@
           "rig": "legionary",
           "clip": "brace",
           "x": 80,
-          "y": -30,
+          "y": 180,
           "scale": 0.2,
           "count": 1,
           "flip": false,
           "phase": 0,
-          "depth": 0.7
+          "depth": 0.6
         },
         {
           "rig": "legionary",
           "clip": "brace",
           "x": 130,
-          "y": -28,
+          "y": 180,
           "scale": 0.2,
           "count": 1,
           "flip": false,
           "phase": 90,
-          "depth": 0.7
+          "depth": 0.6
         },
         {
           "rig": "legionary",
           "clip": "brace",
           "x": 180,
-          "y": -31,
+          "y": 180,
           "scale": 0.2,
           "count": 1,
           "flip": false,
           "phase": 200,
-          "depth": 0.7
+          "depth": 0.6
         },
         {
           "rig": "legionary",
           "clip": "fall",
           "x": 40,
-          "y": -28,
+          "y": 180,
           "scale": 0.2,
           "count": 1,
           "flip": false,
           "phase": 150,
-          "depth": 0.7
+          "depth": 0.6
         },
         {
           "rig": "legionary",
           "clip": "fall",
           "x": 230,
-          "y": -29,
+          "y": 180,
           "scale": 0.2,
           "count": 1,
           "flip": false,
           "phase": 300,
-          "depth": 0.7
+          "depth": 0.6
         }
       ],
       "audio": {
@@ -641,49 +656,51 @@
           "rig": "legionary",
           "clip": "idle",
           "x": -140,
-          "y": -143,
+          "y": 180,
           "scale": 0.18,
           "count": 1,
           "flip": false,
           "phase": 0,
-          "depth": 0.44
+          "depth": 0.6
         },
         {
           "rig": "legionary",
           "clip": "idle",
           "x": -85,
-          "y": -141,
+          "y": 183,
           "scale": 0.18,
           "count": 1,
           "flip": false,
           "phase": 900,
-          "depth": 0.44
+          "depth": 0.6
         },
         {
           "rig": "legionary",
           "clip": "idle",
           "x": 85,
-          "y": -141,
+          "y": 180,
           "scale": 0.18,
           "count": 1,
           "flip": true,
           "phase": 300,
-          "depth": 0.44
+          "depth": 0.6
         },
         {
           "rig": "legionary",
           "clip": "idle",
           "x": 140,
-          "y": -143,
+          "y": 183,
           "scale": 0.18,
           "count": 1,
           "flip": true,
           "phase": 1600,
-          "depth": 0.44
+          "depth": 0.6
         }
       ],
       "audio": {
-        "bedIntensity": 0.25
+        "bedIntensity": 0.25,
+        "cue": "cloth_movement",
+        "cueVolume": 0.12
       },
       "sources": [
         {

@@ -53,7 +53,7 @@ export interface SceneBeat {
   lightSource: boolean;
   actors: SceneActor[];
   sources?: { label: string; url?: string }[];
-  audio?: { cue?: string; bed?: string; bedIntensity: number };
+  audio?: { cue?: string; cueVolume?: number; bed?: string; bedIntensity: number };
 }
 
 export interface SceneActor {
@@ -78,6 +78,13 @@ export interface SceneActor {
 
 export interface ScenePlane {
   id: string;
+  draft?: boolean;
+  offsetY?: number;
+  offsetX?: number;
+  flipX?: boolean;
+  /** Approved atmospheric cuts may share one baked sprite on low tier. */
+  lowTierGroup?: string;
+  compositeSources?: readonly ScenePlane[];
   /** Omitted only for explicitly declared procedural placeholders. */
   assetUrl?: string;
   /** Preserve story-critical art within the low-tier four-plane cap. */

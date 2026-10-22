@@ -8,17 +8,34 @@ import { buildSceneProps } from "../app/scene/[regionId]/buildSceneProps";
 import { cameraForBeat } from "../engine/scene/beatTiming";
 import { computeAutoplayDwellMs } from "../engine/scene/dwell";
 import { selectPlanesForTier } from "../engine/scene/layers/selectActivePlanes";
+import { validateAssetReferences } from "./assetReferences";
+import { existsSync } from "node:fs";
 
 const gallia = () => Region.parse(structuredClone(galliaJson));
 const rigs = [Rig.parse(legionaryJson)];
 const manifest = manifestJson.map((row) => ManifestEntry.parse(row));
 
 describe("Gallia's review sequence", () => {
+  it("passes approved quiet work and cloth cues through to the player, leaving the Mandubii without a cue", () => {
+    const region = gallia();
+    expect(validateAssetReferences(region, manifest, existsSync)).toEqual([]);
+    const props = buildSceneProps(region, rigs, manifest);
+    expect(props.audio?.assets.timber_work).toBe("/assets/gallia/audio/kenney-chop.ogg");
+    expect(props.audio?.assets.cloth_movement).toBe("/assets/gallia/audio/kenney-cloth1.ogg");
+    expect(props.beats[1].audio).toEqual({ bedIntensity: 0.45, cue: "timber_work", cueVolume: 0.18 });
+    expect(props.beats[5].audio).toEqual({ bedIntensity: 0.25, cue: "cloth_movement", cueVolume: 0.12 });
+    expect(props.beats[3].audio?.cue).toBeUndefined();
+    for (const cueVolume of [-0.1, 1.1]) {
+      region.beats[1].audio.cueVolume = cueVolume;
+      expect(Region.safeParse(region).success).toBe(false);
+    }
+  });
+
   it("has six sourced beats with valid plane, rig and LUT references", () => {
     const region = gallia();
     expect(region.beats).toHaveLength(6);
     expect(region.beats.every((beat) => beat.sources.length > 0)).toBe(true);
-    expect(region.scene.planes.filter((plane) => !plane.placeholder).map((plane) => plane.id)).toEqual(["sky", "mid_ground"]);
+    expect(region.scene.planes.filter((plane) => !plane.placeholder).map((plane) => plane.id)).toEqual(["sky", "mid_ground", "inner_wall", "outer_wall", "foreground"]);
     expect(validateSceneReferences(region, rigs)).toEqual([]);
   });
 
@@ -37,8 +54,26 @@ describe("Gallia's review sequence", () => {
     const selected = selectPlanesForTier(buildSceneProps(gallia(), rigs, manifest).planes, "low");
     expect(selected).toHaveLength(4);
     expect(selected.map((plane) => plane.id)).toEqual(["sky", "hillfort", "inner_wall", "outer_wall"]);
+    expect(selected[0].compositeSources?.map((plane) => plane.id)).toEqual(["sky", "mid_ground"]);
     const region = gallia();
     region.scene.planes.forEach((plane) => { plane.essential = true; });
+    expect(Region.safeParse(region).success).toBe(false);
+  });
+
+  it("never shows the later outer wall during the first wall's construction", () => {
+    const region = gallia();
+    expect(region.beats[0].visibleLayers).not.toContain("inner_wall");
+    expect(region.beats[1].visibleLayers).toContain("inner_wall");
+    expect(region.beats[1].visibleLayers).not.toContain("outer_wall");
+    expect(region.beats[2].visibleLayers).toContain("outer_wall");
+  });
+
+  it("rejects grouped structures or atmosphere with different beat visibility", () => {
+    const region = gallia();
+    region.scene.planes[2].lowTierGroup = "painted-atmosphere";
+    expect(Region.safeParse(region).success).toBe(false);
+    delete region.scene.planes[2].lowTierGroup;
+    region.beats[1].visibleLayers = region.beats[1].visibleLayers.filter((id) => id !== "mid_ground");
     expect(Region.safeParse(region).success).toBe(false);
   });
 

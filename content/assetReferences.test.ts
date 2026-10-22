@@ -12,10 +12,23 @@ const isolatedRegion = () => {
   region.scene.planes.forEach((plane) => { plane.placeholder = true; });
   region.scene.audioAssets = {};
   region.scene.audioPlaceholder = true;
+  region.beats.forEach((beat) => { delete beat.audio.cue; delete beat.audio.cueVolume; });
   return region;
 };
 
 describe("approved asset boundary", () => {
+  it("requires separate explicit structure-draft approval and never promotes it to final art or figure/audio use", () => {
+    const source = ManifestEntry.parse({ ...approved, file: "content/assets/staging/motte.jpg" });
+    const draft = ManifestEntry.parse({ ...approved, licence: "Owner-approved provisional AI-assisted structure draft",
+      approval: { ...approved.approval, scope: "structural-draft" },
+      derivation: { kind: "ai-assisted-structure-draft", sourceFile: source.file, modifications: "Provisional source-based rampart study" },
+    });
+    expect(approvedAssetUrl("gallia/sky.webp", [draft, source], "structure-draft")).toBe("/assets/gallia/sky.webp");
+    expect(approvedAssetUrl("gallia/sky.webp", [draft, source])).toBeUndefined();
+    expect(approvedAssetUrl("gallia/sky.webp", [draft, source], "atmosphere")).toBeUndefined();
+    expect(approvedAssetUrl("gallia/sky.webp", [draft], "structure-draft")).toBeUndefined();
+    expect(approvedAssetUrl("gallia/sky.webp", [{ ...draft, approval: { ...draft.approval!, scope: "atmospheric-derivative" } }, source], "structure-draft")).toBeUndefined();
+  });
   it("limits owner-approved AI scenery to atmospheric planes with approved source provenance", () => {
     const source = ManifestEntry.parse({ ...approved, file: "content/assets/staging/source.jpg" });
     const edited = ManifestEntry.parse({ ...approved,

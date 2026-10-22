@@ -276,6 +276,7 @@ const Beat = z.object({
   })).default([]),
   audio: z.object({
     cue: z.string().optional(),
+    cueVolume: z.number().min(0).max(1).optional(), // playback gain defaults to 1
     bedIntensity: z.number().min(0).max(1).default(0.5),
   }).default({}),
   sources: z.array(z.object({

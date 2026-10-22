@@ -16,9 +16,22 @@ const LOW_TIER_MAX_PLANES = 4;
  * author happened to list first.
  */
 export function selectPlanesForTier(planes: readonly ScenePlane[], tier: DeviceTier): ScenePlane[] {
-  if (tier === "high" || planes.length <= LOW_TIER_MAX_PLANES) return [...planes];
+  if (tier === "high") return [...planes];
+  // Co-visible atmosphere shares a registered canvas. Baking it once
+  // keeps real ground alongside essential structures within four sprites.
+  const groups = new Map<string, ScenePlane[]>();
+  for (const plane of planes) if (plane.lowTierGroup && plane.assetUrl) {
+    groups.set(plane.lowTierGroup, [...(groups.get(plane.lowTierGroup) ?? []), plane]);
+  }
+  const grouped = planes.flatMap((plane) => {
+    const group = plane.lowTierGroup ? groups.get(plane.lowTierGroup) : undefined;
+    if (!group || group.length < 2) return [plane];
+    const sources = [...group].sort((a, b) => a.depth - b.depth);
+    return plane.id === sources[0].id ? [{ ...sources[0], essential: sources.some((source) => source.essential), compositeSources: sources }] : [];
+  });
+  if (grouped.length <= LOW_TIER_MAX_PLANES) return grouped;
 
-  const sorted = [...planes].sort((a, b) => a.depth - b.depth);
+  const sorted = [...grouped].sort((a, b) => a.depth - b.depth);
   const essential = sorted.filter((plane) => plane.essential);
   if (essential.length > 0) {
     const selected = new Set(essential.slice(0, LOW_TIER_MAX_PLANES));

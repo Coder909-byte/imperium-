@@ -110,7 +110,7 @@ const embers: EmitterConfig = {
     age: 0,
     life: 1.2 + rand() * 1.2,
     rotation: 0,
-    scale: 0.9 + rand() * 0.5,
+    scale: 0.035 + rand() * 0.03,
     alpha: 0,
     tint: 0xff8a3d,
   }),
@@ -190,7 +190,7 @@ const arrowVolley: EmitterConfig = {
       age: 0,
       life: (bounds.width * 1.1) / vx,
       rotation: 0.34,
-      scale: 2.2 + rand() * 0.6,
+      scale: 0.12 + rand() * 0.05,
       alpha: 0.9,
       tint: 0xcbb489,
     };
