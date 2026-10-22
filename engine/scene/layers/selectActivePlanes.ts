@@ -19,6 +19,20 @@ export function selectPlanesForTier(planes: readonly ScenePlane[], tier: DeviceT
   if (tier === "high" || planes.length <= LOW_TIER_MAX_PLANES) return [...planes];
 
   const sorted = [...planes].sort((a, b) => a.depth - b.depth);
+  const essential = sorted.filter((plane) => plane.essential);
+  if (essential.length > 0) {
+    const selected = new Set(essential.slice(0, LOW_TIER_MAX_PLANES));
+    // Fill remaining slots from the ordinary depth-spread choice. The
+    // schema caps essential planes; this still never exceeds four if a
+    // non-content caller supplies an invalid set.
+    const candidates = selectPlanesForTier(sorted.map((plane) => ({ ...plane, essential: false })), "low");
+    for (const candidate of candidates) {
+      if (selected.size === LOW_TIER_MAX_PLANES) break;
+      const original = sorted.find((plane) => plane.id === candidate.id)!;
+      selected.add(original);
+    }
+    return sorted.filter((plane) => selected.has(plane));
+  }
   const lastIndex = sorted.length - 1;
   const picked = new Set<number>();
   for (let i = 0; i < LOW_TIER_MAX_PLANES; i++) {

@@ -458,7 +458,7 @@ Rig format (`content/rigs/*.json`): parts, pivots, z-order, clips as keyframed r
 ✅ A raw painting scan becomes a game-ready colour plane in one command; a folder of already-separated layers becomes a batch of them; `--matte` produces a clean alpha matte for a character/silhouette source; every processed file gets a manifest row, and a missing licence field refuses the write rather than leaving one blank.
 
 **M8 — Gallia to the ceiling** *(~6 days)*
-Six beats, real painted planes, puppet actors, full audio, all effects. The reference implementation.
+Six beats, real painted planes, puppet actors, Gallia ambient beds and required cues, all effects. The reference implementation. M8 also owns the minimum reusable Howler foundation: user-gesture activation, bed crossfades/intensity, one-shot cues, persisted master mute and scene-exit cleanup. Only human-approved, manifest-listed PD/CC0 assets may play (ADR 009). Audio placeholders keep this milestone incomplete until assets and the audible mix are approved.
 ✅ Someone who has never seen the project watches end to end without touching their phone.
 
 **M9 — Quiz** *(~3 days)*
@@ -466,8 +466,8 @@ Question bank schema and seeding. Server-side grading. Per-option quip UI. XP, r
 ✅ Answer key never appears in any network response before submission. Verified in Playwright.
 
 **M10 — Audio** *(~2 days)*
-Howler ambient beds with crossfade between beats. Per-beat cues. Master mute, persisted. Audio starts on first user gesture, never before.
-✅ No autoplay console errors. Mute survives navigation.
+Broader audio polish and catalog expansion: refine Gallia’s mix against final art, tune transitions and cue balance, and extend approved beds/cues to additional content. Reuse the Howler foundation delivered in M8 (ADR 009); gesture activation, persisted mute and cleanup are no longer deferred here.
+✅ Expanded content has approved audio, consistent levels and reviewed transitions on target devices; M8’s gesture/mute/cleanup checks remain green.
 
 **M11 — Shell and launch** *(~3 days)*
 Landing, profile, OG images, sitemap, PostHog, Sentry, mobile pass, `prefers-reduced-motion` throughout, full keyboard nav.

@@ -51,6 +51,8 @@ export interface SceneActorsOptions {
   ticker: FrameTicker;
   rigDefs: readonly RigDef[];
   textures?: ReadonlyMap<string, Texture>;
+  /** Actor JSON is authored against a 1280px-wide scene. */
+  placementScale?: number;
 }
 
 export class SceneActors {
@@ -63,6 +65,7 @@ export class SceneActors {
   private reducedMotion = false;
   private lastTickTime = performance.now();
   private destroyed = false;
+  private readonly placementScale: number;
 
   private readonly tick = (): void => {
     const now = performance.now();
@@ -73,6 +76,7 @@ export class SceneActors {
   };
 
   constructor(options: SceneActorsOptions) {
+    this.placementScale = options.placementScale ?? 1;
     this.ticker = options.ticker;
     this.layersContainer = options.layersContainer;
     for (const def of options.rigDefs) {
@@ -94,7 +98,8 @@ export class SceneActors {
     this.puppets = [];
     this.crowds = [];
 
-    for (const actor of actors) {
+    for (const authored of actors) {
+      const actor = { ...authored, x: authored.x * this.placementScale, y: authored.y * this.placementScale, scale: authored.scale * this.placementScale };
       const entry = this.rigs.get(actor.rig);
       if (!entry) {
         if (process.env.NODE_ENV !== "production") {

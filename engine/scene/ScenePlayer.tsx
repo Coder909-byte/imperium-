@@ -17,7 +17,7 @@ import type { SceneActors } from "./SceneActors";
 import { SceneLayers } from "./SceneLayers";
 import { SceneRenderer } from "./SceneRenderer";
 import { SceneEffects } from "./SceneEffects";
-import { ParallaxPlane } from "./layers/ParallaxPlane";
+import type { ParallaxPlane } from "./layers/ParallaxPlane";
 import { selectPlanesForTier } from "./layers/selectActivePlanes";
 import type { SceneRegion } from "./types";
 import styles from "./ScenePlayer.module.css";
@@ -143,11 +143,7 @@ export function ScenePlayer({ region, onExit, forcedTier, forcedLut, forcedChain
       effectsRef.current = effects;
       setTier(effects.deviceTier.getSnapshot().tier);
 
-      // Brackets the fully-synchronous scene-graph build (planes' canvas
-      // texture draws + Pixi object construction) that runs between Pixi
-      // context creation finishing and the ticker's first actual draw —
-      // see SceneRenderer.ts's marks for why these are permanent, not
-      // dev-only.
+      // Includes approved image loading as well as graph construction.
       performance.mark("imperium:scene-graph-built");
       renderer.getTicker().addOnce(() => performance.mark("imperium:scene-first-frame"));
 
@@ -280,6 +276,7 @@ export function ScenePlayer({ region, onExit, forcedTier, forcedLut, forcedChain
     <div
       className={styles.player}
       data-testid="scene-player"
+      data-engine-ready={engineReady}
       data-device-tier={tier}
       data-active-fx={beat.fx.join(",")}
       data-active-actors={beat.actors.map((a) => `${a.rig}:${a.clip}:${a.count}`).join(",")}
@@ -287,6 +284,7 @@ export function ScenePlayer({ region, onExit, forcedTier, forcedLut, forcedChain
       <div ref={containerRef} className={styles.canvasHost} />
       {renderError && <p role="alert" className={styles.renderError}>{renderError}</p>}
       <div className={styles.topBar} />
+      {region.planes.some((plane) => !plane.assetUrl) && <span className={styles.artStatus}>Placeholder artwork</span>}
 
       <button type="button" className={styles.exitButton} onClick={exitScene}>
         ← Return to the map

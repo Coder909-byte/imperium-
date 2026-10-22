@@ -1,6 +1,6 @@
 // CI gate: malformed region or question JSON fails the build, never the
 // runtime (CLAUDE.md hard rule #5). Run with `npm run validate`.
-import { existsSync, readdirSync, readFileSync } from "node:fs";
+import { existsSync, readdirSync, readFileSync, statSync } from "node:fs";
 import { join } from "node:path";
 import type { z } from "zod";
 import { Region, Question, Province, City, SeaLabel, Rig, ManifestEntry } from "../content/schema";
@@ -8,7 +8,7 @@ import { adaptRig } from "../app/scene/[regionId]/buildSceneProps";
 import { loadRig } from "../engine/scene/puppet/rigLoader";
 import { lintRig } from "../engine/scene/puppet/rigValidation";
 import { validateSceneReferences } from "../content/sceneValidation";
-import { approvedAssetUrl, assetFile, validateAssetReferences } from "../content/assetReferences";
+import { approvedAssetUrl, assetFile, measureRegionAssets, validateAssetReferences } from "../content/assetReferences";
 
 interface Target {
   dir: string;
@@ -134,6 +134,12 @@ for (const rig of rigs) {
 
 for (const region of regions) {
   const issues = validateAssetReferences(region, manifest, (file) => existsSync(join(__dirname, "..", file)));
+  const payload = measureRegionAssets(region, rigs, (file) => {
+    const path = join(__dirname, "..", file);
+    return existsSync(path) ? statSync(path).size : 0;
+  });
+  console.log(`${region.id}: ${payload.bytes} referenced asset bytes (${payload.files.length} files; procedural placeholders excluded)`);
+  if (!payload.fits) issues.push(`scene assets exceed the strict <2.5MB budget: ${payload.bytes} bytes`);
   if (issues.length === 0) continue;
   failures += 1;
   console.error(`✗ ${region.id} — asset references\n  ${issues.join("\n  ")}`);

@@ -8,7 +8,7 @@
 // per beat (particles, screen shake, godray gating) — the post chain and
 // particle emitters this milestone renders. M6 adds `actors` (rendered
 // by SceneActors/PuppetActor/CrowdField) and the region's `rigs`.
-// `audio`/`sources` still belong to a later milestone (M10).
+// M8 passes per-beat sources and approved audio references as plain props.
 
 // RigDef lives in puppet/types.ts (it's the input to rigLoader.loadRig),
 // re-exported here so app/'s adapters only need one import path for
@@ -80,6 +80,8 @@ export interface ScenePlane {
   id: string;
   /** Omitted only for explicitly declared procedural placeholders. */
   assetUrl?: string;
+  /** Preserve story-critical art within the low-tier four-plane cap. */
+  essential?: boolean;
   /** Depth 0 (far) – 1 (near). Pointer parallax offset and placeholder
    *  colour both scale with this. */
   depth: number;

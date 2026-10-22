@@ -76,10 +76,15 @@ export function SceneLabClient({ regionIds, initialRegionId }: { regionIds: stri
         setError(body.error ?? "unknown error");
         return;
       }
-      const raw = JSON.stringify({ data: body.data, rigs: body.rigs });
+      const raw = JSON.stringify({ data: body.data, rigs: body.rigs, manifest: body.manifest });
       if (raw === lastRawRef.current) return;
+      try {
+        setRegion(buildSceneProps(body.data, body.rigs ?? [], body.manifest ?? []));
+      } catch (error) {
+        setError(error instanceof Error ? error.message : String(error));
+        return;
+      }
       lastRawRef.current = raw;
-      setRegion(buildSceneProps(body.data, body.rigs ?? [], body.manifest ?? []));
       setError(null);
       setVersion((v) => v + 1);
     }

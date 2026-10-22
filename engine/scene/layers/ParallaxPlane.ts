@@ -27,6 +27,8 @@ export interface ParallaxPlaneOptions {
   id: string;
   depth: number;
   texture: Texture;
+  /** Shared real textures belong to SceneLayers, not each sprite. */
+  ownsTexture?: boolean;
   /** Hex colour, e.g. "#8a7a63" — see types.ts's ScenePlane.tint comment. */
   tint?: string;
   /** Blur strength in px. Omitted or 0 skips the filter — a no-op filter
@@ -43,6 +45,7 @@ export class ParallaxPlane {
    *  the container itself sits. */
   readonly container: Container;
   private readonly sprite: Sprite;
+  private readonly ownsTexture: boolean;
   private visible = false;
   private fadeTween: gsap.core.Tween | null = null;
   // Vertical rest position set by setSize (ScenePlayer uses this to
@@ -56,6 +59,7 @@ export class ParallaxPlane {
   constructor(options: ParallaxPlaneOptions) {
     this.id = options.id;
     this.depth = options.depth;
+    this.ownsTexture = options.ownsTexture ?? true;
     this.sprite = new Sprite(options.texture);
     this.sprite.anchor.set(0.5);
 
@@ -107,6 +111,6 @@ export class ParallaxPlane {
 
   destroy(): void {
     this.fadeTween?.kill();
-    this.container.destroy({ children: true, texture: true, textureSource: true });
+    this.container.destroy({ children: true, texture: this.ownsTexture, textureSource: this.ownsTexture });
   }
 }

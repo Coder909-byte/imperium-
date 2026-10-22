@@ -20,9 +20,8 @@
 // ~6-plane scene (2.5MB / 6 ≈ 427KB), rounded up slightly for headroom
 // since not every plane in a real scene needs to be full-width — it's a
 // useful per-file sanity flag, not a substitute for checking the whole
-// region's total once a scene's planes are all forged (that check
-// doesn't exist yet; tools/forge processes one file/batch at a time and
-// has no notion of "this scene's other planes").
+// region's total once a scene's planes are all forged (`npm run validate`
+// now measures unique referenced planes, rig parts and audio together).
 export const BUDGET_PER_PLANE_BYTES = 450 * 1024;
 
 export interface BudgetReport {

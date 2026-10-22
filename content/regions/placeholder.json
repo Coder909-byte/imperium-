@@ -10,14 +10,10 @@
     "lut": "cold_overcast",
     "ambientBed": "none",
     "planes": [
-      { "id": "sky", "asset": "placeholder/sky.webp",
-        "placeholder": true, "depth": 0.05, "tint": "#eef0ec", "blur": 0 },
-      { "id": "far_hills", "asset": "placeholder/far_hills.webp",
-        "placeholder": true, "depth": 0.25, "tint": "#e6e2d4", "blur": 1 },
-      { "id": "mid_ground", "asset": "placeholder/mid_ground.webp",
-        "placeholder": true, "depth": 0.55, "tint": "#f2ecdc", "blur": 0 },
-      { "id": "foreground", "asset": "placeholder/foreground.webp",
-        "placeholder": true, "depth": 0.9, "tint": "#ded2b8", "blur": 3 }
+      { "id": "sky", "asset": "placeholder/sky.webp", "placeholder": true, "depth": 0.05, "tint": "#eef0ec", "blur": 0 },
+      { "id": "far_hills", "asset": "placeholder/far_hills.webp", "placeholder": true, "depth": 0.25, "tint": "#e6e2d4", "blur": 1 },
+      { "id": "mid_ground", "asset": "placeholder/mid_ground.webp", "placeholder": true, "depth": 0.55, "tint": "#f2ecdc", "blur": 0 },
+      { "id": "foreground", "asset": "placeholder/foreground.webp", "placeholder": true, "depth": 0.9, "tint": "#ded2b8", "blur": 3 }
     ]
   },
   "beats": [

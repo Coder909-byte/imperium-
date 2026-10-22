@@ -6,6 +6,7 @@ import { validateSceneReferences } from "./sceneValidation";
 import { buildSceneProps } from "../app/scene/[regionId]/buildSceneProps";
 import { cameraForBeat } from "../engine/scene/beatTiming";
 import { computeAutoplayDwellMs } from "../engine/scene/dwell";
+import { selectPlanesForTier } from "../engine/scene/layers/selectActivePlanes";
 
 const gallia = () => Region.parse(structuredClone(galliaJson));
 const rigs = [Rig.parse(legionaryJson)];
@@ -30,10 +31,19 @@ describe("Gallia's review sequence", () => {
     });
   });
 
+  it("keeps both siege walls legible within the four-plane low-tier budget", () => {
+    const selected = selectPlanesForTier(buildSceneProps(gallia(), rigs).planes, "low");
+    expect(selected).toHaveLength(4);
+    expect(selected.map((plane) => plane.id)).toEqual(["sky", "hillfort", "inner_wall", "outer_wall"]);
+    const region = gallia();
+    region.scene.planes.forEach((plane) => { plane.essential = true; });
+    expect(Region.safeParse(region).success).toBe(false);
+  });
+
   it("rejects dangling and duplicate layer or beat ids", () => {
     const region = gallia();
     region.beats[0].visibleLayers.push("missing-wall");
-    region.scene.planes.push(region.scene.planes[0]);
+    region.scene.planes.push({ ...region.scene.planes[0], essential: false });
     region.beats[1].id = region.beats[0].id;
     const result = Region.safeParse(region);
     expect(result.success).toBe(false);

@@ -17,6 +17,7 @@
       {
         "id": "sky",
         "asset": "gallia/sky.webp",
+        "essential": true,
         "placeholder": true,
         "depth": 0.02,
         "tint": "#ffffff",
@@ -33,6 +34,7 @@
       {
         "id": "hillfort",
         "asset": "gallia/hillfort.webp",
+        "essential": true,
         "placeholder": true,
         "depth": 0.3,
         "tint": "#ffffff",
@@ -49,6 +51,7 @@
       {
         "id": "inner_wall",
         "asset": "gallia/inner_wall.webp",
+        "essential": true,
         "placeholder": true,
         "depth": 0.52,
         "tint": "#ffffff",
@@ -57,6 +60,7 @@
       {
         "id": "outer_wall",
         "asset": "gallia/outer_wall.webp",
+        "essential": true,
         "placeholder": true,
         "depth": 0.68,
         "tint": "#ffffff",

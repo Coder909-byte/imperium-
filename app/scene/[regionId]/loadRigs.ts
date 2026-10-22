@@ -1,9 +1,9 @@
 // Server-only: reads every content/rigs/*.json (M6). Unlike
 // loadContent.ts's per-id lookup, this loads the whole set — there's no
 // per-region "which rigs does it use" indirection in content/regions/
-// (a beat's actors[] just names a rig by string id), and puppets are
-// eager (CLAUDE.md's M6 note), so there's nothing to gain by trying to
-// compute a subset. A rig that fails validation is dropped with a
+// (a beat's actors[] names a rig by string id). buildSceneProps now
+// filters this catalog to the region's referenced rigs before shipping
+// client props. A rig that fails validation is dropped with a
 // console error rather than crashing the route — `npm run validate` is
 // the real CI gate (CLAUDE.md hard rule #5); this mirrors
 // loadContent.ts's "malformed content means absent, not broken" stance.

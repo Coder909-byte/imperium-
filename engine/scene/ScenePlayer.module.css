@@ -170,6 +170,7 @@
 .sources ul { padding-left: 1.25rem; margin: 0.4rem 0; }
 .sources a { color: #eed09e; text-decoration: underline; }
 .renderError { position: relative; padding: 4rem 1.5rem; color: #f4ede0; }
+.artStatus { position: absolute; top: 0.8rem; right: 0.8rem; z-index: 3; padding: 0.25rem 0.5rem; color: #f4ede0; background: #0a0806; font-size: 0.75rem; pointer-events: none; }
 
 /* Long Gallia captions need document flow on narrow screens; a fixed
    cinematic aspect ratio otherwise clips both prose and navigation. */

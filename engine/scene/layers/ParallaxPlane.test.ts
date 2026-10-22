@@ -40,6 +40,12 @@ describe("ParallaxPlane", () => {
     expect(plane.container.alpha).toBe(0);
   });
 
+  it("does not destroy a shared texture owned by the scene when a plane is removed", () => {
+    const plane = new ParallaxPlane({ id: "shared", depth: 0, texture: Texture.WHITE, ownsTexture: false });
+    plane.destroy();
+    expect(Texture.WHITE.destroyed).toBe(false);
+  });
+
   it("setPointerOffset moves the sprite, scaled by depth", () => {
     const plane = makePlane({ depth: 1 });
     plane.setPointerOffset(0.5, -0.5);

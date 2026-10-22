@@ -29,15 +29,16 @@ export class SceneLayers {
     defs.forEach((def, index) => {
       const band = computePlaceholderBand(def.depth, width, height);
       const texture = def.assetUrl ? this.textures.get(def.assetUrl)! : createPlaceholderTexture({ id: def.id, depth: def.depth, index, width: band.width, height: band.height });
-      const plane = new ParallaxPlane({ ...def, texture });
+      const plane = new ParallaxPlane({ ...def, texture, ownsTexture: !def.assetUrl });
       // Real cut layers share a registered full scene canvas. Never
       // stretch them into the depth bands used only for placeholders.
-      plane.setSize(def.assetUrl ? width : band.width, def.assetUrl ? height : band.height, def.assetUrl ? 0 : band.baseOffsetY);
+      const fit = Math.max(width / texture.width, height / texture.height);
+      plane.setSize(def.assetUrl ? texture.width * fit : band.width, def.assetUrl ? texture.height * fit : band.height, def.assetUrl ? 0 : band.baseOffsetY);
       plane.container.zIndex = def.depth;
       this.container.addChild(plane.container);
       this.planes.set(def.id, plane);
     });
-    this.actors = new SceneActors({ layersContainer: this.container, ticker, rigDefs: rigs, textures: this.textures });
+    this.actors = new SceneActors({ layersContainer: this.container, ticker, rigDefs: rigs, textures: this.textures, placementScale: stage.width / 1280 });
   }
 
   destroy(): void {

@@ -91,6 +91,7 @@ export const Region = z.object({
         // Missing art must be an explicit authoring choice, never a
         // silent fallback that makes a broken asset look integrated.
         placeholder: z.boolean().default(false),
+        essential: z.boolean().default(false),
         depth: z.number().min(0).max(1),
         tint: z.string().regex(/^#[0-9a-fA-F]{6}$/),
         blur: z.number().nonnegative().default(0),
@@ -99,6 +100,9 @@ export const Region = z.object({
   }),
   beats: z.array(Beat).min(1).max(10),
 }).superRefine((region, ctx) => {
+  if (region.scene.planes.filter((plane) => plane.essential).length > 4) {
+    ctx.addIssue({ code: "custom", path: ["scene", "planes"], message: "at most four planes may be essential on low tier" });
+  }
   const planeIds = new Set<string>();
   region.scene.planes.forEach((plane, index) => {
     if (planeIds.has(plane.id)) ctx.addIssue({ code: "custom", path: ["scene", "planes", index, "id"], message: `duplicate plane id "${plane.id}"` });

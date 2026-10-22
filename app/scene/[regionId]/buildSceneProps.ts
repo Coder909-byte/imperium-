@@ -43,6 +43,7 @@ export function adaptRig(rig: Rig, manifest?: ManifestEntry[]): RigDef {
 }
 
 export function buildSceneProps(region: Region, rigs: Rig[] = [], manifest: ManifestEntry[] = []): SceneRegion {
+  const usedRigIds = new Set(region.beats.flatMap((beat) => beat.actors.map((actor) => actor.rig)));
   return {
     id: region.id,
     name: region.name,
@@ -51,11 +52,12 @@ export function buildSceneProps(region: Region, rigs: Rig[] = [], manifest: Mani
       const assetUrl = plane.placeholder ? undefined : approvedAssetUrl(plane.asset, manifest);
       if (!plane.placeholder && !assetUrl) throw new Error(`Unapproved scene plane: ${plane.asset}`);
       return {
-      id: plane.id,
-      assetUrl,
-      depth: plane.depth,
-      tint: plane.tint,
-      blur: plane.blur,
+        id: plane.id,
+        assetUrl,
+        essential: plane.essential,
+        depth: plane.depth,
+        tint: plane.tint,
+        blur: plane.blur,
       };
     }),
     beats: region.beats.map((beat) => ({
@@ -88,7 +90,7 @@ export function buildSceneProps(region: Region, rigs: Rig[] = [], manifest: Mani
         depth: actor.depth,
       })),
     })),
-    rigs: rigs.map((rig) => adaptRig(rig, manifest)),
+    rigs: rigs.filter((rig) => usedRigIds.has(rig.id)).map((rig) => adaptRig(rig, manifest)),
     audio: {
       ambientBed: region.scene.ambientBed,
       assets: Object.fromEntries(Object.entries(region.scene.audioAssets).flatMap(([id, asset]) => {

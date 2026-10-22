@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { ManifestEntry, Region } from "./schema";
-import { approvedAssetUrl, assetFile, validateAssetReferences } from "./assetReferences";
+import { approvedAssetUrl, assetFile, measureRegionAssets, SCENE_ASSET_BUDGET_BYTES, validateAssetReferences } from "./assetReferences";
 import galliaJson from "./regions/gallia.json";
 import { buildSceneProps } from "../app/scene/[regionId]/buildSceneProps";
 
@@ -31,5 +31,16 @@ describe("approved asset boundary", () => {
     expect(validateAssetReferences(region, [], () => false)).toEqual([
       'missing ambient bed "wind_plains"', 'the-hill: missing audio cue "horn"',
     ]);
+  });
+
+  it("counts shared assets once and fails at the unchanged strict region budget", () => {
+    const region = Region.parse(galliaJson);
+    region.scene.planes[0].placeholder = false;
+    region.scene.planes[1].placeholder = false;
+    region.scene.planes[1].asset = region.scene.planes[0].asset;
+    const measured = measureRegionAssets(region, [], () => SCENE_ASSET_BUDGET_BYTES);
+    expect(measured.files).toEqual(["public/assets/gallia/sky.webp"]);
+    expect(measured.fits).toBe(false);
+    expect(measureRegionAssets(region, [], () => SCENE_ASSET_BUDGET_BYTES - 1).fits).toBe(true);
   });
 });

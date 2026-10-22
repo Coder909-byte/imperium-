@@ -37,6 +37,7 @@ const page = await context.newPage();
 const client = await context.newCDPSession(page);
 const loads = [];
 const frames = [];
+mkdirSync('test-results', { recursive: true });
 try {
   for (const rate of [1, 1, 1, 4, 6]) {
     await client.send('Emulation.setCPUThrottlingRate', { rate });
@@ -46,10 +47,18 @@ try {
       const mark = (name) => performance.getEntriesByName(name).at(-1)?.startTime;
       return { firstFrameMs: mark('imperium:scene-first-frame'), pixiInitMs: mark('imperium:pixi-init-end') - mark('imperium:pixi-init-start'), sceneGraphMs: mark('imperium:scene-graph-built') - mark('imperium:pixi-init-end') };
     }) });
+    if (loads.length === 1) {
+      await page.screenshot({ path: 'test-results/gallia-camera-start.png', fullPage: true });
+      await page.waitForTimeout(20000);
+      await page.screenshot({ path: 'test-results/gallia-camera-20s.png', fullPage: true });
+    }
   }
   for (const rate of [1, 4, 6]) {
     await client.send('Emulation.setCPUThrottlingRate', { rate });
+    await page.goto(new URL('/scene/gallia', base).href);
+    await page.waitForFunction(() => performance.getEntriesByName('imperium:scene-first-frame').length > 0);
     await page.getByRole('tab', { name: /Go to beat 5:/ }).click();
+    await page.waitForTimeout(3000);
     const samples = await page.evaluate(() => new Promise((resolve) => {
       const gaps = [];
       let previous;
