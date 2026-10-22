@@ -7,6 +7,7 @@ import { join } from "node:path";
 import type { NextRequest } from "next/server";
 import { Region } from "@/content/schema";
 import { loadRigs } from "@/app/scene/[regionId]/loadRigs";
+import { loadManifest } from "@/app/scene/[regionId]/loadManifest";
 
 const REGIONS_DIR = join(process.cwd(), "content", "regions");
 const VALID_ID = /^[a-z0-9-]+$/;
@@ -42,5 +43,5 @@ export async function GET(request: NextRequest) {
   // Rigs come along in the same poll — scene-lab's whole hot-reload
   // model is "re-read everything from disk every second", and the rig
   // set is tiny, so there's no reason to give it a separate endpoint.
-  return Response.json({ ok: true, data: result.data, rigs: loadRigs() }, { headers: { "Cache-Control": "no-store" } });
+  return Response.json({ ok: true, data: result.data, rigs: loadRigs(), manifest: loadManifest() }, { headers: { "Cache-Control": "no-store" } });
 }

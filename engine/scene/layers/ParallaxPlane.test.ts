@@ -64,6 +64,14 @@ describe("ParallaxPlane", () => {
     expect(plane.container.alpha).toBe(0);
   });
 
+  it("snaps an in-flight reveal when reduced motion requests the same visible state", () => {
+    const plane = makePlane();
+    plane.setVisible(true, 600);
+    plane.container.alpha = 0.25;
+    plane.setVisible(true, 0);
+    expect(plane.container.alpha).toBe(1);
+  });
+
   it("skips the blur filter entirely when blur is 0 or omitted", () => {
     const plane = makePlane({ blur: 0 });
     expect((plane.container.children[0] as unknown as { filters: unknown[] }).filters).toHaveLength(0);

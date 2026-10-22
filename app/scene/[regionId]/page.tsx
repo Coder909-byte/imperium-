@@ -5,6 +5,7 @@ import { buildSceneProps } from "./buildSceneProps";
 import { loadRegionContent } from "./loadContent";
 import { loadProvinceMeta } from "./loadProvince";
 import { loadRigs } from "./loadRigs";
+import { loadManifest } from "./loadManifest";
 
 // M4: regions with authored content/regions/{id}.json get the real
 // scene player. A region the atlas can route to but nobody has written
@@ -40,5 +41,5 @@ export default async function ScenePage(props: PageProps<"/scene/[regionId]">) {
     );
   }
 
-  return <ScenePlayerClient region={buildSceneProps(region, loadRigs())} />;
+  return <ScenePlayerClient region={buildSceneProps(region, loadRigs(), loadManifest())} />;
 }

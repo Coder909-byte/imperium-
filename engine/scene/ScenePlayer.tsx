@@ -7,25 +7,20 @@
 // engine's generalise-to-other-civilisations goal. No content imports:
 // `region` arrives already adapted to engine/scene/types.ts's shapes.
 import { useEffect, useRef, useState, useSyncExternalStore } from "react";
-import { Container } from "pixi.js";
 import { BeatDirector } from "./BeatDirector";
+import { useSceneAudio } from "../audio/useSceneAudio";
+import { SceneCaptions } from "./SceneCaptions";
+import { cameraForBeat, LAYER_REVEAL_MS } from "./beatTiming";
 import { Camera } from "./Camera";
 import { detectStartingTier, readNavigatorSignals, type DeviceTier } from "./deviceTier";
-import { SceneActors } from "./SceneActors";
+import type { SceneActors } from "./SceneActors";
+import { SceneLayers } from "./SceneLayers";
 import { SceneRenderer } from "./SceneRenderer";
 import { SceneEffects } from "./SceneEffects";
 import { ParallaxPlane } from "./layers/ParallaxPlane";
-import { computePlaceholderBand } from "./layers/placeholderBand";
-import { createPlaceholderTexture } from "./layers/placeholderTexture";
 import { selectPlanesForTier } from "./layers/selectActivePlanes";
 import type { SceneRegion } from "./types";
 import styles from "./ScenePlayer.module.css";
-
-// Planes render larger than the stage so panning, handheld drift, and
-// pointer parallax never reveal empty canvas past a plane's edge — a
-// placeholder-art concern only; real forged backgrounds (M7) will be
-// composed with their own margin already baked in.
-const PLANE_OVERSCAN = 1.35;
 
 const REDUCED_MOTION_QUERY = "(prefers-reduced-motion: reduce)";
 
@@ -46,6 +41,7 @@ export function ScenePlayer({ region, onExit, forcedTier, forcedLut, forcedChain
   const effectsRef = useRef<SceneEffects | null>(null);
   const actorsRef = useRef<SceneActors | null>(null);
   const planesRef = useRef<Map<string, ParallaxPlane>>(new Map());
+  const hasAppliedBeatRef = useRef(false);
   const [tier, setTier] = useState<DeviceTier>(forcedTier ?? "high");
   // A lazy useState initializer, not a ref: the linter (correctly) forbids
   // reading a ref's `.current` during render — a `useState` value that's
@@ -55,6 +51,7 @@ export function ScenePlayer({ region, onExit, forcedTier, forcedLut, forcedChain
   const [beatDirector] = useState(() => new BeatDirector(region.beats));
 
   const [engineReady, setEngineReady] = useState(false);
+  const [renderError, setRenderError] = useState<string | null>(null);
   // Lazy initializer, not an effect — mirrors AtlasMap.tsx: reducedMotion
   // only gates imperative Pixi/GSAP behaviour here, never which DOM
   // subtree renders, so there's no server/first-client-render mismatch
@@ -65,6 +62,9 @@ export function ScenePlayer({ region, onExit, forcedTier, forcedLut, forcedChain
   );
   const beatState = useSyncExternalStore(beatDirector.subscribe, beatDirector.getSnapshot);
   const beat = region.beats[beatState.index];
+  const audio = useSceneAudio(region, beat);
+  const { stop: stopAudio } = audio;
+  const exitScene = () => { stopAudio(); onExit(); };
 
   useEffect(() => {
     const mediaQuery = window.matchMedia(REDUCED_MOTION_QUERY);
@@ -88,8 +88,9 @@ export function ScenePlayer({ region, onExit, forcedTier, forcedLut, forcedChain
     rendererRef.current = renderer;
     let cancelled = false;
     let unsubscribeTier: (() => void) | null = null;
+    const layers = new SceneLayers();
 
-    void renderer.init().then(() => {
+    void renderer.init().then(async () => {
       if (cancelled || renderer.getStatus() !== "ready") return;
 
       const camera = new Camera(renderer.cameraContainer, renderer.getTicker(), () => renderer.getStageSize());
@@ -123,40 +124,12 @@ export function ScenePlayer({ region, onExit, forcedTier, forcedLut, forcedChain
       // below owns the live snapshot/runtime monitor/console log.
       const initialTierGuess = forcedTier ?? detectStartingTier(readNavigatorSignals());
       const stage = renderer.getStageSize();
-      const overscanWidth = stage.width * PLANE_OVERSCAN;
-      const overscanHeight = stage.height * PLANE_OVERSCAN;
-
-      // Planes and actors share one sortable-by-depth container so an
-      // actor (PRD §3's "character stage" slot) can interleave between
-      // them instead of always sitting on top of every plane — see
-      // content/schema.ts's actor `depth` field and SceneActors.ts.
-      // zIndex sorting (not manual child-index juggling) does the work;
-      // it's the same mechanism PuppetActor already uses for its own
-      // parts' draw order.
-      const layersContainer = new Container();
-      layersContainer.sortableChildren = true;
-      renderer.cameraContainer.addChild(layersContainer);
-
       const planeDefs = selectPlanesForTier(region.planes, initialTierGuess);
-      const planes = new Map<string, ParallaxPlane>();
-      planeDefs.forEach((planeDef, index) => {
-        // Bottom-anchored, depth-scaled band, not a full-bleed rect —
-        // see placeholderBand.ts: a same-size opaque rectangle per plane
-        // made every plane but the frontmost invisible, defeating the
-        // entire point of depth-scaled parallax (confirmed via a real
-        // screenshot, not assumed).
-        const band = computePlaceholderBand(planeDef.depth, overscanWidth, overscanHeight);
-        const texture = createPlaceholderTexture({ id: planeDef.id, depth: planeDef.depth, index, width: band.width, height: band.height });
-        const plane = new ParallaxPlane({ id: planeDef.id, depth: planeDef.depth, texture, tint: planeDef.tint, blur: planeDef.blur });
-        plane.setSize(band.width, band.height, band.baseOffsetY);
-        plane.container.zIndex = planeDef.depth;
-        layersContainer.addChild(plane.container);
-        planes.set(planeDef.id, plane);
-      });
-      planesRef.current = planes;
-
-      const actors = new SceneActors({ layersContainer, ticker: renderer.getTicker(), rigDefs: region.rigs });
-      actorsRef.current = actors;
+      await layers.init(planeDefs, region.rigs, renderer.getTicker(), stage);
+      if (cancelled) { layers.destroy(); return; }
+      renderer.cameraContainer.addChild(layers.container);
+      planesRef.current = layers.planes;
+      actorsRef.current = layers.actors ?? null;
 
       const effects = new SceneEffects({
         stage: renderer.getStage(),
@@ -195,6 +168,9 @@ export function ScenePlayer({ region, onExit, forcedTier, forcedLut, forcedChain
       });
 
       setEngineReady(true);
+    }).catch(() => {
+      layers.destroy();
+      if (!cancelled) setRenderError("Scene artwork could not load. Reload to retry; the text and sources remain available.");
     });
 
     return () => {
@@ -204,12 +180,12 @@ export function ScenePlayer({ region, onExit, forcedTier, forcedLut, forcedChain
       cameraRef.current = null;
       effectsRef.current?.destroy();
       effectsRef.current = null;
-      actorsRef.current?.destroy();
+      layers.destroy();
       actorsRef.current = null;
-      for (const plane of planesRef.current.values()) plane.destroy();
       planesRef.current = new Map();
       renderer.destroy();
       rendererRef.current = null;
+      hasAppliedBeatRef.current = false;
       setEngineReady(false);
     };
     // region/forcedTier/forcedLut/forcedChainEnabled are treated as stable
@@ -240,7 +216,7 @@ export function ScenePlayer({ region, onExit, forcedTier, forcedLut, forcedChain
     const renderer = rendererRef.current;
     if (!camera || !renderer) return;
 
-    camera.animateTo(beat.camera, renderer.getStageSize(), { shakeActive: beat.fx.includes("shake") });
+    camera.animateTo(cameraForBeat(beat), renderer.getStageSize(), { shakeActive: beat.fx.includes("shake") });
     effectsRef.current?.applyBeat(beat.fx, beat.lightSource);
     // Reduced-motion is NOT passed here — SceneActors tracks it via its
     // own setReducedMotion() (the effect above, which fires on the same
@@ -250,10 +226,11 @@ export function ScenePlayer({ region, onExit, forcedTier, forcedLut, forcedChain
     // reduced-motion toggle that didn't actually change the beat.
     actorsRef.current?.applyBeat(beat.actors);
     const visible = new Set(beat.visibleLayers);
-    const fadeMs = reducedMotion ? 0 : beat.camera.durationMs;
+    const fadeMs = reducedMotion || !hasAppliedBeatRef.current ? 0 : LAYER_REVEAL_MS;
     for (const [id, plane] of planesRef.current) {
       plane.setVisible(visible.has(id), fadeMs);
     }
+    hasAppliedBeatRef.current = true;
   }, [engineReady, beat, reducedMotion]);
 
   // Live LUT preview (scene-lab only) — the real /scene/[regionId] route
@@ -291,12 +268,13 @@ export function ScenePlayer({ region, onExit, forcedTier, forcedLut, forcedChain
         beatDirector.previous();
       } else if (event.key === "Escape") {
         event.preventDefault();
+        stopAudio();
         onExit();
       }
     }
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [beatDirector, onExit]);
+  }, [beatDirector, onExit, stopAudio]);
 
   return (
     <div
@@ -307,64 +285,16 @@ export function ScenePlayer({ region, onExit, forcedTier, forcedLut, forcedChain
       data-active-actors={beat.actors.map((a) => `${a.rig}:${a.clip}:${a.count}`).join(",")}
     >
       <div ref={containerRef} className={styles.canvasHost} />
+      {renderError && <p role="alert" className={styles.renderError}>{renderError}</p>}
       <div className={styles.topBar} />
 
-      <button type="button" className={styles.exitButton} onClick={onExit}>
+      <button type="button" className={styles.exitButton} onClick={exitScene}>
         ← Return to the map
       </button>
 
-      <div className={styles.bottomBar}>
-        <div className={styles.captionBlock} aria-live="polite">
-          <p className={styles.eyebrow}>{beat.year}</p>
-          <h2 className={styles.headline}>{beat.headline}</h2>
-          <p className={styles.body}>{beat.body}</p>
-        </div>
-
-        <div className={styles.controls}>
-          <button
-            type="button"
-            className={styles.navButton}
-            onClick={() => beatDirector.previous()}
-            disabled={beatState.index === 0}
-            aria-label="Previous beat"
-          >
-            ‹
-          </button>
-
-          <div className={styles.pips} role="tablist" aria-label="Beats">
-            {region.beats.map((b, index) => (
-              <button
-                key={b.id}
-                type="button"
-                className={styles.pip}
-                role="tab"
-                aria-current={index === beatState.index}
-                aria-label={`Go to beat ${index + 1}: ${b.headline}`}
-                onClick={() => beatDirector.jumpTo(index)}
-              />
-            ))}
-          </div>
-
-          <button
-            type="button"
-            className={styles.navButton}
-            onClick={() => beatDirector.next()}
-            disabled={beatState.index === region.beats.length - 1}
-            aria-label="Next beat"
-          >
-            ›
-          </button>
-
-          <button
-            type="button"
-            className={styles.autoplayButton}
-            aria-pressed={beatState.autoplay}
-            onClick={() => beatDirector.setAutoplay(!beatState.autoplay)}
-          >
-            {beatState.autoplay ? "⏸ Autoplay" : "▶ Autoplay"}
-          </button>
-        </div>
-      </div>
+      <SceneCaptions region={region} beat={beat} index={beatState.index} autoplay={beatState.autoplay} audio={audio}
+        previous={() => beatDirector.previous()} next={() => beatDirector.next()} jumpTo={(index) => beatDirector.jumpTo(index)}
+        toggleAutoplay={() => beatDirector.setAutoplay(!beatState.autoplay)} />
     </div>
   );
 }

@@ -93,13 +93,15 @@ export class ParallaxPlane {
   }
 
   setVisible(visible: boolean, durationMs: number): void {
-    if (visible === this.visible) return;
-    this.visible = visible;
-    this.fadeTween?.kill();
     if (durationMs <= 0) {
+      this.visible = visible;
+      this.fadeTween?.kill();
       this.container.alpha = visible ? 1 : 0;
       return;
     }
+    if (visible === this.visible) return;
+    this.visible = visible;
+    this.fadeTween?.kill();
     this.fadeTween = gsap.to(this.container, { alpha: visible ? 1 : 0, duration: durationMs / 1000, ease: "power1.inOut" });
   }
 

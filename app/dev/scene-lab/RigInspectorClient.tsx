@@ -13,9 +13,10 @@
 // changed, so editing content/rigs/*.json by hand updates the preview
 // without a manual refresh.
 import { useEffect, useMemo, useRef, useState } from "react";
-import { Graphics } from "pixi.js";
+import { Graphics, type Texture } from "pixi.js";
 import { adaptRig } from "@/app/scene/[regionId]/buildSceneProps";
-import type { Rig } from "@/content/schema";
+import type { ManifestEntry, Rig } from "@/content/schema";
+import { loadTextures, destroyTextures } from "@/engine/scene/loadTextures";
 import { PuppetActor } from "@/engine/scene/layers/PuppetActor";
 import { buildPartTextureCache } from "@/engine/scene/layers/puppetTextures";
 import { loadRig } from "@/engine/scene/puppet/rigLoader";
@@ -28,6 +29,7 @@ const OVERLAY_COLOR = 0x39d0ff;
 interface RigContentResponse {
   ok: boolean;
   data?: Rig;
+  manifest?: ManifestEntry[];
   error?: string;
 }
 
@@ -65,6 +67,7 @@ function drawOverlay(actor: PuppetActor, graphics: Graphics): void {
 export function RigInspectorClient({ rigIds }: { rigIds: string[] }) {
   const [rigId, setRigId] = useState(rigIds[0] ?? "");
   const [rig, setRig] = useState<Rig | null>(null);
+  const [manifest, setManifest] = useState<ManifestEntry[]>([]);
   const [clipId, setClipId] = useState("");
   const [playing, setPlaying] = useState(true);
   const [showOverlay, setShowOverlay] = useState(true);
@@ -143,10 +146,11 @@ export function RigInspectorClient({ rigIds }: { rigIds: string[] }) {
         setError(body.error ?? "unknown error");
         return;
       }
-      const raw = JSON.stringify(body.data);
+      const raw = JSON.stringify(body);
       if (raw === lastRawRef.current) return;
       lastRawRef.current = raw;
       setRig(body.data);
+      setManifest(body.manifest ?? []);
       setError(null);
     }
 
@@ -168,11 +172,15 @@ export function RigInspectorClient({ rigIds }: { rigIds: string[] }) {
     if (!hostEl || !rig) return;
     const renderer = new SceneRenderer(hostEl);
     let cancelled = false;
+    let ownedTextures = new Map<string, Texture>();
 
-    void renderer.init().then(() => {
+    void renderer.init().then(async () => {
       if (cancelled || renderer.getStatus() !== "ready") return;
-      const loaded = loadRig(adaptRig(rig));
-      const textures = buildPartTextureCache(loaded);
+      const loaded = loadRig(adaptRig(rig, manifest));
+      ownedTextures = await loadTextures(loaded.parts.map((part) => part.texture).filter((texture) => texture.startsWith("/assets/")));
+      if (cancelled) { destroyTextures(ownedTextures); return; }
+      const textures = buildPartTextureCache(loaded, ownedTextures);
+      for (const [id, texture] of textures) ownedTextures.set(id, texture);
       const stage = renderer.getStageSize();
       // Unlike ScenePlayer's Camera (which centres cameraContainer on the
       // stage as part of its own beat/drift math), this inspector never
@@ -215,6 +223,9 @@ export function RigInspectorClient({ rigIds }: { rigIds: string[] }) {
       };
       renderer.getTicker().add(tick);
       tickRef.current = tick;
+    }).catch(() => {
+      destroyTextures(ownedTextures);
+      if (!cancelled) setError("Rig artwork could not load. Check its file and manifest approval.");
     });
 
     return () => {
@@ -225,12 +236,13 @@ export function RigInspectorClient({ rigIds }: { rigIds: string[] }) {
       actorRef.current = null;
       overlayRef.current = null;
       renderer.destroy();
+      destroyTextures(ownedTextures);
     };
     // effectiveClipId deliberately excluded — it only seeds the FIRST
     // pose on mount; handleClipChange below drives every later switch
     // on the already-live actor instead of remounting the whole Pixi app.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [rig]);
+  }, [rig, manifest]);
 
   // User-driven clip switch: mutate the live actor and snap the slider
   // back to 0, both directly in the event handler — not in an effect

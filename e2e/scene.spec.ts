@@ -122,7 +122,7 @@ test.describe("/dev/scene-lab", () => {
         mapCentroid: [0, 0],
         heldFrom: 0,
         heldTo: null,
-        scene: { lut: "none", ambientBed: "none", planes: [{ id: "a", asset: "a.webp", depth: 0.5, tint: "#ffffff", blur: 0 }] },
+        scene: { lut: "cold_overcast", ambientBed: "none", planes: [{ id: "a", asset: "a.webp", placeholder: true, depth: 0.5, tint: "#ffffff", blur: 0 }] },
         beats: [
           {
             id: "only",

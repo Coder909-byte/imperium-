@@ -1,12 +1,14 @@
 // CI gate: malformed region or question JSON fails the build, never the
 // runtime (CLAUDE.md hard rule #5). Run with `npm run validate`.
-import { readdirSync, readFileSync } from "node:fs";
+import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 import type { z } from "zod";
 import { Region, Question, Province, City, SeaLabel, Rig, ManifestEntry } from "../content/schema";
 import { adaptRig } from "../app/scene/[regionId]/buildSceneProps";
 import { loadRig } from "../engine/scene/puppet/rigLoader";
 import { lintRig } from "../engine/scene/puppet/rigValidation";
+import { validateSceneReferences } from "../content/sceneValidation";
+import { approvedAssetUrl, assetFile, validateAssetReferences } from "../content/assetReferences";
 
 interface Target {
   dir: string;
@@ -38,6 +40,9 @@ const arrayFileTargets: ArrayFileTarget[] = [
 
 let failures = 0;
 let filesChecked = 0;
+const regions: Region[] = [];
+const rigs: Rig[] = [];
+const manifest: ManifestEntry[] = [];
 
 for (const { dir, schema } of targets) {
   const entries = readdirSync(dir, { withFileTypes: true }).filter(
@@ -67,23 +72,16 @@ for (const { dir, schema } of targets) {
       continue;
     }
 
-    // Rig content gets a second pass beyond shape validity: rig-lint
-    // (engine/scene/puppet/rigValidation.ts) samples every clip and
-    // checks midline crossing, reach envelope, ground contact, L/R
-    // symmetry, and loop continuity — the same "malformed content fails
-    // the build, not the runtime" rule (CLAUDE.md hard rule #5), applied
-    // to animation quality a schema shape check alone can't see.
-    if (schema === Rig) {
-      const issues = lintRig(loadRig(adaptRig(result.data as z.infer<typeof Rig>)));
-      if (issues.length > 0) {
-        failures += 1;
-        console.error(`✗ ${path} — rig-lint`);
-        for (const issue of issues) {
-          console.error(`  [${issue.check}] clip "${issue.clipId}"${issue.partId ? ` (${issue.partId})` : ""}: ${issue.message}`);
-        }
-      }
-    }
+    if (schema === Rig) rigs.push(Rig.parse(result.data));
+    if (schema === Region) regions.push(Region.parse(result.data));
   }
+}
+
+for (const region of regions) {
+  const issues = validateSceneReferences(region, rigs);
+  if (issues.length === 0) continue;
+  failures += 1;
+  console.error(`✗ ${region.id} — scene references\n  ${issues.join("\n  ")}`);
 }
 
 for (const { file, itemSchema } of arrayFileTargets) {
@@ -113,7 +111,32 @@ for (const { file, itemSchema } of arrayFileTargets) {
         console.error(`  ${issue.path.join(".") || "(root)"}: ${issue.message}`);
       }
     }
+    if (result.success && itemSchema === ManifestEntry) manifest.push(ManifestEntry.parse(result.data));
   });
+}
+
+for (const rig of rigs) {
+  const assetIssues = rig.parts.filter((part) => !["torso", "head", "limb", "foot"].includes(part.texture)).flatMap((part) => {
+    const file = assetFile(part.texture);
+    return approvedAssetUrl(part.texture, manifest) && file && existsSync(join(__dirname, "..", file)) ? [] : [`${part.id}: missing or unapproved texture "${part.texture}"`];
+  });
+  if (assetIssues.length > 0) {
+    failures += 1;
+    console.error(`✗ ${rig.id} — rig assets\n  ${assetIssues.join("\n  ")}`);
+    continue;
+  }
+  const issues = lintRig(loadRig(adaptRig(rig, manifest)));
+  if (issues.length === 0) continue;
+  failures += 1;
+  console.error(`✗ ${rig.id} — rig-lint`);
+  for (const issue of issues) console.error(`  [${issue.check}] clip "${issue.clipId}" (${issue.partId ?? "rig"}): ${issue.message}`);
+}
+
+for (const region of regions) {
+  const issues = validateAssetReferences(region, manifest, (file) => existsSync(join(__dirname, "..", file)));
+  if (issues.length === 0) continue;
+  failures += 1;
+  console.error(`✗ ${region.id} — asset references\n  ${issues.join("\n  ")}`);
 }
 
 if (failures > 0) {

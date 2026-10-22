@@ -159,3 +159,23 @@
     transition: none;
   }
 }
+
+.sources {
+  color: #dcd2bf;
+  font-size: 0.85rem;
+  max-width: 46rem;
+}
+
+.sources summary { cursor: pointer; }
+.sources ul { padding-left: 1.25rem; margin: 0.4rem 0; }
+.sources a { color: #eed09e; text-decoration: underline; }
+.renderError { position: relative; padding: 4rem 1.5rem; color: #f4ede0; }
+
+/* Long Gallia captions need document flow on narrow screens; a fixed
+   cinematic aspect ratio otherwise clips both prose and navigation. */
+@media (max-width: 700px) {
+  .player { aspect-ratio: auto; overflow: visible; }
+  .canvasHost { position: relative; height: 240px; }
+  .bottomBar { position: relative; padding: 0.8rem; }
+  .controls { flex-wrap: wrap; gap: 0.5rem; }
+}

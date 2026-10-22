@@ -12,10 +12,12 @@
   "scene": {
     "lut": "cold_overcast",
     "ambientBed": "wind_plains",
+    "audioPlaceholder": true,
     "planes": [
       {
         "id": "sky",
         "asset": "gallia/sky.webp",
+        "placeholder": true,
         "depth": 0.02,
         "tint": "#ffffff",
         "blur": 0
@@ -23,6 +25,7 @@
       {
         "id": "far_ridge",
         "asset": "gallia/far_ridge.webp",
+        "placeholder": true,
         "depth": 0.18,
         "tint": "#ffffff",
         "blur": 2
@@ -30,6 +33,7 @@
       {
         "id": "hillfort",
         "asset": "gallia/hillfort.webp",
+        "placeholder": true,
         "depth": 0.3,
         "tint": "#ffffff",
         "blur": 1
@@ -37,6 +41,7 @@
       {
         "id": "mid_ground",
         "asset": "gallia/mid_ground.webp",
+        "placeholder": true,
         "depth": 0.42,
         "tint": "#ffffff",
         "blur": 0
@@ -44,6 +49,7 @@
       {
         "id": "inner_wall",
         "asset": "gallia/inner_wall.webp",
+        "placeholder": true,
         "depth": 0.52,
         "tint": "#ffffff",
         "blur": 0
@@ -51,6 +57,7 @@
       {
         "id": "outer_wall",
         "asset": "gallia/outer_wall.webp",
+        "placeholder": true,
         "depth": 0.68,
         "tint": "#ffffff",
         "blur": 0
@@ -58,6 +65,7 @@
       {
         "id": "foreground",
         "asset": "gallia/foreground.webp",
+        "placeholder": true,
         "depth": 0.9,
         "tint": "#ffffff",
         "blur": 3
@@ -83,7 +91,8 @@
         "y": -0.08,
         "scale": 0.86,
         "durationMs": 9000,
-        "ease": "sine.inOut"
+        "durationMode": "dwell",
+        "ease": "none"
       },
       "fx": [
         "smoke",
@@ -166,7 +175,8 @@
         "y": 0,
         "scale": 1.1,
         "durationMs": 21000,
-        "ease": "power1.inOut"
+        "durationMode": "dwell",
+        "ease": "none"
       },
       "fx": [
         "dust"
@@ -267,7 +277,8 @@
         "y": -0.25,
         "scale": 0.86,
         "durationMs": 24000,
-        "ease": "sine.inOut"
+        "durationMode": "dwell",
+        "ease": "none"
       },
       "fx": [
         "dust"
@@ -373,6 +384,7 @@
         "y": 0.33,
         "scale": 1.24,
         "durationMs": 24000,
+        "durationMode": "dwell",
         "ease": "none"
       },
       "fx": [],
@@ -464,7 +476,8 @@
         "y": -0.54,
         "scale": 1.08,
         "durationMs": 22000,
-        "ease": "power1.inOut"
+        "durationMode": "dwell",
+        "ease": "none"
       },
       "fx": [
         "arrow_volley",
@@ -607,7 +620,8 @@
         "y": 0.34,
         "scale": 1.32,
         "durationMs": 19000,
-        "ease": "power2.inOut"
+        "durationMode": "dwell",
+        "ease": "none"
       },
       "fx": [
         "smoke"

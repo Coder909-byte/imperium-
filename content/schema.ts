@@ -13,8 +13,9 @@ export const Beat = z.object({
   camera: z.object({
     x: z.number().default(0),
     y: z.number().default(0),
-    scale: z.number().default(1),
-    durationMs: z.number().default(2600),
+    scale: z.number().positive().default(1),
+    durationMs: z.number().nonnegative().default(2600),
+    durationMode: z.enum(["authored", "dwell"]).default("authored"),
     ease: z.string().default("power2.inOut"),
   }),
   fx: z
@@ -35,8 +36,8 @@ export const Beat = z.object({
         clip: z.string(), // 'march' | 'brace' | ...
         x: z.number(),
         y: z.number(),
-        scale: z.number().default(1),
-        count: z.number().default(1), // >1 → instanced crowd
+        scale: z.number().positive().default(1),
+        count: z.number().int().positive().default(1), // >1 → instanced crowd
         flip: z.boolean().default(false),
         phase: z.number().default(0), // animation time offset
         // Where this actor sits in the plane depth stack (PRD §3's
@@ -52,6 +53,7 @@ export const Beat = z.object({
   audio: z
     .object({
       cue: z.string().optional(),
+      bed: z.string().optional(),
       bedIntensity: z.number().min(0).max(1).default(0.5),
     })
     // `.default({})` would short-circuit the object's own field defaults —
@@ -80,17 +82,36 @@ export const Region = z.object({
   scene: z.object({
     lut: z.string(), // palette key
     ambientBed: z.string(),
+    audioPlaceholder: z.boolean().default(false),
+    audioAssets: z.record(z.string(), z.string()).default({}),
     planes: z.array(
       z.object({
         id: z.string(),
-        asset: z.string(),
+        asset: z.string().min(1),
+        // Missing art must be an explicit authoring choice, never a
+        // silent fallback that makes a broken asset look integrated.
+        placeholder: z.boolean().default(false),
         depth: z.number().min(0).max(1),
-        tint: z.string(), // hex — applied to alpha line art
-        blur: z.number().default(0),
+        tint: z.string().regex(/^#[0-9a-fA-F]{6}$/),
+        blur: z.number().nonnegative().default(0),
       }),
     ),
   }),
   beats: z.array(Beat).min(1).max(10),
+}).superRefine((region, ctx) => {
+  const planeIds = new Set<string>();
+  region.scene.planes.forEach((plane, index) => {
+    if (planeIds.has(plane.id)) ctx.addIssue({ code: "custom", path: ["scene", "planes", index, "id"], message: `duplicate plane id "${plane.id}"` });
+    planeIds.add(plane.id);
+  });
+  const beatIds = new Set<string>();
+  region.beats.forEach((beat, index) => {
+    if (beatIds.has(beat.id)) ctx.addIssue({ code: "custom", path: ["beats", index, "id"], message: `duplicate beat id "${beat.id}"` });
+    beatIds.add(beat.id);
+    beat.visibleLayers.forEach((id, layerIndex) => {
+      if (!planeIds.has(id)) ctx.addIssue({ code: "custom", path: ["beats", index, "visibleLayers", layerIndex], message: `unknown plane "${id}"` });
+    });
+  });
 });
 
 export type Beat = z.infer<typeof Beat>;
@@ -471,6 +492,14 @@ export const ManifestEntry = z.object({
     })
     .optional(),
   notes: z.string().optional(),
+  // Set only after human review of the specific reproduction's rights.
+  // Forge records provenance, never grants approval on the user's behalf.
+  approval: z.object({
+    by: z.string().min(1),
+    at: z.iso.date(),
+    rightsUrl: z.string().url(),
+    rightsStatement: z.string().min(1),
+  }).optional(),
 });
 
 export type ManifestEntry = z.infer<typeof ManifestEntry>;

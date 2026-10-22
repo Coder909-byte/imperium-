@@ -31,6 +31,8 @@ export interface SceneCamera {
   /** Multiplier on the camera's base fit scale. 1 = neutral. */
   scale: number;
   durationMs: number;
+  /** Dwell mode keeps a slow authored move running while the caption is read. */
+  durationMode?: "authored" | "dwell";
   /** A GSAP core ease name, e.g. "power2.inOut". */
   ease: string;
 }
@@ -50,6 +52,8 @@ export interface SceneBeat {
   /** Gates the post chain's Godray filter (PRD §4). */
   lightSource: boolean;
   actors: SceneActor[];
+  sources?: { label: string; url?: string }[];
+  audio?: { cue?: string; bed?: string; bedIntensity: number };
 }
 
 export interface SceneActor {
@@ -74,6 +78,8 @@ export interface SceneActor {
 
 export interface ScenePlane {
   id: string;
+  /** Omitted only for explicitly declared procedural placeholders. */
+  assetUrl?: string;
   /** Depth 0 (far) – 1 (near). Pointer parallax offset and placeholder
    *  colour both scale with this. */
   depth: number;
@@ -100,4 +106,5 @@ export interface SceneRegion {
    *  loaded eagerly (see CLAUDE.md's M6 note on why puppets are eager,
    *  unlike M5's atmosphere split) and resolved once by SceneActors. */
   rigs: RigDef[];
+  audio?: { ambientBed: string; assets: Record<string, string> };
 }

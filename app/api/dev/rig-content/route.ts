@@ -6,6 +6,7 @@ import { existsSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 import type { NextRequest } from "next/server";
 import { Rig } from "@/content/schema";
+import { loadManifest } from "@/app/scene/[regionId]/loadManifest";
 
 const RIGS_DIR = join(process.cwd(), "content", "rigs");
 const VALID_ID = /^[a-z0-9-]+$/;
@@ -38,5 +39,5 @@ export async function GET(request: NextRequest) {
     return Response.json({ ok: false, error: issues }, { status: 400 });
   }
 
-  return Response.json({ ok: true, data: result.data }, { headers: { "Cache-Control": "no-store" } });
+  return Response.json({ ok: true, data: result.data, manifest: loadManifest() }, { headers: { "Cache-Control": "no-store" } });
 }

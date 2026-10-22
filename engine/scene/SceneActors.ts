@@ -50,6 +50,7 @@ export interface SceneActorsOptions {
   layersContainer: Container;
   ticker: FrameTicker;
   rigDefs: readonly RigDef[];
+  textures?: ReadonlyMap<string, Texture>;
 }
 
 export class SceneActors {
@@ -76,7 +77,7 @@ export class SceneActors {
     this.layersContainer = options.layersContainer;
     for (const def of options.rigDefs) {
       const rig = loadRig(def);
-      this.rigs.set(def.id, { rig, textures: buildPartTextureCache(rig) });
+      this.rigs.set(def.id, { rig, textures: buildPartTextureCache(rig, options.textures) });
     }
     this.ticker.add(this.tick);
   }

@@ -64,10 +64,10 @@ export function createPartTexture(shape: string, width: number, height: number):
 /** Built once per rig (not per instance) and shared by every PuppetActor
  *  playing it — keyed by part id, since within one rig a part's shape
  *  and size are fixed. Caller owns disposing the textures on teardown. */
-export function buildPartTextureCache(rig: LoadedRig): Map<string, Texture> {
+export function buildPartTextureCache(rig: LoadedRig, assets: ReadonlyMap<string, Texture> = new Map()): Map<string, Texture> {
   const cache = new Map<string, Texture>();
   for (const part of rig.parts) {
-    cache.set(part.id, createPartTexture(part.texture, part.size[0], part.size[1]));
+    cache.set(part.id, assets.get(part.texture) ?? createPartTexture(part.texture, part.size[0], part.size[1]));
   }
   return cache;
 }
