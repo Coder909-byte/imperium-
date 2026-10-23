@@ -30,6 +30,8 @@ export interface ScenePlayerProps {
   region: SceneRegion;
   /** Called on Escape or the exit control. Routing lives outside this component. */
   onExit: () => void;
+  onQuiz?: () => void;
+  onBeatChange?: (beatId: string) => void;
   /** Dev-only overrides (scene-lab) — the real /scene/[regionId] route never sets these. */
   forcedTier?: DeviceTier;
   forcedLut?: string;
@@ -37,7 +39,7 @@ export interface ScenePlayerProps {
   debugArt?: boolean;
 }
 
-export function ScenePlayer({ region, onExit, forcedTier, forcedLut, forcedChainEnabled, debugArt = false }: ScenePlayerProps) {
+export function ScenePlayer({ region, onExit, onQuiz, onBeatChange, forcedTier, forcedLut, forcedChainEnabled, debugArt = false }: ScenePlayerProps) {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const rendererRef = useRef<SceneRenderer | null>(null);
   const cameraRef = useRef<Camera | null>(null);
@@ -66,6 +68,7 @@ export function ScenePlayer({ region, onExit, forcedTier, forcedLut, forcedChain
   );
   const beatState = useSyncExternalStore(beatDirector.subscribe, beatDirector.getSnapshot);
   const beat = region.beats[beatState.index];
+  useEffect(() => { onBeatChange?.(beat.id); }, [onBeatChange, beat.id]);
   const audio = useSceneAudio(region, beatDirector);
   const { stop: stopAudio } = audio;
   const exitScene = () => { stopAudio(); onExit(); };
@@ -289,6 +292,7 @@ export function ScenePlayer({ region, onExit, forcedTier, forcedLut, forcedChain
       </button>
 
       <SceneCaptions region={region} beat={beat} index={beatState.index} autoplay={beatState.autoplay} audio={audio}
+        onQuiz={onQuiz ? () => { stopAudio(); onQuiz(); } : undefined}
         previous={() => beatDirector.previous()} next={() => beatDirector.next()} jumpTo={(index) => beatDirector.jumpTo(index)}
         toggleAutoplay={() => beatDirector.setAutoplay(!beatState.autoplay)} />
       {debugArt && <SceneArtDiagnostics region={region} beat={beat} planes={renderedPlanes} />}

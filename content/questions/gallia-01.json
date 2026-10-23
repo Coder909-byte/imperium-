@@ -1,0 +1,42 @@
+{
+  "id": "gallia-01",
+  "regionId": "gallia",
+  "beatIds": [
+    "the-hill"
+  ],
+  "era": "52 BC",
+  "difficulty": 1,
+  "prompt": "According to Caesar, why did Vercingetorix burn the countryside?",
+  "options": [
+    {
+      "id": "gallia-01-a",
+      "text": "To supply timber for Roman towers"
+    },
+    {
+      "id": "gallia-01-b",
+      "text": "To deny the Roman army food and forage"
+    },
+    {
+      "id": "gallia-01-c",
+      "text": "To clear a road for Caesar's cavalry"
+    },
+    {
+      "id": "gallia-01-d",
+      "text": "To prepare a site for a Roman colony"
+    }
+  ],
+  "correctOptionId": "gallia-01-b",
+  "explanation": "Caesar describes a strategy of destroying supplies so the legions could not live off the countryside. This is Caesar's account of his opponent's strategy.",
+  "feedbackByOptionId": {
+    "gallia-01-a": "The burning denied Rome supplies; supplying its towers would have been unusually generous siege preparation.",
+    "gallia-01-b": "Burn the supplies, starve the legions. Caesar describes an army being defeated through its shopping arrangements.",
+    "gallia-01-c": "The fires denied Roman food and forage. Improving Caesar's cavalry roads was not the intended service.",
+    "gallia-01-d": "The target was Roman food and forage, not a future colony's planning permission."
+  },
+  "sources": [
+    {
+      "label": "Caesar, Bellum Gallicum VII.14 — the plan to burn the countryside and starve the legions",
+      "url": "https://www.perseus.tufts.edu/hopper/text?doc=Perseus%3Atext%3A1999.02.0002"
+    }
+  ]
+}

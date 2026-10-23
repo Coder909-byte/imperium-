@@ -1,0 +1,42 @@
+{
+  "id": "gallia-02",
+  "regionId": "gallia",
+  "beatIds": [
+    "eighteen-kilometres"
+  ],
+  "era": "52 BC",
+  "difficulty": 1,
+  "prompt": "What were the siege traps the Roman soldiers called 'lilies', according to Caesar?",
+  "options": [
+    {
+      "id": "gallia-02-a",
+      "text": "Floating barriers across the rivers"
+    },
+    {
+      "id": "gallia-02-b",
+      "text": "Painted shields on the towers"
+    },
+    {
+      "id": "gallia-02-c",
+      "text": "Signals sent to the relief army"
+    },
+    {
+      "id": "gallia-02-d",
+      "text": "Concealed pits containing sharpened stakes"
+    }
+  ],
+  "correctOptionId": "gallia-02-d",
+  "explanation": "Caesar describes concealed pits with sharpened stakes and says the soldiers called them lilies. The pleasant name belonged to a defensive trap, not a flower bed.",
+  "feedbackByOptionId": {
+    "gallia-02-a": "The lilies were concealed pits with stakes. Flooded ditches were another entry in Caesar's extensive landscaping scheme.",
+    "gallia-02-b": "The lilies were stake-filled pits, not tower decorations. The botanical name concealed the less decorative purpose.",
+    "gallia-02-c": "No signal was involved: Caesar's lilies were hidden pits containing stakes. Their message was delivered at ground level.",
+    "gallia-02-d": "Hidden pits, sharpened stakes, a floral nickname. Caesar's soldiers had a narrow interpretation of gardening."
+  },
+  "sources": [
+    {
+      "label": "Caesar, Bellum Gallicum VII.73 — branches, the pits the soldiers called lilies, the iron hooks",
+      "url": "https://www.perseus.tufts.edu/hopper/text?doc=Perseus%3Atext%3A1999.02.0002"
+    }
+  ]
+}

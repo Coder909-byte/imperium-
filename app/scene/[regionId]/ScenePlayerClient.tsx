@@ -19,6 +19,7 @@ import { useRouter } from "next/navigation";
 import { useTransitionStore } from "@/engine/transition/transitionStore";
 import type { SceneRegion } from "@/engine/scene/types";
 import styles from "@/engine/scene/ScenePlayer.module.css";
+import { useSceneProgress } from "@/lib/quiz/useSceneProgress";
 
 const ScenePlayer = dynamic(() => import("@/engine/scene/ScenePlayer").then((mod) => mod.ScenePlayer), {
   ssr: false,
@@ -27,9 +28,12 @@ const ScenePlayer = dynamic(() => import("@/engine/scene/ScenePlayer").then((mod
   loading: () => <div className={styles.player} />,
 });
 
-export function ScenePlayerClient({ region }: { region: SceneRegion }) {
+export function ScenePlayerClient({ region, quizAvailable = false }: { region: SceneRegion; quizAvailable?: boolean }) {
   const router = useRouter();
   const requestSweep = useTransitionStore((s) => s.requestSweep);
+  const recordBeat = useSceneProgress(region.id);
 
-  return <ScenePlayer region={region} onExit={() => requestSweep(() => router.push("/atlas"))} />;
+  return <ScenePlayer region={region} onBeatChange={quizAvailable ? recordBeat : undefined}
+    onQuiz={quizAvailable ? () => router.push(`/quiz/${region.id}`) : undefined}
+    onExit={() => requestSweep(() => router.push("/atlas"))} />;
 }

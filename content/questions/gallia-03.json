@@ -1,0 +1,42 @@
+{
+  "id": "gallia-03",
+  "regionId": "gallia",
+  "beatIds": [
+    "second-wall"
+  ],
+  "era": "52 BC",
+  "difficulty": 2,
+  "prompt": "Why did Caesar build a second line facing outward at Alesia?",
+  "options": [
+    {
+      "id": "gallia-03-a",
+      "text": "To defend against a Gallic relief army"
+    },
+    {
+      "id": "gallia-03-b",
+      "text": "To give the town a new water supply"
+    },
+    {
+      "id": "gallia-03-c",
+      "text": "To provide an unguarded civilian exit"
+    },
+    {
+      "id": "gallia-03-d",
+      "text": "To replace the first line after abandoning the siege"
+    }
+  ],
+  "correctOptionId": "gallia-03-a",
+  "explanation": "The outward-facing line defended the Romans against forces coming to relieve Alesia. The inner line kept the siege in place. Caesar's army occupied the corridor between them.",
+  "feedbackByOptionId": {
+    "gallia-03-a": "One line contained Alesia; the other faced its rescuers. Caesar had arranged to besiege and be besieged at the same address.",
+    "gallia-03-b": "The second line faced the relief army. Water engineering was already on the first line's rather long list of jobs.",
+    "gallia-03-c": "The outward line blocked the relief army. An unguarded exit was not a feature of this siege.",
+    "gallia-03-d": "The first line stayed: the second faced the relief army. Caesar doubled the fortifications rather than abandoning the siege."
+  },
+  "sources": [
+    {
+      "label": "Caesar, Bellum Gallicum VII.74 — the second line, fourteen miles, facing outward",
+      "url": "https://www.perseus.tufts.edu/hopper/text?doc=Perseus%3Atext%3A1999.02.0002"
+    }
+  ]
+}

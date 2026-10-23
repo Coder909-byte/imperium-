@@ -13,9 +13,10 @@ interface SceneCaptionsProps {
   next: () => void;
   jumpTo: (index: number) => void;
   toggleAutoplay: () => void;
+  onQuiz?: () => void;
 }
 
-export function SceneCaptions({ region, beat, index: activeIndex, autoplay, audio, previous, next, jumpTo, toggleAutoplay }: SceneCaptionsProps) {
+export function SceneCaptions({ region, beat, index: activeIndex, autoplay, audio, previous, next, jumpTo, toggleAutoplay, onQuiz }: SceneCaptionsProps) {
   return (
       <div className={styles.bottomBar}>
         <div className={styles.captionBlock} aria-live="polite">
@@ -25,6 +26,7 @@ export function SceneCaptions({ region, beat, index: activeIndex, autoplay, audi
         </div>
 
         <BeatSources key={beat.id} sources={beat.sources} />
+        {onQuiz && activeIndex === region.beats.length - 1 && <button type="button" className={styles.quizButton} onClick={event => { event.stopPropagation(); onQuiz(); }}>Test yourself on {region.name}</button>}
 
         <div className={styles.controls}>
           <button

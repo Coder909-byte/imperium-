@@ -329,12 +329,17 @@ question        id, regionId, era, difficulty(1-3), prompt,
                 rightQuip, wrongQuips jsonb, sources jsonb
 
 quizSession     id, userId, regionId, mode, score, total,
-                startedAt, finishedAt
+                guestHash, questionSnapshot (server-private), xpAwarded,
+                startedAt, finishedAt    [userId nullable for anonymous ownership]
 quizAnswer      id, sessionId, questionId, chosenOptionId,
-                correct, timeMs, createdAt
+                correct, timeMs, createdAt  UNIQUE(sessionId, questionId)
+quizCredit      id, userId, questionId, sessionId, xp, createdAt
+                UNIQUE(userId, questionId)
 ```
 
 **`wrongQuips` is keyed by option ID, not one string per question.** A joke about the *specific* wrong answer someone picked is funny; a generic "nope!" is not. This is the difference between a feature people talk about and a feature people skip.
+
+M9 authoring uses `content/questionSchema.ts`: exactly four distinct option IDs, a correct option reference, final-scene beat/source references and `feedbackByOptionId` containing all four options, including the correct answer. The seed adapter maps this to the existing DB `rightQuip`/`wrongQuips` columns. Client contracts live separately and explicitly allowlist public question fields; the private bank is never passed into a client component.
 
 ---
 
@@ -404,6 +409,24 @@ Worked examples:
 
 **Progression.** XP per correct answer, scaled by difficulty. Ranks are thematic and free: *Tiro → Miles → Immunis → Optio → Centurio → Primus Pilus → Legatus*. Daily streak. No leaderboards in v1 — they invite gaming and add moderation load.
 
+**Owner-approved M9 policy, 2026-10-23 (ADR 018):** difficulty 1/2/3 awards 10/20/30 XP, banked only on completion of all five questions. Each account/question can award XP once, for its first correct answer. Retries can earn previously missed questions; already credited answers remain practice. Duplicate submissions are idempotent for the same choice; conflicting changes require a fresh retry. A transaction, ordered locks and a unique credit ledger enforce this on the server.
+
+| Rank | Minimum XP |
+|---|---:|
+| Tiro | 0 |
+| Miles | 50 |
+| Immunis | 150 |
+| Optio | 350 |
+| Centurio | 700 |
+| Primus Pilus | 1200 |
+| Legatus | 2000 |
+
+XP amounts and thresholds share `lib/quiz/progression.ts`. Thresholds are provisional and must be reassessed as more quizzes become available. Gallia alone offers at most 90 XP and cannot unlock every rank.
+
+**Day policy:** completed quizzes, including practice retries, qualify once per server UTC calendar day. Adjacent days extend a streak; a missed day resets it. Display “Daily streak resets at 00:00 UTC”. Local time and client-supplied dates never determine activity. Signup/login imports count newly verified completed attempts as activity today, without reconstructing a past streak.
+
+**Anonymous trust policy:** localStorage stores untrusted attempt references and viewed-beat IDs. Server attempts are owned by a random HttpOnly guest cookie, stored as a hash in the database. Import only completed, owned attempts; regrade stored answers and deduplicate credit. Ignore unverifiable references and reject submitted XP/ranks/scores/dates. Viewed-beat imports are convenience records and award neither XP nor streak activity. No timer or quiz deadline; an owned unfinished attempt remains resumable after a reading break. Atlas and scenes remain public. Shared Neon migrations/seeding require separate owner approval.
+
 ---
 
 ## 9. Content production — the actual bottleneck
@@ -469,15 +492,15 @@ Rig format (`content/rigs/*.json`): parts, pivots, z-order, clips as keyframed r
 `tools/forge` CLI, one pipeline: load → optional crop/resize → colour-space normalise → export WebP, colour intact (ADR 003's default). `--matte` gates a desaturate → level → luminance-to-alpha stage onto the same pipeline instead — an explicit flag, never the default, scoped to cutout character parts and foreground silhouettes. Batch mode processes a directory of already-separated Photopea layers in one command, uniform flags across the whole folder. Every processed file gets a `content/assets/manifest.json` row (source, licence, artist, institution, the settings used); the command refuses to write one — no output file either — if `--source`/`--licence`/`--artist`/`--institution` aren't supplied (`--artist`/`--institution` accept an explicit `"unknown"`, never a silent default). `npm run forge -- ./raw/gerome-01.jpg --source ... --licence ... --artist ... --institution ...` (colour plane) or the same with `--matte` (character/silhouette source). See `docs/art-pipeline.md` for the full sourcing → rights-check → Photopea → forge workflow.
 ✅ A raw painting scan becomes a game-ready colour plane in one command; a folder of already-separated layers becomes a batch of them; `--matte` produces a clean alpha matte for a character/silhouette source; every processed file gets a manifest row, and a missing licence field refuses the write rather than leaving one blank.
 
-**M8 — Gallia to the ceiling** *(~6 days)*
+**M8 — Gallia to the ceiling** *(owner-accepted 2026-10-23; outstanding evidence checks retained)*
 Six beats, real painted planes, puppet actors, Gallia ambient beds and required cues, all effects. The reference implementation. M8 also owns the minimum reusable Howler foundation: user-gesture activation, bed crossfades/intensity, one-shot cues, persisted master mute and scene-exit cleanup (ADR 009). Ambient beds/cues retain the human-approved, manifest-listed PD/CC0 boundary. Owner-approved generated stock-voice narration has its own reviewed code/model/voice provenance and scoped approval, without claiming PD/CC0 output status (ADR 015).
 
-**Narration scope added 2026-10-23:** one consistent deep, clear, restrained documentary voice reads each existing `beat.body` verbatim; headlines/year and full text remain visible. Investigate zero-cost local generation and verify exact tool/model/stock-voice licences first; prepare a short listening sample before generating six recordings. No paid API, account-dependent shipping path, real-person clone or inference from free access to distribution rights. The owner approved the George sample and full generation in this session. Narration uses the existing Howler foundation, starts only after a trusted gesture, cancels synchronously on beat change/exit and never overlaps an old beat. Separate persisted narration/ambience switches accompany master mute; ambience/cues stay quiet underneath narration. Autoplay waits for actual narration completion plus one second; missing/disabled/muted/failed/stalled narration uses reading-time fallback. Loading/end watchdogs, stale-callback protection, manifest entries, verbatim transcript hashes and narration/audio/total size accounting are required. The strict <2.5 MiB region limit and reduced-motion behaviour remain unchanged. Audio work keeps M8 incomplete until the audible mix/pacing and target-browser/device checks are accepted.
+**Narration scope added 2026-10-23:** one consistent deep, clear, restrained documentary voice reads each existing `beat.body` verbatim; headlines/year and full text remain visible. Investigate zero-cost local generation and verify exact tool/model/stock-voice licences first; prepare a short listening sample before generating six recordings. No paid API, account-dependent shipping path, real-person clone or inference from free access to distribution rights. The owner approved the George sample and full generation in this session. Narration uses the existing Howler foundation, starts only after a trusted gesture, cancels synchronously on beat change/exit and never overlaps an old beat. Separate persisted narration/ambience switches accompany master mute; ambience/cues stay quiet underneath narration. Autoplay waits for actual narration completion plus one second; missing/disabled/muted/failed/stalled narration uses reading-time fallback. Loading/end watchdogs, stale-callback protection, manifest entries, verbatim transcript hashes and narration/audio/total size accounting are required. The strict <2.5 MiB region limit and reduced-motion behaviour remain unchanged. The owner explicitly accepts the current Gallia experience and atlas visuals on 2026-10-23 and authorizes M9. This is owner acceptance of M8, not a pass of the outstanding independent history, specialist art, full listening/mix/pacing or real-device/browser/network checks.
 ✅ Someone who has never seen the project watches end to end without touching their phone.
 
-**M9 — Quiz** *(~3 days)*
+**M9 — Quiz and progression** *(implemented and locally verified, 2026-10-23; shared migration/seed awaiting approval)*
 Question bank schema and seeding. Server-side grading. Per-option quip UI. XP, rank, streaks. Anonymous → account progress migration.
-✅ Answer key never appears in any network response before submission. Verified in Playwright.
+✅ Answer key never appears in any network response before submission. Verified in Playwright against an isolated database and in all production browser chunks. Five Gallia questions, transactional first-correct XP, provisional ranks, UTC streaks and verified guest import are implemented. See `docs/m9-quiz-review.md` for recorded checks, trust policy and shared-database deployment boundary.
 
 **M10 — Audio** *(~2 days)*
 Broader audio polish and catalog expansion: refine Gallia’s mix against final art, tune transitions and cue balance, and extend approved beds/cues to additional content. Reuse the Howler foundation delivered in M8 (ADR 009); gesture activation, persisted mute and cleanup are no longer deferred here.

@@ -1,0 +1,322 @@
+{
+  "base": "http://127.0.0.1:3006",
+  "measuredAt": "2026-10-23T15:46:13.484Z",
+  "environment": {
+    "node": "v24.14.1",
+    "chrome": "150.0.7871.125",
+    "host": "macOS desktop, headless Chrome, responsive 1440/390 widths, reduced motion, dark system preference, isolated test Postgres; not physical-device/Safari acceptance"
+  },
+  "clientChunksScanned": 51,
+  "privateContentLeaks": 0,
+  "preSubmissionFieldsAllowlisted": true,
+  "pages": [
+    {
+      "width": 1440,
+      "state": "intro",
+      "contrast": {
+        "method": "WCAG relative luminance against every background pixel in each DOM text-line rectangle, glyphs hidden without changing layout/background; conservative rectangle sampling, default opaque text state",
+        "checkedLines": 20,
+        "failures": [],
+        "minimum": 5.44
+      },
+      "overflow": false,
+      "axe": {
+        "violations": [],
+        "incomplete": [
+          {
+            "id": "color-contrast",
+            "count": 15
+          }
+        ]
+      },
+      "errors": [],
+      "failedResponses": []
+    },
+    {
+      "width": 1440,
+      "state": "question",
+      "contrast": {
+        "method": "WCAG relative luminance against every background pixel in each DOM text-line rectangle, glyphs hidden without changing layout/background; conservative rectangle sampling, default opaque text state",
+        "checkedLines": 20,
+        "failures": [],
+        "minimum": 5.44
+      },
+      "overflow": false,
+      "axe": {
+        "violations": [],
+        "incomplete": [
+          {
+            "id": "color-contrast",
+            "count": 16
+          }
+        ]
+      },
+      "errors": [],
+      "failedResponses": []
+    },
+    {
+      "width": 1440,
+      "state": "incorrect-feedback",
+      "contrast": {
+        "method": "WCAG relative luminance against every background pixel in each DOM text-line rectangle, glyphs hidden without changing layout/background; conservative rectangle sampling, default opaque text state",
+        "checkedLines": 28,
+        "failures": [],
+        "minimum": 5.43
+      },
+      "overflow": false,
+      "axe": {
+        "violations": [],
+        "incomplete": [
+          {
+            "id": "color-contrast",
+            "count": 15
+          }
+        ]
+      },
+      "errors": [],
+      "failedResponses": []
+    },
+    {
+      "width": 1440,
+      "state": "correct-feedback",
+      "contrast": {
+        "method": "WCAG relative luminance against every background pixel in each DOM text-line rectangle, glyphs hidden without changing layout/background; conservative rectangle sampling, default opaque text state",
+        "checkedLines": 28,
+        "failures": [],
+        "minimum": 5.43
+      },
+      "overflow": false,
+      "axe": {
+        "violations": [],
+        "incomplete": [
+          {
+            "id": "color-contrast",
+            "count": 15
+          }
+        ]
+      },
+      "errors": [],
+      "failedResponses": []
+    },
+    {
+      "width": 1440,
+      "state": "results",
+      "contrast": {
+        "method": "WCAG relative luminance against every background pixel in each DOM text-line rectangle, glyphs hidden without changing layout/background; conservative rectangle sampling, default opaque text state",
+        "checkedLines": 81,
+        "failures": [],
+        "minimum": 5.44
+      },
+      "overflow": false,
+      "axe": {
+        "violations": [],
+        "incomplete": [
+          {
+            "id": "color-contrast",
+            "count": 44
+          }
+        ]
+      },
+      "errors": [],
+      "failedResponses": []
+    },
+    {
+      "width": 1440,
+      "state": "profile",
+      "contrast": {
+        "method": "WCAG relative luminance against every background pixel in each DOM text-line rectangle, glyphs hidden without changing layout/background; conservative rectangle sampling, default opaque text state",
+        "checkedLines": 60,
+        "failures": [],
+        "minimum": 5.35
+      },
+      "overflow": false,
+      "axe": {
+        "violations": [],
+        "incomplete": [
+          {
+            "id": "color-contrast",
+            "count": 44
+          }
+        ]
+      },
+      "errors": [],
+      "failedResponses": []
+    },
+    {
+      "width": 1440,
+      "state": "submission-error",
+      "contrast": {
+        "method": "WCAG relative luminance against every background pixel in each DOM text-line rectangle, glyphs hidden without changing layout/background; conservative rectangle sampling, default opaque text state",
+        "checkedLines": 23,
+        "failures": [],
+        "minimum": 5.44
+      },
+      "overflow": false,
+      "axe": {
+        "violations": [],
+        "incomplete": [
+          {
+            "id": "color-contrast",
+            "count": 15
+          }
+        ]
+      },
+      "errors": [],
+      "failedResponses": []
+    },
+    {
+      "width": 390,
+      "state": "intro",
+      "contrast": {
+        "method": "WCAG relative luminance against every background pixel in each DOM text-line rectangle, glyphs hidden without changing layout/background; conservative rectangle sampling, default opaque text state",
+        "checkedLines": 22,
+        "failures": [],
+        "minimum": 5.44
+      },
+      "overflow": false,
+      "axe": {
+        "violations": [],
+        "incomplete": [
+          {
+            "id": "color-contrast",
+            "count": 15
+          }
+        ]
+      },
+      "errors": [],
+      "failedResponses": []
+    },
+    {
+      "width": 390,
+      "state": "question",
+      "contrast": {
+        "method": "WCAG relative luminance against every background pixel in each DOM text-line rectangle, glyphs hidden without changing layout/background; conservative rectangle sampling, default opaque text state",
+        "checkedLines": 22,
+        "failures": [],
+        "minimum": 5.44
+      },
+      "overflow": false,
+      "axe": {
+        "violations": [],
+        "incomplete": [
+          {
+            "id": "color-contrast",
+            "count": 16
+          }
+        ]
+      },
+      "errors": [],
+      "failedResponses": []
+    },
+    {
+      "width": 390,
+      "state": "incorrect-feedback",
+      "contrast": {
+        "method": "WCAG relative luminance against every background pixel in each DOM text-line rectangle, glyphs hidden without changing layout/background; conservative rectangle sampling, default opaque text state",
+        "checkedLines": 34,
+        "failures": [],
+        "minimum": 5.38
+      },
+      "overflow": false,
+      "axe": {
+        "violations": [],
+        "incomplete": [
+          {
+            "id": "color-contrast",
+            "count": 15
+          }
+        ]
+      },
+      "errors": [],
+      "failedResponses": []
+    },
+    {
+      "width": 390,
+      "state": "correct-feedback",
+      "contrast": {
+        "method": "WCAG relative luminance against every background pixel in each DOM text-line rectangle, glyphs hidden without changing layout/background; conservative rectangle sampling, default opaque text state",
+        "checkedLines": 34,
+        "failures": [],
+        "minimum": 5.38
+      },
+      "overflow": false,
+      "axe": {
+        "violations": [],
+        "incomplete": [
+          {
+            "id": "color-contrast",
+            "count": 15
+          }
+        ]
+      },
+      "errors": [],
+      "failedResponses": []
+    },
+    {
+      "width": 390,
+      "state": "results",
+      "contrast": {
+        "method": "WCAG relative luminance against every background pixel in each DOM text-line rectangle, glyphs hidden without changing layout/background; conservative rectangle sampling, default opaque text state",
+        "checkedLines": 112,
+        "failures": [],
+        "minimum": 5.44
+      },
+      "overflow": false,
+      "axe": {
+        "violations": [],
+        "incomplete": [
+          {
+            "id": "color-contrast",
+            "count": 43
+          }
+        ]
+      },
+      "errors": [],
+      "failedResponses": []
+    },
+    {
+      "width": 390,
+      "state": "profile",
+      "contrast": {
+        "method": "WCAG relative luminance against every background pixel in each DOM text-line rectangle, glyphs hidden without changing layout/background; conservative rectangle sampling, default opaque text state",
+        "checkedLines": 63,
+        "failures": [],
+        "minimum": 5.43
+      },
+      "overflow": false,
+      "axe": {
+        "violations": [],
+        "incomplete": [
+          {
+            "id": "color-contrast",
+            "count": 44
+          }
+        ]
+      },
+      "errors": [],
+      "failedResponses": []
+    },
+    {
+      "width": 390,
+      "state": "submission-error",
+      "contrast": {
+        "method": "WCAG relative luminance against every background pixel in each DOM text-line rectangle, glyphs hidden without changing layout/background; conservative rectangle sampling, default opaque text state",
+        "checkedLines": 26,
+        "failures": [],
+        "minimum": 5.44
+      },
+      "overflow": false,
+      "axe": {
+        "violations": [],
+        "incomplete": [
+          {
+            "id": "color-contrast",
+            "count": 15
+          }
+        ]
+      },
+      "errors": [],
+      "failedResponses": []
+    }
+  ]
+}

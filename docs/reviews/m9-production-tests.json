@@ -1,0 +1,211 @@
+{
+  "environment": "next build + next start at 127.0.0.1:3006; isolated Postgres 16 at loopback:55439/imperium_m9_test_final; system Chrome desktop, not real device or Safari",
+  "stats": {
+    "startTime": "2026-10-23T15:43:29.818Z",
+    "duration": 62875.45,
+    "expected": 18,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "checks": [
+    {
+      "file": "auth.spec.ts",
+      "name": "signup, logout, login, session survives a hard refresh",
+      "ok": true,
+      "runs": [
+        {
+          "status": "passed",
+          "durationMs": 4533
+        }
+      ]
+    },
+    {
+      "file": "quiz-flow.spec.ts",
+      "name": "Gallia scene \u2192 keyboard-friendly quiz \u2192 explanations, results and retry",
+      "ok": true,
+      "runs": [
+        {
+          "status": "passed",
+          "durationMs": 10130
+        }
+      ]
+    },
+    {
+      "file": "quiz-flow.spec.ts",
+      "name": "pre-submission HTML, JSON and downloaded scripts expose no answer bank",
+      "ok": true,
+      "runs": [
+        {
+          "status": "passed",
+          "durationMs": 1599
+        }
+      ]
+    },
+    {
+      "file": "quiz-flow.spec.ts",
+      "name": "malformed, mismatched, out-of-order and foreign submissions fail without revealing feedback",
+      "ok": true,
+      "runs": [
+        {
+          "status": "passed",
+          "durationMs": 157
+        }
+      ]
+    },
+    {
+      "file": "quiz-flow.spec.ts",
+      "name": "quiz loading/rejection states preserve a retryable answer at a narrow width",
+      "ok": true,
+      "runs": [
+        {
+          "status": "passed",
+          "durationMs": 1420
+        }
+      ]
+    },
+    {
+      "file": "quiz-migration.spec.ts",
+      "name": "anonymous quiz imports automatically after real local signup, without trusting XP or dates",
+      "ok": true,
+      "runs": [
+        {
+          "status": "passed",
+          "durationMs": 2408
+        }
+      ]
+    },
+    {
+      "file": "quiz-migration.spec.ts",
+      "name": "tampered and duplicate imports cannot award client XP or backdate a streak",
+      "ok": true,
+      "runs": [
+        {
+          "status": "passed",
+          "durationMs": 350
+        }
+      ]
+    },
+    {
+      "file": "quiz-migration.spec.ts",
+      "name": "a session reference alone, incomplete attempts and foreign beat IDs cannot mint progress rewards",
+      "ok": true,
+      "runs": [
+        {
+          "status": "passed",
+          "durationMs": 10651
+        }
+      ]
+    },
+    {
+      "file": "quiz-migration.spec.ts",
+      "name": "failed signup import retains local references and retries safely",
+      "ok": true,
+      "runs": [
+        {
+          "status": "passed",
+          "durationMs": 1769
+        }
+      ]
+    },
+    {
+      "file": "quiz-progression.spec.ts",
+      "name": "retries bank only newly correct questions and persist rank/history",
+      "ok": true,
+      "runs": [
+        {
+          "status": "passed",
+          "durationMs": 1731
+        }
+      ]
+    },
+    {
+      "file": "quiz-progression.spec.ts",
+      "name": "duplicate/concurrent submissions and concurrent completed sessions cannot duplicate XP",
+      "ok": true,
+      "runs": [
+        {
+          "status": "passed",
+          "durationMs": 9954
+        }
+      ]
+    },
+    {
+      "file": "quiz-progression.spec.ts",
+      "name": "practice completion advances a UTC streak without new XP, with gaps resetting it",
+      "ok": true,
+      "runs": [
+        {
+          "status": "passed",
+          "durationMs": 824
+        }
+      ]
+    },
+    {
+      "file": "quiz-progression.spec.ts",
+      "name": "unfinished attempts can resume after a long reading break without revealing unanswered questions",
+      "ok": true,
+      "runs": [
+        {
+          "status": "passed",
+          "durationMs": 74
+        }
+      ]
+    },
+    {
+      "file": "region-entry.spec.ts",
+      "name": "initial atlas exposes Gallia's dated preview without mislabelling unauthored Latium",
+      "ok": true,
+      "runs": [
+        {
+          "status": "passed",
+          "durationMs": 4456
+        }
+      ]
+    },
+    {
+      "file": "region-entry.spec.ts",
+      "name": "117 AD map distinguishes Gallia's preview from 22 Coming soon provinces",
+      "ok": true,
+      "runs": [
+        {
+          "status": "passed",
+          "durationMs": 5304
+        }
+      ]
+    },
+    {
+      "file": "region-entry.spec.ts",
+      "name": "every unauthored province resolves to its named Coming soon state",
+      "ok": true,
+      "runs": [
+        {
+          "status": "passed",
+          "durationMs": 622
+        }
+      ]
+    },
+    {
+      "file": "region-entry.spec.ts",
+      "name": "Coming soon remains readable and keyboard operable on a narrow reduced-motion viewport",
+      "ok": true,
+      "runs": [
+        {
+          "status": "passed",
+          "durationMs": 1641
+        }
+      ]
+    },
+    {
+      "file": "region-entry.spec.ts",
+      "name": "an unknown region returns 404 instead of pretending to be a coming campaign",
+      "ok": true,
+      "runs": [
+        {
+          "status": "passed",
+          "durationMs": 39
+        }
+      ]
+    }
+  ]
+}

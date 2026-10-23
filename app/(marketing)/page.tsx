@@ -47,7 +47,7 @@ export default function Home() {
           <ol className="journey-steps mt-10 grid gap-8 md:grid-cols-3">
             <li><span className="step-number">I</span><h3>Find a place.</h3><p>Move through four eras on the atlas. Gallia is ready to explore; other provinces are marked coming soon.</p><span className="feature-status">Atlas available</span></li>
             <li><span className="step-number">II</span><h3>Follow the story.</h3><p>Watch Alesia unfold in six painted scenes. Listen to the narration, read at your own pace and open the sources.</p><span className="feature-status">Gallia available</span></li>
-            <li><span className="step-number">III</span><h3>Test what stays.</h3><p>A short quiz will bring you back to the details that matter. Quizzes and saved progress are still being built.</p><span className="feature-status feature-planned">Planned</span></li>
+            <li><span className="step-number">III</span><h3>Test what stays.</h3><p>Five questions bring you back to the details that matter. Gallia’s quiz is available, with explanations, XP and saved account progress.</p><span className="feature-status">Gallia quiz available</span></li>
           </ol>
         </section>
         <section className="shell-width closing-invitation flex flex-col justify-between gap-6 md:flex-row md:items-center" aria-labelledby="invitation-title">

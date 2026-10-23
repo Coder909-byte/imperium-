@@ -1,0 +1,42 @@
+{
+  "id": "gallia-04",
+  "regionId": "gallia",
+  "beatIds": [
+    "the-mandubii"
+  ],
+  "era": "52 BC",
+  "difficulty": 2,
+  "prompt": "According to Caesar, what happened when the expelled Mandubii reached the Roman lines?",
+  "options": [
+    {
+      "id": "gallia-04-a",
+      "text": "They joined the Roman cavalry"
+    },
+    {
+      "id": "gallia-04-b",
+      "text": "They were immediately escorted to safety"
+    },
+    {
+      "id": "gallia-04-c",
+      "text": "Caesar refused to let them through"
+    },
+    {
+      "id": "gallia-04-d",
+      "text": "They were given the Roman food reserve"
+    }
+  ],
+  "correctOptionId": "gallia-04-c",
+  "explanation": "Caesar says the Mandubii were expelled from Alesia with their families, appealed to the Romans for help, and were refused admission. His account does not make that refusal an act of rescue.",
+  "feedbackByOptionId": {
+    "gallia-04-a": "Caesar says he refused them passage. The displaced families were not reinforcements for his cavalry.",
+    "gallia-04-b": "Caesar says he barred them from his lines. There was no safe escort in the account he chose to leave.",
+    "gallia-04-c": "Caesar records refusing passage. Two lines of fortifications, and no place for the people caught between the armies.",
+    "gallia-04-d": "Caesar records refusing them entry, not distributing his reserve. His siege logistics made no provision for their rescue."
+  },
+  "sources": [
+    {
+      "label": "Caesar, Bellum Gallicum VII.78 — the expulsion of the Mandubii",
+      "url": "https://www.perseus.tufts.edu/hopper/text?doc=Perseus%3Atext%3A1999.02.0002"
+    }
+  ]
+}

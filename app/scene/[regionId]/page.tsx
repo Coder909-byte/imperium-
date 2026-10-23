@@ -7,6 +7,7 @@ import { loadRegionContent } from "./loadContent";
 import { loadProvinceMeta } from "./loadProvince";
 import { loadRigs } from "./loadRigs";
 import { loadManifest } from "./loadManifest";
+import { readQuestionBank } from "@/lib/quiz/bank";
 
 function titleCase(slug: string): string {
   return slug
@@ -36,5 +37,6 @@ export default async function ScenePage(props: PageProps<"/scene/[regionId]">) {
     );
   }
 
-  return <ScenePlayerClient region={buildSceneProps(region, loadRigs(), loadManifest())} />;
+  const quizAvailable = readQuestionBank().filter(question => question.regionId === regionId).length === 5;
+  return <ScenePlayerClient region={buildSceneProps(region, loadRigs(), loadManifest())} quizAvailable={quizAvailable} />;
 }

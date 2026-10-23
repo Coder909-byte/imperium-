@@ -63,11 +63,14 @@ describe("Question schema", () => {
     options: [
       { id: "a", text: "8 years" },
       { id: "b", text: "20 years" },
+      { id: "c", text: "3 years" },
+      { id: "d", text: "40 years" },
     ],
     correctOptionId: "a",
     explanation: "Eight years, per Caesar's own account.",
-    rightQuip: "Correct — eight years, and he wrote the book on it. Literally.",
-    wrongQuips: { b: "Twenty years is a senatorial career, not a campaign." },
+    beatIds: ["the-hill"],
+    sources: [{ label: "Caesar, Gallic War" }],
+    feedbackByOptionId: { a: "Eight years. Caesar wrote the report too.", b: "Eight years, not twenty.", c: "Eight years, not three.", d: "Eight years, not forty." },
   };
 
   it("accepts a well-formed question", () => {
@@ -79,15 +82,15 @@ describe("Question schema", () => {
     expect(result.success).toBe(false);
   });
 
-  it("rejects a wrongQuips entry missing for a wrong option", () => {
-    const result = Question.safeParse({ ...base, wrongQuips: {} });
+  it("rejects a feedbackByOptionId entry missing for a wrong option", () => {
+    const result = Question.safeParse({ ...base, feedbackByOptionId: {} });
     expect(result.success).toBe(false);
   });
 
-  it("rejects a wrongQuips key that isn't a real option id", () => {
+  it("rejects a feedbackByOptionId key that isn't a real option id", () => {
     const result = Question.safeParse({
       ...base,
-      wrongQuips: { ...base.wrongQuips, z: "not a real option" },
+      feedbackByOptionId: { ...base.feedbackByOptionId, z: "not a real option" },
     });
     expect(result.success).toBe(false);
   });

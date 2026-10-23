@@ -1,5 +1,6 @@
 // CI gate: malformed region or question JSON fails the build, never the
 // runtime (CLAUDE.md hard rule #5). Run with `npm run validate`.
+import { validateQuizReferences } from "../content/quizValidation";
 import { existsSync, readdirSync, readFileSync, statSync } from "node:fs";
 import { validateNarrationTranscripts, validateSynthesisTranscripts } from "../content/narrationValidation";
 import { join } from "node:path";
@@ -42,6 +43,7 @@ const arrayFileTargets: ArrayFileTarget[] = [
 let failures = 0;
 let filesChecked = 0;
 const regions: Region[] = [];
+const questions: Question[] = [];
 const rigs: Rig[] = [];
 const manifest: ManifestEntry[] = [];
 
@@ -75,8 +77,11 @@ for (const { dir, schema } of targets) {
 
     if (schema === Rig) rigs.push(Rig.parse(result.data));
     if (schema === Region) regions.push(Region.parse(result.data));
+    if (schema === Question) questions.push(Question.parse(result.data));
   }
 }
+
+for (const issue of validateQuizReferences(questions, regions)) { failures += 1; console.error(`✗ ${issue}`); }
 
 for (const region of regions) {
   const issues = validateSceneReferences(region, rigs);

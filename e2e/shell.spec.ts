@@ -6,7 +6,7 @@ test("landing has honest availability, public CTAs and no scene runtime", async 
   page.on("request", (request) => requests.push(request.url()));
   await page.goto("/");
   await expect(page.getByRole("heading", { name: "IMPERIUM", exact: true })).toBeVisible();
-  await expect(page.getByText("Quizzes and saved progress are still being built.", { exact: false })).toBeVisible();
+  await expect(page.getByText("Gallia’s quiz is available", { exact: false })).toBeVisible();
   await expect(page.getByText("Available flagship", { exact: true })).toBeVisible();
   await expect(page.locator("canvas, audio")).toHaveCount(0);
   expect(requests.some((url) => /assets\/gallia|kokoro|onnx|howler|pixi/i.test(url))).toBe(false);

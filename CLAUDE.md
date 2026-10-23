@@ -117,6 +117,18 @@ npm run forge -- <file>  # source scan → scene plane (colour or alpha, see PRD
 
 ## Current state
 
+### M8 owner acceptance and M9 authorization — 2026-10-23
+
+The owner explicitly accepts Gallia's current experience and the updated atlas visuals, records **M8 as owner-accepted**, and authorizes **M9 only: quiz and progression**. This supersedes the earlier instruction to defer M9. Independent historical review, missing specialist hillfort/ridge/engineer/civilian/mounted art, full pronunciation/mix/pacing review and Safari/Pixel-class GPU/network acceptance remain documented outstanding checks; none is marked passed by this acceptance. M10/M11 remain out of scope. Implementation and necessary local schema/migration files are authorized; do not apply migrations or run database-mutating checks against shared Neon without separate owner approval. Preserve existing work; no commit, push or deployment. The owner approved difficulty XP 10/20/30, rank thresholds 0/50/150/350/700/1200/2000, first-correct credit per account/question, retries for missed credit and completed-quiz streaks by server UTC day. Anonymous imports supply no trusted XP or backdated activity. These provisional thresholds share one configuration; Gallia alone offers 90 XP and cannot unlock every rank. See ADR 018.
+
+### M9 quiz and progression — 2026-10-23
+
+Implemented M9 only: five source-grounded Gallia questions/four options/no timer, server-side private snapshots and strict submission grading, keyed option feedback, results/retry/atlas, actual account history/XP/rank/streak and verified anonymous signup/login import. The approved single configuration awards 10/20/30 XP once per account/question on completed quizzes, with retries earning missed credit. Profile/session locks, a transaction and unique answer/credit constraints prevent duplicate/concurrent awards. UTC day policy is explicit in the UI; guest imports trust server-owned attempts and browser cookie proof, never client XP or backdated activity. Gallia alone offers 90 XP; rank thresholds remain provisional. Atlas/scenes remain public, final Gallia content/assets are preserved and engine callbacks stay content-independent. ADR 018 and docs/m9-quiz-review.md record the policy and implementation.
+
+Verified: **330 unit tests / 44 files**, typecheck/lint, **39-file** content validation, final production build, **34 distinct development browser checks** and **18/18 final production checks** against a fresh disposable Postgres 16 database at loopback:55439. Real local email signup/import, retries, duplicates/concurrency, UTC practice streaks and malformed/foreign inputs pass. All **51 production browser JS chunks** and pre-submission responses contain no private quiz answer content. Fourteen desktop/narrow rendered states have no overflow/page errors/unexpected failed responses or detected axe A/AA violations; separate 573-line rendered-text contrast checks pass (minimum 5.35:1), with axe's texture limitation retained. Atlas real gzip JS is **144,590 bytes**. Screenshots/reports are linked in the review. Initial rapid fixture signups hit existing production auth limits; fixtures now respect X-Retry-After, and the final production run passes without auth-config changes.
+
+Migration `db/migrations/0002_dashing_shaman.sql` and explicit-write `npm run db:seed-questions` were verified only on the isolated test database. Shared Neon was not migrated, seeded or used for mutating checks; applying/seeding it still needs separate owner approval. No new dependency/asset, live Google-provider check, commit, push or deployment. M8 remains owner-accepted with outstanding historical/art/listening/real-device checks accurately open. M10/M11 remain out of scope.
+
 ### Atlas UI continuation — 2026-10-23
 
 Resumed clean checkpoint `c033c96` (`map ui change mid`), newer than the landing handoff. Its approved Natural Earth relief, HTML era cards and zoom component were present but their layout styles were missing. Completed the responsive parchment workspace, desktop sidebar/narrow card row, bounded native scroll viewport, keyboard panning, 100–200% zoom with centre preservation/reset, route navigation/skip link and modern-relief credit. SVG/vector geography and all existing era holdings/destinations are preserved. The approved relief file/manifest remain unchanged; no new asset/dependency/approval. ADR 017 and `docs/atlas-ui-review.md` record scope and evidence.
@@ -363,7 +375,7 @@ Milestone: **M7 — Asset forge — complete.** `tools/forge/`: one pipeline (`p
 
 Vitest green (255 unit, up from 227 pre-M7 — `tools/forge/{pipeline,manifest,budget}.test.ts`, all against synthetic in-memory sharp fixtures, no test image files on disk and no network access needed to run the suite); `npm run validate`/`typecheck`/`lint`/`build` clean. `engine/` untouched. No `any`. No paid dependency.
 
-Next: the scoped atlas UI continuation is locally verified. Continue M8's missing hillfort/ridge and dedicated roles within separately scoped art approvals; review complete narration/mix/pacing, final art/history and target-device/network behaviour. Do not advance to M9–M11.
+Next: M9 quiz and progression only, as explicitly authorized after owner acceptance of M8. Historical/art/listening/device checks remain outstanding; do not start M10/M11 or mutate shared Neon.
 
 Update this line at the end of every session.
 

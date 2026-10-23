@@ -10,6 +10,7 @@ import {
 } from "drizzle-orm/pg-core";
 import { sql } from "drizzle-orm";
 import { DEFAULT_RANK } from "@/lib/ranks";
+import type { Question } from "@/content/questionSchema";
 
 // --- Better Auth core tables -----------------------------------------
 // Field names (the JS keys) must match Better Auth's internal model
@@ -99,7 +100,7 @@ export const regionProgress = pgTable(
       .notNull()
       .references(() => user.id, { onDelete: "cascade" }),
     regionId: text("region_id").notNull(),
-    beatsViewed: jsonb("beats_viewed").notNull().default(sql`'[]'::jsonb`),
+    beatsViewed: jsonb("beats_viewed").$type<string[]>().notNull().default(sql`'[]'::jsonb`),
     completedAt: timestamp("completed_at"),
     lastViewedAt: timestamp("last_viewed_at").notNull().defaultNow(),
   },
@@ -131,8 +132,10 @@ export const quizSession = pgTable("quiz_session", {
     .primaryKey()
     .$defaultFn(() => crypto.randomUUID()),
   userId: text("user_id")
-    .notNull()
     .references(() => user.id, { onDelete: "cascade" }),
+  guestHash: text("guest_hash"),
+  questionSnapshot: jsonb("question_snapshot").$type<Question[]>().notNull().default(sql`'[]'::jsonb`),
+  xpAwarded: integer("xp_awarded").notNull().default(0),
   regionId: text("region_id").notNull(),
   mode: text("mode").notNull(),
   score: integer("score").notNull().default(0),
@@ -155,4 +158,15 @@ export const quizAnswer = pgTable("quiz_answer", {
   correct: boolean("correct").notNull(),
   timeMs: integer("time_ms").notNull(),
   createdAt: timestamp("created_at").notNull().defaultNow(),
-});
+}, table => [unique("quiz_answer_session_question_unique").on(table.sessionId, table.questionId)]);
+
+// The profile row is locked while awarding; this constraint also prevents
+// duplicate credit across concurrent sessions, retries and guest imports.
+export const quizCredit = pgTable("quiz_credit", {
+  id: text("id").primaryKey().$defaultFn(() => crypto.randomUUID()),
+  userId: text("user_id").notNull().references(() => user.id, { onDelete: "cascade" }),
+  questionId: text("question_id").notNull().references(() => question.id, { onDelete: "restrict" }),
+  sessionId: text("session_id").references(() => quizSession.id, { onDelete: "set null" }),
+  xp: integer("xp").notNull(),
+  createdAt: timestamp("created_at").notNull().defaultNow(),
+}, table => [unique("quiz_credit_user_question_unique").on(table.userId, table.questionId)]);

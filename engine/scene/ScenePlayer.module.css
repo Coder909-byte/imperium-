@@ -108,6 +108,10 @@
   line-height: 1;
 }
 
+.quizButton { align-self: flex-start; min-height: 44px; padding: 10px 18px; border: 1px solid #d1b98d; background: #f4ede0; color: #241708; cursor: pointer; font-family: inherit; font-size: .95rem; }
+.quizButton:hover { background: #e7d5b4; }
+.quizButton:focus-visible { outline: 2px solid #e8c78b; outline-offset: 3px; }
+
 .navButton:disabled,
 .autoplayButton:disabled {
   opacity: 0.35;

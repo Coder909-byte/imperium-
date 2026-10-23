@@ -6,6 +6,7 @@ import { db } from "@/db";
 import { profile } from "@/db/schema";
 import { ProfileView } from "@/app/_components/shell/ProfileView";
 import { LogoutButton } from "./LogoutButton";
+import { profileRecord } from "@/lib/quiz/profileData";
 
 export default async function ProfilePage() {
   const session = await auth.api.getSession({ headers: await headers() });
@@ -28,5 +29,5 @@ export default async function ProfilePage() {
     );
   }
 
-  return <ProfileView email={session.user.email} logout={<LogoutButton />} />;
+  return <ProfileView email={session.user.email} logout={<LogoutButton />} record={await profileRecord(session.user.id, profileRow)} />;
 }

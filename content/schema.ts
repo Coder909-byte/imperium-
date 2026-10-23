@@ -356,73 +356,7 @@ export type RigClip = z.infer<typeof RigClip>;
 export type RigPart = z.infer<typeof RigPart>;
 export type Rig = z.infer<typeof Rig>;
 
-// --- Question content -----------------------------------------------
-// PRD §7 gives the DB `question` table shape but not a content-authoring
-// schema; this mirrors that table shape for content/questions/*.json,
-// which M9 will seed into the DB.
-
-export const QuestionOption = z.object({
-  id: z.string(),
-  text: z.string(),
-});
-
-export const Question = z
-  .object({
-    id: z.string(),
-    regionId: z.string(),
-    era: z.string(),
-    difficulty: z.number().int().min(1).max(3),
-    prompt: z.string(),
-    options: z.array(QuestionOption).min(2),
-    correctOptionId: z.string(),
-    explanation: z.string(),
-    rightQuip: z.string(),
-    // Keyed by option id, not one string per question — a joke about the
-    // *specific* wrong answer someone picked is the point (PRD §7).
-    wrongQuips: z.record(z.string(), z.string()),
-    sources: z
-      .array(
-        z.object({
-          label: z.string(),
-          url: z.string().url().optional(),
-        }),
-      )
-      .default([]),
-  })
-  .superRefine((question, ctx) => {
-    const optionIds = new Set(question.options.map((option) => option.id));
-
-    if (!optionIds.has(question.correctOptionId)) {
-      ctx.addIssue({
-        code: "custom",
-        message: `correctOptionId "${question.correctOptionId}" is not one of the option ids`,
-        path: ["correctOptionId"],
-      });
-    }
-
-    for (const key of Object.keys(question.wrongQuips)) {
-      if (!optionIds.has(key)) {
-        ctx.addIssue({
-          code: "custom",
-          message: `wrongQuips key "${key}" is not one of the option ids`,
-          path: ["wrongQuips", key],
-        });
-      }
-    }
-
-    for (const id of optionIds) {
-      if (id !== question.correctOptionId && !(id in question.wrongQuips)) {
-        ctx.addIssue({
-          code: "custom",
-          message: `missing wrongQuips entry for wrong option "${id}"`,
-          path: ["wrongQuips", id],
-        });
-      }
-    }
-  });
-
-export type QuestionOption = z.infer<typeof QuestionOption>;
-export type Question = z.infer<typeof Question>;
+export { Question, QuestionOption } from "./questionSchema";
 
 // --- Atlas content ----------------------------------------------------
 // Province boundaries, city markers and sea labels for engine/atlas.

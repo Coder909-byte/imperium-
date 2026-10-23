@@ -1,0 +1,42 @@
+{
+  "id": "gallia-05",
+  "regionId": "gallia",
+  "beatIds": [
+    "rides-out-alone"
+  ],
+  "era": "52 BC",
+  "difficulty": 3,
+  "prompt": "Which later author supplies the scene's elaborate account of Vercingetorix surrendering on horseback?",
+  "options": [
+    {
+      "id": "gallia-05-a",
+      "text": "Caesar, in his brief surrender report"
+    },
+    {
+      "id": "gallia-05-b",
+      "text": "Plutarch, in his Life of Caesar"
+    },
+    {
+      "id": "gallia-05-c",
+      "text": "Vercingetorix, in a surviving memoir"
+    },
+    {
+      "id": "gallia-05-d",
+      "text": "Labienus, in a surviving siege diary"
+    }
+  ],
+  "correctOptionId": "gallia-05-b",
+  "explanation": "The scene distinguishes Caesar's brief report of surrender from Plutarch's later story of armour, a decorated horse and weapons laid before Caesar. The ceremony is an attributed literary account, not an independently verified reconstruction.",
+  "feedbackByOptionId": {
+    "gallia-05-a": "Caesar's report is brief. Plutarch supplies the horse and ceremony; later biography evidently had a larger staging budget.",
+    "gallia-05-b": "Plutarch supplies the horseback ceremony. Caesar supplies a brief report; the extra stage directions arrive with the later biographer.",
+    "gallia-05-c": "The horseback ceremony comes from Plutarch, not a surviving memoir by Vercingetorix. The captive did not get the final editorial word.",
+    "gallia-05-d": "Plutarch supplies the ceremony, not a surviving diary by Labienus. The decorated horse belongs to the later biography."
+  },
+  "sources": [
+    {
+      "label": "Plutarch, Life of Caesar 27 — the armour, the ride around the tribunal, the weapons at Caesar's feet",
+      "url": "https://penelope.uchicago.edu/Thayer/E/Roman/Texts/Plutarch/Lives/Caesar*.html#27"
+    }
+  ]
+}

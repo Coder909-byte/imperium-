@@ -1,0 +1,54 @@
+{
+  "base": "http://127.0.0.1:3006",
+  "measuredAt": "2026-10-23T15:41:33.409Z",
+  "method": "next build + next start; actual served atlas script tags, deduplicated, noModule excluded; HTTP Accept-Encoding gzip, measured response bodies and verified Content-Length when supplied. This server streams gzip with chunked transfer encoding. Relief bytes are separate from JavaScript. No TTI or physical-device claim.",
+  "initialScriptBytes": 144590,
+  "scripts": [
+    {
+      "src": "/_next/static/chunks/11jq0c2_zavac.js",
+      "encoding": "gzip",
+      "contentLength": null,
+      "transferredBytes": 8504
+    },
+    {
+      "src": "/_next/static/chunks/1mkbuudhndal5.js",
+      "encoding": "gzip",
+      "contentLength": null,
+      "transferredBytes": 71576
+    },
+    {
+      "src": "/_next/static/chunks/2h8mq2n9nn_uc.js",
+      "encoding": "gzip",
+      "contentLength": null,
+      "transferredBytes": 42739
+    },
+    {
+      "src": "/_next/static/chunks/turbopack-0tcle8anhm_hs.js",
+      "encoding": "gzip",
+      "contentLength": null,
+      "transferredBytes": 3848
+    },
+    {
+      "src": "/_next/static/chunks/278axw9oxgjty.js",
+      "encoding": "gzip",
+      "contentLength": null,
+      "transferredBytes": 5717
+    },
+    {
+      "src": "/_next/static/chunks/2hunkprxrl7y7.js",
+      "encoding": "gzip",
+      "contentLength": null,
+      "transferredBytes": 8592
+    },
+    {
+      "src": "/_next/static/chunks/3yfl9fgvivx3-.js",
+      "encoding": "gzip",
+      "contentLength": null,
+      "transferredBytes": 3614
+    }
+  ],
+  "relief": {
+    "status": 200,
+    "bytes": 240712
+  }
+}
