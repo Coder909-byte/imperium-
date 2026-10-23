@@ -66,7 +66,7 @@ export function ScenePlayer({ region, onExit, forcedTier, forcedLut, forcedChain
   );
   const beatState = useSyncExternalStore(beatDirector.subscribe, beatDirector.getSnapshot);
   const beat = region.beats[beatState.index];
-  const audio = useSceneAudio(region, beat);
+  const audio = useSceneAudio(region, beatDirector);
   const { stop: stopAudio } = audio;
   const exitScene = () => { stopAudio(); onExit(); };
 
@@ -251,9 +251,11 @@ export function ScenePlayer({ region, onExit, forcedTier, forcedLut, forcedChain
       if (event.key === "ArrowRight") {
         event.preventDefault();
         beatDirector.next();
+        audio.activate(event);
       } else if (event.key === "ArrowLeft") {
         event.preventDefault();
         beatDirector.previous();
+        audio.activate(event);
       } else if (event.key === "Escape") {
         event.preventDefault();
         stopAudio();
@@ -262,7 +264,7 @@ export function ScenePlayer({ region, onExit, forcedTier, forcedLut, forcedChain
     }
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [beatDirector, onExit, stopAudio]);
+  }, [beatDirector, onExit, stopAudio, audio]);
 
   return (
     <div
@@ -273,6 +275,7 @@ export function ScenePlayer({ region, onExit, forcedTier, forcedLut, forcedChain
       data-active-fx={beat.fx.join(",")}
       data-active-actors={beat.actors.map((a) => `${a.rig}:${a.clip}:${a.count}`).join(",")}
       data-debug-art={debugArt}
+      data-narration-state={audio.narrationStatus}
       data-visible-planes={renderedPlanes.filter((plane) => beat.visibleLayers.includes(plane.id)).flatMap((plane) => (plane.compositeSources ?? [plane]).map((source) => source.id)).join(",")}
     >
       <div ref={containerRef} className={styles.canvasHost} />

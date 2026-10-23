@@ -27,7 +27,7 @@ Everything here is free to use. **Do not add a dependency that costs money, has 
 1. **`engine/` never imports from `content/`.** Content is passed in as arguments. This is what makes adding a second civilisation cost zero engine work. Breaking it defeats the architecture.
 2. **The quiz answer key never reaches the client before submission.** `/api/quiz/session` strips `correctOptionId`. Grading happens in `/api/quiz/answer`. This is tested in Playwright.
 3. **Every art or audio asset gets a row in `content/assets/manifest.json`** with source URL and licence, added at the moment it enters the repo. No exceptions.
-4. **No asset ships without a verified public-domain or CC0 licence.** Artist death dates are not proof; the specific scan's rights status is.
+4. **No asset ships without a verified public-domain or CC0 licence.** Artist death dates are not proof; the specific scan's rights status is. **Owner-authorized narration exception (ADR 015):** generated stock-voice narration may ship with verified tool/model/voice grants, transcript provenance and separate scoped `generated-narration` approval. Generated recordings are never labelled PD/CC0; this does not expand ambience/cue or art permissions.
 5. **Content schema validation is a CI gate.** Malformed region JSON fails the build, never the runtime.
 6. **`prefers-reduced-motion` is respected everywhere**, and the content stays fully available when it's on.
 
@@ -116,6 +116,18 @@ npm run forge -- <file>  # source scan → scene plane (colour or alpha, see PRD
 - If something in the PRD turns out to be wrong or impossible, say so and propose an alternative. Don't silently work around it.
 
 ## Current state
+
+### Narrated Gallia continuation — 2026-10-23
+
+The owner explicitly added narrated voiceover to M8, reviewed the 9.85-second `bm_george` sample at `/dev/narration`, and approved all six recordings with that voice and .92 speed. Resumed clean checkpoint `57a9ead`. Gallia now has six mono 24kHz MP3s reading the original beat bodies, generated locally with Apache-2.0 `kokoro-js` 1.2.1 / pinned Kokoro v1.0 ONNX q8 revision `1939ad2a8e416c0acfeecc08a694d14ef25f2231`. The reviewed stock voice binary matches the exact model repository file by SHA-256. No paid API, account or real-person reference/cloning step. Python ONNX Runtime could not install on this Mac; local browser WASM worked. Preparation tools/models stay outside the app. ADR 015, `docs/m8-narration-review.md` and the generation ledger record source licences, generated provenance and scoped owner approval separately; generated audio is not called public domain/CC0.
+
+The six recordings total **209.6 seconds / 1,098,432 bytes**. Region payload is **2,124,928 bytes / 31 files**, including **1,653,554 audio bytes**, leaving 496,512 bytes under the unchanged strict <2.5 MiB ceiling. Each has a manifest row, transcript hash and measured duration; CI binds it to the unchanged body. Sentence reconstruction/context checks prevent source truncation (maximum 189 tokens). The original listening sample remains in staging with its own row and a development-only page/API; full WAV intermediates are outside the repo. Final headlines, bodies, citations, actors, effects and plane definitions are preserved.
+
+`AudioDirector` owns one disposable `NarrationTrack`, using the existing Howler foundation. Trusted gestures activate the latest beat; synchronous beat subscriptions cancel before replacement; generation guards reject stale callbacks even after re-entry. Narration and ambience have separate persisted switches plus master mute. Ambience/cues duck to .18 of authored gains while narration loads/plays. Autoplay follows actual narration end plus one second; missing/disabled/muted/failed/stalled narration uses a fresh reading dwell. Eight-second loading and duration-plus-five-second playback watchdogs avoid indefinite waits. Full text remains visible; reduced-motion rendering keeps its existing behaviour. Dwell camera travel covers declared narration duration too.
+
+Verified: **311 unit tests / 39 files**, typecheck, lint, 34-file content/rig/transcript validation, production build, and **37 distinct focused browser checks** across narration/audio/Gallia/tiering/general scene/region-entry runs. All six actual MP3s decode/play singly and cancel on mute/exit; synthetic delayed-download, rapid re-entry, autoplay-end and failure tests pass. A polling fixture's response-disposal race was fixed by using isolated local fixture data. One stress run saw a React pre-mount warning while source edits triggered development refresh; the unchanged isolated rerun passed without suppressing errors. Ten round trips report no context-exhaustion warning and +1,023,196 post-GC heap bytes (coarse desktop check only). Production route/size and screenshot details are in the narration review.
+
+M8 remains open for hillfort/ridge, dedicated engineers/civilians/mounted roles, final historical/art review, complete narration pronunciation/listening/mix/pacing and Safari/Pixel-class/network acceptance. Voice-sample approval does not establish those final gates. No M9–M11 work, commit, push, deployment or database mutation.
 
 ### Plane tint performance continuation — 2026-10-23
 
@@ -333,7 +345,7 @@ Milestone: **M7 — Asset forge — complete.** `tools/forge/`: one pipeline (`p
 
 Vitest green (255 unit, up from 227 pre-M7 — `tools/forge/{pipeline,manifest,budget}.test.ts`, all against synthetic in-memory sharp fixtures, no test image files on disk and no network access needed to run the suite); `npm run validate`/`typecheck`/`lint`/`build` clean. `engine/` untouched. No `any`. No paid dependency.
 
-Next: continue M8's missing hillfort/ridge and dedicated roles within separately scoped art approvals; final art/history, listening/pacing and target-device/network acceptance remain open. Do not advance to M9–M11.
+Next: continue M8's missing hillfort/ridge and dedicated roles within separately scoped art approvals; review complete narration/mix/pacing, final art/history and target-device/network behaviour. Do not advance to M9–M11.
 
 Update this line at the end of every session.
 

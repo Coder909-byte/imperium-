@@ -1,13 +1,14 @@
 import { BeatSources } from "./BeatSources";
 import type { SceneBeat, SceneRegion } from "./types";
 import styles from "./ScenePlayer.module.css";
+import type { useSceneAudio } from "../audio/useSceneAudio";
 
 interface SceneCaptionsProps {
   region: SceneRegion;
   beat: SceneBeat;
   index: number;
   autoplay: boolean;
-  audio: { muted: boolean; failed: boolean; available: boolean; toggleMute: (event: { isTrusted: boolean }) => void };
+  audio: ReturnType<typeof useSceneAudio>;
   previous: () => void;
   next: () => void;
   jumpTo: (index: number) => void;
@@ -71,6 +72,15 @@ export function SceneCaptions({ region, beat, index: activeIndex, autoplay, audi
           <button type="button" className={styles.autoplayButton} aria-pressed={audio.muted} onClick={audio.toggleMute}>
             {audio.muted ? "Unmute" : "Mute"}
           </button>
+          <button type="button" className={styles.autoplayButton} aria-pressed={audio.narrationEnabled}
+            disabled={!audio.narrationAvailable} onClick={audio.toggleNarration}>
+            Narration {audio.narrationEnabled ? "on" : "off"}
+          </button>
+          <button type="button" className={styles.autoplayButton} aria-pressed={audio.ambienceEnabled} onClick={audio.toggleAmbience}>
+            Ambience {audio.ambienceEnabled ? "on" : "off"}
+          </button>
+          {audio.narrationPending && !audio.narrationAvailable && <span className={styles.sources}>Narration pending</span>}
+          {audio.narrationStatus === "failed" && <span role="status" className={styles.sources}>Narration unavailable. Reading time is active; switch narration off and on to retry.</span>}
           {!audio.available && <span className={styles.sources}>Audio pending</span>}
           {audio.failed && <span role="status" className={styles.sources}>Audio unavailable. Toggle sound to retry.</span>}
         </div>

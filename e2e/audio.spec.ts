@@ -21,7 +21,7 @@ test("Gallia's real approved cues decode and play only on their beat entries", a
     AudioBufferSourceNode.prototype.start = function (...args: Parameters<typeof start>) {
       start.apply(this, args);
       if (this.loop) activeLoops.add(this);
-      else if (this.buffer && this.buffer.duration > 0.1) probe.durations.push(this.buffer.duration);
+      else if (this.buffer && this.buffer.duration > 0.1 && this.buffer.duration < 1) probe.durations.push(this.buffer.duration);
       probe.loops = activeLoops.size;
     };
     AudioBufferSourceNode.prototype.stop = function (...args: Parameters<typeof stop>) {
@@ -90,7 +90,7 @@ test("audio needs a trusted gesture, recovers from a failed load, and stops its 
   });
   const data = Region.parse(gallia);
   data.scene.planes.forEach((plane) => { plane.placeholder = true; });
-  data.beats.forEach((beat) => { delete beat.audio.cue; delete beat.audio.cueVolume; beat.actors = []; });
+  data.beats.forEach((beat) => { delete beat.audio.cue; delete beat.audio.cueVolume; delete beat.audio.narration; beat.actors = []; });
   data.scene.audioAssets = { wind_plains: "audio/recovery-bed.wav" };
   data.scene.audioPlaceholder = false;
   const manifest = [{

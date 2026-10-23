@@ -1,0 +1,102 @@
+{
+  "routes": {
+    "/dev/narration": 404,
+    "/api/dev/narration-sample": 404
+  },
+  "bundles": {
+    "/atlas": {
+      "bytes": 140433,
+      "chunks": [
+        {
+          "src": "/_next/static/chunks/11jq0c2_zavac.js",
+          "status": 200,
+          "bytes": 8504,
+          "encoding": "gzip"
+        },
+        {
+          "src": "/_next/static/chunks/3byuobrkyz9bj.js",
+          "status": 200,
+          "bytes": 71628,
+          "encoding": "gzip"
+        },
+        {
+          "src": "/_next/static/chunks/2h8mq2n9nn_uc.js",
+          "status": 200,
+          "bytes": 42739,
+          "encoding": "gzip"
+        },
+        {
+          "src": "/_next/static/chunks/turbopack-1omqh5338s00v.js",
+          "status": 200,
+          "bytes": 3851,
+          "encoding": "gzip"
+        },
+        {
+          "src": "/_next/static/chunks/278axw9oxgjty.js",
+          "status": 200,
+          "bytes": 5717,
+          "encoding": "gzip"
+        },
+        {
+          "src": "/_next/static/chunks/02ikrwu3kyil4.js",
+          "status": 200,
+          "bytes": 4422,
+          "encoding": "gzip"
+        },
+        {
+          "src": "/_next/static/chunks/3mc6dra1m0098.js",
+          "status": 200,
+          "bytes": 3572,
+          "encoding": "gzip"
+        }
+      ]
+    },
+    "/scene/gallia": {
+      "bytes": 138177,
+      "chunks": [
+        {
+          "src": "/_next/static/chunks/11jq0c2_zavac.js",
+          "status": 200,
+          "bytes": 8504,
+          "encoding": "gzip"
+        },
+        {
+          "src": "/_next/static/chunks/3byuobrkyz9bj.js",
+          "status": 200,
+          "bytes": 71628,
+          "encoding": "gzip"
+        },
+        {
+          "src": "/_next/static/chunks/2h8mq2n9nn_uc.js",
+          "status": 200,
+          "bytes": 42739,
+          "encoding": "gzip"
+        },
+        {
+          "src": "/_next/static/chunks/turbopack-1omqh5338s00v.js",
+          "status": 200,
+          "bytes": 3851,
+          "encoding": "gzip"
+        },
+        {
+          "src": "/_next/static/chunks/278axw9oxgjty.js",
+          "status": 200,
+          "bytes": 5717,
+          "encoding": "gzip"
+        },
+        {
+          "src": "/_next/static/chunks/0j991lh4qxzfq.js",
+          "status": 200,
+          "bytes": 2166,
+          "encoding": "gzip"
+        },
+        {
+          "src": "/_next/static/chunks/3mc6dra1m0098.js",
+          "status": 200,
+          "bytes": 3572,
+          "encoding": "gzip"
+        }
+      ]
+    }
+  }
+}

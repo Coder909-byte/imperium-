@@ -1,7 +1,6 @@
 import { expect, test } from "@playwright/test";
 import gallia from "../content/regions/gallia.json";
-import { Region, Rig } from "../content/schema";
-import { z } from "zod";
+import { Region } from "../content/schema";
 import sharp from "sharp";
 
 test("Gallia's six beats retain their prose and per-beat sources", async ({ page }, testInfo) => {
@@ -37,11 +36,11 @@ test("approved plane and audio references use real loaders, and missing artwork 
     return route.fulfill({ contentType: "audio/wav", body: wave });
   });
   await page.route("**/api/dev/region-content?id=gallia", async (route) => {
-    const response = await route.fetch();
-    const body = z.object({ ok: z.boolean(), data: Region, rigs: z.array(Rig) }).parse(await response.json());
-    const data = Region.parse(body.data);
+    // Keep this synthetic fixture independent of the polling request's
+    // response lifetime, including a poll in flight during page teardown.
+    const data = Region.parse(gallia);
     data.scene.planes.forEach((plane) => { plane.placeholder = true; });
-    data.beats.forEach((beat) => { delete beat.audio.cue; delete beat.audio.cueVolume; beat.actors = []; });
+    data.beats.forEach((beat) => { delete beat.audio.cue; delete beat.audio.cueVolume; delete beat.audio.narration; beat.actors = []; });
     const skyAsset = broken ? "gallia/broken-sky.webp" : "gallia/test-sky.webp";
     data.scene.planes[0].asset = skyAsset;
     data.scene.planes[0].placeholder = false;
@@ -52,7 +51,7 @@ test("approved plane and audio references use real loaders, and missing artwork 
       file: `public/assets/${asset}`, source: "https://example.com/test", licence: "CC0", retrieved: "2026-10-22",
       approval: { by: "synthetic test fixture", at: "2026-10-22", rightsUrl: "https://example.com/test", rightsStatement: "Synthetic test fixture only" },
     }));
-    await route.fulfill({ json: { ...body, data, rigs: [], manifest } });
+    await route.fulfill({ json: { ok: true, data, rigs: [], manifest } });
   });
   await page.emulateMedia({ reducedMotion: "reduce" });
   await page.goto("/dev/scene-lab");

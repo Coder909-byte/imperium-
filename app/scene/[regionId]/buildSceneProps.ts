@@ -45,6 +45,11 @@ export function adaptRig(rig: Rig, manifest?: ManifestEntry[]): RigDef {
 
 export function buildSceneProps(region: Region, rigs: Rig[] = [], manifest: ManifestEntry[] = []): SceneRegion {
   const usedRigIds = new Set(region.beats.flatMap((beat) => beat.actors.map((actor) => actor.rig)));
+  const narrationIds = new Set(region.beats.flatMap(beat => beat.audio.narration ? [beat.audio.narration.asset] : []));
+  for (const id of narrationIds) {
+    const asset = region.scene.audioAssets[id];
+    if (!asset || !approvedAssetUrl(asset, manifest, "narration")) throw new Error(`Unapproved narration: ${id}`);
+  }
   return {
     id: region.id,
     name: region.name,
@@ -101,8 +106,9 @@ export function buildSceneProps(region: Region, rigs: Rig[] = [], manifest: Mani
     rigs: rigs.filter((rig) => usedRigIds.has(rig.id)).map((rig) => adaptRig(rig, manifest)),
     audio: {
       ambientBed: region.scene.ambientBed,
+      narrationPending: region.scene.narrationPending,
       assets: Object.fromEntries(Object.entries(region.scene.audioAssets).flatMap(([id, asset]) => {
-        const url = approvedAssetUrl(asset, manifest);
+        const url = approvedAssetUrl(asset, manifest, narrationIds.has(id) ? "narration" : "asset");
         return url ? [[id, url]] : [];
       })),
     },

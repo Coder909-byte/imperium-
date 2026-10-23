@@ -85,6 +85,7 @@
 
 .controls {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   gap: 0.75rem;
 }
@@ -107,7 +108,8 @@
   line-height: 1;
 }
 
-.navButton:disabled {
+.navButton:disabled,
+.autoplayButton:disabled {
   opacity: 0.35;
   cursor: default;
 }

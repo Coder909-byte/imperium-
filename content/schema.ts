@@ -3,6 +3,12 @@ import { z } from "zod";
 // Single source of truth for content shapes. TS types are inferred with
 // z.infer — never hand-write a parallel interface (CLAUDE.md).
 
+export const Narration = z.object({
+  asset: z.string().min(1),
+  durationMs: z.number().int().positive().max(300_000),
+  transcriptSha256: z.string().regex(/^[a-f0-9]{64}$/),
+});
+
 export const Beat = z.object({
   id: z.string(),
   year: z.string(), // display: "52 BC"
@@ -62,6 +68,7 @@ export const Beat = z.object({
       cueVolume: z.number().min(0).max(1).optional(),
       bed: z.string().optional(),
       bedIntensity: z.number().min(0).max(1).default(0.5),
+      narration: Narration.optional(),
     })
     // `.default({})` would short-circuit the object's own field defaults —
     // zod fills in a default value as-is, it doesn't re-parse it through
@@ -90,6 +97,7 @@ export const Region = z.object({
     lut: z.string(), // palette key
     ambientBed: z.string(),
     audioPlaceholder: z.boolean().default(false),
+    narrationPending: z.boolean().default(false),
     audioAssets: z.record(z.string(), z.string()).default({}),
     planes: z.array(
       z.object({
@@ -523,6 +531,16 @@ export const ManifestEntry = z.object({
     })
     .optional(),
   notes: z.string().optional(),
+  synthesis: z.object({
+    kind: z.literal("stock-voice-tts"),
+    tool: z.object({ name: z.string().min(1), version: z.string().min(1), url: z.string().url(), licence: z.string().min(1) }),
+    model: z.object({ name: z.string().min(1), revision: z.string().min(1), url: z.string().url(), licence: z.string().min(1) }),
+    voice: z.object({ id: z.string().min(1), url: z.string().url(), licence: z.string().min(1), sha256: z.string().regex(/^[a-f0-9]{64}$/) }),
+    speed: z.number().positive(),
+    transcript: z.string().min(1),
+    transcriptSha256: z.string().regex(/^[a-f0-9]{64}$/),
+    durationMs: z.number().int().positive(),
+  }).optional(),
   derivation: z.object({
     kind: z.enum(["ai-assisted-atmosphere", "ai-assisted-structure-draft", "ai-assisted-character-draft"]),
     sourceFile: z.string().min(1),
@@ -531,7 +549,7 @@ export const ManifestEntry = z.object({
   // Set only after human review of the specific reproduction's rights.
   // Forge records provenance, never grants approval on the user's behalf.
   approval: z.object({
-    scope: z.enum(["asset", "atmospheric-derivative", "structural-draft", "character-draft"]).default("asset"),
+    scope: z.enum(["asset", "atmospheric-derivative", "structural-draft", "character-draft", "generated-narration"]).default("asset"),
     by: z.string().min(1),
     at: z.iso.date(),
     rightsUrl: z.string().url(),

@@ -10,6 +10,9 @@
 // scene, not cross-tree state).
 import { computeAutoplayDwellMs } from "./dwell";
 import type { SceneBeat } from "./types";
+import type { NarrationStatus } from "../audio/NarrationTrack";
+
+export const NARRATION_END_HOLD_MS = 1000;
 
 export interface BeatDirectorSnapshot {
   index: number;
@@ -21,6 +24,7 @@ export class BeatDirector {
   private snapshot: BeatDirectorSnapshot;
   private readonly listeners = new Set<() => void>();
   private dwellTimer: ReturnType<typeof setTimeout> | null = null;
+  private narrationStatus: NarrationStatus = "fallback";
 
   constructor(beats: readonly SceneBeat[]) {
     if (beats.length === 0) throw new Error("BeatDirector requires at least one beat");
@@ -55,6 +59,13 @@ export class BeatDirector {
     this.applySnapshot({ autoplay });
   }
 
+  setNarrationStatus(beatId: string, status: NarrationStatus): void {
+    if (this.beats[this.snapshot.index].id !== beatId || status === this.narrationStatus) return;
+    this.narrationStatus = status;
+    this.clearDwellTimer();
+    if (this.snapshot.autoplay) this.armDwellTimer();
+  }
+
   /**
    * Cancels any pending dwell timer and drops all listeners. Deliberately
    * *not* a one-way "poisoned" flag that disables next()/previous()/etc.
@@ -76,6 +87,7 @@ export class BeatDirector {
   }
 
   private applySnapshot(patch: Partial<BeatDirectorSnapshot>): void {
+    if (patch.index !== undefined && patch.index !== this.snapshot.index) this.narrationStatus = "fallback";
     this.snapshot = { ...this.snapshot, ...patch };
     this.clearDwellTimer();
     if (this.snapshot.autoplay) this.armDwellTimer();
@@ -83,8 +95,9 @@ export class BeatDirector {
   }
 
   private armDwellTimer(): void {
+    if (this.narrationStatus === "loading" || this.narrationStatus === "playing") return;
     const beat = this.beats[this.snapshot.index];
-    const dwellMs = computeAutoplayDwellMs(beat.body);
+    const dwellMs = this.narrationStatus === "ended" ? NARRATION_END_HOLD_MS : computeAutoplayDwellMs(beat.body);
     this.dwellTimer = setTimeout(() => {
       // At the last beat there's nowhere left to advance to — stop
       // autoplay instead of silently doing nothing forever.

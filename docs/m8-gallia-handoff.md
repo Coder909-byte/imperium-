@@ -1,5 +1,11 @@
 # M8 Gallia handoff — 2026-10-22
 
+### Narration scope and integration — 2026-10-23
+
+The owner added narration to M8 and approved the 9.85-second stock George listening sample before requesting all six recordings. Gallia now references six locally generated, verbatim-body MP3s using the same Apache-2.0 Kokoro/stock-voice package, pinned model revision and .92 speed. No paid API, account or real-person cloning was used. Generated recordings have separate provenance and scoped `generated-narration` approval; they are not labelled PD/CC0. ADR 015 and `docs/m8-narration-review.md` record licences, approval, preparation and verification limits. Original prose/citations/art remain preserved.
+
+The existing Howler foundation owns a single cancellable narrator, separate persisted narration/ambience switches and master mute, quiet ducked ambience/cues, narration-end-led autoplay and reading-time fallback. All six recordings total 209.6 seconds and 1,098,432 bytes. Region payload is **2,124,928 bytes / 31 files**, including 1,653,554 audio bytes, within the unchanged strict <2.5 MiB ceiling. Transcript hashes and generated metadata are CI-validated. Open `/scene/gallia` and activate sound; `/dev/narration` retains the approved sample player in development only. M8 remains open for missing art, complete listening/mix/pacing, history and Safari/Pixel-class/network acceptance.
+
 ### Painted personnel continuation — 2026-10-23
 
 M8 remains open. The owner explicitly approved provisional AI-assisted Roman/Gallic infantry references, transparent rig parts and shared crowd atlases. Museum/scholarly equipment evidence and limits, the exact Met source image rights, generated provenance and scoped character approval are separate in the manifest and docs/m8-personnel-review.md (ADR 014). No Imperial segmented armour, rectangular scutum or default shirtless Gallic army was introduced; costumes, faces and colours remain interpretive, subject to historical review.

@@ -34,8 +34,8 @@ describe("Gallia's review sequence", () => {
     const props = buildSceneProps(region, rigs, manifest);
     expect(props.audio?.assets.timber_work).toBe("/assets/gallia/audio/kenney-chop.ogg");
     expect(props.audio?.assets.cloth_movement).toBe("/assets/gallia/audio/kenney-cloth1.ogg");
-    expect(props.beats[1].audio).toEqual({ bedIntensity: 0.45, cue: "timber_work", cueVolume: 0.18 });
-    expect(props.beats[5].audio).toEqual({ bedIntensity: 0.25, cue: "cloth_movement", cueVolume: 0.12 });
+    expect(props.beats[1].audio).toMatchObject({ bedIntensity: 0.45, cue: "timber_work", cueVolume: 0.18 });
+    expect(props.beats[5].audio).toMatchObject({ bedIntensity: 0.25, cue: "cloth_movement", cueVolume: 0.12 });
     expect(props.beats[3].audio?.cue).toBeUndefined();
     for (const cueVolume of [-0.1, 1.1]) {
       region.beats[1].audio.cueVolume = cueVolume;

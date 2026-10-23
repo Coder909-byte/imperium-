@@ -14,6 +14,7 @@
 // re-exported here so app/'s adapters only need one import path for
 // every plain shape engine/scene hands back to content.
 import type { RigDef } from "./puppet/types";
+import type { BeatAudio } from "../audio/AudioDirector";
 export type { RigDef } from "./puppet/types";
 
 // Structurally mirrors content/schema.ts's Beat.fx enum, but declared
@@ -54,7 +55,7 @@ export interface SceneBeat {
   lightSource: boolean;
   actors: SceneActor[];
   sources?: { label: string; url?: string }[];
-  audio?: { cue?: string; cueVolume?: number; bed?: string; bedIntensity: number };
+  audio?: BeatAudio;
 }
 
 export interface SceneActor {
@@ -118,5 +119,5 @@ export interface SceneRegion {
    *  loaded eagerly (see CLAUDE.md's M6 note on why puppets are eager,
    *  unlike M5's atmosphere split) and resolved once by SceneActors. */
   rigs: RigDef[];
-  audio?: { ambientBed: string; assets: Record<string, string> };
+  audio?: { ambientBed: string; assets: Record<string, string>; narrationPending?: boolean };
 }

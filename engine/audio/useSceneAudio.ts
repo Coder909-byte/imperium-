@@ -1,44 +1,85 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import type { SceneBeat, SceneRegion } from "../scene/types";
-import { AudioDirector, MUTE_STORAGE_KEY } from "./AudioDirector";
+import type { SceneRegion } from "../scene/types";
+import type { BeatDirector } from "../scene/BeatDirector";
+import type { NarrationStatus } from "./NarrationTrack";
+import { AudioDirector, AMBIENCE_STORAGE_KEY, MUTE_STORAGE_KEY, NARRATION_STORAGE_KEY } from "./AudioDirector";
 
-export function useSceneAudio(region: SceneRegion, beat: SceneBeat) {
+function storedFlag(key: string, fallback: boolean): boolean {
+  try { const value = localStorage.getItem(key); return value === null ? fallback : value === "true"; } catch { return fallback; }
+}
+function persist(key: string, value: boolean): void {
+  try { localStorage.setItem(key, String(value)); } catch { /* Storage may be disabled. */ }
+}
+
+export function useSceneAudio(region: SceneRegion, beatDirector: BeatDirector) {
   const directorRef = useRef<AudioDirector | null>(null);
-  const [muted, setMuted] = useState(() => {
-    try { return localStorage.getItem(MUTE_STORAGE_KEY) === "true"; } catch { return false; }
-  });
+  const [muted, setMuted] = useState(() => storedFlag(MUTE_STORAGE_KEY, false));
+  const [narrationEnabled, setNarration] = useState(() => storedFlag(NARRATION_STORAGE_KEY, true));
+  const [ambienceEnabled, setAmbience] = useState(() => storedFlag(AMBIENCE_STORAGE_KEY, true));
   const [failed, setFailed] = useState(false);
+  const [narrationStatus, setNarrationStatus] = useState<NarrationStatus>("fallback");
 
   useEffect(() => {
-    const director = new AudioDirector(region.audio?.assets ?? {}, region.audio?.ambientBed ?? "none", muted, () => setFailed(true));
+    const director = new AudioDirector(region.audio?.assets ?? {}, region.audio?.ambientBed ?? "none", muted,
+      () => setFailed(true), (id, status) => {
+        if (!id) return;
+        beatDirector.setNarrationStatus(id, status);
+        setNarrationStatus(status);
+      });
     directorRef.current = director;
-    // Mount never constructs a Howl or starts playback. Only trusted
-    // pointer/keyboard input activates the current scene's sounds.
+    director.setNarrationEnabled(narrationEnabled);
+    director.setAmbienceEnabled(ambienceEnabled);
+    const applyBeat = () => {
+      const beat = region.beats[beatDirector.getSnapshot().index];
+      director.applyBeat(beat.id, beat.audio);
+    };
+    applyBeat();
+    // Cancel/replace audio synchronously when the index changes, including
+    // timer-driven autoplay, before React paints the next caption.
+    const unsubscribe = beatDirector.subscribe(applyBeat);
+    // Bubble after button handlers: an initial navigation click must not
+    // briefly start the old beat while it is activating the new one.
     const activate = (event: Event) => { if (event.isTrusted) director.activate(); };
-    window.addEventListener("pointerdown", activate);
-    window.addEventListener("keydown", activate);
+    window.addEventListener("click", activate);
     return () => {
-      window.removeEventListener("pointerdown", activate);
-      window.removeEventListener("keydown", activate);
+      unsubscribe();
+      window.removeEventListener("click", activate);
       director.destroy();
       directorRef.current = null;
     };
-    // A region remount owns the audio lifecycle; mute changes mutate it.
+    // Preferences mutate the scene-owned director through their controls.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [region]);
+  }, [region, beatDirector]);
 
-  useEffect(() => { directorRef.current?.applyBeat(beat.id, beat.audio); }, [beat]);
-  useEffect(() => { directorRef.current?.setMuted(muted); }, [muted]);
-
-  const toggleMute = (event: { isTrusted: boolean }) => {
-    const next = !muted;
-    try { localStorage.setItem(MUTE_STORAGE_KEY, String(next)); } catch { /* Storage may be disabled. */ }
-    setMuted(next);
-    if (!next) setFailed(false);
-    // The click is itself a gesture, including keyboard activation.
-    directorRef.current?.setMuted(next);
+  const activate = (event: { isTrusted: boolean }) => {
     if (event.isTrusted) directorRef.current?.activate();
   };
+  const toggleMute = (event: { isTrusted: boolean }) => {
+    const next = !muted;
+    persist(MUTE_STORAGE_KEY, next);
+    setMuted(next);
+    if (!next) setFailed(false);
+    directorRef.current?.setMuted(next);
+    activate(event);
+  };
+  const toggleNarration = (event: { isTrusted: boolean }) => {
+    const next = !narrationEnabled;
+    persist(NARRATION_STORAGE_KEY, next);
+    setNarration(next);
+    directorRef.current?.setNarrationEnabled(next);
+    activate(event);
+  };
+  const toggleAmbience = (event: { isTrusted: boolean }) => {
+    const next = !ambienceEnabled;
+    persist(AMBIENCE_STORAGE_KEY, next);
+    setAmbience(next);
+    if (next) setFailed(false);
+    directorRef.current?.setAmbienceEnabled(next);
+    activate(event);
+  };
   const stop = useCallback(() => directorRef.current?.destroy(), []);
-  return { muted, toggleMute, stop, failed, available: Object.keys(region.audio?.assets ?? {}).length > 0 };
+  const narrationAvailable = region.beats.some(beat => beat.audio?.narration && region.audio?.assets[beat.audio.narration.asset]);
+  return { muted, toggleMute, stop, failed, activate, narrationEnabled, ambienceEnabled, narrationStatus,
+    toggleNarration, toggleAmbience, narrationAvailable, narrationPending: region.audio?.narrationPending,
+    available: Object.keys(region.audio?.assets ?? {}).length > 0 };
 }

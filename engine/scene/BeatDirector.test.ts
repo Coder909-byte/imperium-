@@ -1,5 +1,5 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import { BeatDirector } from "./BeatDirector";
+import { BeatDirector, NARRATION_END_HOLD_MS } from "./BeatDirector";
 import type { SceneBeat } from "./types";
 
 function makeBeat(id: string, wordCount: number): SceneBeat {
@@ -73,6 +73,50 @@ describe("BeatDirector", () => {
 describe("BeatDirector autoplay dwell", () => {
   beforeEach(() => vi.useFakeTimers());
   afterEach(() => vi.useRealTimers());
+
+  it("waits for narration end when autoplay starts during playback, then holds briefly before advancing", () => {
+    const director = new BeatDirector([makeBeat("a", 10), makeBeat("b", 10)]);
+    director.setNarrationStatus("a", "playing");
+    director.setAutoplay(true);
+    vi.advanceTimersByTime(60_000);
+    expect(director.getSnapshot().index).toBe(0);
+    director.setNarrationStatus("a", "ended");
+    vi.advanceTimersByTime(NARRATION_END_HOLD_MS - 1);
+    expect(director.getSnapshot().index).toBe(0);
+    vi.advanceTimersByTime(1);
+    expect(director.getSnapshot().index).toBe(1);
+    director.destroy();
+  });
+
+  it("gives a fresh reading dwell after disabled/failed narration and ignores an old beat's end", () => {
+    const director = new BeatDirector([makeBeat("a", 10), makeBeat("b", 10)]);
+    director.setAutoplay(true);
+    director.setNarrationStatus("a", "loading");
+    vi.advanceTimersByTime(8000);
+    expect(director.getSnapshot().index).toBe(0);
+    director.setNarrationStatus("a", "failed");
+    vi.advanceTimersByTime(6999);
+    expect(director.getSnapshot().index).toBe(0);
+    vi.advanceTimersByTime(1);
+    expect(director.getSnapshot().index).toBe(1);
+    director.setNarrationStatus("a", "ended");
+    vi.advanceTimersByTime(1000);
+    expect(director.getSnapshot().autoplay).toBe(true);
+    director.setNarrationStatus("b", "playing");
+    director.setNarrationStatus("b", "fallback");
+    vi.advanceTimersByTime(7000);
+    expect(director.getSnapshot().autoplay).toBe(false);
+  });
+
+  it("never advances after autoplay is disabled while the narrator finishes", () => {
+    const director = new BeatDirector([makeBeat("a", 10), makeBeat("b", 10)]);
+    director.setAutoplay(true);
+    director.setNarrationStatus("a", "playing");
+    director.setAutoplay(false);
+    director.setNarrationStatus("a", "ended");
+    vi.advanceTimersByTime(30_000);
+    expect(director.getSnapshot()).toEqual({ index: 0, autoplay: false });
+  });
 
   it("advances to the next beat after the computed dwell, using the *current* beat's body", () => {
     // 10 words -> floors at the 7000ms minimum dwell (dwell.test.ts covers the formula itself).

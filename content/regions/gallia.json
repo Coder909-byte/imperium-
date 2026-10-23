@@ -91,8 +91,15 @@
     "audioAssets": {
       "wind_plains": "gallia/audio/wind-plains.wav",
       "timber_work": "gallia/audio/kenney-chop.ogg",
-      "cloth_movement": "gallia/audio/kenney-cloth1.ogg"
-    }
+      "cloth_movement": "gallia/audio/kenney-cloth1.ogg",
+      "narration_the_hill": "gallia/audio/narration-the-hill.mp3",
+      "narration_eighteen_kilometres": "gallia/audio/narration-eighteen-kilometres.mp3",
+      "narration_second_wall": "gallia/audio/narration-second-wall.mp3",
+      "narration_the_mandubii": "gallia/audio/narration-the-mandubii.mp3",
+      "narration_two_battles": "gallia/audio/narration-two-battles.mp3",
+      "narration_rides_out_alone": "gallia/audio/narration-rides-out-alone.mp3"
+    },
+    "narrationPending": false
   },
   "beats": [
     {
@@ -181,7 +188,12 @@
         }
       ],
       "audio": {
-        "bedIntensity": 0.35
+        "bedIntensity": 0.35,
+        "narration": {
+          "asset": "narration_the_hill",
+          "durationMs": 35625,
+          "transcriptSha256": "3bd479cac32ab89d93e02f8d4bf10b43a5d0c4748134a70f3333a1a89a4ba5a6"
+        }
       },
       "sources": [
         {
@@ -304,7 +316,12 @@
       "audio": {
         "bedIntensity": 0.45,
         "cue": "timber_work",
-        "cueVolume": 0.18
+        "cueVolume": 0.18,
+        "narration": {
+          "asset": "narration_eighteen_kilometres",
+          "durationMs": 33900,
+          "transcriptSha256": "a85997ee85559809699a26fadc8eb4fa7b8ec4dd70439226e8b9820c45b2ffd7"
+        }
       },
       "sources": [
         {
@@ -465,7 +482,12 @@
         }
       ],
       "audio": {
-        "bedIntensity": 0.5
+        "bedIntensity": 0.5,
+        "narration": {
+          "asset": "narration_second_wall",
+          "durationMs": 40425,
+          "transcriptSha256": "7868171043f71d2bf357d02886abcd3429182d93740ec4df60860726dff2caab"
+        }
       },
       "sources": [
         {
@@ -559,7 +581,12 @@
         }
       ],
       "audio": {
-        "bedIntensity": 0.15
+        "bedIntensity": 0.15,
+        "narration": {
+          "asset": "narration_the_mandubii",
+          "durationMs": 34900,
+          "transcriptSha256": "2e73e3367811ecd417b90cc8362cb6ac085a5c8e8b713ffacb5348f70e8b0fe9"
+        }
       },
       "sources": [
         {
@@ -813,7 +840,12 @@
         }
       ],
       "audio": {
-        "bedIntensity": 0.85
+        "bedIntensity": 0.85,
+        "narration": {
+          "asset": "narration_two_battles",
+          "durationMs": 34425,
+          "transcriptSha256": "6abdc8c29c1d3f6edcdd249516e7f872ce4a238dd6ec143fcd077b1ebfb5fbec"
+        }
       },
       "sources": [
         {
@@ -901,7 +933,12 @@
       "audio": {
         "bedIntensity": 0.25,
         "cue": "cloth_movement",
-        "cueVolume": 0.12
+        "cueVolume": 0.12,
+        "narration": {
+          "asset": "narration_rides_out_alone",
+          "durationMs": 30325,
+          "transcriptSha256": "c84a745c52fa8fa68de97598bfb4c4636c01b14188491ee669c58205b5873a0c"
+        }
       },
       "sources": [
         {

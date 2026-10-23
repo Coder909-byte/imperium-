@@ -12,7 +12,7 @@ const isolatedRegion = () => {
   region.scene.planes.forEach((plane) => { plane.placeholder = true; });
   region.scene.audioAssets = {};
   region.scene.audioPlaceholder = true;
-  region.beats.forEach((beat) => { delete beat.audio.cue; delete beat.audio.cueVolume; });
+  region.beats.forEach((beat) => { delete beat.audio.cue; delete beat.audio.cueVolume; delete beat.audio.narration; });
   return region;
 };
 

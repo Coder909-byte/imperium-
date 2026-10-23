@@ -278,6 +278,11 @@ const Beat = z.object({
     cue: z.string().optional(),
     cueVolume: z.number().min(0).max(1).optional(), // playback gain defaults to 1
     bedIntensity: z.number().min(0).max(1).default(0.5),
+    narration: z.object({
+      asset: z.string(), // ID in scene.audioAssets, reviewed recording only
+      durationMs: z.number().int().positive(),
+      transcriptSha256: z.string(), // CI binds it to the unchanged body
+    }).optional(),
   }).default({}),
   sources: z.array(z.object({
     label: z.string(),
@@ -355,7 +360,8 @@ Clash-of-Clans style. Two cloud masses sweep in from left and right, meet, hold 
 
 - Letterboxed. Caption block bottom-centre: year eyebrow, headline, body.
 - `‹` `›`, pip indicators, autoplay toggle. Arrow keys and Escape bound.
-- Autoplay dwell = `max(7s, wordCount / 3.2 + 2.5s)`. Never a fixed interval — long beats get cut off.
+- Autoplay follows an enabled narration's actual end plus one second. When narration is missing, muted, disabled or fails, fallback dwell = `max(7s, wordCount / 3.2 + 2.5s)` (ADR 015). Never a fixed reading interval — long beats get cut off.
+- One narrator only, with trusted activation and immediate cancellation on navigation/exit. Separate narration/ambience switches plus master mute; full captions remain visible throughout.
 - Pointer parallax on all planes; off under `prefers-reduced-motion`.
 - **Sources drawer** per beat. Costs nothing, buys enormous credibility with the audience most likely to pick you apart.
 - End card: "Test yourself on {Region}" / "Return to the map."
@@ -460,7 +466,9 @@ Rig format (`content/rigs/*.json`): parts, pivots, z-order, clips as keyframed r
 ✅ A raw painting scan becomes a game-ready colour plane in one command; a folder of already-separated layers becomes a batch of them; `--matte` produces a clean alpha matte for a character/silhouette source; every processed file gets a manifest row, and a missing licence field refuses the write rather than leaving one blank.
 
 **M8 — Gallia to the ceiling** *(~6 days)*
-Six beats, real painted planes, puppet actors, Gallia ambient beds and required cues, all effects. The reference implementation. M8 also owns the minimum reusable Howler foundation: user-gesture activation, bed crossfades/intensity, one-shot cues, persisted master mute and scene-exit cleanup. Only human-approved, manifest-listed PD/CC0 assets may play (ADR 009). Audio placeholders keep this milestone incomplete until assets and the audible mix are approved.
+Six beats, real painted planes, puppet actors, Gallia ambient beds and required cues, all effects. The reference implementation. M8 also owns the minimum reusable Howler foundation: user-gesture activation, bed crossfades/intensity, one-shot cues, persisted master mute and scene-exit cleanup (ADR 009). Ambient beds/cues retain the human-approved, manifest-listed PD/CC0 boundary. Owner-approved generated stock-voice narration has its own reviewed code/model/voice provenance and scoped approval, without claiming PD/CC0 output status (ADR 015).
+
+**Narration scope added 2026-10-23:** one consistent deep, clear, restrained documentary voice reads each existing `beat.body` verbatim; headlines/year and full text remain visible. Investigate zero-cost local generation and verify exact tool/model/stock-voice licences first; prepare a short listening sample before generating six recordings. No paid API, account-dependent shipping path, real-person clone or inference from free access to distribution rights. The owner approved the George sample and full generation in this session. Narration uses the existing Howler foundation, starts only after a trusted gesture, cancels synchronously on beat change/exit and never overlaps an old beat. Separate persisted narration/ambience switches accompany master mute; ambience/cues stay quiet underneath narration. Autoplay waits for actual narration completion plus one second; missing/disabled/muted/failed/stalled narration uses reading-time fallback. Loading/end watchdogs, stale-callback protection, manifest entries, verbatim transcript hashes and narration/audio/total size accounting are required. The strict <2.5 MiB region limit and reduced-motion behaviour remain unchanged. Audio work keeps M8 incomplete until the audible mix/pacing and target-browser/device checks are accepted.
 ✅ Someone who has never seen the project watches end to end without touching their phone.
 
 **M9 — Quiz** *(~3 days)*

@@ -1,14 +1,19 @@
 import { Howl } from "howler";
+import { NarrationTrack, type BeatNarration, type NarrationStatus } from "./NarrationTrack";
 
 export interface BeatAudio {
   cue?: string;
   cueVolume?: number;
   bed?: string;
   bedIntensity: number;
+  narration?: BeatNarration;
 }
 
 export const AUDIO_FADE_MS = 600;
 export const MUTE_STORAGE_KEY = "imperium:audio-muted";
+export const NARRATION_STORAGE_KEY = "imperium:narration-enabled";
+export const AMBIENCE_STORAGE_KEY = "imperium:ambience-enabled";
+export const NARRATION_DUCK_GAIN = 0.18;
 
 /** Scene-owned sounds only. No global Howler.unload/mute: another
  * mounted consumer must not lose its audio when this scene exits. */
@@ -19,6 +24,10 @@ export class AudioDirector {
   private activated = false;
   private destroyed = false;
   private muted: boolean;
+  private ambienceEnabled = true;
+  private narrationEnabled = true;
+  private narrating = false;
+  private readonly narration: NarrationTrack;
   private currentBed: string | undefined;
   private currentCue: string | undefined;
   private beatId: string | undefined;
@@ -29,13 +38,23 @@ export class AudioDirector {
     private readonly ambientBed: string,
     muted = false,
     private readonly onError: () => void = () => {},
-  ) { this.muted = muted; }
+    onNarration: (beatId: string, status: NarrationStatus) => void = () => {},
+  ) {
+    this.muted = muted;
+    this.narration = new NarrationTrack(assets, (id, status) => {
+      this.narrating = status === "loading" || status === "playing";
+      this.updateAmbienceLevel();
+      onNarration(id, status);
+    });
+    this.narration.setEnabled(!muted);
+  }
 
   /** Caller invokes synchronously inside a trusted user gesture. */
   activate(): void {
     if (this.destroyed || this.activated) return;
     this.activated = true;
-    if (!this.muted) this.playCurrent(true);
+    this.narration.activate();
+    if (!this.muted && this.ambienceEnabled) this.playCurrent(true);
   }
 
   applyBeat(id: string, audio: BeatAudio = { bedIntensity: 0.5 }): void {
@@ -47,20 +66,48 @@ export class AudioDirector {
       if (this.currentCue) this.sounds.get(this.currentCue)?.stop();
       this.currentCue = undefined;
     }
-    if (this.activated && !this.muted) this.playCurrent(changed);
+    this.narration.applyBeat(id, audio.narration);
+    if (this.activated && !this.muted && this.ambienceEnabled) this.playCurrent(changed);
   }
 
   setMuted(muted: boolean): void {
     if (this.destroyed || this.muted === muted) return;
     this.muted = muted;
-    for (const sound of this.sounds.values()) sound.mute(muted);
+    for (const sound of this.sounds.values()) sound.mute(muted || !this.ambienceEnabled);
+    this.narration.setEnabled(!muted && this.narrationEnabled);
     if (muted) {
       if (this.currentCue) this.sounds.get(this.currentCue)?.stop();
       this.currentCue = undefined;
     } else {
       this.failedSounds.clear();
-      if (this.activated) this.playCurrent(false);
+      if (this.activated && this.ambienceEnabled) this.playCurrent(false);
     }
+  }
+
+  setNarrationEnabled(enabled: boolean): void {
+    this.narrationEnabled = enabled;
+    this.narration.setEnabled(enabled && !this.muted);
+  }
+
+  setAmbienceEnabled(enabled: boolean): void {
+    if (this.destroyed || enabled === this.ambienceEnabled) return;
+    this.ambienceEnabled = enabled;
+    for (const sound of this.sounds.values()) sound.mute(this.muted || !enabled);
+    if (!enabled) {
+      if (this.currentCue) this.sounds.get(this.currentCue)?.stop();
+      this.currentCue = undefined;
+    } else if (this.activated && !this.muted) {
+      this.failedSounds.clear();
+      this.playCurrent(false);
+    }
+  }
+
+  private updateAmbienceLevel(): void {
+    const gain = this.narrating ? NARRATION_DUCK_GAIN : 1;
+    const bed = this.currentBed && this.sounds.get(this.currentBed);
+    if (bed) bed.fade(bed.volume(), this.audio.bedIntensity * gain, AUDIO_FADE_MS);
+    const cue = this.currentCue && this.sounds.get(this.currentCue);
+    if (cue) cue.volume((this.audio.cueVolume ?? 1) * gain);
   }
 
   private getSound(id: string, loop: boolean): Howl | undefined {
@@ -113,14 +160,14 @@ export class AudioDirector {
     if (bed) {
       bed.mute(this.muted);
       if (!bed.playing()) bed.play();
-      bed.fade(bed.volume(), this.audio.bedIntensity, AUDIO_FADE_MS);
+      bed.fade(bed.volume(), this.audio.bedIntensity * (this.narrating ? NARRATION_DUCK_GAIN : 1), AUDIO_FADE_MS);
     }
     if (playCue && this.audio.cue) {
       const cue = this.getSound(this.audio.cue, false);
       if (cue) {
         this.currentCue = this.audio.cue;
         cue.mute(false);
-        cue.volume(this.audio.cueVolume ?? 1);
+        cue.volume((this.audio.cueVolume ?? 1) * (this.narrating ? NARRATION_DUCK_GAIN : 1));
         cue.play();
       }
     }
@@ -129,6 +176,7 @@ export class AudioDirector {
   destroy(): void {
     if (this.destroyed) return;
     this.destroyed = true;
+    this.narration.destroy();
     for (const timer of this.stopTimers.values()) clearTimeout(timer);
     this.stopTimers.clear();
     for (const sound of this.sounds.values()) { sound.stop(); sound.unload(); }

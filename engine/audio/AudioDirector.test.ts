@@ -2,7 +2,7 @@ import { afterEach, describe, expect, it, vi } from "vitest";
 import { AudioDirector, AUDIO_FADE_MS } from "./AudioDirector";
 
 const { instances } = vi.hoisted(() => ({ instances: [] as {
-  options: { src: string[]; loop: boolean; onloaderror: () => void; onplayerror: () => void }; play: ReturnType<typeof vi.fn>;
+  options: { src: string[]; loop: boolean; onloaderror: () => void; onplayerror: () => void; onplay?: () => void; onend?: () => void }; play: ReturnType<typeof vi.fn>;
   stop: ReturnType<typeof vi.fn>; unload: ReturnType<typeof vi.fn>;
   fade: ReturnType<typeof vi.fn>; mute: ReturnType<typeof vi.fn>;
   volume: ReturnType<typeof vi.fn>;
@@ -11,17 +11,41 @@ vi.mock("howler", () => ({
   Howl: class {
     play = vi.fn(() => { this.active = true; return 1; });
     stop = vi.fn(() => { this.active = false; });
-    unload = vi.fn(); fade = vi.fn(); mute = vi.fn();
+    unload = vi.fn(); fade = vi.fn(); mute = vi.fn(); off = vi.fn();
     active = false;
     volume = vi.fn(() => 0.5);
     playing = () => this.active;
-    constructor(public options: { src: string[]; loop: boolean; onloaderror: () => void; onplayerror: () => void }) { instances.push(this); }
+    constructor(public options: typeof instances[number]["options"]) { instances.push(this); }
   },
 }));
 afterEach(() => { instances.length = 0; vi.useRealTimers(); });
 const assets = { wind: "/assets/audio/wind.mp3", battle: "/assets/audio/battle.mp3", horn: "/assets/audio/horn.mp3" };
 
 describe("scene audio lifecycle", () => {
+  it("ducks beds and cues under a single narrator while ambience and narration remain independently controllable", () => {
+    const director = new AudioDirector({ ...assets, voice: "/voice.wav" }, "wind");
+    director.applyBeat("a", { cue: "horn", cueVolume: 0.2, bedIntensity: 0.5, narration: { asset: "voice", durationMs: 30_000 } });
+    director.activate();
+    const narrator = instances.find(sound => sound.options.src[0] === "/voice.wav")!;
+    const wind = instances.find(sound => sound.options.src[0] === assets.wind)!;
+    const cue = instances.find(sound => sound.options.src[0] === assets.horn)!;
+    expect(wind.fade).toHaveBeenLastCalledWith(0.5, 0.09, AUDIO_FADE_MS);
+    expect(cue.volume).toHaveBeenLastCalledWith(0.2 * 0.18);
+    director.setAmbienceEnabled(false);
+    expect(wind.mute).toHaveBeenLastCalledWith(true);
+    expect(narrator.stop).not.toHaveBeenCalled();
+    director.setNarrationEnabled(false);
+    expect(narrator.stop).toHaveBeenCalledOnce();
+    expect(wind.mute).toHaveBeenLastCalledWith(true);
+    director.setAmbienceEnabled(true);
+    expect(wind.fade).toHaveBeenLastCalledWith(0.5, 0.5, AUDIO_FADE_MS);
+    director.setNarrationEnabled(true);
+    const restarted = instances.at(-1)!;
+    director.setMuted(true);
+    expect(restarted.stop).toHaveBeenCalledOnce();
+    director.destroy();
+    expect(restarted.unload).toHaveBeenCalledOnce();
+  });
   it("plays cues at their authored level once per beat entry and never replays one on unmute", () => {
     const director = new AudioDirector(assets, "wind");
     const audio = { cue: "horn", cueVolume: 0.18, bedIntensity: 0.45 };

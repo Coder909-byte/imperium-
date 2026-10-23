@@ -1,6 +1,7 @@
 // CI gate: malformed region or question JSON fails the build, never the
 // runtime (CLAUDE.md hard rule #5). Run with `npm run validate`.
 import { existsSync, readdirSync, readFileSync, statSync } from "node:fs";
+import { validateNarrationTranscripts, validateSynthesisTranscripts } from "../content/narrationValidation";
 import { join } from "node:path";
 import type { z } from "zod";
 import { Region, Question, Province, City, SeaLabel, Rig, ManifestEntry } from "../content/schema";
@@ -115,6 +116,8 @@ for (const { file, itemSchema } of arrayFileTargets) {
   });
 }
 
+for (const issue of validateSynthesisTranscripts(manifest)) { failures += 1; console.error(`✗ ${issue}`); }
+
 for (const rig of rigs) {
   const assetIssues = rig.parts.filter((part) => !["torso", "head", "limb", "foot"].includes(part.texture)).flatMap((part) => {
     const file = assetFile(part.texture);
@@ -133,12 +136,13 @@ for (const rig of rigs) {
 }
 
 for (const region of regions) {
-  const issues = validateAssetReferences(region, manifest, (file) => existsSync(join(__dirname, "..", file)));
+  const issues = [...validateAssetReferences(region, manifest, (file) => existsSync(join(__dirname, "..", file))), ...validateNarrationTranscripts(region, manifest)];
   const payload = measureRegionAssets(region, rigs, (file) => {
     const path = join(__dirname, "..", file);
     return existsSync(path) ? statSync(path).size : 0;
   });
   console.log(`${region.id}: ${payload.bytes} referenced asset bytes (${payload.files.length} files; procedural placeholders excluded)`);
+  console.log(`  audio: ${payload.audioBytes} bytes, including ${payload.narrationBytes} narration bytes`);
   if (!payload.fits) issues.push(`scene assets exceed the strict <2.5MB budget: ${payload.bytes} bytes`);
   if (issues.length === 0) continue;
   failures += 1;
