@@ -1,0 +1,41 @@
+{
+  "recordedAt": "2026-10-23T09:00:52.455Z",
+  "environment": "Instrumented headless desktop Chrome; local production; not mobile GPU timing",
+  "baseURL": "http://localhost:3002",
+  "windows": [
+    {
+      "rate": 1,
+      "frames": 155,
+      "medianMs": 16.699999999999818,
+      "p95Ms": 33.399999999999636,
+      "drawsPerFrame": 31.2,
+      "instancedPerFrame": 0,
+      "framebufferBindsPerFrame": 19.12258064516129,
+      "tier": "low",
+      "actors": "gaul_warrior:march:20,gaul_warrior_blue:march:20,roman_infantry:brace:20,roman_infantry:brace:20,roman_infantry:brace:20,roman_infantry:brace:20,gaul_warrior:march:15,gaul_warrior_blue:march:15,roman_infantry:brace:1,roman_infantry:thrust:1,roman_infantry:brace:1,gaul_warrior:thrust:1,gaul_warrior_blue:brace:1"
+    },
+    {
+      "rate": 4,
+      "frames": 131,
+      "medianMs": 16.699999999999818,
+      "p95Ms": 33.400000000000546,
+      "drawsPerFrame": 31.236641221374047,
+      "instancedPerFrame": 0,
+      "framebufferBindsPerFrame": 19.14503816793893,
+      "tier": "low",
+      "actors": "gaul_warrior:march:20,gaul_warrior_blue:march:20,roman_infantry:brace:20,roman_infantry:brace:20,roman_infantry:brace:20,roman_infantry:brace:20,gaul_warrior:march:15,gaul_warrior_blue:march:15,roman_infantry:brace:1,roman_infantry:thrust:1,roman_infantry:brace:1,gaul_warrior:thrust:1,gaul_warrior_blue:brace:1"
+    },
+    {
+      "rate": 6,
+      "frames": 123,
+      "medianMs": 16.699999999999818,
+      "p95Ms": 50,
+      "drawsPerFrame": 31.252032520325205,
+      "instancedPerFrame": 0,
+      "framebufferBindsPerFrame": 19.15447154471545,
+      "tier": "low",
+      "actors": "gaul_warrior:march:20,gaul_warrior_blue:march:20,roman_infantry:brace:20,roman_infantry:brace:20,roman_infantry:brace:20,roman_infantry:brace:20,gaul_warrior:march:15,gaul_warrior_blue:march:15,roman_infantry:brace:1,roman_infantry:thrust:1,roman_infantry:brace:1,gaul_warrior:thrust:1,gaul_warrior_blue:brace:1"
+    }
+  ],
+  "errors": []
+}

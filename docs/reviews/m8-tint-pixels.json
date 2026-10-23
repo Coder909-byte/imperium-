@@ -1,0 +1,18 @@
+[
+  {
+    "width": 1280,
+    "height": 844,
+    "meanAbsoluteChannelDelta": 0.04996019697867299,
+    "maxChannelDelta": 3,
+    "changedPixelFraction": 0.09481357375592417,
+    "over3PixelFraction": 0
+  },
+  {
+    "width": 390,
+    "height": 844,
+    "meanAbsoluteChannelDelta": 0.04572447036902013,
+    "maxChannelDelta": 3,
+    "changedPixelFraction": 0.086441244379633,
+    "over3PixelFraction": 0
+  }
+]

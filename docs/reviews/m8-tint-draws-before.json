@@ -1,0 +1,41 @@
+{
+  "recordedAt": "2026-10-23T08:55:19.439Z",
+  "environment": "Instrumented headless desktop Chrome; local production; not mobile GPU timing",
+  "baseURL": "http://localhost:3002",
+  "windows": [
+    {
+      "rate": 1,
+      "frames": 130,
+      "medianMs": 16.700000000000728,
+      "p95Ms": 33.399999999999636,
+      "drawsPerFrame": 36.276923076923076,
+      "instancedPerFrame": 0,
+      "framebufferBindsPerFrame": 26.2,
+      "tier": "low",
+      "actors": "gaul_warrior:march:20,gaul_warrior_blue:march:20,roman_infantry:brace:20,roman_infantry:brace:20,roman_infantry:brace:20,roman_infantry:brace:20,gaul_warrior:march:15,gaul_warrior_blue:march:15,roman_infantry:brace:1,roman_infantry:thrust:1,roman_infantry:brace:1,gaul_warrior:thrust:1,gaul_warrior_blue:brace:1"
+    },
+    {
+      "rate": 4,
+      "frames": 91,
+      "medianMs": 33.30000000000018,
+      "p95Ms": 50.099999999999454,
+      "drawsPerFrame": 36.395604395604394,
+      "instancedPerFrame": 0,
+      "framebufferBindsPerFrame": 26.285714285714285,
+      "tier": "low",
+      "actors": "gaul_warrior:march:20,gaul_warrior_blue:march:20,roman_infantry:brace:20,roman_infantry:brace:20,roman_infantry:brace:20,roman_infantry:brace:20,gaul_warrior:march:15,gaul_warrior_blue:march:15,roman_infantry:brace:1,roman_infantry:thrust:1,roman_infantry:brace:1,gaul_warrior:thrust:1,gaul_warrior_blue:brace:1"
+    },
+    {
+      "rate": 6,
+      "frames": 83,
+      "medianMs": 33.30000000000018,
+      "p95Ms": 83.39999999999964,
+      "drawsPerFrame": 36.433734939759034,
+      "instancedPerFrame": 0,
+      "framebufferBindsPerFrame": 26.313253012048193,
+      "tier": "low",
+      "actors": "gaul_warrior:march:20,gaul_warrior_blue:march:20,roman_infantry:brace:20,roman_infantry:brace:20,roman_infantry:brace:20,roman_infantry:brace:20,gaul_warrior:march:15,gaul_warrior_blue:march:15,roman_infantry:brace:1,roman_infantry:thrust:1,roman_infantry:brace:1,gaul_warrior:thrust:1,gaul_warrior_blue:brace:1"
+    }
+  ],
+  "errors": []
+}

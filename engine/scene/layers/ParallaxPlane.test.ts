@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { Texture } from "pixi.js";
+import { Sprite, Texture } from "pixi.js";
 import { computeParallaxOffset, ParallaxPlane, PARALLAX_STRENGTH_PX } from "./ParallaxPlane";
 
 describe("computeParallaxOffset", () => {
@@ -92,12 +92,25 @@ describe("ParallaxPlane", () => {
     expect((plane.container.children[0] as unknown as { filters: unknown[] }).filters).toHaveLength(0);
   });
 
-  // Constructing an actual ColorMatrixFilter or BlurFilter probes for a
+  it("keeps white-tinted painted planes in the sprite batch without an identity filter pass", () => {
+    const plane = makePlane({ tint: "#ffffff" });
+    const sprite = plane.container.children[0] as Sprite;
+    expect(sprite.tint).toBe(0xffffff);
+    expect(sprite.filters).toHaveLength(0);
+  });
+
+  it("applies an authored colour tint through sprite multiplication without a filter pass", () => {
+    const plane = makePlane({ tint: "#8a7a63" });
+    const sprite = plane.container.children[0] as Sprite;
+    expect(sprite.tint).toBe(0x8a7a63);
+    expect(sprite.filters).toHaveLength(0);
+    expect(sprite.texture).toBe(Texture.WHITE);
+  });
+
+  // Constructing an actual BlurFilter probes for a
   // real WebGL-capable canvas at filter-construction time (Pixi tests
   // shader precision up front) — unavailable in Vitest's plain "node"
   // environment, and not worth jsdom for one file (same call this
-  // codebase already made for sweepTween.test.ts). The tint/blur branch
-  // that *decides whether* to construct them is covered above; the
-  // filters themselves are verified in the browser — e2e and a visual
-  // check in /dev/scene-lab.
+  // codebase already made for sweepTween.test.ts). Nonzero blur is
+  // verified in the browser alongside painted alpha edges.
 });

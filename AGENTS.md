@@ -117,6 +117,14 @@ npm run forge -- <file>  # source scan → scene plane (colour or alpha, see PRD
 
 ## Current state
 
+### Plane tint performance continuation — 2026-10-23
+
+Resumed clean checkpoint `75be150` (painted infantry). M8 remains open. `ParallaxPlane` now applies authored tint through Pixi's batched `Sprite.tint`, replacing the equivalent per-plane `ColorMatrixFilter` RGB multiply. Gallia's white tints previously requested identity offscreen passes. The whole-scene LUT, authored blur, all art/approvals, 150 battle crowd units/five key actors, prose/citations and audio are preserved. Two regression tests cover white and nonwhite plane tints. No dependency or asset was added; referenced payload stays **1,026,496 bytes / 25 files**.
+
+An instrumented production battle probe records approximately **14% fewer GL draws** (36.28 → 31.20 per sampled frame) and **27% fewer framebuffer binds** (26.20 → 19.12). Fixed-seed low-tier reduced-motion 1280px/390px stills differ by at most 3/255 per RGB channel, average below .05; inspected composition/alpha edges are retained. Uninstrumented cadence/entry results are mixed, so an overall speedup is not established: final battle medians 16.7/33.3/33.3ms at 1×/4×/6×; fresh unthrottled atlas-entry samples 2998/3009/2833ms. Atlas/scene initial real gzip JS remains 140,433/138,178 bytes. These are desktop samples, not strict device/network acceptance. Reproduction, raw runs and limits: `docs/m8-performance-review.md`; `scripts/measure-scene-draws.mjs` adds a reusable GL-submission/still probe.
+
+Verified: **297 unit tests / 37 files**, typecheck, lint, 34-file content/rig validation, production build and **34 focused Playwright checks** (scene, audio, painted personnel/rigs, visual tiering and all region-entry states). Ten atlas/scene round trips show no context-exhaustion warning and +1,249,643 post-GC heap bytes; this is a coarse lifecycle check, not a fixed-memory guarantee. Final high-tier screenshot audit is recorded in the performance review. No auth/database mutation, commit, push or deployment. Hillfort/ridge, engineers/civilians/mounted roles, final art/history, audible mix, human pacing and Safari/Pixel-class/network acceptance remain open; do not start M9–M11.
+
 ### Painted personnel continuation — 2026-10-23
 
 M8 remains open. The owner explicitly approved provisional AI-assisted Roman/Gallic infantry references, transparent rig parts and shared crowd atlases. Museum/scholarly equipment evidence and limits, the exact Met source image rights, generated provenance and scoped character approval are separate in the manifest and docs/m8-personnel-review.md (ADR 014). No Imperial segmented armour, rectangular scutum or default shirtless Gallic army was introduced; costumes, faces and colours remain interpretive, subject to historical review.
@@ -325,7 +333,7 @@ Milestone: **M7 — Asset forge — complete.** `tools/forge/`: one pipeline (`p
 
 Vitest green (255 unit, up from 227 pre-M7 — `tools/forge/{pipeline,manifest,budget}.test.ts`, all against synthetic in-memory sharp fixtures, no test image files on disk and no network access needed to run the suite); `npm run validate`/`typecheck`/`lint`/`build` clean. `engine/` untouched. No `any`. No paid dependency.
 
-Next: finish M8 dependencies listed above; do not advance to M9–M11.
+Next: continue M8's missing hillfort/ridge and dedicated roles within separately scoped art approvals; final art/history, listening/pacing and target-device/network acceptance remain open. Do not advance to M9–M11.
 
 Update this line at the end of every session.
 

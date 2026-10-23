@@ -1,11 +1,11 @@
 // A single depth-ranked plane (PRD §4/§10, M4): a sprite, a pointer-
-// parallax offset scaled by depth, and runtime tint via ColorMatrixFilter.
+// parallax offset scaled by depth, and runtime multiplicative sprite tint.
 // The filter list is built once in the constructor and never rebuilt —
 // "never rebuild a filter per frame" applies to Pixi exactly as it does
 // to the atlas's SVG filters; every subsequent frame only ever mutates
 // container/sprite transform properties.
 import { gsap } from "gsap";
-import { BlurFilter, ColorMatrixFilter, Container, Sprite, type Texture } from "pixi.js";
+import { BlurFilter, Container, Sprite, type Texture } from "pixi.js";
 
 // Not from the PRD — "pointer offset scales with depth" doesn't name a
 // magnitude. Tuned by eye alongside the placeholder region; expected to
@@ -66,13 +66,12 @@ export class ParallaxPlane {
     this.flipX = options.flipX ?? false;
     this.sprite = new Sprite(options.texture);
     this.sprite.anchor.set(0.5);
+    // ColorMatrixFilter.tint is the same RGB multiplication, but needs
+    // an offscreen pass and breaks batching even for white (identity).
+    // The whole-scene colour grade still belongs to PostChain's LUT.
+    this.sprite.tint = options.tint ?? 0xffffff;
 
     const filters = [];
-    if (options.tint) {
-      const colorMatrix = new ColorMatrixFilter();
-      colorMatrix.tint(options.tint);
-      filters.push(colorMatrix);
-    }
     if (options.blur && options.blur > 0) {
       filters.push(new BlurFilter({ strength: options.blur }));
     }
