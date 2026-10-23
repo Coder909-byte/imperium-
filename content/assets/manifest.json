@@ -1168,5 +1168,56 @@
       "rightsStatement": "Reviewed Apache-2.0 tool/model/stock-voice package grants for local generation and intended distribution; exact voice binary verified against the pinned model repository. Owner accepted the listening sample and requested full integration. Generated recordings are not labelled public domain or CC0; this approval is scoped to Gallia narration of the existing project prose."
     },
     "notes": "Owner-approved stock-voice narration; no reference recording, cloning, paid API or hosted inference. Complete sentence inputs, 150ms between sentences. MP3 VBR mono 24000Hz; SoundFile 0.13.1/libsndfile 1.2.2, VBR compression .5, gain 1.431817332519606. Output SHA-256 aff766db7bdc14a3d5813c410196402d9f966ea6171ed06938c91e19ca41b8cd. Model/tool/voice grants and this generated output approval remain separate. See docs/m8-narration-review.md."
+  },
+  {
+    "file": "app/_components/shell/fonts/Cinzel.ttf",
+    "source": "https://raw.githubusercontent.com/google/fonts/main/ofl/cinzel/Cinzel%5Bwght%5D.ttf",
+    "licence": "SIL Open Font License 1.1",
+    "retrieved": "2026-10-23",
+    "artist": "Natanael Gama / The Cinzel Project Authors",
+    "institution": "Google Fonts / NDISCOVER",
+    "notes": "Unmodified variable Cinzel, weights 400–900. Self-hosted with next/font/local only in the shell. Verified official ofl/cinzel/OFL.txt allows embedding and redistribution with its copyright and licence, retained beside font. Font software is OFL, not PD/CC0 art. SHA-256 f4d83d34d1f6c741193e4acf4b3dff9531e5a67b6aa65228d00a7db72a4e0f34"
+  },
+  {
+    "file": "content/assets/shell/cole-consummation.webp",
+    "source": "https://commons.wikimedia.org/wiki/File:Cole_Thomas_The_Consummation_The_Course_of_the_Empire_1836.jpg",
+    "licence": "Public domain",
+    "retrieved": "2026-10-23",
+    "artist": "Thomas Cole",
+    "institution": "New-York Historical Society; reproduction via Wikimedia Commons",
+    "settings": {
+      "matte": false,
+      "quality": 82,
+      "resizeWidth": 1920
+    },
+    "notes": "Owner approved 2026-10-23 for landing-page responsive crops. Full-colour resize, no generated additions. Imagined classical city, 1836; not documentary evidence of ancient Rome. Original reproduction SHA-256: c00295cd1651a55052d19c2f840544a27d13d7b87db5a4fd384775799e2cdd90. Prepared WebP SHA-256: 778ffaa7e3111176594fcf07c4a394507ffdf4948b2d8e8323fb676d9a591112. Source-specific rights reviewed 2026-10-23; Commons notes jurisdictional limits of PD-Art reproductions. No generated additions. Font permission is separate.",
+    "approval": {
+      "scope": "asset",
+      "by": "Project owner (chat: Approve Cole for landing and Royer for account screens)",
+      "at": "2026-10-23",
+      "rightsUrl": "https://commons.wikimedia.org/wiki/File:Cole_Thomas_The_Consummation_The_Course_of_the_Empire_1836.jpg",
+      "rightsStatement": "Commons identifies this specific image as a faithful photographic reproduction of a public-domain two-dimensional artwork and considers the reproduction public domain in the United States."
+    }
+  },
+  {
+    "file": "content/assets/shell/royer-vercingetorix.webp",
+    "source": "https://commons.wikimedia.org/wiki/File:Lionel_Royer_-_Vercingetorix_Throwing_down_His_Weapons_at_the_feet_of_Julius_Caesar.jpg",
+    "licence": "Public domain",
+    "retrieved": "2026-10-23",
+    "artist": "Lionel Royer",
+    "institution": "Musée Crozatier; reproduction via Wikimedia Commons",
+    "settings": {
+      "matte": false,
+      "quality": 82,
+      "resizeWidth": 1600
+    },
+    "notes": "Owner approved 2026-10-23 for account-screen responsive crops only, not Gallia scene art. Full-colour resize, no generated additions. 1899 interpretation of Alesia; not documentary evidence. Original reproduction SHA-256: 5a12fcae5af8d129748c4fdaf2ab90ef2fd2b1f99519b20e18308cf37f695c34. Prepared WebP SHA-256: 244183074924046799af934cafeba67af1f70288722c7003c63d409752d3308e. Source-specific rights reviewed 2026-10-23; Commons notes jurisdictional limits of PD-Art reproductions. No generated additions. Font permission is separate.",
+    "approval": {
+      "scope": "asset",
+      "by": "Project owner (chat: Approve Cole for landing and Royer for account screens)",
+      "at": "2026-10-23",
+      "rightsUrl": "https://commons.wikimedia.org/wiki/File:Lionel_Royer_-_Vercingetorix_Throwing_down_His_Weapons_at_the_feet_of_Julius_Caesar.jpg",
+      "rightsStatement": "Commons identifies this specific image as a faithful photographic reproduction of a public-domain two-dimensional artwork and considers the reproduction public domain in the United States."
+    }
   }
 ]

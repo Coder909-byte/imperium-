@@ -1,5 +1,7 @@
 # M8 Gallia handoff — 2026-10-22
 
+Owner feedback, 2026-10-23: satisfied with Gallia’s current visual experience and narration. This accepts the current experience without claiming outstanding historical, specialist-art, Safari/Pixel GPU or network checks passed. The previous narration browser/build checks finished successfully. A focused M1.5 landing/account/profile shell was separately authorized and implemented; see [shell handoff](m1-5-shell-review.md). It leaves all Gallia engine/content/assets untouched and does not start another region or remaining M11 work.
+
 ### Narration scope and integration — 2026-10-23
 
 The owner added narration to M8 and approved the 9.85-second stock George listening sample before requesting all six recordings. Gallia now references six locally generated, verbatim-body MP3s using the same Apache-2.0 Kokoro/stock-voice package, pinned model revision and .92 speed. No paid API, account or real-person cloning was used. Generated recordings have separate provenance and scoped `generated-narration` approval; they are not labelled PD/CC0. ADR 015 and `docs/m8-narration-review.md` record licences, approval, preparation and verification limits. Original prose/citations/art remain preserved.

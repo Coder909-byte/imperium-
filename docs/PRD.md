@@ -441,6 +441,10 @@ Next.js 15 + TS + Drizzle + Neon + Better Auth. Email/password and Google. Prote
 Historical GeoJSON → `d3-geo` → SVG paths. Four eras. Inset switcher with swap. Parchment filters, ornate frame, cartouche, city and sea labels. Region hover and click.
 ✅ All four eras render; inset click swaps with main; region click routes to `/scene/[id]`.
 
+**M1.5 — Focused shell pass** *(owner-authorized 2026-10-23, undertaken after current Gallia experience review)*
+Landing, login/signup and existing profile shell only: monumental licensed artwork, parchment/oxblood/charcoal, self-hosted inscription-style Cinzel, shared navigation and form states. Atlas/scenes stay public; Gallia is the sole available flagship, quiz/progress remain planned. Preserve Better Auth email/password, Google and redirects without configuration changes. Verify desktop/mobile renderings, keyboard/focus/contrast/reduced motion, navigation, read-only or mocked auth contracts, tests and production performance. New shell artwork requires specific rights/provenance and owner approval, separate from Gallia permissions. No other region or remaining M11 launch work. Owner refinement: make the landing painting the dominant full-width composition behind the masthead, using white highlights and the image’s shadow colours; retain the approved account/profile treatment.
+✅ Implemented and locally verified: actual responsive pages/screenshots, working entry/navigation, honest availability and preserved auth/Gallia. 314 unit tests, 21 focused browser checks, typecheck/lint/validation/final build pass. See `docs/m1-5-shell-review.md` for approved Cole/Royer reproductions, Cinzel OFL, measured production performance and auth/device limits. Historical/device gates remain independent of owner satisfaction with current Gallia visuals/narration.
+
 **M2 — Border morphing** *(~2 days)*
 GSAP MorphSVG between era boundary sets. Gained regions fade in, lost fade out.
 ✅ Era switch animates over ~900ms with no path popping or self-intersection.

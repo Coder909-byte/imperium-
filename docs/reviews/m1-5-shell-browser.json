@@ -1,0 +1,563 @@
+{
+  "base": "http://localhost:3004",
+  "environment": {
+    "node": "v24.14.1",
+    "platform": "darwin",
+    "arch": "x64",
+    "browser": "system Google Chrome, headless; desktop host, not physical mobile"
+  },
+  "pages": [
+    {
+      "width": 1440,
+      "path": "/",
+      "overflow": false,
+      "canvases": 0,
+      "images": [
+        {
+          "src": "http://localhost:3004/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fcole-consummation.1-k1kwrqeix3h.webp&w=1920&q=75",
+          "width": 1324,
+          "height": 897
+        }
+      ],
+      "fonts": [
+        {
+          "family": "Geist",
+          "status": "unloaded"
+        },
+        {
+          "family": "Geist",
+          "status": "unloaded"
+        },
+        {
+          "family": "Geist",
+          "status": "unloaded"
+        },
+        {
+          "family": "Geist",
+          "status": "unloaded"
+        },
+        {
+          "family": "Geist",
+          "status": "unloaded"
+        },
+        {
+          "family": "Geist Fallback",
+          "status": "unloaded"
+        },
+        {
+          "family": "Geist Mono",
+          "status": "unloaded"
+        },
+        {
+          "family": "Geist Mono",
+          "status": "unloaded"
+        },
+        {
+          "family": "Geist Mono",
+          "status": "unloaded"
+        },
+        {
+          "family": "Geist Mono",
+          "status": "unloaded"
+        },
+        {
+          "family": "Geist Mono",
+          "status": "unloaded"
+        },
+        {
+          "family": "Geist Mono",
+          "status": "unloaded"
+        },
+        {
+          "family": "Geist Mono Fallback",
+          "status": "unloaded"
+        },
+        {
+          "family": "inscription",
+          "status": "loaded"
+        },
+        {
+          "family": "inscription Fallback",
+          "status": "unloaded"
+        }
+      ],
+      "contrast": {
+        "method": "WCAG relative luminance against every background pixel in each DOM text-line rectangle, glyphs hidden without changing layout/background; conservative rectangle sampling, default opaque text state",
+        "checkedLines": 60,
+        "failures": [],
+        "minimum": 4.05
+      },
+      "axe": {
+        "violations": [],
+        "incomplete": [
+          {
+            "id": "color-contrast",
+            "nodeCount": 47
+          }
+        ]
+      },
+      "errors": [],
+      "failedResponses": []
+    },
+    {
+      "width": 1440,
+      "path": "/login",
+      "overflow": false,
+      "canvases": 0,
+      "images": [
+        {
+          "src": "http://localhost:3004/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Froyer-vercingetorix.2sqwn7l3s1sab.webp&w=828&q=75",
+          "width": 792,
+          "height": 528
+        }
+      ],
+      "fonts": [
+        {
+          "family": "Geist",
+          "status": "unloaded"
+        },
+        {
+          "family": "Geist",
+          "status": "unloaded"
+        },
+        {
+          "family": "Geist",
+          "status": "unloaded"
+        },
+        {
+          "family": "Geist",
+          "status": "unloaded"
+        },
+        {
+          "family": "Geist",
+          "status": "unloaded"
+        },
+        {
+          "family": "Geist Fallback",
+          "status": "unloaded"
+        },
+        {
+          "family": "Geist Mono",
+          "status": "unloaded"
+        },
+        {
+          "family": "Geist Mono",
+          "status": "unloaded"
+        },
+        {
+          "family": "Geist Mono",
+          "status": "unloaded"
+        },
+        {
+          "family": "Geist Mono",
+          "status": "unloaded"
+        },
+        {
+          "family": "Geist Mono",
+          "status": "unloaded"
+        },
+        {
+          "family": "Geist Mono",
+          "status": "unloaded"
+        },
+        {
+          "family": "Geist Mono Fallback",
+          "status": "unloaded"
+        },
+        {
+          "family": "inscription",
+          "status": "loaded"
+        },
+        {
+          "family": "inscription Fallback",
+          "status": "unloaded"
+        }
+      ],
+      "contrast": {
+        "method": "WCAG relative luminance against every background pixel in each DOM text-line rectangle, glyphs hidden without changing layout/background; conservative rectangle sampling, default opaque text state",
+        "checkedLines": 33,
+        "failures": [],
+        "minimum": 5.44
+      },
+      "axe": {
+        "violations": [],
+        "incomplete": [
+          {
+            "id": "color-contrast",
+            "nodeCount": 34
+          }
+        ]
+      },
+      "errors": [],
+      "failedResponses": []
+    },
+    {
+      "width": 1440,
+      "path": "/signup",
+      "overflow": false,
+      "canvases": 0,
+      "images": [
+        {
+          "src": "http://localhost:3004/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Froyer-vercingetorix.2sqwn7l3s1sab.webp&w=828&q=75",
+          "width": 792,
+          "height": 528
+        }
+      ],
+      "fonts": [
+        {
+          "family": "Geist",
+          "status": "unloaded"
+        },
+        {
+          "family": "Geist",
+          "status": "unloaded"
+        },
+        {
+          "family": "Geist",
+          "status": "unloaded"
+        },
+        {
+          "family": "Geist",
+          "status": "unloaded"
+        },
+        {
+          "family": "Geist",
+          "status": "unloaded"
+        },
+        {
+          "family": "Geist Fallback",
+          "status": "unloaded"
+        },
+        {
+          "family": "Geist Mono",
+          "status": "unloaded"
+        },
+        {
+          "family": "Geist Mono",
+          "status": "unloaded"
+        },
+        {
+          "family": "Geist Mono",
+          "status": "unloaded"
+        },
+        {
+          "family": "Geist Mono",
+          "status": "unloaded"
+        },
+        {
+          "family": "Geist Mono",
+          "status": "unloaded"
+        },
+        {
+          "family": "Geist Mono",
+          "status": "unloaded"
+        },
+        {
+          "family": "Geist Mono Fallback",
+          "status": "unloaded"
+        },
+        {
+          "family": "inscription",
+          "status": "loaded"
+        },
+        {
+          "family": "inscription Fallback",
+          "status": "unloaded"
+        }
+      ],
+      "contrast": {
+        "method": "WCAG relative luminance against every background pixel in each DOM text-line rectangle, glyphs hidden without changing layout/background; conservative rectangle sampling, default opaque text state",
+        "checkedLines": 35,
+        "failures": [],
+        "minimum": 5.43
+      },
+      "axe": {
+        "violations": [],
+        "incomplete": [
+          {
+            "id": "color-contrast",
+            "nodeCount": 35
+          }
+        ]
+      },
+      "errors": [],
+      "failedResponses": []
+    },
+    {
+      "width": 390,
+      "path": "/",
+      "overflow": false,
+      "canvases": 0,
+      "images": [
+        {
+          "src": "http://localhost:3004/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fcole-consummation.1-k1kwrqeix3h.webp&w=640&q=75",
+          "width": 390,
+          "height": 264
+        }
+      ],
+      "fonts": [
+        {
+          "family": "Geist",
+          "status": "unloaded"
+        },
+        {
+          "family": "Geist",
+          "status": "unloaded"
+        },
+        {
+          "family": "Geist",
+          "status": "unloaded"
+        },
+        {
+          "family": "Geist",
+          "status": "unloaded"
+        },
+        {
+          "family": "Geist",
+          "status": "unloaded"
+        },
+        {
+          "family": "Geist Fallback",
+          "status": "unloaded"
+        },
+        {
+          "family": "Geist Mono",
+          "status": "unloaded"
+        },
+        {
+          "family": "Geist Mono",
+          "status": "unloaded"
+        },
+        {
+          "family": "Geist Mono",
+          "status": "unloaded"
+        },
+        {
+          "family": "Geist Mono",
+          "status": "unloaded"
+        },
+        {
+          "family": "Geist Mono",
+          "status": "unloaded"
+        },
+        {
+          "family": "Geist Mono",
+          "status": "unloaded"
+        },
+        {
+          "family": "Geist Mono Fallback",
+          "status": "unloaded"
+        },
+        {
+          "family": "inscription",
+          "status": "loaded"
+        },
+        {
+          "family": "inscription Fallback",
+          "status": "unloaded"
+        }
+      ],
+      "contrast": {
+        "method": "WCAG relative luminance against every background pixel in each DOM text-line rectangle, glyphs hidden without changing layout/background; conservative rectangle sampling, default opaque text state",
+        "checkedLines": 61,
+        "failures": [],
+        "minimum": 4.05
+      },
+      "axe": {
+        "violations": [],
+        "incomplete": [
+          {
+            "id": "color-contrast",
+            "nodeCount": 47
+          }
+        ]
+      },
+      "errors": [],
+      "failedResponses": []
+    },
+    {
+      "width": 390,
+      "path": "/login",
+      "overflow": false,
+      "canvases": 0,
+      "images": [
+        {
+          "src": "http://localhost:3004/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Froyer-vercingetorix.2sqwn7l3s1sab.webp&w=640&q=75",
+          "width": 390,
+          "height": 259
+        }
+      ],
+      "fonts": [
+        {
+          "family": "Geist",
+          "status": "unloaded"
+        },
+        {
+          "family": "Geist",
+          "status": "unloaded"
+        },
+        {
+          "family": "Geist",
+          "status": "unloaded"
+        },
+        {
+          "family": "Geist",
+          "status": "unloaded"
+        },
+        {
+          "family": "Geist",
+          "status": "unloaded"
+        },
+        {
+          "family": "Geist Fallback",
+          "status": "unloaded"
+        },
+        {
+          "family": "Geist Mono",
+          "status": "unloaded"
+        },
+        {
+          "family": "Geist Mono",
+          "status": "unloaded"
+        },
+        {
+          "family": "Geist Mono",
+          "status": "unloaded"
+        },
+        {
+          "family": "Geist Mono",
+          "status": "unloaded"
+        },
+        {
+          "family": "Geist Mono",
+          "status": "unloaded"
+        },
+        {
+          "family": "Geist Mono",
+          "status": "unloaded"
+        },
+        {
+          "family": "Geist Mono Fallback",
+          "status": "unloaded"
+        },
+        {
+          "family": "inscription",
+          "status": "loaded"
+        },
+        {
+          "family": "inscription Fallback",
+          "status": "unloaded"
+        }
+      ],
+      "contrast": {
+        "method": "WCAG relative luminance against every background pixel in each DOM text-line rectangle, glyphs hidden without changing layout/background; conservative rectangle sampling, default opaque text state",
+        "checkedLines": 32,
+        "failures": [],
+        "minimum": 5.43
+      },
+      "axe": {
+        "violations": [],
+        "incomplete": [
+          {
+            "id": "color-contrast",
+            "nodeCount": 33
+          }
+        ]
+      },
+      "errors": [],
+      "failedResponses": []
+    },
+    {
+      "width": 390,
+      "path": "/signup",
+      "overflow": false,
+      "canvases": 0,
+      "images": [
+        {
+          "src": "http://localhost:3004/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Froyer-vercingetorix.2sqwn7l3s1sab.webp&w=640&q=75",
+          "width": 390,
+          "height": 259
+        }
+      ],
+      "fonts": [
+        {
+          "family": "Geist",
+          "status": "unloaded"
+        },
+        {
+          "family": "Geist",
+          "status": "unloaded"
+        },
+        {
+          "family": "Geist",
+          "status": "unloaded"
+        },
+        {
+          "family": "Geist",
+          "status": "unloaded"
+        },
+        {
+          "family": "Geist",
+          "status": "unloaded"
+        },
+        {
+          "family": "Geist Fallback",
+          "status": "unloaded"
+        },
+        {
+          "family": "Geist Mono",
+          "status": "unloaded"
+        },
+        {
+          "family": "Geist Mono",
+          "status": "unloaded"
+        },
+        {
+          "family": "Geist Mono",
+          "status": "unloaded"
+        },
+        {
+          "family": "Geist Mono",
+          "status": "unloaded"
+        },
+        {
+          "family": "Geist Mono",
+          "status": "unloaded"
+        },
+        {
+          "family": "Geist Mono",
+          "status": "unloaded"
+        },
+        {
+          "family": "Geist Mono Fallback",
+          "status": "unloaded"
+        },
+        {
+          "family": "inscription",
+          "status": "loaded"
+        },
+        {
+          "family": "inscription Fallback",
+          "status": "unloaded"
+        }
+      ],
+      "contrast": {
+        "method": "WCAG relative luminance against every background pixel in each DOM text-line rectangle, glyphs hidden without changing layout/background; conservative rectangle sampling, default opaque text state",
+        "checkedLines": 34,
+        "failures": [],
+        "minimum": 5.38
+      },
+      "axe": {
+        "violations": [],
+        "incomplete": [
+          {
+            "id": "color-contrast",
+            "nodeCount": 34
+          }
+        ]
+      },
+      "errors": [],
+      "failedResponses": []
+    }
+  ]
+}

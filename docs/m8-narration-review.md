@@ -67,3 +67,5 @@ Production HTTP confirms `/dev/narration` and `/api/dev/narration-sample` both r
 Final production desktop 1280px and 390px reduced-motion captures of beats 1 and 5 were inspected with narration playing. Both report zero page errors/failed art or audio responses, full captions and reachable controls, and no horizontal overflow. Artifacts: `/private/tmp/imperium-m8-narration-final`. The original sample continues to play at `/dev/narration` on the local dev server. PRD, handoff and identical AGENTS/CLAUDE files record the scope addition and remaining gates.
 
 The owner approved the voice sample and generation; complete listening/mix/pronunciation and target-device review remain distinct from these functional checks. M8's missing art and historical/device gates remain open. No M9–M11 work, commit, push, deployment or database mutation was made.
+
+Owner feedback, 2026-10-23: satisfied with Gallia’s current visual experience and narration. This accepts the current experience, without claiming outstanding independent history, specialist artwork or target-device/network checks passed. A focused M1.5 shell pass is separately authorized; M8’s other gates remain open.

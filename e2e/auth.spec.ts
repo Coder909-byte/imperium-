@@ -21,7 +21,7 @@ test("signup, logout, login, session survives a hard refresh", async ({ page }) 
 
   await page.waitForURL("**/profile");
   await expect(page.getByText(email)).toBeVisible();
-  await expect(page.getByText("Tiro")).toBeVisible();
+  await expect(page.getByText("Your journeys will have a home here.")).toBeVisible();
 
   await page.getByRole("button", { name: "Log out" }).click();
   await page.waitForURL("**/login");
@@ -38,5 +38,5 @@ test("signup, logout, login, session survives a hard refresh", async ({ page }) 
 
   await page.reload();
   await expect(page.getByText(email)).toBeVisible();
-  await expect(page.getByText("Tiro")).toBeVisible();
+  await expect(page.getByText("Your journeys will have a home here.")).toBeVisible();
 });

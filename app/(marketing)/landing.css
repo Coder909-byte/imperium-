@@ -1,0 +1,76 @@
+.landing-shell {
+  --shell-paper: #faf9f5;
+  --shell-ink: #f5f1e8;
+  --shell-muted: #c5c1b5;
+  --shell-rule: #b9ab8e4d;
+  --shell-gold: #c2aa78;
+  --landing-picture-height: max(880px, 100svh);
+  position: relative;
+  isolation: isolate;
+  background: #202927;
+}
+.landing-artwork { position: absolute; inset: 0 0 auto; height: var(--landing-picture-height); overflow: hidden; pointer-events: none; z-index: -1; }
+.landing-artwork .shell-art { object-position: 50% 20%; }
+.landing-artwork::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, #fffdf5db 0%, #fffdf580 22%, transparent 36%, transparent 58%, #202927b3 78%, #202927 100%); }
+.landing-shell .shell-header { color: #292b26; border-color: #6e71564d; min-height: 78px; }
+.landing-shell .shell-header nav a:hover { color: #571f24; }
+.landing-shell .shell-header .shell-brand svg { color: #63583e; }
+.landing-shell .hero-masthead { color: #292b26; padding-top: 20px; }
+.landing-shell .hero-masthead .shell-eyebrow, .landing-shell .hero-edition { color: #474b3e; }
+.landing-shell .hero-edition { border-color: #6e71564d; }
+.landing-shell .hero-edition > span { background: #faf9f5e6; color: #292b26; padding: 2px 6px; }
+.landing-shell .hero-wordmark { margin-block: 0 5px; }
+.landing-shell .hero-scene { height: calc(var(--landing-picture-height) - 370px); display: flex; align-items: end; background: none; }
+.landing-shell .hero-scene::after { display: none; }
+.landing-shell .hero-copy { display: flex; justify-content: space-between; align-items: end; gap: 40px; width: 100%; max-width: none; height: auto; padding: 0 0 28px; }
+.landing-shell .hero-copy h2 { font-size: clamp(30px, 3vw, 42px); line-height: 1.18; margin-top: 10px; }
+.landing-shell .hero-description { font-size: 15px; margin-top: 12px; max-width: 440px; }
+.landing-shell .hero-copy .shell-eyebrow { color: #e7ddc7; }
+.landing-shell .hero-entry { flex-shrink: 0; }
+.landing-shell .hero-entry .mt-7 { margin-top: 0; }
+.landing-shell .hero-note { text-align: right; color: #dfded4; }
+.landing-shell .shell-button-light { background: #faf9f5; border-color: #faf9f5; }
+.landing-shell .shell-button-light:hover { background: #fff; }
+.landing-shell .flagship-strip { padding-block: 24px; }
+.landing-shell .shell-text-link { color: #f0dcc0; }
+.landing-shell .journey-section { padding-block: 54px 58px; }
+.landing-shell .journey-heading { align-items: center; }
+.landing-shell .journey-heading .shell-heading { font-size: clamp(30px, 3vw, 42px); }
+.landing-shell .journey-compass { width: 70px; height: 70px; margin-top: 0; }
+.landing-shell .journey-steps { margin-top: 30px; }
+.landing-shell .journey-steps h3 { font-size: 22px; }
+.landing-shell .journey-steps li { border-color: var(--shell-rule); }
+.landing-shell .feature-status { color: #cbd5bd; }
+.landing-shell .feature-planned { color: #c5c1b5; }
+.landing-shell .closing-invitation { padding-block: 38px 48px; }
+.landing-shell .closing-invitation .shell-button-primary { background: #faf9f5; border-color: #faf9f5; color: #292b26; }
+.landing-shell .closing-invitation .shell-button-primary:hover { background: #fff; }
+.landing-shell .shell-footer { color: #c5c1b5; }
+.landing-shell .shell-skip { color: #292b26; }
+.landing-shell :is(a, button):focus-visible { outline-color: #f3d9a9; }
+.landing-shell .shell-header a:focus-visible { outline-color: #682c2e; }
+@media (max-width: 1023px) {
+  .landing-shell .hero-copy { gap: 22px; }
+  .landing-shell .hero-copy h2 { max-width: 340px; }
+  .landing-shell .hero-entry .shell-button { padding-inline: 16px; gap: 14px; }
+}
+@media (max-width: 767px) {
+  .landing-shell { --landing-picture-height: 980px; }
+  .landing-shell .shell-header { min-height: 76px; }
+  .landing-shell .hero-masthead { padding-top: 21px; }
+  .landing-shell .hero-wordmark { margin-block: 10px 13px; }
+  .landing-artwork .shell-art { object-position: 8% top; }
+  .landing-artwork::after { background: linear-gradient(180deg, #fffdf5e8 0%, #fffdf5a6 17%, transparent 34%, transparent 48%, #202927d9 69%, #202927 94%); }
+  .landing-shell .hero-scene { height: 690px; }
+  .landing-shell .hero-copy { display: block; padding-bottom: 18px; }
+  .landing-shell .hero-copy h2 { max-width: 340px; font-size: 32px; }
+  .landing-shell .hero-description { font-size: 14px; max-width: 390px; }
+  .landing-shell .hero-entry { margin-top: 22px; }
+  .landing-shell .hero-entry .mt-7 { gap: 10px; }
+  .landing-shell .hero-note { text-align: left; }
+  .landing-shell .journey-section { padding-block: 42px; }
+  .landing-shell .journey-compass { width: 54px; height: 54px; }
+}
+@media (max-width: 370px) {
+  .landing-shell .hero-copy h2 { font-size: 29px; }
+}

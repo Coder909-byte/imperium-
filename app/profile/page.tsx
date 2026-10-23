@@ -4,6 +4,7 @@ import { eq } from "drizzle-orm";
 import { auth } from "@/lib/auth";
 import { db } from "@/db";
 import { profile } from "@/db/schema";
+import { ProfileView } from "@/app/_components/shell/ProfileView";
 import { LogoutButton } from "./LogoutButton";
 
 export default async function ProfilePage() {
@@ -27,20 +28,5 @@ export default async function ProfilePage() {
     );
   }
 
-  return (
-    <main className="flex flex-1 flex-col items-center justify-center gap-6 px-6 text-center">
-      <h1 className="text-3xl font-semibold tracking-tight">Profile</h1>
-      <dl className="flex flex-col gap-2 text-lg">
-        <div>
-          <dt className="text-sm text-zinc-600 dark:text-zinc-400">Email</dt>
-          <dd>{session.user.email}</dd>
-        </div>
-        <div>
-          <dt className="text-sm text-zinc-600 dark:text-zinc-400">Rank</dt>
-          <dd>{profileRow.rank}</dd>
-        </div>
-      </dl>
-      <LogoutButton />
-    </main>
-  );
+  return <ProfileView email={session.user.email} logout={<LogoutButton />} />;
 }
