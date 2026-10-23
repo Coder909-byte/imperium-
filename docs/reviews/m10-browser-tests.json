@@ -1,0 +1,145 @@
+{
+  "environment": "Local development server, system Chrome 150 on macOS, anonymous contexts and in-memory routing fixtures; no shared database mutations",
+  "stats": {
+    "startTime": "2026-10-23T16:33:02.910Z",
+    "duration": 166554.928,
+    "expected": 12,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "checks": [
+    {
+      "file": "audio-lifecycle.spec.ts",
+      "name": "all six beats keep one narrator and one correctly ducked wind bed",
+      "ok": true,
+      "runs": [
+        {
+          "status": "passed",
+          "durationMs": 16554
+        }
+      ]
+    },
+    {
+      "file": "audio-lifecycle.spec.ts",
+      "name": "separate settings persist, replay uses the current beat, and history navigation releases old playback",
+      "ok": true,
+      "runs": [
+        {
+          "status": "passed",
+          "durationMs": 28009
+        }
+      ]
+    },
+    {
+      "file": "audio-lifecycle.spec.ts",
+      "name": "a delayed wind download starts only one bed after rapid beat changes",
+      "ok": true,
+      "runs": [
+        {
+          "status": "passed",
+          "durationMs": 9705
+        }
+      ]
+    },
+    {
+      "file": "audio-lifecycle.spec.ts",
+      "name": "a failed real narration can be retried without retaining an old stream",
+      "ok": true,
+      "runs": [
+        {
+          "status": "passed",
+          "durationMs": 7819
+        }
+      ]
+    },
+    {
+      "file": "audio-lifecycle.spec.ts",
+      "name": "real WebAudio bed crossfades settle and rapid return cancels stale stops",
+      "ok": true,
+      "runs": [
+        {
+          "status": "passed",
+          "durationMs": 9251
+        }
+      ]
+    },
+    {
+      "file": "audio.spec.ts",
+      "name": "Gallia's real approved cues decode and play only on their beat entries",
+      "ok": true,
+      "runs": [
+        {
+          "status": "passed",
+          "durationMs": 9806
+        }
+      ]
+    },
+    {
+      "file": "audio.spec.ts",
+      "name": "audio needs a trusted gesture, recovers from a failed load, and stops its loop on exit",
+      "ok": true,
+      "runs": [
+        {
+          "status": "passed",
+          "durationMs": 5940
+        }
+      ]
+    },
+    {
+      "file": "narration.spec.ts",
+      "name": "a delayed old download never speaks; toggles, re-entry and exit keep at most one narrator",
+      "ok": true,
+      "runs": [
+        {
+          "status": "passed",
+          "durationMs": 6475
+        }
+      ]
+    },
+    {
+      "file": "narration.spec.ts",
+      "name": "autoplay follows the current narration's real end rather than its longer reading dwell",
+      "ok": true,
+      "runs": [
+        {
+          "status": "passed",
+          "durationMs": 13883
+        }
+      ]
+    },
+    {
+      "file": "narration.spec.ts",
+      "name": "a failed recording leaves prose visible and autoplay on reading-time fallback",
+      "ok": true,
+      "runs": [
+        {
+          "status": "passed",
+          "durationMs": 30794
+        }
+      ]
+    },
+    {
+      "file": "narration.spec.ts",
+      "name": "the reviewed sample has a working local player",
+      "ok": true,
+      "runs": [
+        {
+          "status": "passed",
+          "durationMs": 2936
+        }
+      ]
+    },
+    {
+      "file": "narration.spec.ts",
+      "name": "all six production recordings decode, play singly and cancel on master mute and exit",
+      "ok": true,
+      "runs": [
+        {
+          "status": "passed",
+          "durationMs": 17993
+        }
+      ]
+    }
+  ]
+}

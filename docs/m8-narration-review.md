@@ -1,5 +1,7 @@
 # Gallia narration — M8 scope addition, 2026-10-23
 
+Current state, 2026-10-23: M8 and M9 are owner-accepted. The scoped M10 implementation/local audio audit is complete without runtime/audio changes; [current audio evidence](m10-audio-review.md) retains actual-phone/Safari, full listening/pronunciation/mix/pacing, history and specialist-art checks as unresolved. Earlier measurements and incomplete-art records below remain historical evidence. [Remaining M11 launch scope](m11-launch-scope.md) is documented; M11 has not started.
+
 ## Owner request and sample decision
 
 The owner requested a deep, clear, restrained documentary voice reading the existing six beat bodies verbatim, with ambience quietly underneath. No paid API, real-person clone, account-dependent shipping path or inference from free access to distribution rights is allowed. Text, reduced-motion rendering, prose, citations and approved artwork stay available. This adds narration to M8, not M9/M10; see ADR 015 and PRD §8.3/§10.

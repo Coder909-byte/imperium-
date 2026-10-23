@@ -3,7 +3,7 @@
 **Working title:** Imperium (product) · "History Made Cool" (internal)
 **Owner:** Jivesh Nazar
 **Version:** 1.2 — painted parallax revision
-**Status:** Pre-build. This document is the build spec.
+**Status:** M8/M9 owner-accepted; current Gallia M10 implementation/local audio audit complete. Unresolved evidence gates are retained in the reviews. M11 has not started.
 
 > **Changes from v1.1:** Art direction changed from animated engraving back to **painted parallax** (§3) — primary sources are full-colour academic history paintings (Gérôme, Alma-Tadema, Poynter, Bierstadt), not monochrome etchings. The per-scene LUT (§4), not colour-stripping at the asset level, now does the cross-source consistency work. Engravings demote to reference/fallback for architectural detail and figure poses, and stay the source for cutout character parts, where alpha-from-luminance still applies. Blender documented as a post-M8 escape hatch (§3.6) if painted planes read flat, not adopted.
 >
@@ -498,16 +498,16 @@ Six beats, real painted planes, puppet actors, Gallia ambient beds and required 
 **Narration scope added 2026-10-23:** one consistent deep, clear, restrained documentary voice reads each existing `beat.body` verbatim; headlines/year and full text remain visible. Investigate zero-cost local generation and verify exact tool/model/stock-voice licences first; prepare a short listening sample before generating six recordings. No paid API, account-dependent shipping path, real-person clone or inference from free access to distribution rights. The owner approved the George sample and full generation in this session. Narration uses the existing Howler foundation, starts only after a trusted gesture, cancels synchronously on beat change/exit and never overlaps an old beat. Separate persisted narration/ambience switches accompany master mute; ambience/cues stay quiet underneath narration. Autoplay waits for actual narration completion plus one second; missing/disabled/muted/failed/stalled narration uses reading-time fallback. Loading/end watchdogs, stale-callback protection, manifest entries, verbatim transcript hashes and narration/audio/total size accounting are required. The strict <2.5 MiB region limit and reduced-motion behaviour remain unchanged. The owner explicitly accepts the current Gallia experience and atlas visuals on 2026-10-23 and authorizes M9. This is owner acceptance of M8, not a pass of the outstanding independent history, specialist art, full listening/mix/pacing or real-device/browser/network checks.
 ✅ Someone who has never seen the project watches end to end without touching their phone.
 
-**M9 — Quiz and progression** *(implemented and locally verified, 2026-10-23; shared migration/seed awaiting approval)*
+**M9 — Quiz and progression** *(owner-accepted 2026-10-23; unresolved verification/deployment checks retained)*
 Question bank schema and seeding. Server-side grading. Per-option quip UI. XP, rank, streaks. Anonymous → account progress migration.
 ✅ Answer key never appears in any network response before submission. Verified in Playwright against an isolated database and in all production browser chunks. Five Gallia questions, transactional first-correct XP, provisional ranks, UTC streaks and verified guest import are implemented. See `docs/m9-quiz-review.md` for recorded checks, trust policy and shared-database deployment boundary.
 
-**M10 — Audio** *(~2 days)*
-Broader audio polish and catalog expansion: refine Gallia’s mix against final art, tune transitions and cue balance, and extend approved beds/cues to additional content. Reuse the Howler foundation delivered in M8 (ADR 009); gesture activation, persisted mute and cleanup are no longer deferred here.
-✅ Expanded content has approved audio, consistent levels and reviewed transitions on target devices; M8’s gesture/mute/cleanup checks remain green.
+**M10 — Audio** *(current Gallia implementation/local audit complete, 2026-10-23; phone/listening checks open)*
+Audit the current Gallia narration, ambience and cues against the foundation delivered in M8 (ADRs 009/015); verify controls, persistence, gesture activation, crossfades, narration-led autoplay, reading fallback, rapid navigation, failure handling, cleanup, provenance and download budgets. Fix demonstrated issues only. The owner’s current authorization does not expand to additional content or rebuild working systems. Final phone/browser and listening checks remain separate evidence gates.
+✅ Current Gallia passes 330 unit tests, 12 focused audio browser checks, the complete six-recording production autoplay and all six desktop/narrow rendering checks. No runtime change was needed. Actual phone/Safari playback and full listening/mix/pronunciation judgement remain unverified. See `docs/m10-audio-review.md`; no catalog expansion is claimed.
 
-**M11 — Shell and launch** *(~3 days)*
-Landing, profile, OG images, sitemap, PostHog, Sentry, mobile pass, `prefers-reduced-motion` throughout, full keyboard nav.
+**M11 — Shell and launch** *(not started; remaining scope audited 2026-10-23)*
+Landing/auth/profile and the atlas makeover are already delivered and must be preserved. Remaining: OG/sharing metadata and sitemap/robots; analytics/error-monitoring setup; launch-wide accessibility/mobile/Lighthouse/performance acceptance; approved-environment auth/database/deployment checks. `docs/m11-launch-scope.md` records the exact remaining work and observed PRD gaps (Read as text, completion wreaths, scene resume), service-account constraints and the separate Gallia-first versus twelve-region catalog decision. No M11 implementation is authorized by the M10 audit.
 ✅ Lighthouse ≥90 performance and accessibility on non-scene routes. Full flow works on mid-range Android.
 
 ---

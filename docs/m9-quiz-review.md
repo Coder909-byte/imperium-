@@ -1,5 +1,9 @@
 # M9 — Gallia quiz and progression
 
+Owner acceptance, 2026-10-23: the owner tested the Gallia quiz and is satisfied with its current behaviour. M9 is owner-accepted. Shared-Neon migration/seed, live Google-provider and outstanding real-device/Safari checks remain unresolved; no technical pass is inferred from acceptance. M10 audio audit is separately authorized; M11 has not started.
+
+For a manual walkthrough with expected XP totals and the isolated automated test command, see [Testing M9 locally](m9-testing.md).
+
 The owner accepted M8's current Gallia experience and the updated atlas visuals on 2026-10-23, and authorized M9 only. M8 is recorded as owner-accepted. Independent historical review, missing specialist hillfort/ridge/engineer/civilian/mounted art, full narration pronunciation/listening/mix/pacing and Safari/Pixel-class GPU/network checks remain outstanding. That acceptance does not turn these checks into passes. Earlier M8 records remain historical evidence.
 
 ## Delivered behavior
@@ -70,7 +74,7 @@ No live Google-provider round trip, shared-Neon migration, physical device, Safa
 
 ## Remaining decisions and work
 
-No XP/rank policy decision is pending: the owner's approved provisional configuration is implemented. Shared deployment still needs explicit permission to apply migration 0002 and seed the five questions, followed by checks in that approved environment. Until then, the local isolated production preview is the review target. M10/M11 have not started. M8's outstanding historical/art/listening/device checks above remain open.
+No XP/rank policy decision is pending: the owner's approved provisional configuration is implemented. Shared deployment still needs explicit permission to apply migration 0002 and seed the five questions, followed by checks in that approved environment. Until then, the local isolated production preview is the review target. The subsequent M10 local audio audit is recorded in `docs/m10-audio-review.md`; M11 has not started. M8's outstanding historical/art/listening/device checks above remain open.
 
 Local verification commands (with the isolated environment above):
 

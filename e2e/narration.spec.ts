@@ -116,6 +116,7 @@ test("autoplay follows the current narration's real end rather than its longer r
 });
 
 test("a failed recording leaves prose visible and autoplay on reading-time fallback", async ({ page }) => {
+  test.setTimeout(60_000);
   await fixture(page, undefined, true);
   await page.getByRole("button", { name: "▶ Autoplay", exact: true }).click();
   await expect(page.getByTestId("scene-player")).toHaveAttribute("data-narration-state", "failed");
@@ -123,6 +124,7 @@ test("a failed recording leaves prose visible and autoplay on reading-time fallb
   await page.waitForTimeout(1200);
   await expect(page.getByRole("tab", { name: /^Go to beat 1:/ })).toHaveAttribute("aria-current", "true");
   await expect(page.getByRole("status").filter({ hasText: "Reading time is active" })).toBeVisible();
+  await expect(page.getByRole("tab", { name: /^Go to beat 2:/ })).toHaveAttribute("aria-current", "true", { timeout: 30_000 });
 });
 
 test("the reviewed sample has a working local player", async ({ page }) => {
