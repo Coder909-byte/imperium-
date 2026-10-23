@@ -13,9 +13,10 @@ export function AtlasSceneCatalog({
   return (
     <section className={styles.catalog} aria-label="Available scene previews">
       <div>
-        <h1 className={styles.catalogTitle}>Choose a campaign</h1>
+        <p className={styles.catalogEyebrow}>Beyond the map</p>
+        <h2 className={styles.catalogTitle}>Step into a story.</h2>
         <p className={styles.catalogIntro}>
-          {previews.length ? "Explore a scene preview, or choose a province on the period map." : "Campaigns are coming soon."}
+          {previews.length ? "Gallia is available now. Other stories are still being written." : "Campaigns are coming soon."}
         </p>
       </div>
       <div className={styles.previewList}>
@@ -27,7 +28,7 @@ export function AtlasSceneCatalog({
             onClick={() => onSelect(province.id)}
             aria-label={`Open ${province.name} scene preview — ${province.scene?.year}`}
           >
-            <span>{province.name}</span>
+            <span>{province.name}<span aria-hidden="true"> →</span></span>
             <span className={styles.previewDetail}>
               {province.scene?.year} · {province.scene?.beatCount} beats · Preview artwork
             </span>

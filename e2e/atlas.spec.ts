@@ -16,7 +16,7 @@ test.describe("atlas", () => {
     const mainEraLabel = page.locator("text=350 BC").first();
     await expect(mainEraLabel).toBeVisible();
 
-    const inset117 = page.locator('g[aria-label="Switch main map to 117 AD"]');
+    const inset117 = page.getByRole("button", { name: "Switch main map to 117 AD", exact: true });
     await expect(inset117).toBeVisible();
     await inset117.click();
 
@@ -26,7 +26,7 @@ test.describe("atlas", () => {
     await expect(page.getByText("117 AD", { exact: true }).first()).toBeVisible();
 
     // 350 BC now lives in the inset that 117 AD vacated.
-    await expect(page.locator('g[aria-label="Switch main map to 350 BC"]')).toBeVisible();
+    await expect(page.getByRole("button", { name: "Switch main map to 350 BC", exact: true })).toBeVisible();
   });
 
   test("hovering a held region raises its opacity and shows a one-line teaser", async ({ page }) => {
@@ -83,7 +83,7 @@ test.describe("atlas", () => {
     await expect(gallia).toHaveCount(0);
   });
 
-  test("parchment texture and hand-inked edges render with no raster assets", async ({ page }) => {
+  test("parchment texture and hand-inked edges retain SVG rendering", async ({ page }) => {
     await expect(page.locator("img")).toHaveCount(0);
     await expect(page.locator("filter#paperGrain")).toHaveCount(1);
     await expect(page.locator("filter#inkEdges feDisplacementMap")).toHaveCount(1);
@@ -98,7 +98,7 @@ test.describe("atlas — border morphing", () => {
   });
 
   test("era switch settles to the target era's held set, with no malformed paths", async ({ page }) => {
-    const inset117 = page.locator('g[aria-label="Switch main map to 117 AD"]');
+    const inset117 = page.getByRole("button", { name: "Switch main map to 117 AD", exact: true });
     await inset117.click();
 
     await expect(page.locator('path[role="button"][data-region-id]')).toHaveCount(23);
@@ -130,8 +130,8 @@ test.describe("atlas — border morphing", () => {
   });
 
   test("rapid era switching leaves no stuck or half-rendered paths", async ({ page }) => {
-    const inset117 = page.locator('g[aria-label="Switch main map to 117 AD"]');
-    const inset486 = page.locator('g[aria-label="Switch main map to 486 AD"]');
+    const inset117 = page.getByRole("button", { name: "Switch main map to 117 AD", exact: true });
+    const inset486 = page.getByRole("button", { name: "Switch main map to 486 AD", exact: true });
 
     await inset117.click();
     await inset486.click(); // fired before the first transition's ~900ms would have finished
@@ -152,7 +152,7 @@ test.describe("atlas — border morphing", () => {
     await page.emulateMedia({ reducedMotion: "reduce" });
     await page.goto("/atlas"); // reload so the reduced-motion state is read at mount
 
-    const inset117 = page.locator('g[aria-label="Switch main map to 117 AD"]');
+    const inset117 = page.getByRole("button", { name: "Switch main map to 117 AD", exact: true });
     await inset117.click();
 
     // The reduced-motion path is a flat 150ms tween on the held-overlay's
@@ -256,12 +256,12 @@ test.describe("atlas — hover and morph performance", () => {
     // content never actually changes shape between eras, see
     // MorphBorders.ts, so provinces whose `d` doesn't change now skip
     // the tween entirely rather than animating a no-op every frame).
-    const inset117 = page.locator('g[aria-label="Switch main map to 117 AD"]');
+    const inset117 = page.getByRole("button", { name: "Switch main map to 117 AD", exact: true });
     await inset117.waitFor();
     await inset117.click();
     await page.waitForTimeout(1500); // let the first switch fully settle before tracing the second
 
-    const inset486 = page.locator('g[aria-label="Switch main map to 486 AD"]');
+    const inset486 = page.getByRole("button", { name: "Switch main map to 486 AD", exact: true });
     await inset486.waitFor();
 
     const paints = await capturePaintsDuring(page, async () => {

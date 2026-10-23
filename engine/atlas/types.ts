@@ -36,6 +36,8 @@ export interface ProjectedSeaLabel {
 }
 
 export interface PhysicalLayers {
+  reliefUrl?: string;
+  graticule?: string;
   coastline: string[];
   ocean: string[];
   rivers: string[];

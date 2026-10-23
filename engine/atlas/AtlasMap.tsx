@@ -5,8 +5,8 @@
 // app/ as props and never changes which provinces the selected era holds.
 import { useEffect, useMemo, useRef, useState, type KeyboardEvent } from "react";
 import { useRouter } from "next/navigation";
-import { AtlasFilters } from "./AtlasFilters";
-import { AtlasFrame } from "./AtlasFrame";
+import { AtlasCanvas } from "./AtlasCanvas";
+import { AtlasViewport } from "./AtlasViewport";
 import { AtlasInsets } from "./AtlasInsets";
 import { AtlasSceneCatalog } from "./AtlasSceneCatalog";
 import { isHeld } from "./heldRegions";
@@ -155,136 +155,14 @@ export function AtlasMap({ width, height, physical, provinces, cities, seas, era
 
   return (
     <div className={styles.wrap}>
-      <AtlasSceneCatalog provinces={provinces} onSelect={goToScene} />
-      <svg viewBox={`0 0 ${width} ${height}`} className={styles.svg} role="group" aria-label={`Roman Empire, ${mainEra.label}`}>
-        <AtlasFilters />
-        <rect x={0} y={0} width={width} height={height} fill="url(#parchmentBase)" filter="url(#paperGrain)" />
-
-        <g filter="url(#inkEdges)">
-          {physical.ocean.map((d, i) => (
-            <path key={`ocean-${i}`} d={d} className={styles.ocean} />
-          ))}
-          {physical.lakes.map((d, i) => (
-            <path key={`lake-${i}`} d={d} className={styles.lake} />
-          ))}
-          {physical.rivers.map((d, i) => (
-            <path key={`river-${i}`} d={d} className={styles.river} />
-          ))}
-          {physical.coastline.map((d, i) => (
-            <path key={`coast-${i}`} d={d} className={styles.coastline} />
-          ))}
-        </g>
-
-        <g filter="url(#inkEdges)">
-          {/* Keep paint properties constant inside this filtered group;
-              held/hover animation belongs to the overlays' opacity. */}
-          {provinces.map((province) => {
-            const held = heldIds.has(province.id);
-            return (
-              <path
-                key={province.id}
-                ref={(el) => {
-                  if (el) pathRefs.current.set(province.id, el);
-                  else pathRefs.current.delete(province.id);
-                }}
-                d={province.d}
-                data-region-id={province.id}
-                data-scene-status={province.scene ? "preview" : "coming-soon"}
-                className={[styles.provinceBase, held ? styles.provinceInteractive : ""].filter(Boolean).join(" ")}
-                role={held ? "button" : undefined}
-                tabIndex={held ? 0 : undefined}
-                aria-label={held ? `${province.name} — ${province.scene ? "open scene preview" : "coming soon"}` : undefined}
-                onMouseEnter={held ? () => handleProvinceHover(province.id) : undefined}
-                onMouseLeave={held ? () => setHoveredId(null) : undefined}
-                onFocus={held ? () => handleProvinceHover(province.id) : undefined}
-                onBlur={held ? () => setHoveredId(null) : undefined}
-                onClick={held ? () => goToScene(province.id) : undefined}
-                onKeyDown={held ? (event) => handleProvinceKeyDown(event, province.id) : undefined}
-              />
-            );
-          })}
-          {/* MorphBorders needs stable refs for gained/lost provinces. */}
-          {provinces.map((province) => (
-            <path
-              key={`held-overlay-${province.id}`}
-              ref={(el) => {
-                if (el) heldOverlayRefs.current.set(province.id, el);
-                else heldOverlayRefs.current.delete(province.id);
-              }}
-              d={province.d}
-              data-held-overlay={province.id}
-              className={[
-                styles.heldOverlay,
-                province.scene ? styles.previewOverlay : styles.comingSoonOverlay,
-                heldIds.has(province.id) ? styles.heldOverlayActive : "",
-              ].filter(Boolean).join(" ")}
-              aria-hidden="true"
-              pointerEvents="none"
-            />
-          ))}
-          {/* Hover also animates outer opacity, never filtered paint. */}
-          {provinces.map((province) => (
-            <path
-              key={`hover-fill-${province.id}`}
-              d={province.d}
-              data-hover-fill={province.id}
-              className={[styles.hoverFill, hoveredId === province.id ? styles.hoverFillActive : ""].filter(Boolean).join(" ")}
-              aria-hidden="true"
-              pointerEvents="none"
-            />
-          ))}
-        </g>
-
-        {provinces.map((province) => (
-          <text
-            key={`label-${province.id}`}
-            ref={(el) => {
-              if (el) labelRefs.current.set(province.id, el);
-              else labelRefs.current.delete(province.id);
-            }}
-            x={province.labelX}
-            y={province.labelY}
-            textAnchor="middle"
-            className={[styles.provinceLabel, heldIds.has(province.id) ? styles.labelHeld : styles.labelUnheld].join(" ")}
-          >
-            {province.name}
-          </text>
-        ))}
-
-        {cities.map((city) => (
-          <g key={city.id} transform={`translate(${city.x} ${city.y})`}>
-            <circle r={2.5} className={styles.cityMark} />
-            <text x={5} y={3} className={styles.cityLabel}>
-              {city.latinName}
-            </text>
-          </g>
-        ))}
-
-        {seas.map((sea) => (
-          <text
-            key={sea.id}
-            x={sea.x}
-            y={sea.y}
-            transform={`rotate(${sea.rotation} ${sea.x} ${sea.y})`}
-            textAnchor="middle"
-            className={styles.seaLabel}
-          >
-            {sea.text}
-          </text>
-        ))}
-
-        <AtlasInsets
-          width={width}
-          height={height}
-          physical={physical}
-          provinces={provinces}
-          eras={eras}
-          eraOrder={eraOrder}
-          onSelect={swapToMain}
-        />
-        <AtlasFrame width={width} height={height} eraLabel={mainEra.label} eraLabelRef={eraLabelRef} />
-        <rect x={0} y={0} width={width} height={height} fill="url(#vignette)" pointerEvents="none" />
-      </svg>
+      <div className={styles.workspace}>
+        <div className={styles.mapColumn}>
+          <AtlasViewport>
+            <AtlasCanvas width={width} height={height} physical={physical} provinces={provinces} cities={cities} seas={seas}
+              eraLabel={mainEra.label} heldIds={heldIds} hoveredId={hoveredId}
+              pathRefs={pathRefs} heldOverlayRefs={heldOverlayRefs} labelRefs={labelRefs} eraLabelRef={eraLabelRef}
+              onHover={(id) => id ? handleProvinceHover(id) : setHoveredId(null)} onSelect={goToScene} handleProvinceKeyDown={handleProvinceKeyDown} />
+          </AtlasViewport>
 
       <div className={styles.legend} aria-label="Scene status legend">
         <span><i className={styles.previewKey} aria-hidden="true" />Scene preview</span>
@@ -293,6 +171,13 @@ export function AtlasMap({ width, height, physical, provinces, cities, seas, era
 
       <div className={styles.teaser} aria-live="polite">
         {teaser}
+      </div>
+        </div>
+        <aside className={styles.marginalia} aria-label="Atlas guide">
+          <div className={styles.periodHeading}><p>Selected period: {mainEra.label}</p><span>Choose another era</span></div>
+          <AtlasInsets width={width} height={height} physical={physical} provinces={provinces} eras={eras} eraOrder={eraOrder} onSelect={swapToMain} />
+          <AtlasSceneCatalog provinces={provinces} onSelect={goToScene} />
+        </aside>
       </div>
     </div>
   );

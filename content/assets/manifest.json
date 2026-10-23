@@ -1219,5 +1219,26 @@
       "rightsUrl": "https://commons.wikimedia.org/wiki/File:Lionel_Royer_-_Vercingetorix_Throwing_down_His_Weapons_at_the_feet_of_Julius_Caesar.jpg",
       "rightsStatement": "Commons identifies this specific image as a faithful photographic reproduction of a public-domain two-dimensional artwork and considers the reproduction public domain in the United States."
     }
+  },
+  {
+    "file": "public/assets/atlas/natural-earth-relief.webp",
+    "source": "https://naturalearth.s3.amazonaws.com/50m_raster/NE2_50M_SR_W.zip",
+    "licence": "Public domain",
+    "retrieved": "2026-10-23",
+    "artist": "Tom Patterson and Natural Earth contributors",
+    "institution": "Natural Earth",
+    "notes": "Owner explicitly approved this 240,712-byte prepared relief candidate for the atlas in chat. Natural Earth II, 1:50m shaded relief with water, version 3.2.0. Publisher terms explicitly cover raster and vector data, modification and distribution. Source TIFF/TFW are WGS84, 10800×5400 RGB; temporary originals remain outside repository. Inverse-projected with the exact live atlas conic projection and shared viewport at 2× resolution, bilinear sampling of pixel centres; saturation .58, brightness 1.02, per-channel linear gain [1.02,1,.94] and offsets [4,3,2], WebP quality84. Modern idealized physical geography, not an ancient map or exact ancient land cover; no generated topography or changed provincial boundaries. TIFF SHA-256 02ae944d9ee8a64ccacbd4f535220aac10b5c95e874118b6db8d6f07cea48e71. Output SHA-256 ffc50869bd3e4934f2e070a67dbba5c7a58a7485fd02a84accb45932cb4c4b85.",
+    "settings": {
+      "matte": false,
+      "quality": 84,
+      "resizeWidth": 2000
+    },
+    "approval": {
+      "scope": "asset",
+      "by": "Project owner (chat: Approve this relief layer for the atlas)",
+      "at": "2026-10-23",
+      "rightsUrl": "https://www.naturalearthdata.com/about/terms-of-use/",
+      "rightsStatement": "All versions of Natural Earth raster + vector map data found on this website are in the public domain."
+    }
   }
 ]

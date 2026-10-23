@@ -1,29 +1,15 @@
+import manifest from "@/content/assets/manifest.json";
+import { ManifestEntry } from "@/content/schema";
+import { approvedAssetUrl } from "@/content/assetReferences";
+import { geoGraticule } from "d3-geo";
 // Adapts loaded content into engine/atlas's plain-prop shapes, doing all
 // projection server-side — d3-geo never ships to the client bundle.
 import { createProjection, projectFeatureCollection, projectGeometry } from "@/engine/atlas/projection";
 import type { AtlasMapProps, Era, PhysicalLayers, ProjectedCity, ProjectedProvince, ProjectedSeaLabel } from "@/engine/atlas/types";
 import type { AtlasContent } from "./loadContent";
 
-export const ATLAS_VIEWPORT = { width: 1000, height: 620 };
-
-// Fixed so framing doesn't shift depending on which physical features
-// happen to fall inside the data's own bounds. Ring order matters here —
-// GeoJSON's right-hand rule needs this small rectangle wound so d3-geo
-// reads it as the small region it is, not its ~4π-steradian complement
-// (verified with geoArea; see tools/unproject.ts for the same class of
-// bug on the province rings).
-const FIT_EXTENT: GeoJSON.Geometry = {
-  type: "Polygon",
-  coordinates: [
-    [
-      [-12, 20],
-      [-12, 58],
-      [48, 58],
-      [48, 20],
-      [-12, 20],
-    ],
-  ],
-};
+import { ATLAS_VIEWPORT, ATLAS_FIT_EXTENT } from "./viewport";
+export { ATLAS_VIEWPORT } from "./viewport";
 
 export const ERAS: Era[] = [
   { year: -350, label: "350 BC" },
@@ -33,9 +19,13 @@ export const ERAS: Era[] = [
 ];
 
 export function buildAtlasProps(content: AtlasContent): AtlasMapProps {
-  const projection = createProjection(FIT_EXTENT, ATLAS_VIEWPORT);
+  const projection = createProjection(ATLAS_FIT_EXTENT, ATLAS_VIEWPORT);
 
+  const reliefUrl = approvedAssetUrl("atlas/natural-earth-relief.webp", manifest.map(entry => ManifestEntry.parse(entry)));
+  if (!reliefUrl) throw new Error("Atlas relief requires a reviewed public-domain manifest entry");
   const physical: PhysicalLayers = {
+    reliefUrl,
+    graticule: projectGeometry(geoGraticule().extent([[-30, 8], [68, 70]]).step([10, 10])(), projection) ?? undefined,
     coastline: projectFeatureCollection(content.physical.coastline, projection, (_f, i) => `coastline-${i}`).map((f) => f.d),
     ocean: projectFeatureCollection(content.physical.ocean, projection, (_f, i) => `ocean-${i}`).map((f) => f.d),
     rivers: projectFeatureCollection(content.physical.rivers, projection, (_f, i) => `rivers-${i}`).map((f) => f.d),
