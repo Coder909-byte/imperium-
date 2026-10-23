@@ -31,9 +31,9 @@ test("117 AD map distinguishes Gallia's preview from 22 Coming soon provinces", 
   await expect(page.locator('path[data-held-overlay="gallia"]')).toHaveCSS("opacity", "1");
   await page.screenshot({ path: testInfo.outputPath("atlas-117ad-availability.png"), fullPage: true });
   await gallia.focus();
-  await expect(page.locator('[aria-live="polite"]')).toContainText("Scene preview: 52 BC");
+  await expect(page.getByRole("status", { name: "Province details" })).toContainText("Scene preview: 52 BC");
   await africa.focus();
-  await expect(page.locator('[aria-live="polite"]')).toContainText("Africa Proconsularis — Coming soon");
+  await expect(page.getByRole("status", { name: "Province details" })).toContainText("Africa Proconsularis — Coming soon");
   await africa.press("Enter");
   await page.waitForURL("**/scene/africa_prov");
   await expect(page.getByRole("heading", { name: "Africa", exact: true })).toBeVisible();

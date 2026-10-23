@@ -342,8 +342,8 @@ quizAnswer      id, sessionId, questionId, chosenOptionId,
 
 ### 8.1 Atlas
 
-- Framed period map: ornate double border, corner rules, title cartouche with aquila.
-- Three inset mini-maps in the corners *are* the era switcher. Click an inset, it swaps with the main map. The control and the reference are the same object — no extra UI.
+- Framed period map: approved georeferenced relief beneath SVG borders, double border, corner rules, title cartouche and wind rose. Relief depicts modern physical geography, not reconstructed ancient land cover.
+- Three inset mini-maps beside the map *are* the era switcher, with a row below the map on narrow screens (ADR 017). Click an inset, it swaps with the main map. Native scrolling and keyboard panning plus bounded zoom keep the map usable on narrow screens without widening the page.
 - Held regions fill vermilion; labels fade in. Hover raises opacity and shows a one-line teaser.
 - Historical held status and scene availability are separate (ADR 010). Authored campaigns are labelled scene previews with solid outlines; unauthored provinces use dashed outlines and named Coming soon destinations. A dated preview catalog makes available campaigns discoverable from every map era.
 - Borders morph between eras via MorphSVG over ~900ms. Lost regions fade out, gained regions fade in.

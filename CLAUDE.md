@@ -117,6 +117,12 @@ npm run forge -- <file>  # source scan → scene plane (colour or alpha, see PRD
 
 ## Current state
 
+### Atlas UI continuation — 2026-10-23
+
+Resumed clean checkpoint `c033c96` (`map ui change mid`), newer than the landing handoff. Its approved Natural Earth relief, HTML era cards and zoom component were present but their layout styles were missing. Completed the responsive parchment workspace, desktop sidebar/narrow card row, bounded native scroll viewport, keyboard panning, 100–200% zoom with centre preservation/reset, route navigation/skip link and modern-relief credit. SVG/vector geography and all existing era holdings/destinations are preserved. The approved relief file/manifest remain unchanged; no new asset/dependency/approval. ADR 017 and `docs/atlas-ui-review.md` record scope and evidence.
+
+Removed a conflicting label animation that revealed unheld provinces, clear stale GSAP label styles after interrupted transitions, hide unheld labels from assistive technology and clear hover on era change. Raster water stays visible to avoid straight seams from the clipped vector ocean wash. Fixed the checkpoint relief test's coordinate tuple type. Final verification: **317 unit tests / 41 files**, typecheck/lint/34-file validation/final production build, **22 focused browser checks** and diff check pass. Eight production captures at 320/390/768/1440px across 350 BC/117 AD have no overflow/page errors/failed responses; visible labels match holdings. Axe has no A/AA violations, with SVG/artwork contrast explicitly incomplete. Actual initial atlas gzip JS is **144,590 bytes**; relief remains **240,712 bytes**. This is not a TTI/physical-device/Safari acceptance claim. Final preview runs on port 3004. Gallia/scene/audio/auth/root layout/dependencies/database are unchanged. No commit, push or deployment; M8's other gates stay open.
+
 ### Landing artwork emphasis — 2026-10-23
 
 The owner liked the selected images and login page, then asked for Cole’s painting to be the centre of the landing. A scoped landing variant now carries the painting full width behind navigation and IMPERIUM, leaves its central architecture clear, moves compact copy/actions low and continues the image’s charcoal/green shadows below. White highlights replace broad cream framing on this page. The mobile crop selects enough source resolution to avoid blur; the same approved art/rights apply. Account-page composition is preserved (desktop/mobile login captures are pixel-identical), with no Gallia/engine/root/auth-config changes. All 11 shell browser checks rerun and pass, plus typecheck/lint/final production build. Final desktop/mobile captures and rendered-pixel contrast checks pass; axe retains the documented image-contrast limitation. Landing initial gzip JS remains 144,585 bytes. Mobile 4G/4× CPU desktop emulation records median 1064ms LCP and 2856ms artwork decode-plus-two-frames readiness; the sharper image transfers 200,040 bytes, so LCP alone is not artwork timing. See the follow-up in `docs/m1-5-shell-review.md`. No new region, pending asset approval, commit, push, deployment or database mutation.
@@ -357,7 +363,7 @@ Milestone: **M7 — Asset forge — complete.** `tools/forge/`: one pipeline (`p
 
 Vitest green (255 unit, up from 227 pre-M7 — `tools/forge/{pipeline,manifest,budget}.test.ts`, all against synthetic in-memory sharp fixtures, no test image files on disk and no network access needed to run the suite); `npm run validate`/`typecheck`/`lint`/`build` clean. `engine/` untouched. No `any`. No paid dependency.
 
-Next: continue M8's missing hillfort/ridge and dedicated roles within separately scoped art approvals; review complete narration/mix/pacing, final art/history and target-device/network behaviour. Do not advance to M9–M11.
+Next: the scoped atlas UI continuation is locally verified. Continue M8's missing hillfort/ridge and dedicated roles within separately scoped art approvals; review complete narration/mix/pacing, final art/history and target-device/network behaviour. Do not advance to M9–M11.
 
 Update this line at the end of every session.
 

@@ -13,7 +13,7 @@ import { isHeld } from "./heldRegions";
 import type { AtlasMapProps } from "./types";
 import type { BorderMorph, ProvinceMorphElement } from "./MorphBorders";
 import { useTransitionStore } from "@/engine/transition/transitionStore";
-import styles from "./AtlasMap.module.css";
+import styles from "./AtlasWorkspace.module.css";
 
 function formatYear(year: number): string {
   return year < 0 ? `${-year} BC` : `${year} AD`;
@@ -113,6 +113,7 @@ export function AtlasMap({ width, height, physical, provinces, cities, seas, era
     const nextEra = eras[eraOrder[slotIndex]];
     const nextHeldIds = new Set(provinces.filter((p) => isHeld(nextEra.year, p)).map((p) => p.id));
     const prevHeldIds = heldIds;
+    setHoveredId(null);
 
     setEraOrder((order) => {
       const next = [...order];
@@ -158,24 +159,31 @@ export function AtlasMap({ width, height, physical, provinces, cities, seas, era
       <div className={styles.workspace}>
         <div className={styles.mapColumn}>
           <AtlasViewport>
-            <AtlasCanvas width={width} height={height} physical={physical} provinces={provinces} cities={cities} seas={seas}
+            <AtlasCanvas
+              width={width} height={height} physical={physical}
+              provinces={provinces} cities={cities} seas={seas}
               eraLabel={mainEra.label} heldIds={heldIds} hoveredId={hoveredId}
-              pathRefs={pathRefs} heldOverlayRefs={heldOverlayRefs} labelRefs={labelRefs} eraLabelRef={eraLabelRef}
-              onHover={(id) => id ? handleProvinceHover(id) : setHoveredId(null)} onSelect={goToScene} handleProvinceKeyDown={handleProvinceKeyDown} />
+              pathRefs={pathRefs} heldOverlayRefs={heldOverlayRefs}
+              labelRefs={labelRefs} eraLabelRef={eraLabelRef}
+              onHover={(id) => id ? handleProvinceHover(id) : setHoveredId(null)}
+              onSelect={goToScene} handleProvinceKeyDown={handleProvinceKeyDown}
+            />
           </AtlasViewport>
-
-      <div className={styles.legend} aria-label="Scene status legend">
-        <span><i className={styles.previewKey} aria-hidden="true" />Scene preview</span>
-        <span><i className={styles.comingSoonKey} aria-hidden="true" />Coming soon</span>
-      </div>
-
-      <div className={styles.teaser} aria-live="polite">
-        {teaser}
-      </div>
+          <div className={styles.legend} role="group" aria-label="Scene status legend">
+            <span><i className={styles.previewKey} aria-hidden="true" />Scene preview</span>
+            <span><i className={styles.comingSoonKey} aria-hidden="true" />Coming soon</span>
+          </div>
+          <div className={styles.teaser} role="status" aria-label="Province details" aria-live="polite">{teaser}</div>
         </div>
         <aside className={styles.marginalia} aria-label="Atlas guide">
-          <div className={styles.periodHeading}><p>Selected period: {mainEra.label}</p><span>Choose another era</span></div>
-          <AtlasInsets width={width} height={height} physical={physical} provinces={provinces} eras={eras} eraOrder={eraOrder} onSelect={swapToMain} />
+          <div className={styles.periodHeading}>
+            <p aria-live="polite" aria-atomic="true">Selected period: {mainEra.label}</p>
+            <span>Choose another era</span>
+          </div>
+          <AtlasInsets
+            width={width} height={height} physical={physical}
+            provinces={provinces} eras={eras} eraOrder={eraOrder} onSelect={swapToMain}
+          />
           <AtlasSceneCatalog provinces={provinces} onSelect={goToScene} />
         </aside>
       </div>

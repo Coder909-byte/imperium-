@@ -67,7 +67,7 @@ test.describe("atlas", () => {
     expect(after).toBeCloseTo(0.85, 2); // matches the pre-fix single-path fill-opacity:0.85 exactly
     expect(after).toBeGreaterThan(before);
 
-    await expect(page.locator('[aria-live="polite"]')).toContainText("Ager Romanus");
+    await expect(page.getByRole("status", { name: "Province details" })).toContainText("Ager Romanus");
   });
 
   test("clicking a held region opens an intentional Coming soon state", async ({ page }) => {
@@ -81,6 +81,12 @@ test.describe("atlas", () => {
     // not be interactive.
     const gallia = page.locator('path[aria-label^="Gallia"]');
     await expect(gallia).toHaveCount(0);
+    const galliaLabel = page.getByRole("group", { name: "Roman Empire, 350 BC", exact: true }).locator("text", { hasText: /^Gallia$/ });
+    await expect(galliaLabel).toHaveCSS("opacity", "0");
+    // The old labelFadeIn animation overrode the unheld class after 300ms.
+    await page.waitForTimeout(400);
+    await expect(galliaLabel).toHaveCSS("opacity", "0");
+    await expect(galliaLabel).toHaveAttribute("aria-hidden", "true");
   });
 
   test("parchment texture and hand-inked edges retain SVG rendering", async ({ page }) => {
@@ -140,6 +146,9 @@ test.describe("atlas — border morphing", () => {
     await expect(page.getByText("486 AD", { exact: true }).first()).toBeVisible();
     await expect(page.locator('path[role="button"][data-region-id]')).toHaveCount(9);
     await expect(page.locator('path[aria-label="Aegyptus — coming soon"]')).toBeVisible();
+    const map = page.getByRole("group", { name: "Roman Empire, 486 AD", exact: true });
+    await expect(map.locator('text[aria-hidden="true"]').filter({ hasText: /^Gallia$/ })).toHaveCSS("opacity", "0");
+    await expect.poll(() => map.locator('text[aria-hidden="false"]').evaluateAll(labels => labels.every(label => getComputedStyle(label).opacity === "1"))).toBe(true);
 
     const dValues = await page.locator("path").evaluateAll((els) => els.map((el) => el.getAttribute("d")));
     for (const d of dValues) {

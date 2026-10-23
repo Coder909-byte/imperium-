@@ -1,0 +1,56 @@
+/* Keep the scroll container bounded so enlarged maps never widen the page. */
+.wrap { width: 100%; max-width: 1480px; margin: 0 auto; }
+.workspace { display: grid; grid-template-columns: minmax(0, 1fr) 248px; gap: 28px; align-items: start; }
+.mapColumn, .marginalia { min-width: 0; }
+.mapColumn { border: 1px solid #b5a180; background: #e9dfc8; box-shadow: 0 6px 24px #382b1514; }
+.mapStage { position: relative; }
+.mapViewport { width: 100%; aspect-ratio: 1000 / 620; min-height: 380px; max-height: 740px; overflow: auto; overscroll-behavior: contain; scrollbar-color: #927b58 #e9dfc8; background: #c5cfc0; }
+.mapViewport:focus-visible { outline: 3px solid #69342a; outline-offset: -3px; }
+.mapSurface { min-width: 860px; }
+.zoomControls { position: absolute; right: 18px; bottom: 38px; display: flex; align-items: center; border: 1px solid #86704e; background: #f6efdf; box-shadow: 0 2px 8px #382b1526; }
+.zoomControls button { min-width: 44px; min-height: 44px; padding: 6px 10px; color: #31291e; font-family: var(--font-cinzel), serif; font-size: .85rem; cursor: pointer; }
+.zoomControls button:first-child, .zoomControls button:last-child { font-family: Georgia, serif; font-size: 1.4rem; }
+.zoomControls button + button { border-left: 1px solid #c9b99b; }
+.zoomControls button:hover:enabled { background: #e5d7bc; }
+.zoomControls button:disabled { color: #8b816f; cursor: default; }
+.zoomControls button:focus-visible, .inset:focus-visible { outline: 3px solid #69342a; outline-offset: 3px; }
+.panHint { position: absolute; bottom: 9px; right: 18px; max-width: calc(100% - 36px); margin: 0; padding: 3px 8px; background: #f6efdf; color: #4d422f; font-size: .75rem; pointer-events: none; }
+.periodHeading { padding: 2px 0 14px; color: #30271a; }
+.periodHeading p { margin: 0 0 7px; font-family: var(--font-cinzel), serif; font-size: .95rem; }
+.periodHeading span { color: #63533e; font-size: .8rem; }
+.insets { display: grid; gap: 12px; }
+.inset { display: grid; width: 100%; overflow: hidden; border: 1px solid #a9926e; background: #f3ebda; color: #30271a; text-align: left; cursor: pointer; }
+.inset:hover { border-color: #69342a; background: #e9dbc0; }
+.insetMap { display: block; width: 100%; height: auto; aspect-ratio: 1000 / 620; }
+.insetLabel { display: flex; justify-content: space-between; gap: 4px; padding: 9px 12px; border-top: 1px solid #b8a381; font-family: var(--font-cinzel), serif; font-size: .85rem; letter-spacing: .06em; }
+.catalog { display: grid; gap: 16px; margin-top: 24px; padding-top: 22px; border-top: 1px solid #b8a381; color: #30271a; }
+.catalogEyebrow { margin: 0 0 8px; color: #6c382d; font-family: var(--font-cinzel), serif; font-size: .7rem; letter-spacing: .1em; }
+.catalogTitle { margin: 0; font-family: var(--font-cinzel), serif; font-size: 1.15rem; }
+.catalogIntro { margin: 8px 0 0; color: #63533e; font-family: Georgia, serif; font-size: .9rem; line-height: 1.6; }
+.previewList { display: grid; gap: 10px; }
+.previewButton { display: flex; flex-direction: column; align-items: flex-start; gap: 6px; min-height: 44px; padding: 14px; border: 1px solid #653a30; background: #653a30; color: #fff5df; cursor: pointer; font-family: var(--font-cinzel), serif; text-align: left; }
+.previewButton:hover { background: #4c2a22; }
+.previewButton:focus-visible { outline: 3px solid #653a30; outline-offset: 3px; }
+.previewDetail { font-family: Georgia, serif; font-size: .8rem; line-height: 1.5; color: #f4e4c9; }
+.legend { display: flex; flex-wrap: wrap; justify-content: center; gap: 16px; padding: 12px; color: #453722; font-size: .8rem; }
+.legend span { display: inline-flex; align-items: center; gap: 6px; }
+.legend i { display: inline-block; width: 22px; height: 13px; background: #c48d75; }
+.previewKey { border: 2px solid #754817; }
+.comingSoonKey { border: 1px dashed #3a2510; }
+.teaser { min-height: 3.8em; margin: 0 16px; padding: 12px 4px; border-top: 1px solid #c8b99c; font-family: Georgia, serif; font-size: .85rem; font-style: italic; line-height: 1.6; color: #453722; text-align: center; }
+@media (max-width: 1100px) {
+  .workspace { grid-template-columns: minmax(0, 1fr); gap: 24px; }
+  .marginalia { display: grid; grid-template-columns: minmax(0, 1fr) 240px; column-gap: 24px; }
+  .periodHeading { grid-column: 1; }
+  .insets { grid-column: 1; grid-row: 2; grid-template-columns: repeat(3, minmax(0, 1fr)); align-self: start; }
+  .catalog { grid-column: 2; grid-row: 1 / 3; margin: 0; padding: 0 0 0 24px; border-top: 0; border-left: 1px solid #b8a381; align-content: start; }
+}
+@media (max-width: 640px) {
+  .mapViewport { height: 440px; min-height: 0; max-height: 65svh; aspect-ratio: auto; }
+  .marginalia { display: block; }
+  .insets { gap: 8px; }
+  .insetLabel { font-size: .7rem; letter-spacing: 0; padding: 9px 7px; }
+  .catalog { margin-top: 24px; padding: 22px 0 0; border-left: 0; border-top: 1px solid #b8a381; }
+  .zoomControls { right: 12px; }
+  .panHint { right: 12px; }
+}

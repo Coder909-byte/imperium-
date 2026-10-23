@@ -1,0 +1,7 @@
+# ADR 017 — Relief atlas workspace
+
+The owner asked to continue from checkpoint `c033c96` (`map ui change mid`). That checkpoint already contains the owner-approved Natural Earth relief, registered to the shared vector projection, separate HTML era cards and a zoom component. Its new workspace and viewport CSS selectors were absent, leaving the layout unfinished. This continues that atlas work while M8's separate art/history/device gates remain open.
+
+Keep the atlas in SVG and its historical geometry unchanged. Complete a parchment workspace with a large map and three era cards beside it; move the cards below the map on smaller screens. Use a bounded native scroll region for touch/keyboard panning and 100–200% zoom that scales from the minimum map width even on narrow screens. Preserve scene availability independently of historical possession. Keep the approved relief file and provenance unchanged; use its painted water to avoid straight edges from a clipped vector ocean wash.
+
+No rendering dependency, new asset, region, auth configuration or database change is required. The relief URL is shared across all four maps. Era changes clear hover state, hide unheld labels from assistive technology and return label opacity to React's classes after interrupted GSAP transitions. Production browser captures and actual transferred gzip script bytes verify this scoped continuation; they do not establish physical-device TTI, Safari/GPU acceptance or completion of M8.

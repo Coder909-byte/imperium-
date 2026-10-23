@@ -1,0 +1,860 @@
+{
+  "base": "http://127.0.0.1:3004",
+  "measuredAt": "2026-10-23T14:29:00.879Z",
+  "environment": {
+    "node": "v24.14.1",
+    "platform": "darwin",
+    "arch": "x64",
+    "chrome": "150.0.7871.125",
+    "mode": "Headless desktop Chrome; responsive dark-preference/reduced-motion captures, not physical mobile or Safari. Axe cannot fully assess SVG/artwork text contrast."
+  },
+  "pages": [
+    {
+      "width": 320,
+      "era": "350 BC",
+      "overflow": false,
+      "canvases": 0,
+      "held": 1,
+      "shownProvinceLabels": 1,
+      "relief": [
+        "/assets/atlas/natural-earth-relief.webp"
+      ],
+      "viewport": {
+        "x": 17,
+        "y": 360,
+        "width": 286,
+        "height": 440
+      },
+      "axe": {
+        "violations": [],
+        "incomplete": [
+          {
+            "id": "color-contrast",
+            "nodes": [
+              [
+                ".AtlasMap-module__pbEoiG__labelHeld"
+              ],
+              [
+                "g:nth-child(32) > .AtlasMap-module__pbEoiG__cityLabel[x=\"5\"][y=\"11\"]"
+              ],
+              [
+                "g:nth-child(33) > .AtlasMap-module__pbEoiG__cityLabel[x=\"5\"][y=\"11\"]"
+              ],
+              [
+                "g:nth-child(34) > .AtlasMap-module__pbEoiG__cityLabel[x=\"5\"][y=\"11\"]"
+              ],
+              [
+                "g:nth-child(35) > .AtlasMap-module__pbEoiG__cityLabel[x=\"5\"][y=\"11\"]"
+              ],
+              [
+                "g:nth-child(36) > .AtlasMap-module__pbEoiG__cityLabel[x=\"5\"][y=\"11\"]"
+              ],
+              [
+                "text[x=\"495.2937325900543\"]"
+              ],
+              [
+                ".AtlasMap-module__pbEoiG__cartoucheTitle"
+              ],
+              [
+                ".AtlasMap-module__pbEoiG__eraLabel"
+              ],
+              [
+                ".AtlasMap-module__pbEoiG__imprint"
+              ],
+              [
+                "span:nth-child(1) > span"
+              ]
+            ]
+          }
+        ]
+      },
+      "errors": [],
+      "failedResponses": []
+    },
+    {
+      "width": 320,
+      "era": "117 AD",
+      "overflow": false,
+      "canvases": 0,
+      "held": 23,
+      "shownProvinceLabels": 23,
+      "relief": [
+        "/assets/atlas/natural-earth-relief.webp"
+      ],
+      "viewport": {
+        "x": 17,
+        "y": 360,
+        "width": 286,
+        "height": 440
+      },
+      "axe": {
+        "violations": [],
+        "incomplete": [
+          {
+            "id": "color-contrast",
+            "nodes": [
+              [
+                "text[x=\"692.7530891795291\"]"
+              ],
+              [
+                "text[x=\"433.90960231875357\"]"
+              ],
+              [
+                "text[x=\"698.0980086913148\"]"
+              ],
+              [
+                "text[x=\"762.9315823642081\"]"
+              ],
+              [
+                "text[x=\"640.1110484497196\"]"
+              ],
+              [
+                "text[x=\"297.371126752878\"]"
+              ],
+              [
+                "text[x=\"394.8680189123437\"]"
+              ],
+              [
+                "text[x=\"576.3627610575161\"]"
+              ],
+              [
+                "text[x=\"678.3392722676269\"]"
+              ],
+              [
+                "text[x=\"554.057701363655\"]"
+              ],
+              [
+                "text[x=\"475.51442517716765\"]"
+              ],
+              [
+                "text[x=\"324.290403474663\"]"
+              ],
+              [
+                "text[x=\"548.0155754311802\"]"
+              ],
+              [
+                "text[x=\"443.1552513593163\"]"
+              ],
+              [
+                "text[x=\"713.1407290004811\"]"
+              ],
+              [
+                "text[x=\"789.9750622404979\"]"
+              ],
+              [
+                "text[x=\"542.382398999918\"]"
+              ],
+              [
+                "text[x=\"427.6965891994381\"]"
+              ],
+              [
+                "text[x=\"391.6415739395738\"]"
+              ],
+              [
+                "text[x=\"446.79931477713245\"]"
+              ],
+              [
+                "text[x=\"727.5425235753888\"]"
+              ],
+              [
+                "g:nth-child(32) > .AtlasMap-module__pbEoiG__cityLabel[x=\"5\"][y=\"11\"]"
+              ],
+              [
+                "g:nth-child(33) > .AtlasMap-module__pbEoiG__cityLabel[x=\"5\"][y=\"11\"]"
+              ],
+              [
+                "g:nth-child(34) > .AtlasMap-module__pbEoiG__cityLabel[x=\"5\"][y=\"11\"]"
+              ],
+              [
+                "g:nth-child(35) > .AtlasMap-module__pbEoiG__cityLabel[x=\"5\"][y=\"11\"]"
+              ],
+              [
+                "g:nth-child(36) > .AtlasMap-module__pbEoiG__cityLabel[x=\"5\"][y=\"11\"]"
+              ],
+              [
+                "text[x=\"495.2937325900543\"]"
+              ],
+              [
+                ".AtlasMap-module__pbEoiG__cartoucheTitle"
+              ],
+              [
+                ".AtlasMap-module__pbEoiG__eraLabel"
+              ],
+              [
+                ".AtlasMap-module__pbEoiG__imprint"
+              ],
+              [
+                "span:nth-child(1) > span"
+              ]
+            ]
+          }
+        ]
+      },
+      "errors": [],
+      "failedResponses": []
+    },
+    {
+      "width": 390,
+      "era": "350 BC",
+      "overflow": false,
+      "canvases": 0,
+      "held": 1,
+      "shownProvinceLabels": 1,
+      "relief": [
+        "/assets/atlas/natural-earth-relief.webp"
+      ],
+      "viewport": {
+        "x": 17,
+        "y": 258,
+        "width": 356,
+        "height": 440
+      },
+      "axe": {
+        "violations": [],
+        "incomplete": [
+          {
+            "id": "color-contrast",
+            "nodes": [
+              [
+                ".AtlasMap-module__pbEoiG__labelHeld"
+              ],
+              [
+                "g:nth-child(32) > .AtlasMap-module__pbEoiG__cityLabel[x=\"5\"][y=\"11\"]"
+              ],
+              [
+                "g:nth-child(33) > .AtlasMap-module__pbEoiG__cityLabel[x=\"5\"][y=\"11\"]"
+              ],
+              [
+                "g:nth-child(34) > .AtlasMap-module__pbEoiG__cityLabel[x=\"5\"][y=\"11\"]"
+              ],
+              [
+                "g:nth-child(35) > .AtlasMap-module__pbEoiG__cityLabel[x=\"5\"][y=\"11\"]"
+              ],
+              [
+                "g:nth-child(36) > .AtlasMap-module__pbEoiG__cityLabel[x=\"5\"][y=\"11\"]"
+              ],
+              [
+                "text[x=\"495.2937325900543\"]"
+              ],
+              [
+                ".AtlasMap-module__pbEoiG__cartoucheTitle"
+              ],
+              [
+                ".AtlasMap-module__pbEoiG__eraLabel"
+              ],
+              [
+                ".AtlasMap-module__pbEoiG__imprint"
+              ],
+              [
+                "span:nth-child(1) > span"
+              ]
+            ]
+          }
+        ]
+      },
+      "errors": [],
+      "failedResponses": []
+    },
+    {
+      "width": 390,
+      "era": "117 AD",
+      "overflow": false,
+      "canvases": 0,
+      "held": 23,
+      "shownProvinceLabels": 23,
+      "relief": [
+        "/assets/atlas/natural-earth-relief.webp"
+      ],
+      "viewport": {
+        "x": 17,
+        "y": 258,
+        "width": 356,
+        "height": 440
+      },
+      "axe": {
+        "violations": [],
+        "incomplete": [
+          {
+            "id": "color-contrast",
+            "nodes": [
+              [
+                "text[x=\"692.7530891795291\"]"
+              ],
+              [
+                "text[x=\"433.90960231875357\"]"
+              ],
+              [
+                "text[x=\"698.0980086913148\"]"
+              ],
+              [
+                "text[x=\"762.9315823642081\"]"
+              ],
+              [
+                "text[x=\"640.1110484497196\"]"
+              ],
+              [
+                "text[x=\"297.371126752878\"]"
+              ],
+              [
+                "text[x=\"394.8680189123437\"]"
+              ],
+              [
+                "text[x=\"576.3627610575161\"]"
+              ],
+              [
+                "text[x=\"678.3392722676269\"]"
+              ],
+              [
+                "text[x=\"554.057701363655\"]"
+              ],
+              [
+                "text[x=\"475.51442517716765\"]"
+              ],
+              [
+                "text[x=\"324.290403474663\"]"
+              ],
+              [
+                "text[x=\"548.0155754311802\"]"
+              ],
+              [
+                "text[x=\"443.1552513593163\"]"
+              ],
+              [
+                "text[x=\"713.1407290004811\"]"
+              ],
+              [
+                "text[x=\"271.85927525976484\"]"
+              ],
+              [
+                "text[x=\"789.9750622404979\"]"
+              ],
+              [
+                "text[x=\"542.382398999918\"]"
+              ],
+              [
+                "text[x=\"427.6965891994381\"]"
+              ],
+              [
+                "text[x=\"391.6415739395738\"]"
+              ],
+              [
+                "text[x=\"446.79931477713245\"]"
+              ],
+              [
+                "text[x=\"727.5425235753888\"]"
+              ],
+              [
+                "g:nth-child(32) > .AtlasMap-module__pbEoiG__cityLabel[x=\"5\"][y=\"11\"]"
+              ],
+              [
+                "g:nth-child(33) > .AtlasMap-module__pbEoiG__cityLabel[x=\"5\"][y=\"11\"]"
+              ],
+              [
+                "g:nth-child(34) > .AtlasMap-module__pbEoiG__cityLabel[x=\"5\"][y=\"11\"]"
+              ],
+              [
+                "g:nth-child(35) > .AtlasMap-module__pbEoiG__cityLabel[x=\"5\"][y=\"11\"]"
+              ],
+              [
+                "g:nth-child(36) > .AtlasMap-module__pbEoiG__cityLabel[x=\"5\"][y=\"11\"]"
+              ],
+              [
+                "text[x=\"495.2937325900543\"]"
+              ],
+              [
+                ".AtlasMap-module__pbEoiG__cartoucheTitle"
+              ],
+              [
+                ".AtlasMap-module__pbEoiG__eraLabel"
+              ],
+              [
+                ".AtlasMap-module__pbEoiG__imprint"
+              ],
+              [
+                "span:nth-child(1) > span"
+              ]
+            ]
+          }
+        ]
+      },
+      "errors": [],
+      "failedResponses": []
+    },
+    {
+      "width": 768,
+      "era": "350 BC",
+      "overflow": false,
+      "canvases": 0,
+      "held": 1,
+      "shownProvinceLabels": 1,
+      "relief": [
+        "/assets/atlas/natural-earth-relief.webp"
+      ],
+      "viewport": {
+        "x": 33,
+        "y": 262,
+        "width": 702,
+        "height": 435.234375
+      },
+      "axe": {
+        "violations": [],
+        "incomplete": [
+          {
+            "id": "color-contrast",
+            "nodes": [
+              [
+                ".AtlasMap-module__pbEoiG__labelHeld"
+              ],
+              [
+                "g:nth-child(32) > .AtlasMap-module__pbEoiG__cityLabel[x=\"5\"][y=\"11\"]"
+              ],
+              [
+                "g:nth-child(33) > .AtlasMap-module__pbEoiG__cityLabel[x=\"5\"][y=\"11\"]"
+              ],
+              [
+                "g:nth-child(34) > .AtlasMap-module__pbEoiG__cityLabel[x=\"5\"][y=\"11\"]"
+              ],
+              [
+                "g:nth-child(35) > .AtlasMap-module__pbEoiG__cityLabel[x=\"5\"][y=\"11\"]"
+              ],
+              [
+                "g:nth-child(36) > .AtlasMap-module__pbEoiG__cityLabel[x=\"5\"][y=\"11\"]"
+              ],
+              [
+                "text[x=\"495.2937325900543\"]"
+              ],
+              [
+                "text[x=\"197.41435023978244\"]"
+              ],
+              [
+                ".AtlasMap-module__pbEoiG__cartoucheTitle"
+              ],
+              [
+                ".AtlasMap-module__pbEoiG__eraLabel"
+              ],
+              [
+                "text[y=\"-45\"]"
+              ],
+              [
+                "text[y=\"51\"]"
+              ],
+              [
+                "text[x=\"48\"]"
+              ],
+              [
+                ".AtlasMap-module__pbEoiG__imprint"
+              ],
+              [
+                "span:nth-child(1) > span"
+              ]
+            ]
+          }
+        ]
+      },
+      "errors": [],
+      "failedResponses": []
+    },
+    {
+      "width": 768,
+      "era": "117 AD",
+      "overflow": false,
+      "canvases": 0,
+      "held": 23,
+      "shownProvinceLabels": 23,
+      "relief": [
+        "/assets/atlas/natural-earth-relief.webp"
+      ],
+      "viewport": {
+        "x": 33,
+        "y": 262,
+        "width": 702,
+        "height": 435.234375
+      },
+      "axe": {
+        "violations": [],
+        "incomplete": [
+          {
+            "id": "color-contrast",
+            "nodes": [
+              [
+                "text[x=\"692.7530891795291\"]"
+              ],
+              [
+                "text[x=\"433.90960231875357\"]"
+              ],
+              [
+                "text[x=\"698.0980086913148\"]"
+              ],
+              [
+                "text[x=\"762.9315823642081\"]"
+              ],
+              [
+                "text[x=\"640.1110484497196\"]"
+              ],
+              [
+                "text[x=\"297.371126752878\"]"
+              ],
+              [
+                "text[x=\"394.8680189123437\"]"
+              ],
+              [
+                "text[x=\"576.3627610575161\"]"
+              ],
+              [
+                "text[x=\"678.3392722676269\"]"
+              ],
+              [
+                "text[x=\"554.057701363655\"]"
+              ],
+              [
+                "text[x=\"475.51442517716765\"]"
+              ],
+              [
+                "text[x=\"324.290403474663\"]"
+              ],
+              [
+                "text[x=\"548.0155754311802\"]"
+              ],
+              [
+                "text[x=\"249.49152894127516\"]"
+              ],
+              [
+                "text[x=\"443.1552513593163\"]"
+              ],
+              [
+                "text[x=\"713.1407290004811\"]"
+              ],
+              [
+                "text[x=\"271.85927525976484\"]"
+              ],
+              [
+                "text[x=\"789.9750622404979\"]"
+              ],
+              [
+                "text[x=\"542.382398999918\"]"
+              ],
+              [
+                "text[x=\"427.6965891994381\"]"
+              ],
+              [
+                "text[x=\"391.6415739395738\"]"
+              ],
+              [
+                "text[x=\"446.79931477713245\"]"
+              ],
+              [
+                "text[x=\"727.5425235753888\"]"
+              ],
+              [
+                "g:nth-child(32) > .AtlasMap-module__pbEoiG__cityLabel[x=\"5\"][y=\"11\"]"
+              ],
+              [
+                "g:nth-child(33) > .AtlasMap-module__pbEoiG__cityLabel[x=\"5\"][y=\"11\"]"
+              ],
+              [
+                "g:nth-child(34) > .AtlasMap-module__pbEoiG__cityLabel[x=\"5\"][y=\"11\"]"
+              ],
+              [
+                "g:nth-child(35) > .AtlasMap-module__pbEoiG__cityLabel[x=\"5\"][y=\"11\"]"
+              ],
+              [
+                "g:nth-child(36) > .AtlasMap-module__pbEoiG__cityLabel[x=\"5\"][y=\"11\"]"
+              ],
+              [
+                "text[x=\"495.2937325900543\"]"
+              ],
+              [
+                "text[x=\"197.41435023978244\"]"
+              ],
+              [
+                ".AtlasMap-module__pbEoiG__cartoucheTitle"
+              ],
+              [
+                ".AtlasMap-module__pbEoiG__eraLabel"
+              ],
+              [
+                "text[y=\"-45\"]"
+              ],
+              [
+                "text[y=\"51\"]"
+              ],
+              [
+                "text[x=\"48\"]"
+              ],
+              [
+                ".AtlasMap-module__pbEoiG__imprint"
+              ],
+              [
+                "span:nth-child(1) > span"
+              ]
+            ]
+          }
+        ]
+      },
+      "errors": [],
+      "failedResponses": []
+    },
+    {
+      "width": 1440,
+      "era": "350 BC",
+      "overflow": false,
+      "canvases": 0,
+      "held": 1,
+      "shownProvinceLabels": 1,
+      "relief": [
+        "/assets/atlas/natural-earth-relief.webp"
+      ],
+      "viewport": {
+        "x": 49,
+        "y": 202,
+        "width": 1066,
+        "height": 660.90625
+      },
+      "axe": {
+        "violations": [],
+        "incomplete": [
+          {
+            "id": "color-contrast",
+            "nodes": [
+              [
+                ".AtlasMap-module__pbEoiG__labelHeld"
+              ],
+              [
+                "g:nth-child(32) > .AtlasMap-module__pbEoiG__cityLabel[x=\"5\"][y=\"11\"]"
+              ],
+              [
+                "g:nth-child(33) > .AtlasMap-module__pbEoiG__cityLabel[x=\"5\"][y=\"11\"]"
+              ],
+              [
+                "g:nth-child(34) > .AtlasMap-module__pbEoiG__cityLabel[x=\"5\"][y=\"11\"]"
+              ],
+              [
+                "g:nth-child(35) > .AtlasMap-module__pbEoiG__cityLabel[x=\"5\"][y=\"11\"]"
+              ],
+              [
+                "g:nth-child(36) > .AtlasMap-module__pbEoiG__cityLabel[x=\"5\"][y=\"11\"]"
+              ],
+              [
+                "text[x=\"495.2937325900543\"]"
+              ],
+              [
+                "text[x=\"197.41435023978244\"]"
+              ],
+              [
+                ".AtlasMap-module__pbEoiG__cartoucheTitle"
+              ],
+              [
+                ".AtlasMap-module__pbEoiG__eraLabel"
+              ],
+              [
+                "text[y=\"-45\"]"
+              ],
+              [
+                "text[y=\"51\"]"
+              ],
+              [
+                "text[x=\"-48\"]"
+              ],
+              [
+                "text[x=\"48\"]"
+              ],
+              [
+                ".AtlasMap-module__pbEoiG__imprint"
+              ],
+              [
+                ".AtlasWorkspace-module__QyYNwq__legend > span:nth-child(1)"
+              ],
+              [
+                ".AtlasWorkspace-module__QyYNwq__legend > span:nth-child(2)"
+              ],
+              [
+                ".AtlasWorkspace-module__QyYNwq__teaser"
+              ],
+              [
+                "button[aria-label=\"Switch main map to 200 BC\"] > .AtlasWorkspace-module__QyYNwq__insetLabel"
+              ],
+              [
+                "button[aria-label=\"Switch main map to 117 AD\"] > .AtlasWorkspace-module__QyYNwq__insetLabel"
+              ],
+              [
+                "button[aria-label=\"Switch main map to 486 AD\"] > .AtlasWorkspace-module__QyYNwq__insetLabel"
+              ],
+              [
+                ".AtlasWorkspace-module__QyYNwq__catalogEyebrow"
+              ],
+              [
+                "span:nth-child(1) > span"
+              ]
+            ]
+          }
+        ]
+      },
+      "errors": [],
+      "failedResponses": []
+    },
+    {
+      "width": 1440,
+      "era": "117 AD",
+      "overflow": false,
+      "canvases": 0,
+      "held": 23,
+      "shownProvinceLabels": 23,
+      "relief": [
+        "/assets/atlas/natural-earth-relief.webp"
+      ],
+      "viewport": {
+        "x": 49,
+        "y": 202,
+        "width": 1066,
+        "height": 660.90625
+      },
+      "axe": {
+        "violations": [],
+        "incomplete": [
+          {
+            "id": "color-contrast",
+            "nodes": [
+              [
+                "text[x=\"692.7530891795291\"]"
+              ],
+              [
+                "text[x=\"433.90960231875357\"]"
+              ],
+              [
+                "text[x=\"698.0980086913148\"]"
+              ],
+              [
+                "text[x=\"762.9315823642081\"]"
+              ],
+              [
+                "text[x=\"640.1110484497196\"]"
+              ],
+              [
+                "text[x=\"297.371126752878\"]"
+              ],
+              [
+                "text[x=\"394.8680189123437\"]"
+              ],
+              [
+                "text[x=\"576.3627610575161\"]"
+              ],
+              [
+                "text[x=\"678.3392722676269\"]"
+              ],
+              [
+                "text[x=\"554.057701363655\"]"
+              ],
+              [
+                "text[x=\"475.51442517716765\"]"
+              ],
+              [
+                "text[x=\"324.290403474663\"]"
+              ],
+              [
+                "text[x=\"548.0155754311802\"]"
+              ],
+              [
+                "text[x=\"249.49152894127516\"]"
+              ],
+              [
+                "text[x=\"443.1552513593163\"]"
+              ],
+              [
+                "text[x=\"713.1407290004811\"]"
+              ],
+              [
+                "text[x=\"271.85927525976484\"]"
+              ],
+              [
+                "text[x=\"789.9750622404979\"]"
+              ],
+              [
+                "text[x=\"542.382398999918\"]"
+              ],
+              [
+                "text[x=\"427.6965891994381\"]"
+              ],
+              [
+                "text[x=\"391.6415739395738\"]"
+              ],
+              [
+                "text[x=\"446.79931477713245\"]"
+              ],
+              [
+                "text[x=\"727.5425235753888\"]"
+              ],
+              [
+                "g:nth-child(32) > .AtlasMap-module__pbEoiG__cityLabel[x=\"5\"][y=\"11\"]"
+              ],
+              [
+                "g:nth-child(33) > .AtlasMap-module__pbEoiG__cityLabel[x=\"5\"][y=\"11\"]"
+              ],
+              [
+                "g:nth-child(34) > .AtlasMap-module__pbEoiG__cityLabel[x=\"5\"][y=\"11\"]"
+              ],
+              [
+                "g:nth-child(35) > .AtlasMap-module__pbEoiG__cityLabel[x=\"5\"][y=\"11\"]"
+              ],
+              [
+                "g:nth-child(36) > .AtlasMap-module__pbEoiG__cityLabel[x=\"5\"][y=\"11\"]"
+              ],
+              [
+                "text[x=\"495.2937325900543\"]"
+              ],
+              [
+                "text[x=\"197.41435023978244\"]"
+              ],
+              [
+                ".AtlasMap-module__pbEoiG__cartoucheTitle"
+              ],
+              [
+                ".AtlasMap-module__pbEoiG__eraLabel"
+              ],
+              [
+                "text[y=\"-45\"]"
+              ],
+              [
+                "text[y=\"51\"]"
+              ],
+              [
+                "text[x=\"-48\"]"
+              ],
+              [
+                "text[x=\"48\"]"
+              ],
+              [
+                ".AtlasMap-module__pbEoiG__imprint"
+              ],
+              [
+                ".AtlasWorkspace-module__QyYNwq__legend > span:nth-child(1)"
+              ],
+              [
+                ".AtlasWorkspace-module__QyYNwq__legend > span:nth-child(2)"
+              ],
+              [
+                ".AtlasWorkspace-module__QyYNwq__teaser"
+              ],
+              [
+                "button[aria-label=\"Switch main map to 200 BC\"] > .AtlasWorkspace-module__QyYNwq__insetLabel"
+              ],
+              [
+                "button[aria-label=\"Switch main map to 350 BC\"] > .AtlasWorkspace-module__QyYNwq__insetLabel"
+              ],
+              [
+                "button[aria-label=\"Switch main map to 486 AD\"] > .AtlasWorkspace-module__QyYNwq__insetLabel"
+              ],
+              [
+                ".AtlasWorkspace-module__QyYNwq__catalogEyebrow"
+              ],
+              [
+                "span:nth-child(1) > span"
+              ]
+            ]
+          }
+        ]
+      },
+      "errors": [],
+      "failedResponses": []
+    }
+  ]
+}

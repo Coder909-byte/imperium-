@@ -17,7 +17,8 @@ describe("georeferenced atlas relief sampling", () => {
   });
   it("shares the live vector projection at Rome, Alesia, the Alps and Alexandria", () => {
     const projection = createProjection(ATLAS_FIT_EXTENT, ATLAS_VIEWPORT);
-    for (const position of [[12.4964, 41.9028], [4.5, 47.5], [8, 46], [29.9187, 31.2001]]) {
+    const positions: [number, number][] = [[12.4964, 41.9028], [4.5, 47.5], [8, 46], [29.9187, 31.2001]];
+    for (const position of positions) {
       const svg = projection(position);
       expect(svg).not.toBeNull();
       const restored = projection.invert?.(svg!);

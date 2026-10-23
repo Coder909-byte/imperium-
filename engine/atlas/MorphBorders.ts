@@ -105,9 +105,10 @@ export class BorderMorph {
 
     const duration = input.reducedMotion ? REDUCED_DURATION : DURATION;
     const overlays = input.provinces.map((p) => p.heldOverlay);
+    const labels = input.provinces.map((p) => p.label).filter((label): label is SVGTextElement => label !== null);
     const tl = gsap.timeline({
       onComplete: () => {
-        gsap.set(overlays, { clearProps: CLEARED_PROPS });
+        gsap.set([...overlays, ...labels], { clearProps: CLEARED_PROPS });
         input.onComplete?.();
       },
     });

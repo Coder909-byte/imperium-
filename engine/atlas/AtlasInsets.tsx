@@ -1,6 +1,7 @@
 import type { Era, PhysicalLayers, ProjectedProvince } from "./types";
 import { isHeld } from "./heldRegions";
-import styles from "./AtlasMap.module.css";
+import mapStyles from "./AtlasMap.module.css";
+import styles from "./AtlasWorkspace.module.css";
 
 interface AtlasInsetsProps {
   width: number;
@@ -22,9 +23,9 @@ export function AtlasInsets({ width, height, physical, provinces, eras, eraOrder
             <svg viewBox={`0 0 ${width} ${height}`} aria-hidden="true" className={styles.insetMap}>
               <rect width={width} height={height} fill="#eee6d0" />
               {physical.reliefUrl && <image href={physical.reliefUrl} width={width} height={height} opacity={.65} />}
-              {physical.ocean.map((d, i) => <path key={i} d={d} className={styles.ocean} />)}
-              {physical.coastline.map((d, i) => <path key={i} d={d} className={styles.coastline} />)}
-              {provinces.filter(province => isHeld(era.year, province)).map(province => <path key={province.id} d={province.d} className={styles.insetProvinceHeld} />)}
+              {physical.ocean.map((d, i) => <path key={i} d={d} className={physical.reliefUrl ? mapStyles.reliefOcean : mapStyles.ocean} />)}
+              {physical.coastline.map((d, i) => <path key={i} d={d} className={mapStyles.coastline} />)}
+              {provinces.filter(province => isHeld(era.year, province)).map(province => <path key={province.id} d={province.d} className={mapStyles.insetProvinceHeld} />)}
             </svg>
             <span className={styles.insetLabel}>{era.label}<span aria-hidden="true">↗</span></span>
           </button>

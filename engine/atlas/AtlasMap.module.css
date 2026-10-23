@@ -3,18 +3,10 @@
    EB Garamond for the caption/teaser line. Both loaded in app/atlas/layout.tsx
    as CSS variables (--font-cinzel, --font-garamond). */
 
-.wrap {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-  width: 100%;
-  max-width: 1100px;
-  margin: 0 auto;
-}
-
 .svg {
   width: 100%;
   height: auto;
+  display: block;
   background: #1a1108;
 }
 
@@ -28,6 +20,10 @@
      winding direction, so land renders as land, not filled ocean. */
   fill-rule: evenodd;
 }
+
+/* The georeferenced raster already paints water; a clipped vector wash
+   would introduce straight seams across the shaded ocean. */
+.reliefOcean { fill: none; }
 
 .lake {
   fill: #a9bdb9;
@@ -108,52 +104,6 @@
   stroke-dasharray: 3 2;
 }
 
-.catalog {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  align-items: center;
-  gap: 1rem;
-  padding: 1rem 1.25rem;
-  background: #17120e;
-  color: #f4ede0;
-}
-
-.catalogTitle {
-  margin: 0;
-  font-family: var(--font-cinzel), serif;
-  font-size: 1.1rem;
-}
-
-.catalogIntro {
-  margin: 0.4rem 0 0;
-  font-family: var(--font-garamond), serif;
-  color: #dcd2bf;
-}
-
-.previewList { display: flex; flex-wrap: wrap; gap: 0.6rem; }
-.previewButton {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 0.2rem;
-  min-height: 44px;
-  padding: 0.7rem 1rem;
-  border: 1px solid #c9a876;
-  background: #2c2115;
-  color: #f4ede0;
-  cursor: pointer;
-  font-family: var(--font-cinzel), serif;
-}
-.previewButton:hover { background: #46321e; }
-.previewButton:focus-visible { outline: 2px solid #f2e2b8; outline-offset: 3px; }
-.previewDetail { font-family: var(--font-garamond), serif; font-size: 0.9rem; color: #dcd2bf; }
-.legend { display: flex; flex-wrap: wrap; justify-content: center; gap: 1.25rem; padding: 0.5rem; background: #e2d4b7; color: #241708; font-size: 0.85rem; }
-.legend span { display: inline-flex; align-items: center; gap: 0.4rem; }
-.legend i { display: inline-block; width: 1.4rem; height: 0.8rem; background: #c48d75; }
-.previewKey { border: 2px solid #754817; }
-.comingSoonKey { border: 1px dashed #3a2510; }
-
 /* Solving 0.85 = 0.55 + x*(1-0.55) for x: two same-color layers stacked
    with alpha "over" compositing combine as top + bottom*(1-top), not by
    simple addition. Stacked on .heldOverlay's fixed 0.55 (once active),
@@ -179,7 +129,6 @@
   fill: #241708;
   text-shadow: 0 0 3px #f2e2b8;
   pointer-events: none;
-  animation: labelFadeIn 300ms ease both;
 }
 
 /* Labels are always mounted now (M2) — unheld ones sit at opacity 0
@@ -217,39 +166,11 @@
   pointer-events: none;
 }
 
-.insets {
-  cursor: pointer;
-}
-
-.inset:focus-visible .insetFrame {
-  stroke: #f2e2b8;
-}
-
-.insetFrame {
-  fill: none;
-  stroke: #3a2510;
-  stroke-width: 2;
-}
-
-.insetLabel {
-  font-family: var(--font-cinzel), "Cinzel", serif;
-  font-size: 9px;
-  letter-spacing: 0.08em;
-  fill: #f2e2b8;
-}
-
 .insetProvinceHeld {
   fill: #a33d2b;
   fill-opacity: 0.55;
   stroke: #3a2510;
   stroke-width: 0.6;
-}
-
-.insetProvinceUnheld {
-  fill: none;
-  stroke: #3a2510;
-  stroke-width: 0.4;
-  stroke-opacity: 0.25;
 }
 
 .cartoucheTitle {
@@ -266,25 +187,6 @@
   fill: #241708;
 }
 
-.teaser {
-  min-height: 1.4em;
-  padding: 0.4rem;
-  background: #e2d4b7;
-  font-family: var(--font-garamond), "EB Garamond", serif;
-  font-style: italic;
-  color: #241708;
-  text-align: center;
-}
-
-@keyframes labelFadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
 @media (prefers-reduced-motion: reduce) {
   .provinceBase,
   .heldOverlay,
@@ -294,3 +196,7 @@
     animation: none;
   }
 }
+
+.graticule { fill: none; stroke: #725a39; stroke-width: .5; stroke-opacity: .22; }
+.compassLabel { font-family: var(--font-cinzel), serif; font-size: 8px; fill: #544026; stroke: none; }
+.imprint { font-family: var(--font-cinzel), serif; font-size: 6px; letter-spacing: .14em; fill: #544026; }

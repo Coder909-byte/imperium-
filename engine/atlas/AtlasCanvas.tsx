@@ -27,7 +27,7 @@ export function AtlasCanvas({ width, height, physical, provinces, cities, seas, 
         {physical.graticule && <path d={physical.graticule} className={styles.graticule} pointerEvents="none" aria-hidden="true" />}
         <g filter="url(#inkEdges)">
           {physical.ocean.map((d, i) => (
-            <path key={`ocean-${i}`} d={d} className={styles.ocean} />
+            <path key={`ocean-${i}`} d={d} className={physical.reliefUrl ? styles.reliefOcean : styles.ocean} />
           ))}
           {physical.lakes.map((d, i) => (
             <path key={`lake-${i}`} d={d} className={styles.lake} />
@@ -111,6 +111,7 @@ export function AtlasCanvas({ width, height, physical, provinces, cities, seas, 
             x={province.labelX}
             y={province.labelY}
             textAnchor="middle"
+            aria-hidden={!heldIds.has(province.id)}
             className={[styles.provinceLabel, heldIds.has(province.id) ? styles.labelHeld : styles.labelUnheld].join(" ")}
           >
             {province.name}

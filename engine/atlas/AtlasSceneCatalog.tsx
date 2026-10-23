@@ -1,5 +1,5 @@
 import type { ProjectedProvince } from "./types";
-import styles from "./AtlasMap.module.css";
+import styles from "./AtlasWorkspace.module.css";
 
 export function AtlasSceneCatalog({
   provinces,
