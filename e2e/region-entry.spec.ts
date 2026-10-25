@@ -7,6 +7,10 @@ const provinceDir = join(process.cwd(), "content", "borders", "provinces");
 const provinces = readdirSync(provinceDir)
   .filter((file) => file.endsWith(".json"))
   .map((file) => Province.parse(JSON.parse(readFileSync(join(provinceDir, file), "utf-8"))));
+const authoredIds = new Set(provinces.filter(province => {
+  const path = join(process.cwd(), "content", "regions", `${province.id}.json`);
+  try { return Boolean(readFileSync(path, "utf8")); } catch { return false; }
+}).map(province => province.id));
 
 test("initial atlas exposes Gallia's dated preview without mislabelling unauthored Latium", async ({ page }, testInfo) => {
   await page.goto("/atlas");
@@ -21,11 +25,11 @@ test("initial atlas exposes Gallia's dated preview without mislabelling unauthor
   await expect(page.getByRole("heading", { name: "The hill", exact: true })).toBeVisible();
 });
 
-test("117 AD map distinguishes Gallia's preview from 22 Coming soon provinces", async ({ page }, testInfo) => {
+test("117 AD map distinguishes both previews from 21 Coming soon provinces", async ({ page }, testInfo) => {
   await page.goto("/atlas");
   await page.getByRole("button", { name: "Switch main map to 117 AD" }).click();
-  await expect(page.locator('path[role="button"][data-scene-status="preview"]')).toHaveCount(1);
-  await expect(page.locator('path[role="button"][data-scene-status="coming-soon"]')).toHaveCount(22);
+  await expect(page.locator('path[role="button"][data-scene-status="preview"]')).toHaveCount(2);
+  await expect(page.locator('path[role="button"][data-scene-status="coming-soon"]')).toHaveCount(21);
   const gallia = page.locator('path[aria-label="Gallia — open scene preview"]');
   const africa = page.locator('path[aria-label="Africa — coming soon"]');
   await expect(page.locator('path[data-held-overlay="gallia"]')).toHaveCSS("opacity", "1");
@@ -42,7 +46,7 @@ test("117 AD map distinguishes Gallia's preview from 22 Coming soon provinces", 
 });
 
 test("every unauthored province resolves to its named Coming soon state", async ({ request }) => {
-  for (const province of provinces.filter((province) => province.id !== "gallia")) {
+  for (const province of provinces.filter((province) => !authoredIds.has(province.id))) {
     const response = await request.get(`/scene/${province.id}`);
     expect(response.status(), province.id).toBe(200);
     const html = await response.text();

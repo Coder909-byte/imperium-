@@ -12,15 +12,16 @@ vi.mock("node:fs", async (importOriginal) => {
 });
 
 describe("atlas scene availability", () => {
-  it("lists the one authored atlas scene and keeps engine fixtures out of the catalog", () => {
+  it("lists both authored atlas previews and keeps engine fixtures out of the catalog", () => {
     const content = loadAtlasContent();
     const props = buildAtlasProps(content);
     expect(content.provinces).toHaveLength(24);
-    expect(content.regions.map((region) => region.id)).toEqual(["gallia"]);
+    expect(content.regions.map((region) => region.id)).toEqual(["gallia", "italia"]);
     expect(props.provinces.filter((province) => province.scene !== null)).toMatchObject([
       { id: "gallia", scene: { beatCount: 6, year: "52 BC" } },
+      { id: "italia", scene: { beatCount: 6, year: "January 49 BC" } },
     ]);
-    expect(props.provinces.filter((province) => province.scene === null)).toHaveLength(23);
+    expect(props.provinces.filter((province) => province.scene === null)).toHaveLength(22);
   });
 
   it("preserves metadata for every actual province ID, including Africa's underscore", () => {

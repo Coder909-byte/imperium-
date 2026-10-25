@@ -1,5 +1,9 @@
 # Atlas UI continuation — 2026-10-23
 
+**Current reconciliation, 2026-10-23:** The relief atlas/viewport/navigation/availability redesign is explicitly owner-accepted and delivered. Its local measurements remain evidence, not a phone/4G/Safari pass. External launch checks are in [M11](m11-launch-scope.md); the owner prioritizes region two next. See [current status](project-status.md).
+
+**Historical evidence follows.** Earlier “M8 open/unfinished” and old payload/readiness statements describe their checkpoint. They do not override current acceptance/status, widen asset permissions, or certify unperformed checks. Original decisions/results are preserved.
+
 Resumed clean checkpoint `c033c96` (`map ui change mid`) at the owner's request. The saved code was newer than the landing handoff: it already included the approved Natural Earth relief, extracted SVG canvas, HTML era cards and a zoom component, but referenced missing layout styles. Acceptance for this continuation: finish that responsive workspace, preserve all four eras/province destinations and Gallia, make zoom/keyboard scrolling usable on narrow screens, respect reduced motion, and retain the <180KB initial atlas script budget. This is a scoped atlas continuation, not another region or M9–M11.
 
 The map now sits beside three era cards and the dated Gallia preview on desktop. Cards move below the map at narrower widths; a bounded native scroll region contains the enlarged map. Zoom scales the actual minimum-width map from 100–200%, preserving its centre; reset recentres it. Keyboard arrows and native touch/trackpad scrolling remain available. A route-local parchment header, home/Gallia/login navigation, skip link and source footer complete the page without changing the landing/account design or root layout. Era and zoom changes have polite announcements.

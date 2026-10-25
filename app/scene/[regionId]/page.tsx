@@ -38,5 +38,6 @@ export default async function ScenePage(props: PageProps<"/scene/[regionId]">) {
   }
 
   const quizAvailable = readQuestionBank().filter(question => question.regionId === regionId).length === 5;
-  return <ScenePlayerClient region={buildSceneProps(region, loadRigs(), loadManifest())} quizAvailable={quizAvailable} />;
+  return <ScenePlayerClient region={buildSceneProps(region, loadRigs(), loadManifest())} quizAvailable={quizAvailable}
+    progressAvailable={region.civilisation !== "Test"} previewNotice={region.scene.previewNotice} />;
 }

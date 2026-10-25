@@ -1,5 +1,9 @@
 # M1.5 — Focused Imperium shell
 
+**Current reconciliation, 2026-10-23:** The redesigned landing/auth/profile shell is explicitly owner-accepted. Its original empty-profile/quizzes-planned statements below describe M1.5: M9 now provides real profile progress/history and an accepted working quiz. [Project status](project-status.md) records the additions; remaining metadata/monitoring/launch verification is itemized in [M11](m11-launch-scope.md).
+
+**Historical evidence follows.** Earlier “M8 open/unfinished” and old payload/readiness statements describe their checkpoint. They do not override current acceptance/status, widen asset permissions, or certify unperformed checks. Original decisions/results are preserved.
+
 Scope authorized 2026-10-23: landing page, login/signup and existing profile shell, before another region. The owner is satisfied with Gallia’s current visual experience and narration; this records subjective experience acceptance, without treating historical, specialist-art, Safari/Pixel GPU or network checks as passed. M8 stays open. No other region, quiz/progress feature or remaining M11 launch work is started. ADR 016 records the sequencing/design decision.
 
 ## Composition and assets

@@ -1,5 +1,7 @@
 # Testing M9 locally
 
+Environment note, 2026-10-23: these are the M9 isolated test setup and recorded port paths. This documentation reconciliation does not promise those temporary processes/files survive a restart or inspect the shared target. Confirm the local environment before running mutating checks; the guards below remain mandatory. The working quiz is owner-accepted.
+
 Use **http://127.0.0.1:3006**, the production preview backed by the disposable local Postgres database. Keep the same hostname throughout signup and login. Port 3000 is a separate server; it does not inherit this preview's database setup.
 
 The five authored questions are `content/questions/gallia-01.json` through `gallia-05.json`. Each contains options, the answer key, feedback and citations. These are server-side authoring files, not a public question-bank page. The isolated database has all five seeded question rows. A “quiz bank has not been installed” message means the database used by that server lacks the seeded rows. Shared Neon has deliberately not been migrated or seeded.

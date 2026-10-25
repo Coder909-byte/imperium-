@@ -94,6 +94,7 @@ export const Region = z.object({
   heldFrom: z.number(),
   heldTo: z.number().nullable(),
   scene: z.object({
+    previewNotice: z.string().min(1).max(240).optional(),
     lut: z.string(), // palette key
     ambientBed: z.string(),
     audioPlaceholder: z.boolean().default(false),

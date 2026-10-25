@@ -25,7 +25,7 @@ export default function AtlasPage() {
         <Link href="/" className="font-[family-name:var(--font-cinzel)] text-lg tracking-[.16em] focus-visible:outline-2 focus-visible:outline-offset-4">IMPERIUM</Link>
         <nav aria-label="Main navigation" className="flex items-center gap-5 text-sm sm:gap-8">
           <Link href="/" className="hover:underline focus-visible:outline-2 focus-visible:outline-offset-4">Home</Link>
-          <Link href="/scene/gallia" prefetch={false} className="hover:underline focus-visible:outline-2 focus-visible:outline-offset-4">Gallia</Link>
+          <Link href="/atlas#stories" prefetch={false} className="hover:underline focus-visible:outline-2 focus-visible:outline-offset-4">Stories</Link>
           <Link href="/login" className="hover:underline focus-visible:outline-2 focus-visible:outline-offset-4">Log in <span aria-hidden="true">↗</span></Link>
         </nav>
       </header>

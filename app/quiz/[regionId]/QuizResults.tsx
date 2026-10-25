@@ -3,11 +3,11 @@ import { useEffect, useRef } from "react";
 import type { QuizView } from "@/lib/quiz/contracts";
 import { PROGRESSION } from "@/lib/quiz/progression";
 
-export function QuizResults({ view, retry, pending }: { view: QuizView; retry: () => void; pending: boolean }) {
+export function QuizResults({ view, name, retry, pending }: { view: QuizView; name: string; retry: () => void; pending: boolean }) {
   const heading = useRef<HTMLHeadingElement>(null);
   useEffect(() => { heading.current?.focus(); }, []);
   return <>
-    <p className="shell-eyebrow">Gallia · The record</p>
+    <p className="shell-eyebrow">{name} · The record</p>
     <h1 ref={heading} tabIndex={-1} className="shell-heading mt-4">{view.score} out of 5</h1>
     <p className="mt-5 leading-relaxed">{view.authenticated ? `${view.xpAwarded} new XP banked. Previously credited questions do not award XP again.` : `Up to ${view.potentialXP} XP from this attempt. Signup verifies the record; previously credited questions do not award XP again.`}</p>
     {view.progress && <p className="mt-3 text-lg">{view.progress.rank} · {view.progress.xp} XP · {view.progress.streakDays}-day streak</p>}

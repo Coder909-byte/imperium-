@@ -1,12 +1,12 @@
 # M10 — Existing Gallia audio audit, 2026-10-23
 
-The owner tested Gallia's quiz and accepts M9's current behaviour. This records owner acceptance while retaining unresolved shared-Neon migration/seed, live Google-provider and actual-device checks. M10 was authorized only to audit and finish the audio already delivered in M8. M11 was not started.
+The owner tested Gallia's quiz and accepts M9's current behaviour. This records owner acceptance while retaining unresolved shared-Neon migration/seed, live Google-provider and actual-device checks. M10 was authorized only to audit and finish the audio already delivered in M8. M11's launch remainder was not started; its shell/profile/atlas portions were already delivered through earlier work.
 
 ## Scope and result
 
 ADRs 009 and 015 moved the reusable Howler foundation and narration into M8. The current PRD also describes later catalog expansion; this session's explicit owner instruction narrows M10 to the existing six-beat Gallia experience. No new region, track, sound engine, asset or mix change is needed merely to fill the milestone.
 
-The existing implementation passes the local lifecycle checks below. No runtime defect has been demonstrated, so `AudioDirector`, `NarrationTrack`, `useSceneAudio`, `BeatDirector`, player controls, content and audio files are preserved. Work here adds targeted browser instrumentation/coverage and records the audit. The scoped M10 implementation and desktop audit are complete; final production autoplay/render evidence is recorded below. Phone/browser acceptance and full listening judgement remain separate, unresolved gates.
+The existing implementation passes the local lifecycle checks below. No runtime defect has been demonstrated, so `AudioDirector`, `NarrationTrack`, `useSceneAudio`, `BeatDirector`, player controls, content and audio files are preserved. Work here adds targeted browser instrumentation/coverage and records the audit. The scoped M10 implementation and desktop audit are complete; final production autoplay/render evidence is recorded below. The owner accepts the current narration/visual experience. Actual phone/browser launch acceptance remains unverified and is tracked in M11; local tests do not claim independent word-for-word transcription or phonetic certification.
 
 ## Existing behavior verified
 
@@ -71,12 +71,10 @@ node --import tsx scripts/audit-scene-audio.mjs http://127.0.0.1:3006 /tmp/imper
 
 The browser suite uses development fixture/sample routes, so run it against the local dev server. The standalone audit uses only the real public production scene and intercepts progress writes; the local port-3006 preview retains the isolated test database configuration. Its desktop pass waits for actual audio completion; its 390px pass visits all six beats with reduced motion. Output and screenshots are local diagnostics, not new shipped assets.
 
-## Unresolved human/device checks
+## Accepted experience and remaining verification ownership
 
-These remain **unverified**, not failed or passed by owner acceptance of the current experience:
+The owner explicitly accepts Gallia's current narration and visuals. There is no pending taste-approval task for that same baseline and no cosmetic Gallia work is scheduled. Local playback/hash tests do not independently transcribe every spoken word or certify historical pronunciation; that evidence limit is retained without calling M8/M10 unfinished.
 
-- **Owner listening:** hear all six beats end to end; check Vercingetorix/Mandubii and other names, complete spoken content, breaths/pauses, mix balance, cue timing, the wind loop seam and subjective pacing. Transcript/output identity and successful playback do not perform an independent audible transcription or taste judgement.
-- **Actual phone/browser:** Android/Pixel-class Chrome and Safari/iOS trusted unlock, speaker/headphone balance, mute/preference restoration, navigation/back/re-entry, foreground/background resumption and failure/recovery on mobile networking. Responsive desktop Chrome is not an iPhone or Pixel GPU/audio test.
-- **Existing scene launch gates:** independent history, missing specialist art, real GPU/frame-time/4G first-interactive acceptance remain open from M8. This audio audit does not close them or tune the mix against artwork that is not finished.
+Cross-cutting Android/Pixel-class/Safari/iOS audio unlock, speaker/headphone behavior, foreground/background playback, networking/GPU budgets, launch-wide accessibility and approved-environment/provider checks now live in [M11's unchecked list](m11-launch-scope.md). They have not been marked passed. Specific Gallia holding-date/ancient-claim/interpretive-art questions and accepted omissions live in [Gallia status](regions/gallia-status.md).
 
-The exact remaining M11 scope is recorded in [M11 launch scope](m11-launch-scope.md). M11 has not started. No commit, push, deployment or shared-database write was performed.
+The local M10 implementation/audit is complete. [Project status](project-status.md) records M11 as partially delivered, with its remaining launch work deferred behind the owner's next priority of region two. No commit, push, deployment or shared-database write was performed by the audio audit or this reconciliation.

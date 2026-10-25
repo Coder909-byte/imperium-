@@ -2,9 +2,11 @@
 
 **Working title:** Imperium (product) · "History Made Cool" (internal)
 **Owner:** Jivesh Nazar
-**Version:** 1.2 — painted parallax revision
-**Status:** M8/M9 owner-accepted; current Gallia M10 implementation/local audio audit complete. Unresolved evidence gates are retained in the reviews. M11 has not started.
+**Version:** 1.3 — repository/status reconciliation (v1.2 art decisions retained)
+**Status:** M0–M10 implementation/local work complete, including additive M1.5. Gallia visuals/narration/quiz and redesigned shell/relief atlas are owner-accepted. M11 is partially delivered; its actual launch remainder is deferred. Next priority: the approved Italia/Rubicon episode; full prose and artwork scopes await separate review. See [current status](project-status.md).
 
+> **Current implementation, 2026-10-23:** v1.2 below records the original painted-plane direction. Expanded M8 subsequently added specifically approved AI-assisted atmosphere/structural/painted-personnel assets and generated stock-voice narration (ADRs 012–015). These approvals remain scoped and generated files are not PD/CC0. Milestone history is retained under the same IDs; [ADR 019](adr/019-milestone-acceptance-and-region-workstreams.md) separates accepted region delivery from external launch verification.
+>
 > **Changes from v1.1:** Art direction changed from animated engraving back to **painted parallax** (§3) — primary sources are full-colour academic history paintings (Gérôme, Alma-Tadema, Poynter, Bierstadt), not monochrome etchings. The per-scene LUT (§4), not colour-stripping at the asset level, now does the cross-source consistency work. Engravings demote to reference/fallback for architectural detail and figure poses, and stay the source for cutout character parts, where alpha-from-luminance still applies. Blender documented as a post-M8 escape hatch (§3.6) if painted planes read flat, not adopted.
 >
 > **Changes from v1.0:** Rive removed (its free plan cannot export runtime files). Characters are now cutout puppet rigs driven by GSAP. `flubber` replaced by GSAP MorphSVG, now free. Every dependency in this document costs nothing.
@@ -115,10 +117,10 @@ Cut a figure from an engraving — a Cichorius plate, or a high-contrast figure 
 
 This is how cutout animation has always worked. It's free, needs no new tool, and profile-view engraved figures are *ideal* source material because they were carved in profile in the first place, and their ink/paper contrast alpha-mattes cleanly (see above) in a way a painted figure won't.
 
-**Rig library for v1:** `legionary`, `auxiliary`, `cavalry`, `standard_bearer`, `gaul_warrior`, `civilian`.
+**Original intended rig library for v1:** `legionary`, `auxiliary`, `cavalry`, `standard_bearer`, `gaul_warrior`, `civilian`. **Actually present:** procedural development `legionary` and three six-part provisional painted rigs: `roman_infantry`, `gaul_warrior`, `gaul_warrior_blue`. Painted parts preserve colour/alpha; they do not use luminance matte (ADR 014). No dedicated civilian, cavalry or standard-bearer rig is claimed.
 **Clips per rig:** `idle`, `march`, `brace`, `thrust`, `fall`, `raise`.
 
-Distant crowds are never individual rigs — instanced quads on a shared 4-frame march texture. Thousands of units at negligible cost.
+Distant crowds are instanced quads. Procedural fixtures retain a shared four-frame march texture; painted crowds bake poses from their referenced rig/action and share transient atlases (ADR 014). Atlas textures still cost runtime memory/upload work; do not assume negligible cost or claim an unmeasured unit capacity.
 
 ### 3.6 — Escape hatch: Blender, if M8 falls short
 
@@ -161,7 +163,7 @@ ColorMatrixFilter   per-scene LUT
   → Vignette
 ```
 
-**Camera** — a GSAP timeline on the root container's `x`, `y`, `scale`, `rotation`. Every beat gets a slow push or drift; never a static hold. On top of that, permanent handheld noise: 1D Perlin sampled at ~0.4Hz, 3–6px translation, 0.2° rotation. This single detail does more for perceived quality than any asset.
+**Camera** — GSAP moves a plain beat target; the render ticker combines it with seeded value-noise handheld drift and writes the root transform once per frame. It is not a GSAP transform writer competing with a second drift writer, and the shipped noise is not gradient Perlin. Every beat retains deliberate camera travel; reduced motion cuts camera/reveals and disables drift/parallax. See `engine/scene/Camera.ts` and `noise.ts`.
 
 ---
 
@@ -174,19 +176,19 @@ Every item is free. Where I recommend against something you already know, the re
 | Framework | **Next.js 16, App Router, TypeScript** | RSC genuinely helps: content and quiz render server-side, only the scene player ships as client JS. |
 | Atlas | **SVG + `d3-geo` + GSAP MorphSVG** | Crisp clickable vectors and border morphing. MorphSVG is free now, so no `flubber` dependency. |
 | Scenes | **PixiJS v8** | WebGL. Thousands of sprites, real filter chains, 60fps mobile. SVG has a hard ceiling here. |
-| Characters | **Cutout puppets — Pixi containers + GSAP** | Free. Rive's free tier can't export runtime files. |
+| Characters | **Cutout puppets — Pixi containers + GSAP-eased pose math** | Sparse keyframes, no per-instance timeline; current painted-part path is ADR 014. |
 | Timeline | **GSAP** (free, all plugins) | Beat orchestration with seek, scrub and reverse for free. |
 | Audio | **Howler.js** | Layered ambient beds with crossfade, sprite maps. Tone.js is overkill. |
 | Auth | **Better Auth** + Drizzle adapter | TS-native, self-hosted, you own the user table. Email/password + Google. |
 | Database | **Postgres on Neon** free tier | Serverless, branches per PR. |
-| ORM | **Drizzle** | Over Prisma despite your familiarity: far smaller serverless cold start, SQL-shaped API suits the quiz analytics. Prisma is acceptable if velocity wins. |
+| ORM | **Drizzle** | Implemented with Postgres/Better Auth adapter; settled in ADR 001. |
 | Content | **JSON in-repo, Zod-validated** | Version-controlled content, CI-enforced schema. Authoring UI comes in v2. |
-| Assets | **Cloudflare R2** free tier (10GB, no egress) | Scene art is heavy — full-colour painted planes more so than the monochrome-alpha planes originally budgeted (§3) — and S3 egress would hurt. Still comfortably inside 10GB at 12-region launch scale. |
-| Hosting | **Vercel Hobby** | Free. ⚠️ Hobby is **non-commercial only** — the day you charge for anything, you need Pro. |
-| Analytics | **PostHog** free tier | Per-beat drop-off is the most valuable number you'll have. |
-| Errors | **Sentry** free tier | WebGL fails in device-specific ways. |
-| Fonts | **Cinzel + EB Garamond** (Google Fonts, OFL) | Cinzel is based on Roman inscriptional capitals. Correct, and free. |
-| Audio assets | **Freesound** (filter CC0) · **Musopen** · **Pixabay Audio** | Attribution required for CC-BY. Log it in the manifest. |
+| Assets | **Current: repository `public/assets/`, served by Next** | R2 was a proposed launch storage option; no R2 shipping integration is implemented. |
+| Hosting | **Proposed: Vercel; deployment unverified** | Choose/verify an authorized shipping setup and current terms during M11; this repository audit makes no live-deployment claim. |
+| Analytics | **Planned: PostHog** | Not implemented. M11 must resolve hosted/account constraints and verify events. |
+| Errors | **Planned: Sentry** | Not implemented. M11 must resolve setup and verify a release smoke event. |
+| Fonts | **Self-hosted Cinzel (OFL), Georgia body** | Implemented shell/atlas typography; the root retains its existing Geist setup. EB Garamond was a plan, not installed shell work. |
+| Audio assets | **Approved wind/Kenney CC0 cues; scoped generated narration** | Specific-file rights, manifest and owner scope required. CC-BY is not an implied exception to the PD/CC0 rule; ADR 015 is a separate narration exception. |
 | Testing | **Vitest** + **Playwright** | Content schema validation is a CI gate. |
 
 **Not using:** Three.js (3D asset cost prohibitive solo), Rive/Spine (both cost money to ship), Redux (Zustand covers it), any paid CMS.
@@ -205,12 +207,12 @@ imperium/
 │  ├─ profile/page.tsx
 │  └─ api/
 │     ├─ auth/[...all]/route.ts
-│     ├─ progress/route.ts
+│     ├─ progress/{scene,migrate}/route.ts
 │     └─ quiz/{session,answer}/route.ts
 ├─ engine/
 │  ├─ scene/
 │  │  ├─ SceneRenderer.ts       Pixi lifecycle, layer mount
-│  │  ├─ Camera.ts              GSAP timeline + Perlin handheld
+│  │  ├─ Camera.ts              GSAP target + seeded value-noise drift
 │  │  ├─ BeatDirector.ts        beat JSON → timeline
 │  │  ├─ layers/                ParallaxPlane, CrowdField, PuppetActor
 │  │  ├─ puppet/                rig loader, clip player, joint solver
@@ -228,7 +230,7 @@ imperium/
 ├─ content/
 │  ├─ regions/{id}.json
 │  ├─ questions/{id}.json
-│  ├─ borders/{year}.geojson
+│  ├─ borders/{provinces,physical}/  province JSON + Natural Earth vectors
 │  ├─ rigs/{name}.json
 │  ├─ assets/manifest.json      source URL + licence per file
 │  └─ schema.ts                 Zod
@@ -245,73 +247,11 @@ imperium/
 
 ## 7. Data models
 
-### Content (Zod, `content/schema.ts`)
+### Content (Zod; source files are authoritative)
 
-```ts
-const Beat = z.object({
-  id: z.string(),
-  year: z.string(),                 // display: "52 BC"
-  sortYear: z.number(),             // ordering: -52
-  headline: z.string().max(80),
-  body: z.string().min(180).max(700),
-  visibleLayers: z.array(z.string()),
-  camera: z.object({
-    x: z.number().default(0),
-    y: z.number().default(0),
-    scale: z.number().default(1),
-    durationMs: z.number().default(2600),
-    ease: z.string().default('power2.inOut'),
-  }),
-  fx: z.array(z.enum([
-    'dust','smoke','embers','rain','arrow_volley','fire','shake','flash'
-  ])).default([]),
-  actors: z.array(z.object({
-    rig: z.string(),                // 'legionary' | 'gaul_warrior' | ...
-    clip: z.string(),               // 'march' | 'brace' | ...
-    x: z.number(), y: z.number(),
-    scale: z.number().default(1),
-    count: z.number().default(1),   // >1 → instanced crowd
-    flip: z.boolean().default(false),
-    phase: z.number().default(0),   // animation time offset
-  })).default([]),
-  audio: z.object({
-    cue: z.string().optional(),
-    cueVolume: z.number().min(0).max(1).optional(), // playback gain defaults to 1
-    bedIntensity: z.number().min(0).max(1).default(0.5),
-    narration: z.object({
-      asset: z.string(), // ID in scene.audioAssets, reviewed recording only
-      durationMs: z.number().int().positive(),
-      transcriptSha256: z.string(), // CI binds it to the unchanged body
-    }).optional(),
-  }).default({}),
-  sources: z.array(z.object({
-    label: z.string(),
-    url: z.string().url().optional(),
-  })).default([]),
-});
+Use `content/schema.ts` for Region/Beat/Rig/ManifestEntry, `content/questionSchema.ts` for private question authoring and `content/quizPublicSchema.ts` plus `lib/quiz/contracts.ts` for public/API contracts. All content types are inferred from Zod. The previous illustrative schema copy is superseded by these actual files, avoiding a parallel incomplete model.
 
-const Region = z.object({
-  id: z.string(),
-  name: z.string(),
-  latinName: z.string(),
-  civilisation: z.string(),
-  mapCentroid: z.tuple([z.number(), z.number()]),
-  heldFrom: z.number(),
-  heldTo: z.number().nullable(),
-  scene: z.object({
-    lut: z.string(),                 // palette key
-    ambientBed: z.string(),
-    planes: z.array(z.object({
-      id: z.string(),
-      asset: z.string(),
-      depth: z.number().min(0).max(1),
-      tint: z.string(),              // hex — applied via ColorMatrixFilter; alpha planes only (characters, silhouettes), colour backdrop planes use the scene-level lut instead
-      blur: z.number().default(0),
-    })),
-  }),
-  beats: z.array(Beat).min(1).max(10),
-});
-```
+Current region data includes camera opening/dwell mode, plane placeholder/draft/role/low-tier registration, actor depth/formation, per-beat sources, per-beat bed/cue gain and narration transcript/hash/duration. Region schema permits 1–10 beats for generic/dev content; authored production episodes target 4–8. Approved URLs/only-referenced rigs pass through `app/scene/[regionId]/buildSceneProps.ts`; `engine/` imports no content. See [region checklist](region-completion-checklist.md).
 
 ### Database (Drizzle)
 
@@ -352,8 +292,8 @@ M9 authoring uses `content/questionSchema.ts`: exactly four distinct option IDs,
 - Held regions fill vermilion; labels fade in. Hover raises opacity and shows a one-line teaser.
 - Historical held status and scene availability are separate (ADR 010). Authored campaigns are labelled scene previews with solid outlines; unauthored provinces use dashed outlines and named Coming soon destinations. A dated preview catalog makes available campaigns discoverable from every map era.
 - Borders morph between eras via MorphSVG over ~900ms. Lost regions fade out, gained regions fade in.
-- Completed regions carry a small gold wreath mark.
-- **Real GeoJSON, not hand-drawn paths.** Candidates: `aourednik/historical-basemaps` (GitHub), Digital Atlas of the Roman Empire (Lund), Pleiades for place coordinates. **Verify licences before M1.**
+- **Pending M11-L6:** completed-region gold wreaths are specified but not implemented. Profile viewed-beat completion is not an atlas mark.
+- **Implemented data source (ADR 002):** Natural Earth physical GeoJSON and self-authored province geometry, with approximate historical boundaries. GPL historical-basemaps was rejected; DARE remains an unadopted reference candidate. The realistic relief depicts modern geography, not verified ancient terrain.
 
 ### 8.2 Cloud transition
 
@@ -370,7 +310,7 @@ Clash-of-Clans style. Two cloud masses sweep in from left and right, meet, hold 
 - Pointer parallax on all planes; off under `prefers-reduced-motion`.
 - **Sources drawer** per beat. Costs nothing, buys enormous credibility with the audience most likely to pick you apart.
 - End card: "Test yourself on {Region}" / "Return to the map."
-- Progress POSTs per beat (debounced) so refresh resumes.
+- Debounced viewed-beat progress POSTs/local storage and account import are implemented. **Pending M11-L6:** last-beat scene resume; the current scene starts at index 0. Quiz resume is already implemented.
 
 ### 8.4 Auth
 
@@ -393,7 +333,7 @@ Clash-of-Clans style. Two cloud masses sweep in from left and right, meet, hold 
 - One to two sentences, under 30 words. Longer isn't funnier.
 - Correct answers get humour too. Being right should feel good, not like a bare green tick.
 
-Worked examples:
+Historical worked examples (tone illustrations, not the shipped Gallia bank; current questions use attributed claims and all-option feedback):
 
 > **Q.** How long did Caesar's conquest of Gaul take?
 > A) 8 years ✓ · B) 20 years · C) 3 years · D) 40 years
@@ -405,7 +345,7 @@ Worked examples:
 
 > **Q.** Why did Caesar build a *second* wall at Alesia?
 > ✓ — "Correct. A relief army was coming, so he built twenty-one more kilometres facing outward. His army was besieging and besieged at once, which remains an extremely strange sentence."
-> ✗ *(option: "to hold cavalry")* — "The cavalry were fine. The second wall faced outward, because a quarter of a million Gauls were on their way to hit him from behind."
+> ✗ *(option: "to hold cavalry")* — "The cavalry were fine. The second wall faced outward, because Caesar claimed a quarter of a million Gauls were on their way to hit him from behind."
 
 **Progression.** XP per correct answer, scaled by difficulty. Ranks are thematic and free: *Tiro → Miles → Immunis → Optio → Centurio → Primus Pilus → Legatus*. Daily streak. No leaderboards in v1 — they invite gaming and add moderation load.
 
@@ -439,89 +379,61 @@ The painted workflow doesn't move this estimate. Sourcing a painting instead of 
 
 Twelve regions for a credible launch ≈ **190 hours**. That is the real schedule. Everything else is a rounding error.
 
-**Gates before a region ships:**
+**Production and launch status are separate.** Use [the region-completion checklist](region-completion-checklist.md) for local delivery and owner approval. Cross-cutting release/device/accessibility/provider checks belong to [M11](m11-launch-scope.md), while specific historical questions stay in region documents. The following original requirements remain public-release targets, not a reason to relabel accepted Gallia unfinished or reopen it cosmetically.
+
+**Gates before public release:**
 1. Every factual claim traceable to a source. Wikipedia may be the route to a source; it is not the source.
 2. Disputed numbers flagged as disputed in the copy. Ancient troop figures are propaganda — say so.
 3. A second pair of eyes on the history. A history postgrad reviewing for credit is the cheapest credibility you will ever buy.
 4. Every asset's source URL and licence recorded in `content/assets/manifest.json`.
 5. Read the copy aloud. If it sounds like an encyclopaedia, rewrite it.
 
-**Launch set (12):** Gallia, Britannia, Italia, Aegyptus, Judaea, Dacia, Hispania, Africa, Asia, Syria, Graecia, Germania.
+**Original launch set (12), not mandatory production order:** Gallia, Britannia, Italia, Aegyptus, Judaea, Dacia, Hispania, Africa, Asia, Syria, Graecia, Germania. Actual atlas IDs differ in places (Africa is `africa_prov`; Germania is not yet an authored province). Only Gallia is currently playable; fixtures are not campaigns. The owner prioritizes a second region before M11. Release catalog size remains a later decision; see [inventory](region-inventory.md).
 
 Gallia/Alesia is the flagship. Build it to the ceiling and make it the bar everything else must clear.
 
 ---
 
-## 10. Build plan
+## 10. Milestone record and current workstream
 
-One milestone per Claude Code session. Do not start a milestone until the previous acceptance criteria pass.
+Preserve M0–M11 and the existing additive M1.5 identifier. [The original plan/acceptance targets](history/2026-10-23-build-plan.md), [dated state log](history/2026-10-23-milestone-record.md) and ADRs retain history. [Current project status](project-status.md) gives the evidence and separates local implementation, owner acceptance and external verification; old checkmarks are not automatic hardware/provider/launch passes.
 
-**M0 — Foundation** *(~1 day)*
-Next.js 15 + TS + Drizzle + Neon + Better Auth. Email/password and Google. Protected `/profile`. Vitest + Playwright. CI runs typecheck, lint, test.
-✅ Sign up, log in, log out, session survives refresh. CI green on a PR.
+| ID | Corrected delivery status |
+|---|---|
+| M0 — Foundation | Implemented/local verification complete: Next.js 16, Better Auth/Drizzle, protected profile, unit/browser tooling and CI. Live provider/target checks are M11. |
+| M1 — Atlas | Implemented/local verification complete; expanded relief/viewport/navigation/availability UI is owner-accepted. |
+| M1.5 — Shell addition | Landing/auth/profile makeover implemented, locally verified and owner-accepted. M9 later replaces the live profile's empty shell with real progress/history. |
+| M2 — Border morphing | Implemented/local verification complete; target-device cadence is an M11 check. |
+| M3 — Cloud transition | Implemented/local verification complete with CSS/SVG and reduced motion (ADR 004); hardware/network targets remain M11. |
+| M4 — Scene core | Implemented/local verification complete: Pixi lifecycle, registered layers/camera, beats/captions/sources/controls. |
+| M5 — Post/particles | Implemented/local verification complete; strict mobile/GPU acceptance remains M11. |
+| M6 — Puppets | Implemented/local verification complete: sparse pose evaluation, rig lint/inspector and instanced/rig-derived crowds. |
+| M7 — Asset forge | Implemented/local verification complete: colour WebP, optional matte/batch processing, provenance and validation. |
+| M8 — Gallia flagship, expanded | **Complete for the owner-accepted current visuals/narration.** Expanded approved atmosphere/provisional structure art, painted personnel and six generated narration recordings are explicitly included. |
+| M9 — Quiz/progression | **Implemented/local verification complete and quiz owner-accepted.** Server grading, five questions, feedback/results, transactional XP, ranks, UTC streak and verified guest import. |
+| M10 — Audio | **Implementation/local audit complete.** Existing M8 audio retained; 12 focused browser checks and full six-recording production autoplay/cleanup pass. |
+| M11 — Shell/launch | **Partially delivered.** Accepted shell/profile/atlas work, scoped accessibility, basic metadata/guards and CI exist. Only unchecked launch checklist items remain; deferred behind region two. |
 
-**M1 — Atlas** *(~3 days)*
-Historical GeoJSON → `d3-geo` → SVG paths. Four eras. Inset switcher with swap. Parchment filters, ornate frame, cartouche, city and sea labels. Region hover and click.
-✅ All four eras render; inset click swaps with main; region click routes to `/scene/[id]`.
+**Expanded M8 history:** ADR 009 moved the minimum Howler foundation from M10 to M8; ADRs 012–014 added scoped atmosphere/structure/personnel preparation and rig-derived crowds; ADR 015 added owner-approved stock George narration. Files keep their actual provenance/draft labels; acceptance is not a blanket new asset licence or a claim that every originally imagined figure/plane exists. [Gallia status](regions/gallia-status.md) preserves its specific historical/representation questions and accepted omissions.
 
-**M1.5 — Focused shell pass** *(owner-authorized 2026-10-23, undertaken after current Gallia experience review)*
-Landing, login/signup and existing profile shell only: monumental licensed artwork, parchment/oxblood/charcoal, self-hosted inscription-style Cinzel, shared navigation and form states. Atlas/scenes stay public; Gallia is the sole available flagship, quiz/progress remain planned. Preserve Better Auth email/password, Google and redirects without configuration changes. Verify desktop/mobile renderings, keyboard/focus/contrast/reduced motion, navigation, read-only or mocked auth contracts, tests and production performance. New shell artwork requires specific rights/provenance and owner approval, separate from Gallia permissions. No other region or remaining M11 launch work. Owner refinement: make the landing painting the dominant full-width composition behind the masthead, using white highlights and the image’s shadow colours; retain the approved account/profile treatment.
-✅ Implemented and locally verified: actual responsive pages/screenshots, working entry/navigation, honest availability and preserved auth/Gallia. 314 unit tests, 21 focused browser checks, typecheck/lint/validation/final build pass. See `docs/m1-5-shell-review.md` for approved Cole/Royer reproductions, Cinzel OFL, measured production performance and auth/device limits. Historical/device gates remain independent of owner satisfaction with current Gallia visuals/narration.
+**M9 policy:** ADR 018 and §8.5 remain authoritative. Shared-target migration/seed/provider state is not established by local success; M11 checks the approved target before any authorized write.
 
-**M2 — Border morphing** *(~2 days)*
-GSAP MorphSVG between era boundary sets. Gained regions fade in, lost fade out.
-✅ Era switch animates over ~900ms with no path popping or self-intersection.
+**Current priority, 2026-10-25:** produce a second playable Roman region through the existing content systems, ahead of M11. [Italia / the Rubicon crisis](regions/italia-rubicon-proposal.md) and its six-beat outline are owner-approved. [Full prose](regions/italia-prose-review.md) is drafted for approval; a clearly marked temporary scene/atlas entry and demonstrated metadata/progress integration are implemented. [Artwork/use scopes](regions/italia-artwork-proposal.md) await a batched decision. Quiz authoring and established George narration follow prose approval. Italia is not complete with its visible placeholders; [regional status](regions/italia-status.md) records exact gates. No M11 launch implementation, Gallia cosmetic reopening, speculative engine expansion, commit/push/deploy or shared-data mutation is authorized by this reconciliation. [ADR 019](adr/019-milestone-acceptance-and-region-workstreams.md) records the sequencing change.
 
-**M3 — Cloud transition** *(~2 days)*
-CSS/SVG cloud sweep (§8.2, ADR 004), noise-displaced alpha, parallax puffs, route swap at full occlusion. Reusable both directions.
-✅ 60fps on mid-range Android. No white flash. No layout shift either side.
-
-**M4 — Scene engine core** *(~5 days)*
-Pixi v8 lifecycle. `ParallaxPlane` with depth-based pointer offset and runtime tint. `Camera` with GSAP timeline plus Perlin handheld. `BeatDirector` consuming beat JSON. Letterbox, captions, controls, keyboard.
-✅ A region JSON with placeholder planes plays all beats with correct camera and caption timing.
-
-**M5 — Post-processing and particles** *(~4 days)*
-Full filter chain with per-scene LUTs. Emitters: dust, smoke, embers, arrow volleys, fire. Screen shake. Device-tier degradation.
-✅ Side-by-side with and without the chain shows an obvious quality gap. Frame time under 16ms on mid-range mobile.
-
-**M6 — Cutout puppets** *(~4 days)*
-Rig format (`content/rigs/*.json`): parts, pivots, z-order, clips as keyframed rotations. `PuppetActor` renders a rig; `CrowdField` does instanced quads for distant units. One `legionary` rig with all six clips.
-✅ 40 legionaries with staggered phase offsets plus a 500-unit distant crowd, holding 60fps.
-
-**M7 — Asset forge** *(~2 days)*
-`tools/forge` CLI, one pipeline: load → optional crop/resize → colour-space normalise → export WebP, colour intact (ADR 003's default). `--matte` gates a desaturate → level → luminance-to-alpha stage onto the same pipeline instead — an explicit flag, never the default, scoped to cutout character parts and foreground silhouettes. Batch mode processes a directory of already-separated Photopea layers in one command, uniform flags across the whole folder. Every processed file gets a `content/assets/manifest.json` row (source, licence, artist, institution, the settings used); the command refuses to write one — no output file either — if `--source`/`--licence`/`--artist`/`--institution` aren't supplied (`--artist`/`--institution` accept an explicit `"unknown"`, never a silent default). `npm run forge -- ./raw/gerome-01.jpg --source ... --licence ... --artist ... --institution ...` (colour plane) or the same with `--matte` (character/silhouette source). See `docs/art-pipeline.md` for the full sourcing → rights-check → Photopea → forge workflow.
-✅ A raw painting scan becomes a game-ready colour plane in one command; a folder of already-separated layers becomes a batch of them; `--matte` produces a clean alpha matte for a character/silhouette source; every processed file gets a manifest row, and a missing licence field refuses the write rather than leaving one blank.
-
-**M8 — Gallia to the ceiling** *(owner-accepted 2026-10-23; outstanding evidence checks retained)*
-Six beats, real painted planes, puppet actors, Gallia ambient beds and required cues, all effects. The reference implementation. M8 also owns the minimum reusable Howler foundation: user-gesture activation, bed crossfades/intensity, one-shot cues, persisted master mute and scene-exit cleanup (ADR 009). Ambient beds/cues retain the human-approved, manifest-listed PD/CC0 boundary. Owner-approved generated stock-voice narration has its own reviewed code/model/voice provenance and scoped approval, without claiming PD/CC0 output status (ADR 015).
-
-**Narration scope added 2026-10-23:** one consistent deep, clear, restrained documentary voice reads each existing `beat.body` verbatim; headlines/year and full text remain visible. Investigate zero-cost local generation and verify exact tool/model/stock-voice licences first; prepare a short listening sample before generating six recordings. No paid API, account-dependent shipping path, real-person clone or inference from free access to distribution rights. The owner approved the George sample and full generation in this session. Narration uses the existing Howler foundation, starts only after a trusted gesture, cancels synchronously on beat change/exit and never overlaps an old beat. Separate persisted narration/ambience switches accompany master mute; ambience/cues stay quiet underneath narration. Autoplay waits for actual narration completion plus one second; missing/disabled/muted/failed/stalled narration uses reading-time fallback. Loading/end watchdogs, stale-callback protection, manifest entries, verbatim transcript hashes and narration/audio/total size accounting are required. The strict <2.5 MiB region limit and reduced-motion behaviour remain unchanged. The owner explicitly accepts the current Gallia experience and atlas visuals on 2026-10-23 and authorizes M9. This is owner acceptance of M8, not a pass of the outstanding independent history, specialist art, full listening/mix/pacing or real-device/browser/network checks.
-✅ Someone who has never seen the project watches end to end without touching their phone.
-
-**M9 — Quiz and progression** *(owner-accepted 2026-10-23; unresolved verification/deployment checks retained)*
-Question bank schema and seeding. Server-side grading. Per-option quip UI. XP, rank, streaks. Anonymous → account progress migration.
-✅ Answer key never appears in any network response before submission. Verified in Playwright against an isolated database and in all production browser chunks. Five Gallia questions, transactional first-correct XP, provisional ranks, UTC streaks and verified guest import are implemented. See `docs/m9-quiz-review.md` for recorded checks, trust policy and shared-database deployment boundary.
-
-**M10 — Audio** *(current Gallia implementation/local audit complete, 2026-10-23; phone/listening checks open)*
-Audit the current Gallia narration, ambience and cues against the foundation delivered in M8 (ADRs 009/015); verify controls, persistence, gesture activation, crossfades, narration-led autoplay, reading fallback, rapid navigation, failure handling, cleanup, provenance and download budgets. Fix demonstrated issues only. The owner’s current authorization does not expand to additional content or rebuild working systems. Final phone/browser and listening checks remain separate evidence gates.
-✅ Current Gallia passes 330 unit tests, 12 focused audio browser checks, the complete six-recording production autoplay and all six desktop/narrow rendering checks. No runtime change was needed. Actual phone/Safari playback and full listening/mix/pronunciation judgement remain unverified. See `docs/m10-audio-review.md`; no catalog expansion is claimed.
-
-**M11 — Shell and launch** *(not started; remaining scope audited 2026-10-23)*
-Landing/auth/profile and the atlas makeover are already delivered and must be preserved. Remaining: OG/sharing metadata and sitemap/robots; analytics/error-monitoring setup; launch-wide accessibility/mobile/Lighthouse/performance acceptance; approved-environment auth/database/deployment checks. `docs/m11-launch-scope.md` records the exact remaining work and observed PRD gaps (Read as text, completion wreaths, scene resume), service-account constraints and the separate Gallia-first versus twelve-region catalog decision. No M11 implementation is authorized by the M10 audit.
-✅ Lighthouse ≥90 performance and accessibility on non-scene routes. Full flow works on mid-range Android.
+**M11 remainder:** [item-by-item audit](m11-launch-scope.md): advanced metadata/OG/sitemap/robots; analytics and monitoring setup; launch-wide accessibility/Read as text; completion wreaths/scene resume decisions; Lighthouse and actual-device/network/performance acceptance; approved target/provider/release checks and content-release review. Delivered design work is already complete. These are release checks/work, not new blockers on accepted Gallia or the owner's next-region priority.
 
 ---
 
 ## 11. Performance budgets
 
-Enforced in CI. WebGL products die on mobile.
+Required budgets. Content/reference/asset checks run in CI; actual device/runtime/Lighthouse acceptance is not automatically certified there and remains M11-L7/L8. WebGL products die on mobile.
 
 | Metric | Budget |
 |---|---|
 | Atlas TTI | < 2.0s on 4G |
-| Scene first beat interactive | < 3.0s, decomposed: ~0.8–1.1s is a fixed GPU-side Pixi/WebGL `app.init()` floor (measured M5 post-split, flat across CPU throttle — not addressable by code-splitting or bundle size), leaving ≤ ~1.9–2.2s for bundle transfer/parse + scene-graph build. Measured 3.02–3.11s unthrottled against placeholder content as of M5 — over budget by design-intent but not yet by feel; recorded as a known gap (see CLAUDE.md Current State), revisit with real M8 art rather than restructuring init around it now. |
+| Scene first beat interactive | < 3.0s, decomposed: ~0.8–1.1s is a fixed GPU-side Pixi/WebGL `app.init()` floor (measured M5 post-split, flat across CPU throttle — not addressable by code-splitting or bundle size), leaving ≤ ~1.9–2.2s for bundle transfer/parse + scene-graph build. Measured 3.02–3.11s unthrottled against placeholder content as of M5 — over budget by design-intent but not yet by feel; recorded as a known gap (see the preserved milestone history and M8/M10 reviews), revisit with real M8 art rather than restructuring init around it now. |
 | Scene frame time | < 16ms on Pixel 6a class |
-| Scene asset payload | < 2.5MB per region. **Measured M7** (`tools/forge`, a real 6000×3694 CC0 painting, not estimated — see `docs/art-pipeline.md` §7 for the full width×quality grid): a full-width (1920px) colour plane at WebP quality 75–78 runs **~385–450KB**, roughly quadrupling per doubling of width (2560px ≈ 700–930KB, 3840px ≈ 1.4–2.0MB). The old ~200KB/plane figure (ADR 003) was an alpha-line-art-era assumption, superseded, not adjusted — colour planes are genuinely heavier. **`--matte` is not reliably cheaper**: a densely cross-hatched engraving's alpha channel is high-frequency detail throughout and can compress *worse* than a colour plane at the same width/quality (measured: a Piranesi etching at 1200px ran 753KB matte vs. 375KB colour) — budget a character-part crop by its own (usually small, since tightly cropped) resolution, never by assuming the format is cheap. Practical read for a 5–8 plane region: export most backdrop planes at 1920px/q75–78 (~400KB each), keep far/blurred planes narrower (1280–1440px) rather than uniformly full-width, and reserve full resolution for character-stage/foreground planes the camera actually approaches. |
+| Scene asset payload | < 2.5MB per region. **Measured M7** (`tools/forge`, a real 6000×3694 CC0 painting, not estimated — see `docs/art-pipeline.md` §7 for the full width×quality grid): a full-width (1920px) colour plane at WebP quality 75–78 runs **~385–450KB**, roughly quadrupling per doubling of width (2560px ≈ 700–930KB, 3840px ≈ 1.4–2.0MB). The old ~200KB/plane figure (ADR 003) was an alpha-line-art-era assumption, superseded, not adjusted — colour planes are genuinely heavier. **`--matte` is not reliably cheaper**: a densely cross-hatched engraving's alpha channel is high-frequency detail throughout and can compress *worse* than a colour plane at the same width/quality (measured: a Piranesi etching at 1200px ran 753KB matte vs. 375KB colour) — budget a character-part crop by its own (usually small, since tightly cropped) resolution, never by assuming the format is cheap. Budget the total first, including narration/audio/rigs; six ~400KB planes are not a safe narrated-region allowance. Gallia already uses 1,653,554 audio bytes. Choose widths/quality per actual cut and reserve full resolution for approached planes; `npm run validate` measures unique referenced files against the strict 2.5 MiB implementation ceiling. |
 | Atlas route JS | < 180KB gzipped |
 
 Low-end detection degrades to 4 planes, halved particles, no godrays or chromatic aberration. **Never ship a stuttering scene** — a stuttering cinematic is worse than a static image.
@@ -534,7 +446,7 @@ Low-end detection degrades to 4 planes, halved particles, no godrays or chromati
 - Every beat's text is real DOM, not baked into canvas. Screen readers get the full narrative.
 - Full keyboard nav: focusable atlas regions, arrow keys drive beats, Escape exits.
 - Captions meet 4.5:1 against the letterbox, not against the scene.
-- A "Read as text" toggle rendering the campaign as an article. Some people want to read. Let them, and take the SEO.
+- **Pending M11-L5:** a "Read as text" article/toggle; scene DOM captions are delivered, but this specified article is not.
 
 ---
 
@@ -595,16 +507,16 @@ Beat-level drop-off is the most valuable number you will have. It names the bori
 
 ## 17. Decisions needed before M0
 
-1. **Border data source.** Verify licence on `aourednik/historical-basemaps` and DARE. Blocks M1.
-2. **Drizzle or Prisma.** Recommend Drizzle. Blocks M0.
-3. **History reviewer.** Find one before M8.
-4. **Domain.** `.vercel.app` is free and fine until launch.
+1. **Border data source — decided (ADR 002).** Natural Earth physical data plus self-authored provinces; the original GPL candidate was rejected. DARE was not adopted. Historical decision retained; M1 is not blocked.
+2. **Drizzle or Prisma — decided (ADR 001).** Drizzle is implemented; M0 is not blocked.
+3. **History reviewer — external review unverified.** M8 current experience is owner-accepted; cross-cutting public-release review is M11-L10, with specific Gallia issues retained in its region document.
+4. **Domain/deployment — unresolved target verification.** No live domain/deployment is certified by this repository audit; retain under M11-L9.
 
 ---
 
 ## Appendix — Claude Code working notes
 
-- One milestone per session. Start each by having it read `CLAUDE.md` and the previous milestone's acceptance criteria.
+- Keep milestones stable and one authorized workstream per session. The owner explicitly prioritizes Italia/Rubicon before M11; its outline is approved, full prose needs approval before quiz/narration, and new art/use scopes need their recorded decision. Read synchronized AGENTS/CLAUDE and current project/region status.
 - Content schema validation runs in CI. Malformed region JSON fails the build, not the runtime.
 - `engine/` gets unit tests; scenes get Playwright screenshot comparisons at fixed beats.
 - After M4, add `/dev/scene-lab` — loads any region JSON with hot reload. Pays for itself within a week.

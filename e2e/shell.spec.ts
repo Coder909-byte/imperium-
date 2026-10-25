@@ -118,7 +118,7 @@ test("profile preview has an honest empty state and logout recovers from an erro
   await page.goto("/dev/shell");
   await expect(page.getByText("reader@example.com")).toBeVisible();
   await expect(page.getByRole("heading", { name: "Your journeys will have a home here." })).toBeVisible();
-  await expect(page.getByText("Saved progress, quiz history and achievements are not available yet.", { exact: false })).toBeVisible();
+  await expect(page.getByText("This sample shows the profile layout.", { exact: false })).toBeVisible();
   await expect(page.getByText("Tiro", { exact: true })).toHaveCount(0);
   await page.getByRole("button", { name: "Log out", exact: true }).click();
   await expect(page.getByText("Could not log out. Check your connection and try again.")).toBeVisible();

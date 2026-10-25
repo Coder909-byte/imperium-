@@ -1,4 +1,8 @@
-# Gallia personnel preparation — M8 remains open
+# Gallia personnel preparation — historical M8 increment
+
+**Current reconciliation, 2026-10-23:** The painted personnel are part of the owner-accepted Gallia visuals. M8 is complete for the accepted composition; equipment/provenance and missing-role limitations remain in [Gallia status](regions/gallia-status.md). Target-device/release checks belong to [M11](m11-launch-scope.md).
+
+**Historical evidence follows.** Earlier “M8 open/unfinished” and old payload/readiness statements describe their checkpoint. They do not override current acceptance/status, widen asset permissions, or certify unperformed checks. Original decisions/results are preserved.
 
 ## Diagnosis and acceptance for this increment
 

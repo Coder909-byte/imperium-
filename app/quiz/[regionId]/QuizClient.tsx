@@ -10,7 +10,7 @@ import { PROGRESSION } from "@/lib/quiz/progression";
 import { QuizQuestion } from "./QuizQuestion";
 import { QuizResults } from "./QuizResults";
 
-export function QuizClient({ regionId, name }: { regionId: string; name: string }) {
+export function QuizClient({ regionId, name, year }: { regionId: string; name: string; year: string }) {
   const [view, setView] = useState<QuizView | null>(null);
   const [index, setIndex] = useState(0);
   const [selected, setSelected] = useState("");
@@ -72,14 +72,14 @@ export function QuizClient({ regionId, name }: { regionId: string; name: string 
     {storageWarning && <p role="status" className="mb-6 border border-[#b2a083] p-4 text-sm leading-relaxed">This browser could not save a local record. Keep this page open; signup import may be unavailable.</p>}
     {error && <div role="alert" className="form-error mb-6"><p>{error}</p>{view && <button type="button" disabled={pending} onClick={start} className="mt-3 underline">Start a new quiz</button>}</div>}
     {!view ? <>
-      <p className="shell-eyebrow">52 BC · Gallia</p>
+      <p className="shell-eyebrow">{year} · {name}</p>
       <h1 className="shell-heading mt-4">Test yourself on {name}.</h1>
       <p className="mt-6 text-lg leading-relaxed">Five questions. Four options each. No timer. Each answer comes with an explanation and the source behind it.</p>
       <p className="mt-4 leading-relaxed text-[#655c4d]">Complete all five to bank XP. Each question can award XP once per account; retries can earn previously missed answers.</p>
       <p className="mt-3 text-sm text-[#655c4d]">{PROGRESSION.streakNotice}</p>
       <div className="mt-8 flex flex-wrap gap-3"><button type="button" disabled={pending} onClick={start} className="shell-button shell-button-primary">{pending ? "Checking saved quiz…" : "Start quiz"}</button><Link href="/atlas" prefetch={false} className="shell-button shell-button-outline">Return to the atlas</Link></div>
-    </> : results ? <QuizResults view={view} retry={start} pending={pending} /> : <>
-      <h1 className="mb-6 font-[family-name:var(--font-inscription)] text-sm tracking-widest">{name} · 52 BC</h1>
+    </> : results ? <QuizResults view={view} name={name} retry={start} pending={pending} /> : <>
+      <h1 className="mb-6 font-[family-name:var(--font-inscription)] text-sm tracking-widest">{name} · {year}</h1>
       <QuizQuestion question={view.questions[index]} index={index} selected={selected} verdict={verdict} pending={pending} onSelect={setSelected} onSubmit={submit} onContinue={() => {
         if (index === 4) setResults(true);
         else { setIndex(index + 1); setSelected(""); }

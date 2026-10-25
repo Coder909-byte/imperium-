@@ -1,0 +1,80 @@
+{
+  "reviewDate": "2026-10-25",
+  "scope": "Italia approved-outline draft; full prose/art approval pending",
+  "environment": {
+    "server": "Next production on 127.0.0.1:3008",
+    "database": "unreachable loopback endpoint; no shared target",
+    "devices": "desktop Chrome responsive emulation; no physical phone/Safari claim"
+  },
+  "checks": {
+    "unitTests": 334,
+    "unitFiles": 46,
+    "contentFiles": 40,
+    "typecheck": "passed",
+    "lint": "passed",
+    "productionBuild": "passed",
+    "developmentBrowserChecks": 23,
+    "productionItaliaChecks": 4
+  },
+  "privateBundleCheck": {
+    "chunksScanned": 51,
+    "privateAuthoredContentLeaks": 0,
+    "method": "Search all .next/static JS for every existing question explanation and option feedback, including JSON-escaped text."
+  },
+  "atlasTransfer": {
+    "method": "Real production HTTP gzip responses for the served atlas script tags; noModule excluded.",
+    "files": [
+      {
+        "src": "/_next/static/chunks/0hg3k7un3rsb_.js",
+        "gzipBytes": 8604
+      },
+      {
+        "src": "/_next/static/chunks/11jq0c2_zavac.js",
+        "gzipBytes": 8504
+      },
+      {
+        "src": "/_next/static/chunks/1mkbuudhndal5.js",
+        "gzipBytes": 71576
+      },
+      {
+        "src": "/_next/static/chunks/278axw9oxgjty.js",
+        "gzipBytes": 5717
+      },
+      {
+        "src": "/_next/static/chunks/2h8mq2n9nn_uc.js",
+        "gzipBytes": 42739
+      },
+      {
+        "src": "/_next/static/chunks/3yfl9fgvivx3-.js",
+        "gzipBytes": 3614
+      },
+      {
+        "src": "/_next/static/chunks/turbopack-0tcle8anhm_hs.js",
+        "gzipBytes": 3848
+      }
+    ],
+    "totalGzipBytes": 144602,
+    "budgetBytes": 184320
+  },
+  "rendering": {
+    "modes": [
+      "desktop",
+      "high",
+      "low",
+      "narrow"
+    ],
+    "beatsEach": 6,
+    "captures": 25,
+    "path": "/tmp/imperium-italia-draft-final-2026-10-25",
+    "errors": 0,
+    "failedResponses": 0,
+    "italiaAssetRequests": 0,
+    "finalArtworkAccepted": false
+  },
+  "preserved": "Gallia content, manifest/binaries/rigs, scene/audio engine, reward policy and DB files match HEAD.",
+  "notRun": [
+    "Italia quiz grading/import/concurrency: no authored bank before prose approval",
+    "Narration generation/listening: no approved prose yet",
+    "Physical-device/Safari/network/GPU launch checks"
+  ]
+}

@@ -1,5 +1,9 @@
 # Gallia asset decisions and preparation — 2026-10-22
 
+**Current reconciliation, 2026-10-23:** The integrated Gallia visuals/narration are owner-accepted. This candidate/preparation record preserves its original use scopes; shell approval of Royer is not Gallia scene approval, and accepted Gallia does not authorize another region's reuse. [Gallia status](regions/gallia-status.md) records current assets/omissions; [M11](m11-launch-scope.md) owns launch checks.
+
+**Historical evidence follows.** Earlier “M8 open/unfinished” and old payload/readiness statements describe their checkpoint. They do not override current acceptance/status, widen asset permissions, or certify unperformed checks. Original decisions/results are preserved.
+
 **Personnel approval update — 2026-10-23:** the owner explicitly approved provisional AI-assisted Roman/Gallic infantry references, transparent parts and shared crowd atlases, including routine variations. The sole photographic input is the specific [Met Montefortino-family helmet image](https://www.metmuseum.org/art/collection/search/684492), explicitly marked “Public Domain”; its earlier Etruscan date and modern cheekpieces are not evidence for Alesia equipment. This permission is separate from the NGA atmospheric and Motte structure approvals. Generated assets remain provisional, never public domain. Source rights, research, preparation and limitations are recorded in `docs/m8-personnel-review.md` and the manifest; civilians, horses/riders and the hillfort are outside this infantry preparation approval.
 
 ## Visual continuation — 2026-10-23

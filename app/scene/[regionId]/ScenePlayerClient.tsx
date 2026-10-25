@@ -28,12 +28,17 @@ const ScenePlayer = dynamic(() => import("@/engine/scene/ScenePlayer").then((mod
   loading: () => <div className={styles.player} />,
 });
 
-export function ScenePlayerClient({ region, quizAvailable = false }: { region: SceneRegion; quizAvailable?: boolean }) {
+export function ScenePlayerClient({ region, quizAvailable = false, progressAvailable = quizAvailable, previewNotice }: {
+  region: SceneRegion; quizAvailable?: boolean; progressAvailable?: boolean; previewNotice?: string;
+}) {
   const router = useRouter();
   const requestSweep = useTransitionStore((s) => s.requestSweep);
   const recordBeat = useSceneProgress(region.id);
 
-  return <ScenePlayer region={region} onBeatChange={quizAvailable ? recordBeat : undefined}
+  return <>
+    {previewNotice && <aside role="note" className="border-b border-[#6e5c3b] bg-[#19150f] px-5 py-3 font-serif text-sm leading-relaxed text-[#f4ede0]">{previewNotice}</aside>}
+    <ScenePlayer region={region} onBeatChange={progressAvailable ? recordBeat : undefined}
     onQuiz={quizAvailable ? () => router.push(`/quiz/${region.id}`) : undefined}
-    onExit={() => requestSweep(() => router.push("/atlas"))} />;
+    onExit={() => requestSweep(() => router.push("/atlas"))} />
+  </>;
 }

@@ -23,7 +23,7 @@ test("signup, logout, login, session survives a hard refresh", async ({ page }) 
 
   await page.waitForURL("**/profile");
   await expect(page.getByText(email)).toBeVisible();
-  await expect(page.getByText("No completed quizzes yet. Gallia is ready when you are.")).toBeVisible();
+  await expect(page.getByText("No completed quizzes yet. Choose a quiz below.")).toBeVisible();
 
   await page.getByRole("button", { name: "Log out" }).click();
   await page.waitForURL("**/login");
@@ -40,5 +40,5 @@ test("signup, logout, login, session survives a hard refresh", async ({ page }) 
 
   await page.reload();
   await expect(page.getByText(email)).toBeVisible();
-  await expect(page.getByText("No completed quizzes yet. Gallia is ready when you are.")).toBeVisible();
+  await expect(page.getByText("No completed quizzes yet. Choose a quiz below.")).toBeVisible();
 });

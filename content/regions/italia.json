@@ -1,0 +1,133 @@
+{
+  "id": "italia",
+  "name": "Italia",
+  "latinName": "Italia",
+  "civilisation": "Rome",
+  "mapCentroid": [13.522, 42.154],
+  "heldFrom": -272,
+  "heldTo": 476,
+  "scene": {
+    "previewNotice": "Italia draft — prose awaiting approval. All scenery and figures are temporary layout placeholders. Narration, sound and quiz are not available yet.",
+    "lut": "cold_overcast",
+    "ambientBed": "none",
+    "audioPlaceholder": true,
+    "narrationPending": true,
+    "audioAssets": {},
+    "planes": [
+      { "id": "sky-layout", "asset": "italia/sky-pending.webp", "placeholder": true, "essential": true, "role": "atmosphere", "depth": 0.02, "tint": "#ffffff" },
+      { "id": "town-layout", "asset": "italia/town-pending.webp", "placeholder": true, "essential": true, "depth": 0.2, "tint": "#ffffff" },
+      { "id": "riverbank-layout", "asset": "italia/riverbank-pending.webp", "placeholder": true, "essential": true, "depth": 0.4, "tint": "#ffffff" },
+      { "id": "road-layout", "asset": "italia/road-pending.webp", "placeholder": true, "essential": true, "depth": 0.72, "tint": "#ffffff" }
+    ]
+  },
+  "beats": [
+    {
+      "id": "an-order-from-rome",
+      "year": "January 49 BC",
+      "sortYear": -49,
+      "headline": "An order from Rome",
+      "body": "At Rome, a letter from Caesar is read aloud. His opponents demand that he give up his army by a fixed deadline; Antony and Cassius, the tribunes who oppose the move, leave the city. Caesar waits at Ravenna, still in his province. He will describe the crisis as an attack on lawful rights. His opponents fear a commander who will not let go of his troops. The argument is still being made in the Senate. Armies are already part of it.",
+      "visibleLayers": ["sky-layout", "town-layout", "road-layout"],
+      "camera": { "from": { "x": -0.12, "y": 0.05, "scale": 1.02 }, "x": 0.12, "y": 0.05, "scale": 1.08, "durationMode": "dwell", "durationMs": 24000, "ease": "none" },
+      "actors": [],
+      "fx": [],
+      "sources": [
+        { "label": "Caesar, Civil War I.1–6 — the Senate's demand, the tribunes' departure and Ravenna. Caesar is a participant defending his own conduct, not a neutral judge of legality.", "url": "https://penelope.uchicago.edu/Thayer/E/Roman/Texts/Caesar/Civil_Wars/1A*.html#1" },
+        { "label": "Cicero, Letters to Atticus VII.9 — the dispute over command, candidature and disarmament. A contemporary political insider, hostile to Caesar's demands and uncertain how to avoid war.", "url": "https://www.attalus.org/cicero/atticus7.html#9" },
+        { "label": "Reading the scene: January follows the contemporary Roman calendar. Senate and headquarters staging is interpretive; no verbatim private conversation is reconstructed." }
+      ]
+    },
+    {
+      "id": "the-army-he-keeps",
+      "year": "January 49 BC",
+      "sortYear": -49,
+      "headline": "The army he keeps",
+      "body": "The Thirteenth Legion stands before its commander. These are men who have fought for him in Gaul. In Caesar's account, he calls on them to defend his honour and the rights of the tribunes; they answer that they will. His account turns a political quarrel into another obligation between a general and his soldiers. His other legions have not yet gathered. For this first move, he has the loyalty of the men already here.",
+      "visibleLayers": ["sky-layout", "riverbank-layout", "road-layout"],
+      "camera": { "from": { "x": 0.12, "y": 0.12, "scale": 1.04 }, "x": -0.12, "y": 0.18, "scale": 1.13, "durationMode": "dwell", "durationMs": 24000, "ease": "none" },
+      "actors": [
+        { "rig": "legionary", "clip": "idle", "x": 45, "y": 95, "scale": 0.65, "count": 1, "depth": 0.82 },
+        { "rig": "legionary", "clip": "march", "x": -85, "y": 82, "scale": 0.65, "count": 18, "depth": 0.8, "formation": { "columns": 9, "spacing": [42, 28], "jitter": 0.12 } }
+      ],
+      "fx": [],
+      "sources": [
+        { "label": "Caesar, Civil War I.7–8 — the Thirteenth's response and the summons to other legions. The speech and unanimous support come through Caesar's own presentation of events.", "url": "https://penelope.uchicago.edu/Thayer/E/Roman/Texts/Caesar/Civil_Wars/1A*.html#7" },
+        { "label": "Suetonius, Julius 33 — a later version places the troop address after the crossing. Accounts differ over sequence and setting; this beat does not settle the exact meeting place.", "url": "https://penelope.uchicago.edu/Thayer/E/Roman/Texts/Suetonius/12Caesars/Julius*.html#33" },
+        { "label": "Reading the scene: the pale procedural figures are temporary military layout markers, not approved Italia equipment or portraits. Their count is composition, not a troop total." }
+      ]
+    },
+    {
+      "id": "across-the-boundary",
+      "year": "January 49 BC",
+      "sortYear": -49,
+      "headline": "Across the boundary",
+      "body": "The river is small. The boundary is not. The Rubicon marks the edge of Caesar's province; taking his troops beyond it carries the quarrel into Italy. Plutarch and Suetonius, writing much later, give him a pause and words about casting a die. Caesar's own account leaves out that scene. We cannot pin the crossing to an undisputed day or a certain point on today's map. What matters now is the movement of armed men across a provincial boundary.",
+      "visibleLayers": ["sky-layout", "riverbank-layout"],
+      "camera": { "from": { "x": -0.14, "y": 0.02, "scale": 1.05 }, "x": 0.16, "y": 0.13, "scale": 1.11, "durationMode": "dwell", "durationMs": 26000, "ease": "none" },
+      "actors": [
+        { "rig": "legionary", "clip": "march", "x": 30, "y": 95, "scale": 0.6, "count": 1, "depth": 0.82 },
+        { "rig": "legionary", "clip": "march", "x": -85, "y": 100, "scale": 0.6, "count": 12, "depth": 0.8, "formation": { "columns": 6, "spacing": [48, 28], "jitter": 0.16 } }
+      ],
+      "fx": [],
+      "sources": [
+        { "label": "Plutarch, Life of Caesar 32.5–8 — the boundary, hesitation and dice phrase. A dramatic biography written long after the event, not an eyewitness transcript.", "url": "https://penelope.uchicago.edu/Thayer/E/Roman/Texts/Plutarch/Lives/Caesar*.html#32" },
+        { "label": "Suetonius, Julius 31–33 — another later crossing tradition, including a supernatural sign. The apparition is not treated as a historical event or depicted here.", "url": "https://penelope.uchicago.edu/Thayer/E/Roman/Texts/Suetonius/12Caesars/Julius*.html#31" },
+        { "label": "Elizabeth Rawson, Caesar: Civil War and Dictatorship, public chapter summary — cautions about the crossing's date, river location and displaced Roman calendar. Full paid chapter not consulted.", "url": "https://www.cambridge.org/core/books/abs/cambridge-ancient-history/caesar-civil-war-and-dictatorship/C7F8E34AD8D803954A497D4E56707A53" },
+        { "label": "Reading the scene: no exact bridge, modern river identification, GPS route or seasonal weather is asserted. The current riverbank band is a temporary layout placeholder." }
+      ]
+    },
+    {
+      "id": "ariminum",
+      "year": "January 49 BC",
+      "sortYear": -49,
+      "headline": "Ariminum",
+      "body": "Ariminum, modern Rimini, is the first town in the advance. Caesar says he reaches it with the Thirteenth and meets the fugitive tribunes there. In Plutarch's later telling, an advance party has already been sent to seize it quietly. The accounts do not line up into a single clean scene. The result does: Caesar has occupied a town beyond his province. Rome's dispute is now being enforced inside Italy, by Roman troops.",
+      "visibleLayers": ["sky-layout", "town-layout", "road-layout"],
+      "camera": { "from": { "x": 0.14, "y": 0.06, "scale": 1.03 }, "x": -0.1, "y": 0.12, "scale": 1.1, "durationMode": "dwell", "durationMs": 25000, "ease": "none" },
+      "actors": [
+        { "rig": "legionary", "clip": "march", "x": -20, "y": 110, "scale": 0.75, "count": 12, "depth": 0.8, "formation": { "columns": 6, "spacing": [46, 25], "jitter": 0.12 } }
+      ],
+      "fx": [],
+      "sources": [
+        { "label": "Caesar, Civil War I.8 — arrival at Ariminum and meeting the tribunes. Caesar narrates the advance with no Rubicon set piece.", "url": "https://penelope.uchicago.edu/Thayer/E/Roman/Texts/Caesar/Civil_Wars/1A*.html#8" },
+        { "label": "Plutarch, Life of Caesar 32.3–8 — the advance party and later arrival. This later sequence should not be spliced into Caesar's as a proven minute-by-minute reconstruction.", "url": "https://penelope.uchicago.edu/Thayer/E/Roman/Texts/Plutarch/Lives/Caesar*.html#32" },
+        { "label": "Reading the scene: Ariminum is modern Rimini. The temporary town band is not a reconstruction; future scenery must avoid its later Augustan arch and Tiberian bridge." }
+      ]
+    },
+    {
+      "id": "terms-and-marching-orders",
+      "year": "January 49 BC",
+      "sortYear": -49,
+      "headline": "Terms and marching orders",
+      "body": "Cicero has weighed the possible bargains in letters to Atticus: an election, an army surrendered, a compromise neither side trusts. Now news comes of towns occupied by Caesar's men. Caesar says he had proposed that all sides lay down their arms. That claim travels beside the advance it is meant to justify. Messages still promise a political settlement; soldiers are already deciding who controls the roads.",
+      "visibleLayers": ["sky-layout", "town-layout", "road-layout"],
+      "camera": { "from": { "x": -0.08, "y": 0.16, "scale": 1.12 }, "x": 0.12, "y": 0.08, "scale": 1.04, "durationMode": "dwell", "durationMs": 24000, "ease": "none" },
+      "actors": [
+        { "rig": "legionary", "clip": "idle", "x": 10, "y": 105, "scale": 0.65, "count": 1, "depth": 0.82 }
+      ],
+      "fx": [],
+      "sources": [
+        { "label": "Cicero, Letters to Atticus VII.9 and VII.11 — possible settlements and reports of occupied towns. The letters preserve uncertainty and anti-Caesarian anger, not a detached verdict.", "url": "https://www.attalus.org/cicero/atticus7.html#9" },
+        { "label": "Caesar, Civil War I.9 — his retrospective claim that an earlier dispatch proposed general disarmament. The narrative attributes his justification instead of endorsing its sincerity.", "url": "https://penelope.uchicago.edu/Thayer/E/Roman/Texts/Caesar/Civil_Wars/1A*.html#9" },
+        { "label": "Reading the scene: messages and troop movements overlap. This beat recalls earlier proposals; it does not move the later reply from Capua before Rome's evacuation. The commander and dispatch setting still need approved art." }
+      ]
+    },
+    {
+      "id": "rome-empties",
+      "year": "January 49 BC",
+      "sortYear": -49,
+      "headline": "Rome empties",
+      "body": "News outruns the marching columns. Pompey and the consuls leave Rome; many senators follow them south. Cicero, who favours Pompey, writes in disbelief at the city's abandonment and admits he does not understand the plan. The government's leaders are moving away from the capital while Caesar is still advancing through Italy. He has not yet entered Rome. The Republic has not become an empire in a night. It has begun a war against itself.",
+      "visibleLayers": ["sky-layout", "town-layout", "road-layout"],
+      "camera": { "from": { "x": 0.08, "y": 0.08, "scale": 1.13 }, "x": -0.12, "y": 0.02, "scale": 1.02, "durationMode": "dwell", "durationMs": 26000, "ease": "none" },
+      "actors": [],
+      "fx": [],
+      "sources": [
+        { "label": "Cicero, Letters to Atticus VII.10–12 — departure, anger at abandoning Rome and uncertainty about Pompey's plans. A contemporary supporter of Pompey who relies partly on reports.", "url": "https://www.attalus.org/cicero/atticus7.html#10" },
+        { "label": "Plutarch, Life of Caesar 33–34 — panic, Pompey's departure and fleeing consuls/senators. His sweeping picture of the city is later literary narration; not everyone in Rome left.", "url": "https://penelope.uchicago.edu/Thayer/E/Roman/Texts/Plutarch/Lives/Caesar*.html#33" },
+        { "label": "Elizabeth Rawson, public chapter summary — Pompey, the consuls and many senators retire to Campania. Used to check the endpoint, not to imply the whole Italian campaign is over.", "url": "https://www.cambridge.org/core/books/abs/cambridge-ancient-history/caesar-civil-war-and-dictatorship/C7F8E34AD8D803954A497D4E56707A53" },
+        { "label": "Reading the scene: 'Rome empties' describes the leadership's departure, not an empty city. The episode stops here; Caesar's later entry into Rome, Brundisium and dictatorship are outside its scope. Civic figures are still absent." }
+      ]
+    }
+  ]
+}

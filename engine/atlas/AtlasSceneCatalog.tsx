@@ -11,12 +11,12 @@ export function AtlasSceneCatalog({
   const previews = provinces.filter((province) => province.scene !== null);
 
   return (
-    <section className={styles.catalog} aria-label="Available scene previews">
+    <section id="stories" className={styles.catalog} aria-label="Available scene previews">
       <div>
         <p className={styles.catalogEyebrow}>Beyond the map</p>
         <h2 className={styles.catalogTitle}>Step into a story.</h2>
         <p className={styles.catalogIntro}>
-          {previews.length ? "Gallia is available now. Other stories are still being written." : "Campaigns are coming soon."}
+          {previews.length ? "Explore the available stories and work-in-progress previews. More campaigns are being written." : "Campaigns are coming soon."}
         </p>
       </div>
       <div className={styles.previewList}>

@@ -1,0 +1,231 @@
+{
+  "base": "http://127.0.0.1:3008",
+  "draft": true,
+  "finalArtAcceptance": false,
+  "runs": [
+    {
+      "mode": "desktop",
+      "beats": [
+        {
+          "id": "an-order-from-rome",
+          "tier": "low",
+          "planes": "sky-layout,town-layout,road-layout",
+          "actors": "",
+          "ready": "true",
+          "overflow": false
+        },
+        {
+          "id": "the-army-he-keeps",
+          "tier": "low",
+          "planes": "sky-layout,riverbank-layout,road-layout",
+          "actors": "legionary:idle:1,legionary:march:18",
+          "ready": "true",
+          "overflow": false
+        },
+        {
+          "id": "across-the-boundary",
+          "tier": "low",
+          "planes": "sky-layout,riverbank-layout",
+          "actors": "legionary:march:1,legionary:march:12",
+          "ready": "true",
+          "overflow": false
+        },
+        {
+          "id": "ariminum",
+          "tier": "low",
+          "planes": "sky-layout,town-layout,road-layout",
+          "actors": "legionary:march:12",
+          "ready": "true",
+          "overflow": false
+        },
+        {
+          "id": "terms-and-marching-orders",
+          "tier": "low",
+          "planes": "sky-layout,town-layout,road-layout",
+          "actors": "legionary:idle:1",
+          "ready": "true",
+          "overflow": false
+        },
+        {
+          "id": "rome-empties",
+          "tier": "low",
+          "planes": "sky-layout,town-layout,road-layout",
+          "actors": "",
+          "ready": "true",
+          "overflow": false
+        }
+      ],
+      "errors": [],
+      "failures": [],
+      "assetRequests": []
+    },
+    {
+      "mode": "high",
+      "beats": [
+        {
+          "id": "an-order-from-rome",
+          "tier": "high",
+          "planes": "sky-layout,town-layout,road-layout",
+          "actors": "",
+          "ready": "true",
+          "overflow": false
+        },
+        {
+          "id": "the-army-he-keeps",
+          "tier": "high",
+          "planes": "sky-layout,riverbank-layout,road-layout",
+          "actors": "legionary:idle:1,legionary:march:18",
+          "ready": "true",
+          "overflow": false
+        },
+        {
+          "id": "across-the-boundary",
+          "tier": "high",
+          "planes": "sky-layout,riverbank-layout",
+          "actors": "legionary:march:1,legionary:march:12",
+          "ready": "true",
+          "overflow": false
+        },
+        {
+          "id": "ariminum",
+          "tier": "high",
+          "planes": "sky-layout,town-layout,road-layout",
+          "actors": "legionary:march:12",
+          "ready": "true",
+          "overflow": false
+        },
+        {
+          "id": "terms-and-marching-orders",
+          "tier": "high",
+          "planes": "sky-layout,town-layout,road-layout",
+          "actors": "legionary:idle:1",
+          "ready": "true",
+          "overflow": false
+        },
+        {
+          "id": "rome-empties",
+          "tier": "high",
+          "planes": "sky-layout,town-layout,road-layout",
+          "actors": "",
+          "ready": "true",
+          "overflow": false
+        }
+      ],
+      "errors": [],
+      "failures": [],
+      "assetRequests": []
+    },
+    {
+      "mode": "low",
+      "beats": [
+        {
+          "id": "an-order-from-rome",
+          "tier": "low",
+          "planes": "sky-layout,town-layout,road-layout",
+          "actors": "",
+          "ready": "true",
+          "overflow": false
+        },
+        {
+          "id": "the-army-he-keeps",
+          "tier": "low",
+          "planes": "sky-layout,riverbank-layout,road-layout",
+          "actors": "legionary:idle:1,legionary:march:18",
+          "ready": "true",
+          "overflow": false
+        },
+        {
+          "id": "across-the-boundary",
+          "tier": "low",
+          "planes": "sky-layout,riverbank-layout",
+          "actors": "legionary:march:1,legionary:march:12",
+          "ready": "true",
+          "overflow": false
+        },
+        {
+          "id": "ariminum",
+          "tier": "low",
+          "planes": "sky-layout,town-layout,road-layout",
+          "actors": "legionary:march:12",
+          "ready": "true",
+          "overflow": false
+        },
+        {
+          "id": "terms-and-marching-orders",
+          "tier": "low",
+          "planes": "sky-layout,town-layout,road-layout",
+          "actors": "legionary:idle:1",
+          "ready": "true",
+          "overflow": false
+        },
+        {
+          "id": "rome-empties",
+          "tier": "low",
+          "planes": "sky-layout,town-layout,road-layout",
+          "actors": "",
+          "ready": "true",
+          "overflow": false
+        }
+      ],
+      "errors": [],
+      "failures": [],
+      "assetRequests": []
+    },
+    {
+      "mode": "narrow",
+      "beats": [
+        {
+          "id": "an-order-from-rome",
+          "tier": "low",
+          "planes": "sky-layout,town-layout,road-layout",
+          "actors": "",
+          "ready": "true",
+          "overflow": false
+        },
+        {
+          "id": "the-army-he-keeps",
+          "tier": "low",
+          "planes": "sky-layout,riverbank-layout,road-layout",
+          "actors": "legionary:idle:1,legionary:march:18",
+          "ready": "true",
+          "overflow": false
+        },
+        {
+          "id": "across-the-boundary",
+          "tier": "low",
+          "planes": "sky-layout,riverbank-layout",
+          "actors": "legionary:march:1,legionary:march:12",
+          "ready": "true",
+          "overflow": false
+        },
+        {
+          "id": "ariminum",
+          "tier": "low",
+          "planes": "sky-layout,town-layout,road-layout",
+          "actors": "legionary:march:12",
+          "ready": "true",
+          "overflow": false
+        },
+        {
+          "id": "terms-and-marching-orders",
+          "tier": "low",
+          "planes": "sky-layout,town-layout,road-layout",
+          "actors": "legionary:idle:1",
+          "ready": "true",
+          "overflow": false
+        },
+        {
+          "id": "rome-empties",
+          "tier": "low",
+          "planes": "sky-layout,town-layout,road-layout",
+          "actors": "",
+          "ready": "true",
+          "overflow": false
+        }
+      ],
+      "errors": [],
+      "failures": [],
+      "assetRequests": []
+    }
+  ]
+}

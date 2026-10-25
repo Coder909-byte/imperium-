@@ -1,6 +1,6 @@
 # Art pipeline — the manual workflow
 
-This is the guide to follow at 1am during M8 when a scene needs planes and
+This is the reusable guide for producing region planes; M8 supplied its original measurements. Use it when a scene needs planes and
 the only question that matters is "what do I actually do." `tools/forge`'s
 own `--help` covers flag syntax; this covers everything around it —
 where the source comes from, how to know it's actually safe to use, how
@@ -8,7 +8,9 @@ to cut it into planes, and what resolution to bother exporting at.
 
 Read `docs/adr/003-art-direction-painted-planes.md` first if this is the
 first session touching art — it's short, and it's the reason backdrop
-planes keep their colour while character parts don't.
+planes keep their colour. For the subsequently approved painted character-part path, also read ADR 014: colour and alpha are preserved, and `--matte` is not used on already separated painted parts.
+
+**Current production, 2026-10-23:** Gallia's visuals/narration are owner-accepted. Existing atmosphere, wall, personnel and narration approvals remain limited to their documented scopes; this guide does not authorize another region's reuse/generation. Use the [region-completion checklist](region-completion-checklist.md) and obtain episode/outline approval before full narrative/art. Historical M7 measurements below remain unchanged.
 
 ## 1. Source the painting
 
@@ -28,11 +30,7 @@ rights verification (next section) fast rather than a guessing game.
 other reliable high-res CC0/PD sources named in PRD §3, worth searching
 directly when Commons doesn't have what a scene needs.
 
-**For character rig source material** (cutout puppets, ADR 003's
-alpha-from-luminance path): engravings, not paintings — **Cichorius**
-(Trajan's Column reliefs) and **Piranesi** (architectural etchings) are
-the named library. See §5 below on why the *kind* of line art matters
-more than "is it monochrome" for how well `--matte` actually performs.
+**For the original engraving rig path** (ADR 003), Cichorius/Piranesi are reference candidates, with the matte cautions in §5; their imagery is not automatically period-appropriate. The implemented painted-part path (ADR 014) uses already separated full-colour alpha assemblies and the normal colour export. Do not strip painted faces/clothing/mail using `--matte`. Source rights and historical suitability are separate checks.
 
 ## 2. Verify the rights — every time, not just the first time
 
@@ -86,21 +84,11 @@ and `tools/forge`'s default (colour) path preserves whatever alpha a
 source file already carries untouched. Put a whole scene's cut layers
 in one folder; that folder is what batch mode takes.
 
-**Character parts** (for a puppet rig, not a backdrop plane): cut at the
-joints per PRD §3 — head, torso, upper arm, forearm, thigh, shin, foot —
-from an engraving source, one PNG per part, into their own folder,
-separate from the scene's backdrop-plane folder (see §6 on why separate
-folders, not a shared one).
+**Character parts:** choose the supported rig treatment deliberately. The procedural/engraved reference path uses joint-separated parts; Gallia's painted rigs instead use six connected assemblies to hide joints under tunics/shields (ADR 014). Keep colours/alpha intact for painted parts, author actual sizes/pivots and inspect anatomy/ground contact. Separate folders by export settings, not by an assumption that all figures need matte.
 
 ## 4. What resolution to export at
 
-**The specific number this doc exists to answer:** export backdrop
-planes at **1920px wide**, WebP quality **75–78**. That's not a rule of
-thumb — it's read directly off the measurement table in §7. At that
-width and quality, a full-width colour plane runs **~385–450KB**, and
-six of those fit inside the 2.5MB per-region budget (PRD §11) with
-headroom left for the character-stage and foreground planes, which
-often need to be sharper because the camera pushes into them.
+**Measure the total budget first.** The M7 reference scan produced a **~385–450KB** colour plane at **1920px / quality 75–78** (§7); that is a measured example, not a six-plane allowance. The strict <2.5 MiB region budget includes all unique referenced planes, rig textures and audio. Gallia's narration alone is 1,098,432 bytes and all audio 1,653,554 bytes. Reserve the actual narration/audio/rig budget before selecting backdrop widths/quality; six ~400KB planes leave no realistic narrated-region headroom. Cropped/transparent cuts can differ substantially from the full-scan measurement. Use actual exported bytes and `npm run validate`, not an assumed per-plane average.
 
 Work from whatever resolution the source painting was scanned at — the
 whole point of sourcing from Commons/Met/Rijksmuseum is that their
@@ -149,8 +137,7 @@ a flat rectangle in a normal image viewer until composited against
 something that isn't the same tone as its own alpha-transparent areas).
 
 **RGB defaults to white, not a baked-in colour**, because
-`ParallaxPlane`/`PuppetActor` tint alpha art at *runtime* via a
-multiply filter (`ColorMatrixFilter.tint`/Pixi's own sprite tint) —
+`ParallaxPlane`/`PuppetActor` tint alpha art at *runtime* via Pixi's sprite multiply tint —
 that only produces a clean, vivid result over a white base. `--tint`
 exists for the rarer asset that won't go through runtime tinting at
 all and should carry a fixed flat colour into the file itself instead.
@@ -159,9 +146,7 @@ all and should carry a fixed flat colour into the file itself instead.
 
 Batch mode applies **one uniform set of flags to every file in a
 folder** — no per-file overrides. Since a real scene's plane set
-usually mixes backdrop layers (no matte) with a character-stage layer
-(matte), **export backdrops and character parts into two separate
-folders from Photopea**, and run the forge once per folder:
+can mix colour layers with genuine engraving mattes, **separate folders by the needed flags** and run the forge once per group. Painted parts use colour mode like backdrops, though their size/quality settings often need a separate group. The two commands below show the original engraving example, not a requirement to matte painted figures:
 
 ```bash
 npm run forge -- ./raw/gallia-backdrops \

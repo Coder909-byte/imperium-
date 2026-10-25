@@ -1,4 +1,8 @@
-# Gallia plane tint performance — M8 remains open
+# Gallia plane tint performance — historical M8 increment
+
+**Current reconciliation, 2026-10-23:** M8 is complete for the owner-accepted current Gallia experience. The measurements below retain their exact desktop limits; strict device/network acceptance is a cross-cutting [M11](m11-launch-scope.md) item. Specific representation/history issues remain in [Gallia status](regions/gallia-status.md).
+
+**Historical evidence follows.** Earlier “M8 open/unfinished” and old payload/readiness statements describe their checkpoint. They do not override current acceptance/status, widen asset permissions, or certify unperformed checks. Original decisions/results are preserved.
 
 ## Change and acceptance
 

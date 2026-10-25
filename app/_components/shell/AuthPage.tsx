@@ -22,7 +22,7 @@ export function AuthPage({ mode }: { mode: "login" | "signup" }) {
         <section className="auth-panel flex flex-col justify-center">
           <p className="shell-eyebrow">Your Imperium account</p>
           <h1 className="shell-heading mt-3">{signup ? "Begin your journey." : "Welcome back."}</h1>
-          <p className="auth-intro mt-4 mb-8 leading-relaxed">{signup ? "Create an account with email or Google. Saved progress and quizzes are still to come." : "Log in with your email or Google account."}</p>
+          <p className="auth-intro mt-4 mb-8 leading-relaxed">{signup ? "Create an account with email or Google to keep your quiz results and progress." : "Log in with your email or Google account."}</p>
           <AuthForm mode={mode} />
           <p className="auth-open-note mt-8 pt-5 text-center text-xs leading-relaxed">You can explore without an account.<br /><Link href="/atlas" prefetch={false}>Continue to the atlas <span aria-hidden="true">→</span></Link></p>
         </section>

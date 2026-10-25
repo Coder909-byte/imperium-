@@ -1,6 +1,9 @@
 # M8 Gallia handoff — 2026-10-22
 
-Current state, 2026-10-23: M8 and M9 are owner-accepted. The scoped M10 implementation/local audio audit is complete without runtime/audio changes; [current audio evidence](m10-audio-review.md) retains actual-phone/Safari, full listening/pronunciation/mix/pacing, history and specialist-art checks as unresolved. Earlier measurements and incomplete-art records below remain historical evidence. [Remaining M11 launch scope](m11-launch-scope.md) is documented; M11 has not started.
+**Current reconciliation, 2026-10-23:** M8 is complete for the accepted current Gallia composition/narration; the working quiz is accepted and M10 local audit is complete. Specific history/representation limits are in [Gallia status](regions/gallia-status.md); cross-cutting external checks belong to [M11](m11-launch-scope.md). The next priority is region two, not cosmetic Gallia reopening.
+
+**Historical evidence follows.** Earlier “M8 open/unfinished” and old payload/readiness statements describe their checkpoint. They do not override current acceptance/status, widen asset permissions, or certify unperformed checks. Original decisions/results are preserved.
+
 
 Owner feedback, 2026-10-23: satisfied with Gallia’s current visual experience and narration. This accepts the current experience without claiming outstanding historical, specialist-art, Safari/Pixel GPU or network checks passed. The previous narration browser/build checks finished successfully. A focused M1.5 landing/account/profile shell was separately authorized and implemented; see [shell handoff](m1-5-shell-review.md). It leaves all Gallia engine/content/assets untouched and does not start another region or remaining M11 work.
 

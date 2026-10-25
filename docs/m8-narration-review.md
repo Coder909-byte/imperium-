@@ -1,6 +1,9 @@
 # Gallia narration — M8 scope addition, 2026-10-23
 
-Current state, 2026-10-23: M8 and M9 are owner-accepted. The scoped M10 implementation/local audio audit is complete without runtime/audio changes; [current audio evidence](m10-audio-review.md) retains actual-phone/Safari, full listening/pronunciation/mix/pacing, history and specialist-art checks as unresolved. Earlier measurements and incomplete-art records below remain historical evidence. [Remaining M11 launch scope](m11-launch-scope.md) is documented; M11 has not started.
+**Current reconciliation, 2026-10-23:** The owner accepts the current Gallia narration/visuals; M8 and the M10 local audio audit are complete for that baseline. Owner listening approval is not left pending. Actual-device/network and launch-wide evidence belong to [M11](m11-launch-scope.md); independent word-for-word/phonetic certification is not claimed. See [Gallia status](regions/gallia-status.md).
+
+**Historical evidence follows.** Earlier “M8 open/unfinished” and old payload/readiness statements describe their checkpoint. They do not override current acceptance/status, widen asset permissions, or certify unperformed checks. Original decisions/results are preserved.
+
 
 ## Owner request and sample decision
 

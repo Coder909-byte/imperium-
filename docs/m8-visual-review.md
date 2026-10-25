@@ -1,5 +1,9 @@
 # Gallia visual work — 2026-10-23
 
+**Current reconciliation, 2026-10-23:** Current Gallia visuals/narration are owner-accepted and M8 is complete for that composition. The omissions/draft flags below remain real and are retained in [Gallia status](regions/gallia-status.md); they do not schedule another cosmetic pass. Generic launch checks are tracked in [M11](m11-launch-scope.md).
+
+**Historical evidence follows.** Earlier “M8 open/unfinished” and old payload/readiness statements describe their checkpoint. They do not override current acceptance/status, widen asset permissions, or certify unperformed checks. Original decisions/results are preserved.
+
 M8 remains open. This is a visual implementation/review record, not final historical or art acceptance. Existing uncommitted audio work, prose and citations were preserved. No commit, push or deployment is authorized.
 
 ## Reproduced defect

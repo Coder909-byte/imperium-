@@ -26,7 +26,7 @@ export function Shell({ children, account = false, authArt = false, backdrop }: 
         </Link>
         <nav aria-label="Main navigation" className="flex items-center gap-6 sm:gap-9">
           <Link href="/atlas" prefetch={false}>The atlas</Link>
-          <Link href="/scene/gallia" prefetch={false}>Gallia</Link>
+          <Link href="/atlas#stories" prefetch={false}>Stories</Link>
           {account ? <Link href="/profile">Account</Link> : <Link href="/login">Log in <span aria-hidden="true">↗</span></Link>}
         </nav>
       </header>
@@ -40,7 +40,7 @@ export function Shell({ children, account = false, authArt = false, backdrop }: 
           </> : !account ? <>
             <p>Thomas Cole, <cite>The Consummation of Empire</cite>, 1836 · New-York Historical Society.</p>
             <p>An imagined classical city. <a href="https://commons.wikimedia.org/wiki/File:Cole_Thomas_The_Consummation_The_Course_of_the_Empire_1836.jpg">Public-domain reproduction</a>.</p>
-          </> : <p>The atlas and Gallia remain open without an account.</p>}
+          </> : <p>The atlas and scenes remain open without an account.</p>}
           <p className="mt-1">Cinzel by Natanael Gama · <a href="https://github.com/google/fonts/blob/main/ofl/cinzel/OFL.txt">SIL Open Font License</a></p>
         </div>
       </footer>

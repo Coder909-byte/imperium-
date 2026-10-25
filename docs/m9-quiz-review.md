@@ -1,5 +1,7 @@
 # M9 — Gallia quiz and progression
 
+**Current reconciliation, 2026-10-23:** M9 implementation and the working Gallia quiz are owner-accepted and complete. Gallia visuals/narration and the redesigned shell/relief atlas are also accepted; M10 local audit is complete. External launch checks belong to [M11](m11-launch-scope.md), and specific Gallia history/representation questions to [its region status](regions/gallia-status.md). The owner's next priority is region two. Local DB test/setup statements below describe those runs; this reconciliation does not inspect or infer the current shared target's state.
+
 Owner acceptance, 2026-10-23: the owner tested the Gallia quiz and is satisfied with its current behaviour. M9 is owner-accepted. Shared-Neon migration/seed, live Google-provider and outstanding real-device/Safari checks remain unresolved; no technical pass is inferred from acceptance. M10 audio audit is separately authorized; M11 has not started.
 
 For a manual walkthrough with expected XP totals and the isolated automated test command, see [Testing M9 locally](m9-testing.md).
@@ -74,7 +76,7 @@ No live Google-provider round trip, shared-Neon migration, physical device, Safa
 
 ## Remaining decisions and work
 
-No XP/rank policy decision is pending: the owner's approved provisional configuration is implemented. Shared deployment still needs explicit permission to apply migration 0002 and seed the five questions, followed by checks in that approved environment. Until then, the local isolated production preview is the review target. The subsequent M10 local audio audit is recorded in `docs/m10-audio-review.md`; M11 has not started. M8's outstanding historical/art/listening/device checks above remain open.
+No XP/rank policy decision is pending: the owner's approved provisional configuration is implemented. Shared deployment still needs explicit permission to apply migration 0002 and seed the five questions, followed by checks in that approved environment. The isolated production preview was the review target for these checks. The subsequent M10 local audit is complete. M11 is partially delivered; its release remainder is deferred. Current shared target state is unverified in this reconciliation. See the current banner above rather than treating the older M8 gate list as a reason to reopen accepted Gallia.
 
 Local verification commands (with the isolated environment above):
 
