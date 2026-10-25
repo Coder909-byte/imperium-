@@ -1,6 +1,6 @@
-# Italia — full prose for approval
+# Italia — approved prose record
 
-**Draft 1, 2026-10-25.** Episode and six-beat outline approved by the owner. Full prose is awaiting approval; no Italia narration or quiz has been produced. The bodies below are the exact current content, intended to be read verbatim by the established George voice only after approval.
+**Draft 1 approved editorially, 2026-10-25.** The owner approves these six headlines/bodies and citations for narration and quiz production. This is not independent historical verification. The prose and linked citation entries remain verbatim in runtime content; obsolete temporary-art status notes below are preserved as the approval-stage snapshot. Current interpretation/provenance notes and production evidence are in [Italia status](italia-status.md) and [production review](italia-production-review.md). Six George recordings and five questions have now been produced from this wording.
 
 All beats display **January 49 BC** in the contemporary Roman calendar. The episode ends with the departure of Pompey and the consuls from Rome, not the later evacuation of Italy. Messages/advances overlap; beat 5 recalls pre-crossing proposals rather than moving the later Capua reply before this endpoint.
 
@@ -88,4 +88,4 @@ Research checked 2026-10-25: Caesar I.1–14; Cicero, Atticus VII.9–12; Plutar
 
 Sources use the existing drawer’s label/link shape; there is no added engine citation subsystem. [Content JSON](../../content/regions/italia.json) is the runtime text authority. If approved wording changes, regenerate this review and the eventual transcript hashes/recordings, then review affected questions.
 
-Approval sought: **these six headlines, bodies and source notes**, before five-question authoring and George narration production. Artwork has a separate [batched scope proposal](italia-artwork-proposal.md).
+Approval recorded: **these six headlines, bodies and citation entries**. Frozen machine-readable snapshot: [approved prose](../reviews/italia-approved-prose.json). The separately approved [artwork batch](italia-artwork-proposal.md) retains its narrow interpretive limits.

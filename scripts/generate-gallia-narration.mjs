@@ -1,7 +1,7 @@
 // Offline preparation only. Requires the Apache-2.0 kokoro-js 1.2.1 npm
 // archive extracted outside the repo. No TTS code/weights ship to users.
 // Run only after voice/sample approval:
-// node scripts/generate-gallia-narration.mjs <package-dir> <temporary-output-dir>
+// node scripts/generate-gallia-narration.mjs <package-dir> <temporary-output-dir> [approved-region-id]
 import http from 'node:http';
 import { createHash } from 'node:crypto';
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
@@ -20,7 +20,9 @@ if (pkg.name !== 'kokoro-js' || pkg.version !== '1.2.1' || pkg.license !== 'Apac
 const voiceBytes = readFileSync(join(packageDirectory, 'voices', `${voice}.bin`));
 const voiceHash = hash(voiceBytes);
 if (voiceHash !== 'c4b235a4c1f2cd3b939fed08b899ce9385638b763f7b73a59616c4fc9bd6c9bc') throw new Error('Stock voice differs from the reviewed sample');
-const region = JSON.parse(readFileSync('content/regions/gallia.json', 'utf8'));
+const regionId = process.argv[4] ?? 'gallia';
+if (!/^[a-z0-9]+(?:[-_][a-z0-9]+)*$/.test(regionId)) throw new Error('Use a safe approved region ID');
+const region = JSON.parse(readFileSync(`content/regions/${regionId}.json`, 'utf8'));
 mkdirSync(outputDirectory, { recursive: true });
 
 const server = http.createServer((request, response) => {

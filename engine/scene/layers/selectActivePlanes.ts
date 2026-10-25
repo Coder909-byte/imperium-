@@ -4,7 +4,7 @@
 // plane simply never exists to be toggled by a beat's visibleLayers
 // (no special-casing needed at the call site).
 import type { DeviceTier } from "../deviceTier";
-import type { ScenePlane } from "../types";
+import type { SceneBeat, ScenePlane } from "../types";
 
 const LOW_TIER_MAX_PLANES = 4;
 
@@ -52,4 +52,18 @@ export function selectPlanesForTier(planes: readonly ScenePlane[], tier: DeviceT
     picked.add(Math.round((i * lastIndex) / (LOW_TIER_MAX_PLANES - 1)));
   }
   return sorted.filter((_, index) => picked.has(index));
+}
+
+/** Preserve the established selection when it covers the episode. Distinct
+ * settings need a cached pool spanning beats; the visible set is capped below. */
+export function selectScenePlanesForTier(planes: readonly ScenePlane[], tier: DeviceTier, beats: readonly Pick<SceneBeat, "visibleLayers">[]): ScenePlane[] {
+  const selected = selectPlanesForTier(planes, tier);
+  if (tier === "high" || beats.every(beat => !beat.visibleLayers.length || selected.some(plane => beat.visibleLayers.includes(plane.id)))) return selected;
+  const pool = new Map<string, ScenePlane>();
+  for (const beat of beats) for (const plane of selectPlanesForTier(planes.filter(plane => beat.visibleLayers.includes(plane.id)), tier)) pool.set(plane.id, plane);
+  return [...pool.values()].sort((a, b) => a.depth - b.depth);
+}
+
+export function selectVisiblePlanes(planes: readonly ScenePlane[], tier: DeviceTier, visibleLayers: readonly string[]): ScenePlane[] {
+  return selectPlanesForTier(planes.filter(plane => visibleLayers.includes(plane.id)), tier);
 }

@@ -1,0 +1,19 @@
+{
+  "source": "public/assets/gallia/audio/wind-plains.wav",
+  "sourceSha256": "b9d942447175b4b7978e2396ae493d907177005a23fb27e88c855a0719cfcb2b",
+  "output": "/private/tmp/imperium-italia-wind.mp3",
+  "bytes": 59047,
+  "sha256": "2c995fafc352fa0dc109fedee828c2f4fa6a8338c0bf9bc77e5d052eab88334b",
+  "rate": 22050,
+  "decodedRate": 22050,
+  "durationSeconds": 12.0,
+  "decodedDurationSeconds": 12.0,
+  "sourceRms": 0.031622770930116346,
+  "decodedRms": 0.03162884677071259,
+  "decodedPeak": 0.2220073640346527,
+  "sf": "0.13.1",
+  "libsndfile": "1.2.2",
+  "compressionLevel": 0.5,
+  "codec": "MP3 VBR mono 22050Hz",
+  "notes": "Same prepared CC0 loop, no time/gain/sample edits; Italia-only encoding, source Gallia file unchanged. Numerical checks do not establish subjective listening acceptance."
+}

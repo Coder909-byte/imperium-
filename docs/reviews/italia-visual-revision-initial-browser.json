@@ -1,0 +1,331 @@
+{
+  "config": {
+    "argv": [
+      "/Users/kokila/.nvm/versions/node/v24.14.1/bin/node",
+      "/Users/kokila/Projects/imperium/node_modules/.bin/playwright",
+      "test",
+      "e2e/italia.spec.ts",
+      "e2e/gallia.spec.ts",
+      "--grep-invert",
+      "approved plane and audio",
+      "--workers=1",
+      "--reporter=json"
+    ],
+    "configFile": "/Users/kokila/Projects/imperium/playwright.config.ts",
+    "rootDir": "/Users/kokila/Projects/imperium/e2e",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/kokila/Projects/imperium/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/Users/kokila/Projects/imperium/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "json"
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.62.1",
+    "workers": 1,
+    "webServer": {
+      "command": "npm run dev -- --hostname 127.0.0.1 --port 3006",
+      "url": "http://127.0.0.1:3006",
+      "reuseExistingServer": true,
+      "timeout": 60000
+    }
+  },
+  "suites": [
+    {
+      "title": "gallia.spec.ts",
+      "file": "gallia.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "Gallia's six beats retain their prose and per-beat sources",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 15757,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveCount\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  locator('canvas')\nExpected: \u001b[32m1\u001b[39m\nReceived: \u001b[31m0\u001b[39m\nTimeout:  5000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveCount\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('canvas')\u001b[22m\n\u001b[2m    8 \u00d7 locator resolved to 0 elements\u001b[22m\n\u001b[2m      - unexpected value \"0\"\u001b[22m\n",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveCount\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  locator('canvas')\nExpected: \u001b[32m1\u001b[39m\nReceived: \u001b[31m0\u001b[39m\nTimeout:  5000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveCount\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('canvas')\u001b[22m\n\u001b[2m    8 \u00d7 locator resolved to 0 elements\u001b[22m\n\u001b[2m      - unexpected value \"0\"\u001b[22m\n\n    at /Users/kokila/Projects/imperium/e2e/gallia.spec.ts:11:40",
+                    "location": {
+                      "file": "/Users/kokila/Projects/imperium/e2e/gallia.spec.ts",
+                      "column": 40,
+                      "line": 11
+                    },
+                    "snippet": "   9 |   page.on(\"pageerror\", (error) => errors.push(error.message));\n  10 |   await page.goto(\"/scene/gallia\");\n> 11 |   await expect(page.locator(\"canvas\")).toHaveCount(1);\n     |                                        ^\n  12 |   for (const [index, beat] of gallia.beats.entries()) {\n  13 |     await page.getByRole(\"tab\", { name: `Go to beat ${index + 1}: ${beat.headline}`, exact: true }).click();\n  14 |     await expect(page.getByText(beat.body, { exact: true })).toBeVisible();"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/kokila/Projects/imperium/e2e/gallia.spec.ts",
+                        "column": 40,
+                        "line": 11
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveCount\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  locator('canvas')\nExpected: \u001b[32m1\u001b[39m\nReceived: \u001b[31m0\u001b[39m\nTimeout:  5000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveCount\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('canvas')\u001b[22m\n\u001b[2m    8 \u00d7 locator resolved to 0 elements\u001b[22m\n\u001b[2m      - unexpected value \"0\"\u001b[22m\n\n\n   9 |   page.on(\"pageerror\", (error) => errors.push(error.message));\n  10 |   await page.goto(\"/scene/gallia\");\n> 11 |   await expect(page.locator(\"canvas\")).toHaveCount(1);\n     |                                        ^\n  12 |   for (const [index, beat] of gallia.beats.entries()) {\n  13 |     await page.getByRole(\"tab\", { name: `Go to beat ${index + 1}: ${beat.headline}`, exact: true }).click();\n  14 |     await expect(page.getByText(beat.body, { exact: true })).toBeVisible();\n    at /Users/kokila/Projects/imperium/e2e/gallia.spec.ts:11:40"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-25T11:06:38.468Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/kokila/Projects/imperium/test-results/gallia-Gallia-s-six-beats--c016d--prose-and-per-beat-sources-chromium/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/kokila/Projects/imperium/e2e/gallia.spec.ts",
+                    "column": 40,
+                    "line": 11
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "a58236e933869715f270-330ef3b57ec4a6c5d8c6",
+          "file": "gallia.spec.ts",
+          "line": 6,
+          "column": 5
+        },
+        {
+          "title": "narrow reduced-motion playback keeps all prose, sources and controls reachable; mute survives navigation",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 8648,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-25T11:07:15.440Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "a58236e933869715f270-100b9431cd9367ec3064",
+          "file": "gallia.spec.ts",
+          "line": 71,
+          "column": 5
+        }
+      ]
+    },
+    {
+      "title": "italia.spec.ts",
+      "file": "italia.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "Italia is discoverable from the earliest era with its actual episode date",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2766,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-25T11:07:26.497Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "7955125d5c08d0a7d704-d5af967f30d26763897e",
+          "file": "italia.spec.ts",
+          "line": 15,
+          "column": 5
+        },
+        {
+          "title": "all six Italia beats and bias/uncertainty notes remain readable at 1440px",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 16147,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-25T11:07:29.321Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "7955125d5c08d0a7d704-5421f2c24fde2f44a230",
+          "file": "italia.spec.ts",
+          "line": 27,
+          "column": 7
+        },
+        {
+          "title": "all six Italia beats and bias/uncertainty notes remain readable at 390px",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4877,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-25T11:07:45.510Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "7955125d5c08d0a7d704-0822ad4fe4de8dc90669",
+          "file": "italia.spec.ts",
+          "line": 27,
+          "column": 7
+        },
+        {
+          "title": "navigation between campaigns preserves Gallia and offers the authored Italia quiz",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 8645,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-25T11:07:50.406Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "7955125d5c08d0a7d704-e9f1b0eb6b7376008f21",
+          "file": "italia.spec.ts",
+          "line": 59,
+          "column": 5
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-25T11:06:18.685Z",
+    "duration": 101608.617,
+    "expected": 5,
+    "skipped": 0,
+    "unexpected": 1,
+    "flaky": 0
+  }
+}

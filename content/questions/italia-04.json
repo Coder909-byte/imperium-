@@ -1,0 +1,46 @@
+{
+  "id": "italia-04",
+  "regionId": "italia",
+  "beatIds": [
+    "ariminum"
+  ],
+  "era": "January 49 BC",
+  "difficulty": 1,
+  "prompt": "What result at Ariminum is shared by the scene’s differing accounts?",
+  "options": [
+    {
+      "id": "italia-04-a",
+      "text": "The town is destroyed after a long siege"
+    },
+    {
+      "id": "italia-04-b",
+      "text": "Caesar withdraws without entering Italy"
+    },
+    {
+      "id": "italia-04-c",
+      "text": "Caesar occupies a town beyond his province"
+    },
+    {
+      "id": "italia-04-d",
+      "text": "The consuls crown Caesar emperor in the town"
+    }
+  ],
+  "correctOptionId": "italia-04-c",
+  "explanation": "Caesar and Plutarch differ over the sequence around Ariminum. The scene’s shared result is occupation of a town beyond Caesar’s province, not a proven minute-by-minute reconstruction.",
+  "feedbackByOptionId": {
+    "italia-04-a": "The result is occupation beyond Caesar’s province, not a narrated siege. The siege equipment can stay packed.",
+    "italia-04-b": "Caesar occupies Ariminum beyond his province. This advance has gone rather poorly as a withdrawal.",
+    "italia-04-c": "The accounts differ over sequence; occupation beyond his province is the result. The timetable remains less cooperative.",
+    "italia-04-d": "The result is occupation beyond Caesar’s province. No imperial coronation is included in the municipal business."
+  },
+  "sources": [
+    {
+      "label": "Caesar, Civil War I.8 — arrival at Ariminum and meeting the tribunes. Caesar narrates the advance with no Rubicon set piece.",
+      "url": "https://penelope.uchicago.edu/Thayer/E/Roman/Texts/Caesar/Civil_Wars/1A*.html#8"
+    },
+    {
+      "label": "Plutarch, Life of Caesar 32.3–8 — the advance party and later arrival. This later sequence should not be spliced into Caesar's as a proven minute-by-minute reconstruction.",
+      "url": "https://penelope.uchicago.edu/Thayer/E/Roman/Texts/Plutarch/Lives/Caesar*.html#32"
+    }
+  ]
+}

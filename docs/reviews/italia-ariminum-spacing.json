@@ -1,0 +1,41 @@
+{
+  "scope": "Ariminum group separation through authored camera motion; desktop Chrome responsive view, no physical-device claim",
+  "captures": [
+    {
+      "width": 1440,
+      "phase": "entry",
+      "backdrop": "town",
+      "overflow": false
+    },
+    {
+      "width": 1440,
+      "phase": "middle",
+      "backdrop": "town",
+      "overflow": false
+    },
+    {
+      "width": 1440,
+      "phase": "settled",
+      "backdrop": "town",
+      "overflow": false
+    },
+    {
+      "width": 390,
+      "phase": "entry",
+      "backdrop": "town",
+      "overflow": false
+    },
+    {
+      "width": 390,
+      "phase": "middle",
+      "backdrop": "town",
+      "overflow": false
+    },
+    {
+      "width": 390,
+      "phase": "settled",
+      "backdrop": "town",
+      "overflow": false
+    }
+  ]
+}

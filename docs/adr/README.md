@@ -23,3 +23,4 @@ ADRs record decisions and their context at the time. Preserve their original con
 | [017](017-relief-atlas-workspace.md) | Relief/viewport/era-card redesign; delivered and owner-accepted. |
 | [018](018-quiz-grading-and-progression.md) | Server grading, approved XP/ranks/UTC policy and untrusted guest migration. |
 | [019](019-milestone-acceptance-and-region-workstreams.md) | Stable milestone history, explicit acceptance/evidence status and region-two priority before M11. |
+| [020](020-distinct-beat-settings-on-low-tier.md) | Preserve distinct beat settings on low tier while retaining Gallia’s existing selection and a four-rendered-plane limit. |

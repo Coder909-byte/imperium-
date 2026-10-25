@@ -7,12 +7,15 @@ import { renderedTextContrast } from './rendered-text-contrast.mjs';
 import { assertIsolatedTestDatabase } from '../lib/testDatabase.ts';
 
 assertIsolatedTestDatabase(process.env.DATABASE_URL);
-const [base = 'http://127.0.0.1:3006', output = '/tmp/imperium-m9-final'] = process.argv.slice(2);
+const [base = 'http://127.0.0.1:3006', output = '/tmp/imperium-m9-final', regionId = 'gallia'] = process.argv.slice(2);
 const origin = new URL(base).origin;
 if (origin !== new URL(process.env.BETTER_AUTH_URL).origin) throw new Error('Audit origin must match the isolated server origin');
 await fs.mkdir(output, { recursive: true });
-const bank = await Promise.all((await fs.readdir('content/questions')).filter(file => file.endsWith('.json')).sort().map(async file => JSON.parse(await fs.readFile(`content/questions/${file}`, 'utf8'))));
-const privateText = bank.flatMap(question => [question.explanation, ...Object.values(question.feedbackByOptionId)]);
+const allQuestions = await Promise.all((await fs.readdir('content/questions')).filter(file => file.endsWith('.json')).sort().map(async file => JSON.parse(await fs.readFile(`content/questions/${file}`, 'utf8'))));
+if (!/^[a-z-]+$/.test(regionId)) throw new Error('Invalid region');
+const bank = allQuestions.filter(question => question.regionId === regionId);
+if (bank.length !== 5) throw new Error('Expected five questions');
+const privateText = allQuestions.flatMap(question => [question.explanation, ...Object.values(question.feedbackByOptionId)]);
 const chunks = [];
 async function inspectChunks(dir) {
   for (const entry of await fs.readdir(dir, { withFileTypes: true })) {
@@ -52,7 +55,7 @@ for (const width of [1440, 390]) {
     const item = { width, state, contrast, overflow: await page.evaluate(() => document.documentElement.scrollWidth > innerWidth), axe, errors: [...errors], failedResponses: [...failedResponses] };
     pages.push(item); console.log(JSON.stringify(item));
   }
-  await page.goto(`${base}/quiz/gallia`);
+  await page.goto(`${base}/quiz/${regionId}`);
   await page.getByRole('button', { name: 'Start quiz', exact: true }).waitFor();
   await page.waitForFunction(() => ![...document.querySelectorAll('button')].find(button => button.textContent === 'Start quiz')?.disabled);
   await capture('intro');
@@ -65,7 +68,7 @@ for (const width of [1440, 390]) {
   await capture('question');
   for (let index = 0; index < bank.length; index++) {
     const question = bank[index];
-    const id = index === 0 ? question.options[0].id : question.correctOptionId;
+    const id = index === 0 ? question.options.find(option => option.id !== question.correctOptionId).id : question.correctOptionId;
     await page.getByRole('radio', { name: question.options.find(option => option.id === id).text, exact: true }).check();
     await page.getByRole('button', { name: 'Submit answer', exact: true }).click();
     await page.getByRole('region', { name: 'Answer feedback' }).waitFor();
@@ -77,10 +80,11 @@ for (const width of [1440, 390]) {
   const signup = await page.request.post(`${base}/api/auth/sign-up/email`, { headers: { Origin: origin }, data: { email: `audit-${crypto.randomUUID()}@example.com`, password: 'LocalQuizPass23', name: 'Local audit reader' } });
   if (signup.status() !== 200) throw new Error(`Local audit signup failed: ${signup.status()}`);
   await page.goto(`${base}/profile`);
-  await page.getByText('Saved progress verified. 80 new XP imported.', { exact: true }).waitFor();
-  await page.getByRole('definition').filter({ hasText: /^80 XP$/ }).waitFor();
+  const expectedXP = bank.slice(1).reduce((total, question) => total + question.difficulty * 10, 0);
+  await page.getByText(`Saved progress verified. ${expectedXP} new XP imported.`, { exact: true }).waitFor();
+  await page.getByRole('definition').filter({ hasText: new RegExp(`^${expectedXP} XP$`) }).waitFor();
   await capture('profile');
-  await page.goto(`${base}/quiz/gallia`);
+  await page.goto(`${base}/quiz/${regionId}`);
   await page.getByRole('button', { name: 'Retry quiz', exact: true }).click();
   await page.getByRole('radio').first().check();
   syntheticError = true;

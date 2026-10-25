@@ -1,0 +1,43 @@
+{
+  "browserChunksScanned": 51,
+  "privateExplanationFeedbackLeaks": 0,
+  "atlasActualGzipBytes": 144602,
+  "scripts": [
+    {
+      "src": "/_next/static/chunks/11jq0c2_zavac.js",
+      "encoding": "gzip",
+      "bytes": 8504
+    },
+    {
+      "src": "/_next/static/chunks/1mkbuudhndal5.js",
+      "encoding": "gzip",
+      "bytes": 71576
+    },
+    {
+      "src": "/_next/static/chunks/2h8mq2n9nn_uc.js",
+      "encoding": "gzip",
+      "bytes": 42739
+    },
+    {
+      "src": "/_next/static/chunks/turbopack-0tcle8anhm_hs.js",
+      "encoding": "gzip",
+      "bytes": 3848
+    },
+    {
+      "src": "/_next/static/chunks/278axw9oxgjty.js",
+      "encoding": "gzip",
+      "bytes": 5717
+    },
+    {
+      "src": "/_next/static/chunks/0hg3k7un3rsb_.js",
+      "encoding": "gzip",
+      "bytes": 8604
+    },
+    {
+      "src": "/_next/static/chunks/3yfl9fgvivx3-.js",
+      "encoding": "gzip",
+      "bytes": 3614
+    }
+  ],
+  "method": "All current browser JS scanned for both banks; served atlas script tags measured using Accept-Encoding:gzip, noModule excluded."
+}

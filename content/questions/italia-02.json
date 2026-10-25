@@ -1,0 +1,50 @@
+{
+  "id": "italia-02",
+  "regionId": "italia",
+  "beatIds": [
+    "across-the-boundary"
+  ],
+  "era": "January 49 BC",
+  "difficulty": 2,
+  "prompt": "Why does the crossing matter in this episode?",
+  "options": [
+    {
+      "id": "italia-02-a",
+      "text": "It takes Caesar’s troops across a provincial boundary into Italy"
+    },
+    {
+      "id": "italia-02-b",
+      "text": "It gives Caesar an undisputed legal right to rule Rome"
+    },
+    {
+      "id": "italia-02-c",
+      "text": "It ends the civil war before any town is occupied"
+    },
+    {
+      "id": "italia-02-d",
+      "text": "It crosses the frontier of an already established Roman Empire"
+    }
+  ],
+  "correctOptionId": "italia-02-a",
+  "explanation": "The river marks the edge of Caesar’s province. Moving armed troops beyond it carries the political confrontation into Italy; it does not instantly create an empire.",
+  "feedbackByOptionId": {
+    "italia-02-a": "A small river marks a provincial boundary. The political consequences are doing most of the heavy lifting.",
+    "italia-02-b": "The crossing carries troops into Italy; it does not settle their commander’s legal case. Rivers issue no acquittals.",
+    "italia-02-c": "The crossing carries armed conflict into Italy. Ending the war would require rather more than reaching the other bank.",
+    "italia-02-d": "This is a provincial boundary in the Republic. The Empire has arrived early in that answer."
+  },
+  "sources": [
+    {
+      "label": "Plutarch, Life of Caesar 32.5–8 — the boundary, hesitation and dice phrase. A dramatic biography written long after the event, not an eyewitness transcript.",
+      "url": "https://penelope.uchicago.edu/Thayer/E/Roman/Texts/Plutarch/Lives/Caesar*.html#32"
+    },
+    {
+      "label": "Suetonius, Julius 31–33 — another later crossing tradition, including a supernatural sign. The apparition is not treated as a historical event or depicted here.",
+      "url": "https://penelope.uchicago.edu/Thayer/E/Roman/Texts/Suetonius/12Caesars/Julius*.html#31"
+    },
+    {
+      "label": "Elizabeth Rawson, Caesar: Civil War and Dictatorship, public chapter summary — cautions about the crossing's date, river location and displaced Roman calendar. Full paid chapter not consulted.",
+      "url": "https://www.cambridge.org/core/books/abs/cambridge-ancient-history/caesar-civil-war-and-dictatorship/C7F8E34AD8D803954A497D4E56707A53"
+    }
+  ]
+}

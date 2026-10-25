@@ -1,11 +1,11 @@
-// Captures the draft composition, not final-art or hardware acceptance.
+// Captures every authored beat; not owner taste or hardware acceptance.
 // Run against the isolated local review server; never submits a quiz.
 import { chromium } from '@playwright/test';
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 
-const base = process.argv[2] ?? 'http://127.0.0.1:3008';
-const out = resolve(process.argv[3] ?? '/tmp/imperium-italia-draft');
+const base = process.argv[2] ?? 'http://localhost:3000';
+const out = resolve(process.argv[3] ?? '/tmp/imperium-italia-review');
 const modes = process.argv[4]?.split(',') ?? ['desktop', 'high', 'low', 'narrow'];
 const region = JSON.parse(readFileSync('content/regions/italia.json', 'utf8'));
 mkdirSync(out, { recursive: true });
@@ -38,7 +38,7 @@ try {
         actors: element.getAttribute('data-active-actors'), ready: element.getAttribute('data-engine-ready'),
         overflow: document.documentElement.scrollWidth > innerWidth,
       }));
-      if (await pip.getAttribute('aria-current') !== 'true' || snapshot.ready !== 'true' || snapshot.overflow) throw new Error(`${mode}: invalid beat ${index + 1} capture`);
+      if (await pip.getAttribute('aria-current') !== 'true' || snapshot.ready !== 'true' || snapshot.overflow || !snapshot.planes?.split(',').includes(beat.visibleLayers[0])) throw new Error(`${mode}: invalid or missing backdrop in beat ${index + 1} capture`);
       beats.push({ id: beat.id, ...snapshot });
     }
     if (mode === 'desktop') {
@@ -46,11 +46,11 @@ try {
       await page.waitForTimeout(27_000);
       await page.screenshot({ path: `${out}/desktop-beat-3-settled.png`, fullPage: true });
     }
-    if (errors.length || failures.length || assetRequests.length) throw new Error(JSON.stringify({ mode, errors, failures, assetRequests }));
+    if (errors.length || failures.length) throw new Error(JSON.stringify({ mode, errors, failures, assetRequests }));
     report.push({ mode, beats, errors, failures, assetRequests });
     await page.close();
-    console.log(`${mode}: all six draft beats captured`);
+    console.log(`${mode}: all six authored beats captured`);
   }
 } finally { await browser.close(); }
-writeFileSync(`${out}/report.json`, JSON.stringify({ base, draft: true, finalArtAcceptance: false, runs: report }, null, 2) + '\n');
+writeFileSync(`${out}/report.json`, JSON.stringify({ base, productionArt: true, ownerVisualAcceptance: false, runs: report }, null, 2) + '\n');
 console.log(`Saved ${out}`);

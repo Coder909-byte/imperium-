@@ -1,0 +1,59 @@
+{
+  "tool": "Built-in image_gen",
+  "date": "2026-10-25",
+  "scope": "Owner-approved Italia batch only; interpreted/provisional output, not PD/CC0",
+  "entries": [
+    {
+      "id": "river",
+      "prompt": "Use case: historical-scene. Edit/reference role: the supplied public-domain Daubigny painting is a visual reference for oil paint handling, water reflections and atmosphere only, not an image of the Rubicon. Create a finished, richly painted extra-wide 21:9 cinematic landscape plate for an interactive historical atlas: an interpreted small north-Italian river crossing during Caesar's advance in 49 BC. No exact river location, bridge or season is claimed. Eye-level view from a low pebbled and grassy near bank, a shallow narrow stream winding diagonally from lower right toward center-left distance, muted olive reeds and low trees on the far bank, a walkable gravel shelf and low ford in the middle lower half where separate figures will be placed. Broad quiet river light and real stone/earth textures. Horizon at roughly 38 percent of frame, roomy sky and subtle warm grey daylight; cinematic tonal depth with charcoal green foreground and pale silver-blue water, distinct from Gallia's siege field. Make the center half work as a narrow mobile crop. No people, armies, animals, buildings, banners, fortifications, roads with modern markings, text, frame, labels, logos, watermarks or supernatural imagery. No snow. This is interpreted scenery, not an archaeological reconstruction. High-quality painterly realism, restrained and atmospheric; do not imitate fresco damage or place a museum frame around it. Deliver a full-bleed landscape, ideally 2520 by 1080, with extra painting beyond the central focal area for slow camera movement.",
+      "output": "Generated images are saved to /Users/kokila/.codex/generated_images/01a1691a-b523-7300-bb08-3461196aa0be as /Users/kokila/.codex/generated_images/01a1691a-b523-7300-bb08-3461196aa0be/exec-a6d36622-878b-417f-b9ae-e865bf5c12ba.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link.",
+      "referencedImages": [
+        "content/assets/staging/italia/met-river-source.jpg"
+      ]
+    },
+    {
+      "id": "river_foreground",
+      "prompt": "Use case: background-extraction. Edit target: the supplied interpreted river landscape. Extract ONLY the closest foreground rocks, low grasses and reeds from the bottom left and bottom edge, retaining the same paint handling, colours and exact overall wide 21:9 registration. Everything above these low foreground plants/pebbles, including all sky, far trees, all river water, far bank and the broad central walkable shelf, must be fully transparent. Keep a low irregular alpha silhouette in the bottom fifth at the left and a few pebbles along the bottom; the central 60 percent must stay unobstructed so separate figures can stand at the ford. Do not add people, architecture, text, checkerboard pixels, labels or a frame. Deliver a true transparent PNG at the same panoramic aspect ratio, not a flat colour background. Preserve the original paint texture; this is a compositing cut, not another complete landscape.",
+      "output": "Generated images are saved to /Users/kokila/.codex/generated_images/01a1691a-b523-7300-bb08-3461196aa0be as /Users/kokila/.codex/generated_images/01a1691a-b523-7300-bb08-3461196aa0be/exec-8bb295eb-3fc3-47fd-a33d-a95aa3121aac.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link.",
+      "referencedImages": [
+        "content/assets/staging/italia/river-reference.png"
+      ]
+    },
+    {
+      "id": "caesar",
+      "prompt": "Use case: historical-scene, transparent painted cutout. Create a full-length standing Caesar interpretation for an animated historical atlas set in January 49 BC. Supplied 44 BC coin is only a later politically styled facial reference, NOT a guaranteed likeness; do not copy its laurel crown. One solitary mature Roman commander about fifty, lean lined face, prominent nose, receding short dark greying hair, three-quarter profile looking right. Plain muted red wool cloak over a restrained mail shirt and off-white knee-length tunic, simple belt, bare lower legs, practical leather sandals. No imperial segmented armour, fantasy cuirass, golden regalia, crown or horse. Hands relaxed near belt, balanced standing feet, readable silhouette. Rich painterly oil brushwork, natural grey outdoor light matching the reference river, restrained ochre/red/charcoal. Entire body and feet fully inside frame with generous transparent margin. A connected figure intended for restrained tableau idle motion, not an action pose. Transparent background, no ground shadow, text, coins, scenery or extra people. This is provisional interpreted costume/personnel, not archaeological reconstruction.",
+      "output": "Generated images are saved to /Users/kokila/.codex/generated_images/01a1691a-b523-7300-bb08-3461196aa0be as /Users/kokila/.codex/generated_images/01a1691a-b523-7300-bb08-3461196aa0be/exec-eadc1a10-0b0b-49ba-8ee0-5b74c7939c96.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link.",
+      "referencedImages": [
+        "content/assets/staging/italia/caesar-coin-source.jpg",
+        "content/assets/staging/italia/river-reference.png"
+      ]
+    },
+    {
+      "id": "town",
+      "prompt": "Use case: historical-scene. Create a finished extra-wide 21:9 painted landscape plate for an interactive historical atlas: a restrained late Republican Italian town approach, interpreted Ariminum in 49 BC, NOT a surveyed reconstruction. Supplied Boscoreale museum image is vocabulary for painted plaster/masonry and tile colours only: do not reproduce museum installation, modern windows, mosaic display floor, bedroom or furniture. River image establishes painterly atmospheric quality and grey green light. View from a modest road toward low tile-roofed plaster buildings and a plain unadorned masonry gateway at middle-right, small portico on left, distant trees, broad clear middle foreground road for separately composited figures. Buildings human scale, weathered pale ochre plaster, muted terracotta tiles, winter-neutral grey daylight, quiet urgency, rich oil brushwork and subtle depth. Horizon at 38%, central mobile crop retains road and architecture. No people, statues, burning, smoke, siege machinery, army, triumphal arch, Tiberian bridge, Colosseum, domes, modern monuments, signage or text. Avoid dramatic monumental imperial architecture. Modest road-level camera, not aerial view. Full frame painted art, no border. This is provisional interpreted civic scenery.",
+      "output": "Generated images are saved to /Users/kokila/.codex/generated_images/01a1691a-b523-7300-bb08-3461196aa0be as /Users/kokila/.codex/generated_images/01a1691a-b523-7300-bb08-3461196aa0be/exec-5ccddd2d-5e3b-42d6-944c-7c142f481d8a.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link.",
+      "referencedImages": [
+        "content/assets/staging/italia/met-town-source.jpg",
+        "content/assets/staging/italia/river-reference.png"
+      ]
+    },
+    {
+      "id": "courtyard",
+      "prompt": "Use case: historical-scene. Finished extra-wide 21:9 painterly backdrop for a late Republican political dispatch scene in Italy, January 49 BC. Interpretive provisional architecture, not a surveyed historical room. Reference Boscoreale painted vistas only for period colour/plaster/portico vocabulary; do not copy museum installation/furniture/window. Second river plate for grey green oil paint handling. View from shaded modest portico into a small open courtyard with simple fluted columns, dull red plaster lower walls and pale worn upper walls, terracotta roof edges, cloudy pale sky through open court. At left foreground a modest wooden writing table with one rolled papyrus and a tied bundle of dispatches, no legible writing. Broad clear central/right stone pavement for separate standing civic/commander figures. Quiet tension, grounded human scale, angled recession, cool olive shadows and restrained warm ochres, rich painterly texture. Not palace luxury. Central mobile crop contains open court and edge of table. No people, sculpture, throne, imperial symbols, ornate triumphal arch, glass windows, modern furniture, Colosseum, text, lettering, battle, fire or flags. Full painted rectangular frame with no border.",
+      "output": "Generated images are saved to /Users/kokila/.codex/generated_images/01a1691a-b523-7300-bb08-3461196aa0be as /Users/kokila/.codex/generated_images/01a1691a-b523-7300-bb08-3461196aa0be/exec-3c2e5405-9774-4362-bf03-43c57faa0b1a.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link.",
+      "referencedImages": [
+        "content/assets/staging/italia/met-town-source.jpg",
+        "content/assets/staging/italia/river-reference.png"
+      ]
+    },
+    {
+      "id": "civic",
+      "prompt": "Use case: historical-scene, transparent painted cutout for atlas. Two unnamed late Republican Italian civic men standing in restrained discussion, modest full-length figures, complete feet with generous margin. One middle-aged man in plain off-white wool toga with historically cautious simple draped folds over tunic, no broad imperial ornament; the other a younger messenger in dull ochre knee-length tunic and muted grey-brown wool cloak, holding a tied small dispatch bundle. No named Pompey/consul portraits. Natural distinct faces, calm concerned posture, three-quarter view turned slightly left. Connected small group suitable for subtle tableau idle motion, no walking claim. Supplied Roman fresco is reference for painted drapery folds/palette only: DO NOT copy royal female jewellery, headdress, kithara, throne or exact elite costume. Supplied river is light/style reference: rich restrained oil brushwork, olive grey light, softly modelled forms. No sword, shield, armour, crowns, large gestures, text, scenery, ground, cast shadow or extra figures. Transparent background. Interpreted provisional clothing, not verified reconstruction.",
+      "output": "Generated images are saved to /Users/kokila/.codex/generated_images/01a1691a-b523-7300-bb08-3461196aa0be as /Users/kokila/.codex/generated_images/01a1691a-b523-7300-bb08-3461196aa0be/exec-5a2801e1-79b4-40a2-b163-db83098f66f3.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link.",
+      "referencedImages": [
+        "content/assets/staging/italia/met-civic-source.jpg",
+        "content/assets/staging/italia/river-reference.png"
+      ]
+    }
+  ]
+}

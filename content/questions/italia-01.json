@@ -1,0 +1,46 @@
+{
+  "id": "italia-01",
+  "regionId": "italia",
+  "beatIds": [
+    "the-army-he-keeps"
+  ],
+  "era": "January 49 BC",
+  "difficulty": 1,
+  "prompt": "In Caesar's account, what does he ask the Thirteenth Legion to defend?",
+  "options": [
+    {
+      "id": "italia-01-a",
+      "text": "His honour and the rights of the tribunes"
+    },
+    {
+      "id": "italia-01-b",
+      "text": "A new imperial throne at Rome"
+    },
+    {
+      "id": "italia-01-c",
+      "text": "A promise to abandon all political office"
+    },
+    {
+      "id": "italia-01-d",
+      "text": "The right to burn Ariminum"
+    }
+  ],
+  "correctOptionId": "italia-01-a",
+  "explanation": "Caesar presents the appeal as a defence of his honour and the tribunes' rights. That justification belongs to his account, not an impartial verdict.",
+  "feedbackByOptionId": {
+    "italia-01-a": "Caesar invokes honour and the tribunes’ rights. A civil war arrives with its own legal brief.",
+    "italia-01-b": "Caesar invokes honour and the tribunes’ rights, not an imperial throne. The monarchy is getting ahead of the paperwork.",
+    "italia-01-c": "His appeal concerns honour and the tribunes’ rights. Retirement is conspicuously absent from Caesar’s account.",
+    "italia-01-d": "He invokes honour and the tribunes’ rights. Burning Ariminum is not part of this appeal."
+  },
+  "sources": [
+    {
+      "label": "Caesar, Civil War I.7–8 — the Thirteenth's response and the summons to other legions. The speech and unanimous support come through Caesar's own presentation of events.",
+      "url": "https://penelope.uchicago.edu/Thayer/E/Roman/Texts/Caesar/Civil_Wars/1A*.html#7"
+    },
+    {
+      "label": "Suetonius, Julius 33 — a later version places the troop address after the crossing. Accounts differ over sequence and setting; this beat does not settle the exact meeting place.",
+      "url": "https://penelope.uchicago.edu/Thayer/E/Roman/Texts/Suetonius/12Caesars/Julius*.html#33"
+    }
+  ]
+}

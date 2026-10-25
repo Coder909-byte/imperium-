@@ -38,7 +38,7 @@ export default function Home() {
             <p><span className="shell-eyebrow block mb-1">Available flagship</span><span className="text-xl">Gallia · The siege of Alesia</span></p>
             <p className="text-sm">52 BC <span aria-hidden="true" className="mx-3">/</span> Six narrated scenes <span aria-hidden="true" className="mx-3">/</span> <Link href="/scene/gallia" prefetch={false} className="shell-text-link">Enter the story →</Link></p>
           </div>
-          <p className="shell-width pb-5 text-sm leading-relaxed">In progress: Italia · The Rubicon crisis, January 49 BC. <Link href="/scene/italia" prefetch={false} className="shell-text-link">Read the draft preview →</Link> Temporary artwork; narration and quiz pending.</p>
+          <p className="shell-width pb-5 text-sm leading-relaxed">Italia · The Rubicon crisis, January 49 BC. <Link href="/scene/italia" prefetch={false} className="shell-text-link">Enter the story →</Link> Six narrated beats and a five-question quiz.</p>
         </section>
         <section className="shell-width journey-section" aria-labelledby="journey-title">
           <div className="journey-heading flex items-start justify-between gap-8">
@@ -46,7 +46,7 @@ export default function Home() {
             <Compass className="journey-compass h-24 w-24 shrink-0" />
           </div>
           <ol className="journey-steps mt-10 grid gap-8 md:grid-cols-3">
-            <li><span className="step-number">I</span><h3>Find a place.</h3><p>Move through four eras on the atlas. Explore Gallia, read Italia’s draft preview or find a province marked coming soon.</p><span className="feature-status">Atlas available</span></li>
+            <li><span className="step-number">I</span><h3>Find a place.</h3><p>Move through four eras on the atlas. Explore Gallia or Italia, or find a province marked coming soon.</p><span className="feature-status">Atlas available</span></li>
             <li><span className="step-number">II</span><h3>Follow the story.</h3><p>Watch Alesia unfold in six painted scenes. Listen to the narration, read at your own pace and open the sources.</p><span className="feature-status">Gallia available</span></li>
             <li><span className="step-number">III</span><h3>Test what stays.</h3><p>Five questions bring you back to the details that matter. Gallia’s quiz is available, with explanations, XP and saved account progress.</p><span className="feature-status">Gallia quiz available</span></li>
           </ol>

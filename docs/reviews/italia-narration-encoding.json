@@ -1,0 +1,62 @@
+{
+  "soundfile": "0.13.1",
+  "libsndfile": "1.2.2",
+  "codec": "MP3 VBR mono 24000Hz",
+  "compressionLevel": 0.5,
+  "recordings": [
+    {
+      "id": "an-order-from-rome",
+      "bytes": 182400,
+      "sha256": "8f922ab179dd7c54b32d547484441d0a5019c9c172565afc606891d070c358e6",
+      "durationMs": 35575,
+      "gain": 1.437221078812423,
+      "sourcePeak": 0.60986328125,
+      "sourceRms": 0.08349446147780974
+    },
+    {
+      "id": "the-army-he-keeps",
+      "bytes": 171744,
+      "sha256": "b37d079f2b4389c95617f2dd63a1b1f89816fd0ab90cbff1f725fc5ff900c8a8",
+      "durationMs": 32950,
+      "gain": 1.4463889261517968,
+      "sourcePeak": 0.5950927734375,
+      "sourceRms": 0.08296523696379997
+    },
+    {
+      "id": "across-the-boundary",
+      "bytes": 193704,
+      "sha256": "2e325e6bfff523a970708f472d82840ebc7fe9d17f81d2c6cde20e3235c86c2f",
+      "durationMs": 37750,
+      "gain": 1.4516696812879217,
+      "sourcePeak": 0.542327880859375,
+      "sourceRms": 0.08266343338763951
+    },
+    {
+      "id": "ariminum",
+      "bytes": 178992,
+      "sha256": "4e6f9c47313b709131bc8e44cdce97613c5aba78a9a621464c3cc5e3e3ba42f3",
+      "durationMs": 34125,
+      "gain": 1.4393229714447404,
+      "sourcePeak": 0.581634521484375,
+      "sourceRms": 0.08337253165601069
+    },
+    {
+      "id": "terms-and-marching-orders",
+      "bytes": 183000,
+      "sha256": "6f4359c12d1deddd4e01ee54d93e32ffcdd53f5a6030828c7cac7e216c02a3d9",
+      "durationMs": 34075,
+      "gain": 1.4730939236698664,
+      "sourcePeak": 0.523590087890625,
+      "sourceRms": 0.08146120085883476
+    },
+    {
+      "id": "rome-empties",
+      "bytes": 188976,
+      "sha256": "0c1620452e5c6012fd8d66c3435c14dd99253eedca3c03a86be47c03856cdecf",
+      "durationMs": 36775,
+      "gain": 1.4477078276571231,
+      "sourcePeak": 0.58123779296875,
+      "sourceRms": 0.0828896533592695
+    }
+  ]
+}

@@ -1,10 +1,12 @@
 # Italia — one batched artwork/use-scope proposal
 
-**Awaiting owner decision, 2026-10-25.** Episode/outline approval authorizes this brief and temporary composition, not generated final scenery. No new image/audio file, source download or manifest approval has been added. The current route uses only procedural layout placeholders; Gallia art/audio are unchanged. See [the prose](italia-prose-review.md) and [region status](italia-status.md).
+**IT-A1–A5 owner-approved, 2026-10-25.** The table below preserves the proposed scope and historical cautions. The owner separately approved the six-beat prose and authorized artwork, five questions and six George recordings. Production now replaces the procedural layouts with actual painted assets. Approvals cover Italia only; generated output is not PD/CC0 and provisional representation flags remain. See [production evidence](italia-production-review.md) and [current status](italia-status.md).
+
+**Production source substitution:** the Tübingen ID1578 image endpoint repeatedly returned HTTP 503; its pixels were not used. The commander instead uses the specific [ANS 1937.158.290 photograph on Commons](https://commons.wikimedia.org/wiki/File:Denarius_portrait_of_Julius_Caesar.jpg), explicitly CC0 on that file page, with author/photographer, URL/hash and rights statement registered before use. It too dates to 44 BC and supplies a limited portrait reference, not a guaranteed 49 BC likeness. This stays within the approved standing-commander scope. The Met river, cubiculum and Room H images were downloaded from the exact institution endpoints and visually inspected. The later togatus image was not downloaded or used.
 
 ## Proposed batch
 
-Approve or amend **IT-A1 through IT-A5 together**. This would authorize source retrieval/manifest registration and AI-assisted preparation of these specific Italia drafts, followed by rendered review. It would not mark them historically final, make generated output PD/CC0, approve a new tool subscription, or extend to other regions. Follow the existing [art pipeline](../art-pipeline.md) and scoped provenance model in ADRs 013/014.
+Historical proposal, now approved: **IT-A1 through IT-A5 together** authorized source retrieval/manifest registration and AI-assisted preparation of these specific Italia drafts, followed by rendered review. It would not mark them historically final, make generated output PD/CC0, approve a new tool subscription, or extend to other regions. Follow the existing [art pipeline](../art-pipeline.md) and scoped provenance model in ADRs 013/014.
 
 | ID | Deliverable and use | Verified source rights / historical limit | Requested AI-assistance scope |
 |---|---|---|---|
@@ -37,4 +39,4 @@ This leaves **102,196 bytes** under the unchanged strict 2,621,440-byte ceiling.
 
 The owner authorizes five-question production and **the established George voice/pipeline after prose approval**, subject to the existing pinned model/voice/tool grants and transcript provenance. That conditional narration authorization is recorded; no new voice-choice approval is requested here. Every new recording still needs its own manifest/transcript/output record. This artwork batch does not approve the prose or certify future generated recordings.
 
-Italia remains **in progress** until the approved prose, approved actual art/rigs, six recordings, five-question quiz, integration and every-beat review are delivered. Visible development placeholders are a completion blocker for Italia, even though Gallia's separately accepted composition remains the reference. [The region checklist](../region-completion-checklist.md) governs production and evidence.
+Completion gates (see current status for delivery): Italia remains **in progress** until the approved prose, approved actual art/rigs, six recordings, five-question quiz, integration and every-beat review are delivered. Visible development placeholders are a completion blocker for Italia, even though Gallia's separately accepted composition remains the reference. [The region checklist](../region-completion-checklist.md) governs production and evidence.

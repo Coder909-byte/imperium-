@@ -1,0 +1,50 @@
+{
+  "id": "italia-03",
+  "regionId": "italia",
+  "beatIds": [
+    "across-the-boundary"
+  ],
+  "era": "January 49 BC",
+  "difficulty": 2,
+  "prompt": "How should the dramatic pause and dice phrase be treated?",
+  "options": [
+    {
+      "id": "italia-03-a",
+      "text": "As an eyewitness transcript preserved by Caesar"
+    },
+    {
+      "id": "italia-03-b",
+      "text": "As later biographical traditions, not established words at the crossing"
+    },
+    {
+      "id": "italia-03-c",
+      "text": "As proof of the river’s exact modern identification"
+    },
+    {
+      "id": "italia-03-d",
+      "text": "As an undisputed way to date the crossing to a particular day"
+    }
+  ],
+  "correctOptionId": "italia-03-b",
+  "explanation": "Plutarch and Suetonius supply dramatic crossing traditions much later. Caesar omits that set piece; neither the precise words, day nor modern crossing point is established here.",
+  "feedbackByOptionId": {
+    "italia-03-a": "The dramatic scene comes from later biographies; Caesar omits it. Even a famous quotation needs a source label.",
+    "italia-03-b": "Later biographers supply the pause and dice phrase. The river has acquired better dialogue than a secure transcript.",
+    "italia-03-c": "Later biographies supply the anecdote, not modern coordinates. A dice phrase is a poor survey instrument.",
+    "italia-03-d": "The later anecdote does not establish an undisputed day. Dramatic timing is not the same as a calendar."
+  },
+  "sources": [
+    {
+      "label": "Plutarch, Life of Caesar 32.5–8 — the boundary, hesitation and dice phrase. A dramatic biography written long after the event, not an eyewitness transcript.",
+      "url": "https://penelope.uchicago.edu/Thayer/E/Roman/Texts/Plutarch/Lives/Caesar*.html#32"
+    },
+    {
+      "label": "Suetonius, Julius 31–33 — another later crossing tradition, including a supernatural sign. The apparition is not treated as a historical event or depicted here.",
+      "url": "https://penelope.uchicago.edu/Thayer/E/Roman/Texts/Suetonius/12Caesars/Julius*.html#31"
+    },
+    {
+      "label": "Elizabeth Rawson, Caesar: Civil War and Dictatorship, public chapter summary — cautions about the crossing's date, river location and displaced Roman calendar. Full paid chapter not consulted.",
+      "url": "https://www.cambridge.org/core/books/abs/cambridge-ancient-history/caesar-civil-war-and-dictatorship/C7F8E34AD8D803954A497D4E56707A53"
+    }
+  ]
+}

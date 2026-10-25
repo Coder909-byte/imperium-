@@ -1,0 +1,217 @@
+{
+  "tool": "1.2.1",
+  "model": "onnx-community/Kokoro-82M-v1.0-ONNX",
+  "revision": "1939ad2a8e416c0acfeecc08a694d14ef25f2231",
+  "dtype": "q8",
+  "voice": "bm_george",
+  "voiceHash": "c4b235a4c1f2cd3b939fed08b899ce9385638b763f7b73a59616c4fc9bd6c9bc",
+  "speed": 0.92,
+  "recordings": [
+    {
+      "id": "an-order-from-rome",
+      "transcript": "At Rome, a letter from Caesar is read aloud. His opponents demand that he give up his army by a fixed deadline; Antony and Cassius, the tribunes who oppose the move, leave the city. Caesar waits at Ravenna, still in his province. He will describe the crisis as an attack on lawful rights. His opponents fear a commander who will not let go of his troops. The argument is still being made in the Senate. Armies are already part of it.",
+      "transcriptSha256": "24e17bfd0913f2cf50b49bc91c1981526dbb811be41e06323f26503dd1f92a03",
+      "durationMs": 35575,
+      "chunks": [
+        {
+          "text": "At Rome, a letter from Caesar is read aloud.",
+          "tokens": 48
+        },
+        {
+          "text": "His opponents demand that he give up his army by a fixed deadline; Antony and Cassius, the tribunes who oppose the move, leave the city.",
+          "tokens": 147
+        },
+        {
+          "text": "Caesar waits at Ravenna, still in his province.",
+          "tokens": 51
+        },
+        {
+          "text": "He will describe the crisis as an attack on lawful rights.",
+          "tokens": 63
+        },
+        {
+          "text": "His opponents fear a commander who will not let go of his troops.",
+          "tokens": 73
+        },
+        {
+          "text": "The argument is still being made in the Senate.",
+          "tokens": 51
+        },
+        {
+          "text": "Armies are already part of it.",
+          "tokens": 34
+        }
+      ],
+      "wavSha256": "2ebd7ee451f01471554f8b98bf323419fddca8912947c74c068b91db12f30d8f"
+    },
+    {
+      "id": "the-army-he-keeps",
+      "transcript": "The Thirteenth Legion stands before its commander. These are men who have fought for him in Gaul. In Caesar's account, he calls on them to defend his honour and the rights of the tribunes; they answer that they will. His account turns a political quarrel into another obligation between a general and his soldiers. His other legions have not yet gathered. For this first move, he has the loyalty of the men already here.",
+      "transcriptSha256": "8960d3377a8b65030927180b2fb5dd6d3372b94cb56898d437680dcb9f1ad490",
+      "durationMs": 32950,
+      "chunks": [
+        {
+          "text": "The Thirteenth Legion stands before its commander.",
+          "tokens": 53
+        },
+        {
+          "text": "These are men who have fought for him in Gaul.",
+          "tokens": 48
+        },
+        {
+          "text": "In Caesar's account, he calls on them to defend his honour and the rights of the tribunes; they answer that they will.",
+          "tokens": 116
+        },
+        {
+          "text": "His account turns a political quarrel into another obligation between a general and his soldiers.",
+          "tokens": 108
+        },
+        {
+          "text": "His other legions have not yet gathered.",
+          "tokens": 41
+        },
+        {
+          "text": "For this first move, he has the loyalty of the men already here.",
+          "tokens": 68
+        }
+      ],
+      "wavSha256": "fe0d065f56b7320a964a99ee8b8d9a92ac1c49faea088d47162130e5a8d215eb"
+    },
+    {
+      "id": "across-the-boundary",
+      "transcript": "The river is small. The boundary is not. The Rubicon marks the edge of Caesar's province; taking his troops beyond it carries the quarrel into Italy. Plutarch and Suetonius, writing much later, give him a pause and words about casting a die. Caesar's own account leaves out that scene. We cannot pin the crossing to an undisputed day or a certain point on today's map. What matters now is the movement of armed men across a provincial boundary.",
+      "transcriptSha256": "209ea530c5571095f0dd8824dc65f0e52738fe2f790645ab35dbd2f96719456a",
+      "durationMs": 37750,
+      "chunks": [
+        {
+          "text": "The river is small.",
+          "tokens": 22
+        },
+        {
+          "text": "The boundary is not.",
+          "tokens": 23
+        },
+        {
+          "text": "The Rubicon marks the edge of Caesar's province; taking his troops beyond it carries the quarrel into Italy.",
+          "tokens": 113
+        },
+        {
+          "text": "Plutarch and Suetonius, writing much later, give him a pause and words about casting a die.",
+          "tokens": 102
+        },
+        {
+          "text": "Caesar's own account leaves out that scene.",
+          "tokens": 45
+        },
+        {
+          "text": "We cannot pin the crossing to an undisputed day or a certain point on today's map.",
+          "tokens": 92
+        },
+        {
+          "text": "What matters now is the movement of armed men across a provincial boundary.",
+          "tokens": 79
+        }
+      ],
+      "wavSha256": "7acabeed9430f7051bb50eac4b7315b8641ffa8edecff061e31e3d361c7fa5f3"
+    },
+    {
+      "id": "ariminum",
+      "transcript": "Ariminum, modern Rimini, is the first town in the advance. Caesar says he reaches it with the Thirteenth and meets the fugitive tribunes there. In Plutarch's later telling, an advance party has already been sent to seize it quietly. The accounts do not line up into a single clean scene. The result does: Caesar has occupied a town beyond his province. Rome's dispute is now being enforced inside Italy, by Roman troops.",
+      "transcriptSha256": "dce6c8c0b02aa00364ae158ab3601e059482173ff14c8414fe31a5373f07a586",
+      "durationMs": 34125,
+      "chunks": [
+        {
+          "text": "Ariminum, modern Rimini, is the first town in the advance.",
+          "tokens": 63
+        },
+        {
+          "text": "Caesar says he reaches it with the Thirteenth and meets the fugitive tribunes there.",
+          "tokens": 89
+        },
+        {
+          "text": "In Plutarch's later telling, an advance party has already been sent to seize it quietly.",
+          "tokens": 96
+        },
+        {
+          "text": "The accounts do not line up into a single clean scene.",
+          "tokens": 61
+        },
+        {
+          "text": "The result does: Caesar has occupied a town beyond his province.",
+          "tokens": 70
+        },
+        {
+          "text": "Rome's dispute is now being enforced inside Italy, by Roman troops.",
+          "tokens": 79
+        }
+      ],
+      "wavSha256": "4a8fdb1752a46041c1ca3fcded8e0e50960778710dbbe2c91346e5d6dc59602d"
+    },
+    {
+      "id": "terms-and-marching-orders",
+      "transcript": "Cicero has weighed the possible bargains in letters to Atticus: an election, an army surrendered, a compromise neither side trusts. Now news comes of towns occupied by Caesar's men. Caesar says he had proposed that all sides lay down their arms. That claim travels beside the advance it is meant to justify. Messages still promise a political settlement; soldiers are already deciding who controls the roads.",
+      "transcriptSha256": "e09e905c1dc1b9edf94f899b090788a3e3d2faa68246de6143ea7d69f64acd01",
+      "durationMs": 34075,
+      "chunks": [
+        {
+          "text": "Cicero has weighed the possible bargains in letters to Atticus: an election, an army surrendered, a compromise neither side trusts.",
+          "tokens": 133
+        },
+        {
+          "text": "Now news comes of towns occupied by Caesar's men.",
+          "tokens": 58
+        },
+        {
+          "text": "Caesar says he had proposed that all sides lay down their arms.",
+          "tokens": 70
+        },
+        {
+          "text": "That claim travels beside the advance it is meant to justify.",
+          "tokens": 68
+        },
+        {
+          "text": "Messages still promise a political settlement; soldiers are already deciding who controls the roads.",
+          "tokens": 110
+        }
+      ],
+      "wavSha256": "887a6bb8e20478d685465e034bd86a749be38e4373ee478edc2b5f1bf7f8b20b"
+    },
+    {
+      "id": "rome-empties",
+      "transcript": "News outruns the marching columns. Pompey and the consuls leave Rome; many senators follow them south. Cicero, who favours Pompey, writes in disbelief at the city's abandonment and admits he does not understand the plan. The government's leaders are moving away from the capital while Caesar is still advancing through Italy. He has not yet entered Rome. The Republic has not become an empire in a night. It has begun a war against itself.",
+      "transcriptSha256": "63939b78e9c99a27de35671e61e01d3a8a6bff0cee3bbfb729bc9a2ba65a5a5d",
+      "durationMs": 36775,
+      "chunks": [
+        {
+          "text": "News outruns the marching columns.",
+          "tokens": 38
+        },
+        {
+          "text": "Pompey and the consuls leave Rome; many senators follow them south.",
+          "tokens": 71
+        },
+        {
+          "text": "Cicero, who favours Pompey, writes in disbelief at the city's abandonment and admits he does not understand the plan.",
+          "tokens": 126
+        },
+        {
+          "text": "The government's leaders are moving away from the capital while Caesar is still advancing through Italy.",
+          "tokens": 103
+        },
+        {
+          "text": "He has not yet entered Rome.",
+          "tokens": 31
+        },
+        {
+          "text": "The Republic has not become an empire in a night.",
+          "tokens": 52
+        },
+        {
+          "text": "It has begun a war against itself.",
+          "tokens": 40
+        }
+      ],
+      "wavSha256": "2cc4d471d41b4dc4a447051e0f54841c6556a9a014353c8dbe5ff3436eebf59f"
+    }
+  ]
+}

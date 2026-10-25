@@ -1,0 +1,50 @@
+{
+  "id": "italia-05",
+  "regionId": "italia",
+  "beatIds": [
+    "rome-empties"
+  ],
+  "era": "January 49 BC",
+  "difficulty": 2,
+  "prompt": "Where does this episode end?",
+  "options": [
+    {
+      "id": "italia-05-a",
+      "text": "Caesar has entered Rome and ended the Republic overnight"
+    },
+    {
+      "id": "italia-05-b",
+      "text": "Pompey and the consuls leave Rome while Caesar is still advancing"
+    },
+    {
+      "id": "italia-05-c",
+      "text": "Caesar has won every battle of the civil war"
+    },
+    {
+      "id": "italia-05-d",
+      "text": "Every resident has permanently abandoned Rome"
+    }
+  ],
+  "correctOptionId": "italia-05-b",
+  "explanation": "The endpoint is the leadership’s departure from Rome. Caesar has not yet entered it; “Rome empties” does not claim every resident leaves or the war is over.",
+  "feedbackByOptionId": {
+    "italia-05-a": "The leaders leave while Caesar is still advancing. The episode does not grant him Rome, dictatorship and an empire in one evening.",
+    "italia-05-b": "Pompey and the consuls leave; Caesar has not entered Rome. The capital has lost its leadership, not its entire population.",
+    "italia-05-c": "The episode ends with the leadership leaving Rome. A civil war has begun; its victories are not yet available for collection.",
+    "italia-05-d": "The leadership leaves, not every resident. Rome’s departure list is political, not a complete census."
+  },
+  "sources": [
+    {
+      "label": "Cicero, Letters to Atticus VII.10–12 — departure, anger at abandoning Rome and uncertainty about Pompey's plans. A contemporary supporter of Pompey who relies partly on reports.",
+      "url": "https://www.attalus.org/cicero/atticus7.html#10"
+    },
+    {
+      "label": "Plutarch, Life of Caesar 33–34 — panic, Pompey's departure and fleeing consuls/senators. His sweeping picture of the city is later literary narration; not everyone in Rome left.",
+      "url": "https://penelope.uchicago.edu/Thayer/E/Roman/Texts/Plutarch/Lives/Caesar*.html#33"
+    },
+    {
+      "label": "Elizabeth Rawson, public chapter summary — Pompey, the consuls and many senators retire to Campania. Used to check the endpoint, not to imply the whole Italian campaign is over.",
+      "url": "https://www.cambridge.org/core/books/abs/cambridge-ancient-history/caesar-civil-war-and-dictatorship/C7F8E34AD8D803954A497D4E56707A53"
+    }
+  ]
+}

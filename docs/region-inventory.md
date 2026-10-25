@@ -1,6 +1,6 @@
 # Atlas region inventory — updated 2026-10-25
 
-The repository contains **24 map provinces, one authored/owner-accepted Gallia campaign, one integrated Italia draft, five Gallia question files and two development fixtures**. The other 22 provinces have no campaign file. Italia's six-beat Rubicon outline/endpoint is owner-approved; its full prose awaits approval and the current art/figures are explicit procedural placeholders. No Italia quiz/narration has been authored or generated yet. See [Italia status](regions/italia-status.md), [full prose](regions/italia-prose-review.md) and the [artwork batch](regions/italia-artwork-proposal.md). All IDs below are exact filenames; `africa_prov` deliberately includes an underscore.
+The repository contains **24 map provinces, two authored playable campaigns, ten question files and two development fixtures**. Gallia's current experience is owner-accepted. Italia's outline, exact prose and artwork/use batch are approved; seven painted planes/six distinct settings, provisional commander/civic rigs, permitted infantry reuse, six new George recordings and five questions are integrated. Final Italia visual/listening/quiz acceptance remains distinct from production authorization. The other 22 provinces have no campaign file. See [Italia status](regions/italia-status.md). All IDs below are exact filenames; `africa_prov` deliberately includes an underscore.
 
 Era columns describe whether the province can be selected on that historical map, using the province's inclusive `heldFrom`/`heldTo`. They do not claim a scene is available. Totals are 1 / 5 / 23 / 9 for 350 BC / 200 BC / 117 AD / 486 AD. Direct named Coming soon routes remain accessible outside those historical ranges.
 
@@ -20,7 +20,7 @@ Era columns describe whether the province can be selected on that historical map
 | gallia | Gallia / Gallia Comata | — | — | yes | — | `/scene/gallia` | Accepted current six-beat visuals/narration and quiz; approved art, three painted provisional infantry rigs/crowds, six recordings + wind/two cues. Two placeholder planes and absent specialist roles are documented in [Gallia status](regions/gallia-status.md). |
 | graecia | Achaea / Achaea et Macedonia | — | — | yes | yes | `/scene/graecia` | Unauthored; Coming soon |
 | hispania | Hispania / Hispaniae | — | yes | yes | — | `/scene/hispania` | Unauthored; Coming soon |
-| italia | Italia / Italia | — | yes | yes | — | `/scene/italia` | Six-beat January 49 BC draft integrated; prose awaiting approval, four temporary planes/procedural military markers, no approved final art/audio/quiz yet. Not complete. |
+| italia | Italia / Italia | — | yes | yes | — | `/scene/italia` | Six-beat January 49 BC episode: editorially approved prose/citations, painted river/town/courtyard art, provisional commander/civic figures, six George recordings and five questions. Locally reviewable; final experience acceptance pending. |
 | judaea | Judaea / Iudaea | — | — | yes | yes | `/scene/judaea` | Unauthored; Coming soon |
 | latium | Latium / Ager Romanus | yes | — | — | — | `/scene/latium` | Unauthored; Coming soon |
 | mauretania | Mauretania / Mauretania | — | — | yes | — | `/scene/mauretania` | Unauthored; Coming soon |

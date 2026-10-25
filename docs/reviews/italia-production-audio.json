@@ -1,0 +1,783 @@
+{
+  "base": "http://127.0.0.1:3006",
+  "measuredAt": "2026-10-25T10:13:15.486Z",
+  "environment": {
+    "node": "v24.14.1",
+    "chrome": "150.0.7871.125",
+    "mode": "macOS desktop headless Chrome; 1440x1000 normal motion and 390x844 reduced motion; not physical phone, Safari or audible owner review"
+  },
+  "pages": [
+    {
+      "width": 1440,
+      "beat": "an-order-from-rome",
+      "narrationState": "playing",
+      "audio": {
+        "starts": [
+          {
+            "loop": false,
+            "seconds": 0.6610204081632653
+          },
+          {
+            "loop": true,
+            "seconds": 12
+          },
+          {
+            "loop": false,
+            "seconds": 35.57498866213152
+          }
+        ],
+        "active": [
+          {
+            "loop": true,
+            "seconds": 12,
+            "gain": 0.03240000084042549
+          },
+          {
+            "loop": false,
+            "seconds": 35.57498866213152,
+            "gain": 1
+          }
+        ]
+      },
+      "overflow": false,
+      "errors": [],
+      "failedResponses": []
+    },
+    {
+      "width": 1440,
+      "beat": "the-army-he-keeps",
+      "narrationState": "playing",
+      "audio": {
+        "starts": [
+          {
+            "loop": false,
+            "seconds": 0.6610204081632653
+          },
+          {
+            "loop": true,
+            "seconds": 12
+          },
+          {
+            "loop": false,
+            "seconds": 35.57498866213152
+          },
+          {
+            "loop": false,
+            "seconds": 0.6610204081632653
+          },
+          {
+            "loop": false,
+            "seconds": 32.94997732426304
+          }
+        ],
+        "active": [
+          {
+            "loop": true,
+            "seconds": 12,
+            "gain": 0.0575999990105629
+          },
+          {
+            "loop": false,
+            "seconds": 32.94997732426304,
+            "gain": 1
+          }
+        ]
+      },
+      "overflow": false,
+      "errors": [],
+      "failedResponses": []
+    },
+    {
+      "width": 1440,
+      "beat": "across-the-boundary",
+      "narrationState": "playing",
+      "audio": {
+        "starts": [
+          {
+            "loop": false,
+            "seconds": 0.6610204081632653
+          },
+          {
+            "loop": true,
+            "seconds": 12
+          },
+          {
+            "loop": false,
+            "seconds": 35.57498866213152
+          },
+          {
+            "loop": false,
+            "seconds": 0.6610204081632653
+          },
+          {
+            "loop": false,
+            "seconds": 32.94997732426304
+          },
+          {
+            "loop": false,
+            "seconds": 37.749977324263035
+          }
+        ],
+        "active": [
+          {
+            "loop": true,
+            "seconds": 12,
+            "gain": 0.07559999823570251
+          },
+          {
+            "loop": false,
+            "seconds": 37.749977324263035,
+            "gain": 1
+          }
+        ]
+      },
+      "overflow": false,
+      "errors": [],
+      "failedResponses": []
+    },
+    {
+      "width": 1440,
+      "beat": "ariminum",
+      "narrationState": "playing",
+      "audio": {
+        "starts": [
+          {
+            "loop": false,
+            "seconds": 0.6610204081632653
+          },
+          {
+            "loop": true,
+            "seconds": 12
+          },
+          {
+            "loop": false,
+            "seconds": 35.57498866213152
+          },
+          {
+            "loop": false,
+            "seconds": 0.6610204081632653
+          },
+          {
+            "loop": false,
+            "seconds": 32.94997732426304
+          },
+          {
+            "loop": false,
+            "seconds": 37.749977324263035
+          },
+          {
+            "loop": false,
+            "seconds": 0.6610204081632653
+          },
+          {
+            "loop": false,
+            "seconds": 34.12498866213152
+          }
+        ],
+        "active": [
+          {
+            "loop": true,
+            "seconds": 12,
+            "gain": 0.05040000006556511
+          },
+          {
+            "loop": false,
+            "seconds": 34.12498866213152,
+            "gain": 1
+          }
+        ]
+      },
+      "overflow": false,
+      "errors": [],
+      "failedResponses": []
+    },
+    {
+      "width": 1440,
+      "beat": "terms-and-marching-orders",
+      "narrationState": "playing",
+      "audio": {
+        "starts": [
+          {
+            "loop": false,
+            "seconds": 0.6610204081632653
+          },
+          {
+            "loop": true,
+            "seconds": 12
+          },
+          {
+            "loop": false,
+            "seconds": 35.57498866213152
+          },
+          {
+            "loop": false,
+            "seconds": 0.6610204081632653
+          },
+          {
+            "loop": false,
+            "seconds": 32.94997732426304
+          },
+          {
+            "loop": false,
+            "seconds": 37.749977324263035
+          },
+          {
+            "loop": false,
+            "seconds": 0.6610204081632653
+          },
+          {
+            "loop": false,
+            "seconds": 34.12498866213152
+          },
+          {
+            "loop": false,
+            "seconds": 0.6610204081632653
+          },
+          {
+            "loop": false,
+            "seconds": 34.07498866213152
+          }
+        ],
+        "active": [
+          {
+            "loop": true,
+            "seconds": 12,
+            "gain": 0.03240000084042549
+          },
+          {
+            "loop": false,
+            "seconds": 34.07498866213152,
+            "gain": 1
+          }
+        ]
+      },
+      "overflow": false,
+      "errors": [],
+      "failedResponses": []
+    },
+    {
+      "width": 1440,
+      "beat": "rome-empties",
+      "narrationState": "playing",
+      "audio": {
+        "starts": [
+          {
+            "loop": false,
+            "seconds": 0.6610204081632653
+          },
+          {
+            "loop": true,
+            "seconds": 12
+          },
+          {
+            "loop": false,
+            "seconds": 35.57498866213152
+          },
+          {
+            "loop": false,
+            "seconds": 0.6610204081632653
+          },
+          {
+            "loop": false,
+            "seconds": 32.94997732426304
+          },
+          {
+            "loop": false,
+            "seconds": 37.749977324263035
+          },
+          {
+            "loop": false,
+            "seconds": 0.6610204081632653
+          },
+          {
+            "loop": false,
+            "seconds": 34.12498866213152
+          },
+          {
+            "loop": false,
+            "seconds": 0.6610204081632653
+          },
+          {
+            "loop": false,
+            "seconds": 34.07498866213152
+          },
+          {
+            "loop": false,
+            "seconds": 0.6610204081632653
+          },
+          {
+            "loop": false,
+            "seconds": 36.77498866213152
+          }
+        ],
+        "active": [
+          {
+            "loop": true,
+            "seconds": 12,
+            "gain": 0.04320000112056732
+          },
+          {
+            "loop": false,
+            "seconds": 36.77498866213152,
+            "gain": 1
+          }
+        ]
+      },
+      "overflow": false,
+      "errors": [],
+      "failedResponses": []
+    },
+    {
+      "width": 1440,
+      "state": "exit",
+      "activeAudio": 0,
+      "errors": [],
+      "failedResponses": []
+    },
+    {
+      "width": 390,
+      "beat": "an-order-from-rome",
+      "narrationState": "playing",
+      "audio": {
+        "starts": [
+          {
+            "loop": false,
+            "seconds": 0.6610204081632653
+          },
+          {
+            "loop": true,
+            "seconds": 12
+          },
+          {
+            "loop": false,
+            "seconds": 35.57498866213152
+          }
+        ],
+        "active": [
+          {
+            "loop": true,
+            "seconds": 12,
+            "gain": 0.03240000084042549
+          },
+          {
+            "loop": false,
+            "seconds": 35.57498866213152,
+            "gain": 1
+          }
+        ]
+      },
+      "overflow": false,
+      "errors": [],
+      "failedResponses": []
+    },
+    {
+      "width": 390,
+      "beat": "the-army-he-keeps",
+      "narrationState": "playing",
+      "audio": {
+        "starts": [
+          {
+            "loop": false,
+            "seconds": 0.6610204081632653
+          },
+          {
+            "loop": true,
+            "seconds": 12
+          },
+          {
+            "loop": false,
+            "seconds": 35.57498866213152
+          },
+          {
+            "loop": false,
+            "seconds": 0.6610204081632653
+          },
+          {
+            "loop": false,
+            "seconds": 32.94997732426304
+          }
+        ],
+        "active": [
+          {
+            "loop": true,
+            "seconds": 12,
+            "gain": 0.0575999990105629
+          },
+          {
+            "loop": false,
+            "seconds": 32.94997732426304,
+            "gain": 1
+          }
+        ]
+      },
+      "overflow": false,
+      "errors": [],
+      "failedResponses": []
+    },
+    {
+      "width": 390,
+      "beat": "across-the-boundary",
+      "narrationState": "playing",
+      "audio": {
+        "starts": [
+          {
+            "loop": false,
+            "seconds": 0.6610204081632653
+          },
+          {
+            "loop": true,
+            "seconds": 12
+          },
+          {
+            "loop": false,
+            "seconds": 35.57498866213152
+          },
+          {
+            "loop": false,
+            "seconds": 0.6610204081632653
+          },
+          {
+            "loop": false,
+            "seconds": 32.94997732426304
+          },
+          {
+            "loop": false,
+            "seconds": 37.749977324263035
+          }
+        ],
+        "active": [
+          {
+            "loop": true,
+            "seconds": 12,
+            "gain": 0.07559999823570251
+          },
+          {
+            "loop": false,
+            "seconds": 37.749977324263035,
+            "gain": 1
+          }
+        ]
+      },
+      "overflow": false,
+      "errors": [],
+      "failedResponses": []
+    },
+    {
+      "width": 390,
+      "beat": "ariminum",
+      "narrationState": "playing",
+      "audio": {
+        "starts": [
+          {
+            "loop": false,
+            "seconds": 0.6610204081632653
+          },
+          {
+            "loop": true,
+            "seconds": 12
+          },
+          {
+            "loop": false,
+            "seconds": 35.57498866213152
+          },
+          {
+            "loop": false,
+            "seconds": 0.6610204081632653
+          },
+          {
+            "loop": false,
+            "seconds": 32.94997732426304
+          },
+          {
+            "loop": false,
+            "seconds": 37.749977324263035
+          },
+          {
+            "loop": false,
+            "seconds": 0.6610204081632653
+          },
+          {
+            "loop": false,
+            "seconds": 34.12498866213152
+          }
+        ],
+        "active": [
+          {
+            "loop": true,
+            "seconds": 12,
+            "gain": 0.05040000006556511
+          },
+          {
+            "loop": false,
+            "seconds": 34.12498866213152,
+            "gain": 1
+          }
+        ]
+      },
+      "overflow": false,
+      "errors": [],
+      "failedResponses": []
+    },
+    {
+      "width": 390,
+      "beat": "terms-and-marching-orders",
+      "narrationState": "playing",
+      "audio": {
+        "starts": [
+          {
+            "loop": false,
+            "seconds": 0.6610204081632653
+          },
+          {
+            "loop": true,
+            "seconds": 12
+          },
+          {
+            "loop": false,
+            "seconds": 35.57498866213152
+          },
+          {
+            "loop": false,
+            "seconds": 0.6610204081632653
+          },
+          {
+            "loop": false,
+            "seconds": 32.94997732426304
+          },
+          {
+            "loop": false,
+            "seconds": 37.749977324263035
+          },
+          {
+            "loop": false,
+            "seconds": 0.6610204081632653
+          },
+          {
+            "loop": false,
+            "seconds": 34.12498866213152
+          },
+          {
+            "loop": false,
+            "seconds": 0.6610204081632653
+          },
+          {
+            "loop": false,
+            "seconds": 34.07498866213152
+          }
+        ],
+        "active": [
+          {
+            "loop": true,
+            "seconds": 12,
+            "gain": 0.03240000084042549
+          },
+          {
+            "loop": false,
+            "seconds": 34.07498866213152,
+            "gain": 1
+          }
+        ]
+      },
+      "overflow": false,
+      "errors": [],
+      "failedResponses": []
+    },
+    {
+      "width": 390,
+      "beat": "rome-empties",
+      "narrationState": "playing",
+      "audio": {
+        "starts": [
+          {
+            "loop": false,
+            "seconds": 0.6610204081632653
+          },
+          {
+            "loop": true,
+            "seconds": 12
+          },
+          {
+            "loop": false,
+            "seconds": 35.57498866213152
+          },
+          {
+            "loop": false,
+            "seconds": 0.6610204081632653
+          },
+          {
+            "loop": false,
+            "seconds": 32.94997732426304
+          },
+          {
+            "loop": false,
+            "seconds": 37.749977324263035
+          },
+          {
+            "loop": false,
+            "seconds": 0.6610204081632653
+          },
+          {
+            "loop": false,
+            "seconds": 34.12498866213152
+          },
+          {
+            "loop": false,
+            "seconds": 0.6610204081632653
+          },
+          {
+            "loop": false,
+            "seconds": 34.07498866213152
+          },
+          {
+            "loop": false,
+            "seconds": 0.6610204081632653
+          },
+          {
+            "loop": false,
+            "seconds": 36.77498866213152
+          }
+        ],
+        "active": [
+          {
+            "loop": true,
+            "seconds": 12,
+            "gain": 0.04320000112056732
+          },
+          {
+            "loop": false,
+            "seconds": 36.77498866213152,
+            "gain": 1
+          }
+        ]
+      },
+      "overflow": false,
+      "errors": [],
+      "failedResponses": []
+    },
+    {
+      "width": 390,
+      "state": "exit",
+      "activeAudio": 0,
+      "errors": [],
+      "failedResponses": []
+    }
+  ],
+  "audioTransfers": [
+    {
+      "width": 1440,
+      "path": "/assets/gallia/audio/wind-plains.wav",
+      "bytes": 529244,
+      "status": 200
+    },
+    {
+      "width": 1440,
+      "path": "/assets/italia/audio/narration-an-order-from-rome.mp3",
+      "bytes": 182400,
+      "status": 200
+    },
+    {
+      "width": 1440,
+      "path": "/assets/gallia/audio/kenney-cloth1.ogg",
+      "bytes": 16508,
+      "status": 200
+    },
+    {
+      "width": 1440,
+      "path": "/assets/italia/audio/narration-the-army-he-keeps.mp3",
+      "bytes": 171744,
+      "status": 200
+    },
+    {
+      "width": 1440,
+      "path": "/assets/italia/audio/narration-across-the-boundary.mp3",
+      "bytes": 193704,
+      "status": 200
+    },
+    {
+      "width": 1440,
+      "path": "/assets/italia/audio/narration-ariminum.mp3",
+      "bytes": 178992,
+      "status": 200
+    },
+    {
+      "width": 1440,
+      "path": "/assets/italia/audio/narration-terms-and-marching-orders.mp3",
+      "bytes": 183000,
+      "status": 200
+    },
+    {
+      "width": 1440,
+      "path": "/assets/italia/audio/narration-rome-empties.mp3",
+      "bytes": 188976,
+      "status": 200
+    },
+    {
+      "width": 390,
+      "path": "/assets/gallia/audio/wind-plains.wav",
+      "bytes": 529244,
+      "status": 200
+    },
+    {
+      "width": 390,
+      "path": "/assets/italia/audio/narration-an-order-from-rome.mp3",
+      "bytes": 182400,
+      "status": 200
+    },
+    {
+      "width": 390,
+      "path": "/assets/gallia/audio/kenney-cloth1.ogg",
+      "bytes": 16508,
+      "status": 200
+    },
+    {
+      "width": 390,
+      "path": "/assets/italia/audio/narration-the-army-he-keeps.mp3",
+      "bytes": 171744,
+      "status": 200
+    },
+    {
+      "width": 390,
+      "path": "/assets/italia/audio/narration-across-the-boundary.mp3",
+      "bytes": 193704,
+      "status": 200
+    },
+    {
+      "width": 390,
+      "path": "/assets/italia/audio/narration-ariminum.mp3",
+      "bytes": 178992,
+      "status": 200
+    },
+    {
+      "width": 390,
+      "path": "/assets/italia/audio/narration-terms-and-marching-orders.mp3",
+      "bytes": 183000,
+      "status": 200
+    },
+    {
+      "width": 390,
+      "path": "/assets/italia/audio/narration-rome-empties.mp3",
+      "bytes": 188976,
+      "status": 200
+    }
+  ],
+  "completeAutoplay": {
+    "allSixRealRecordingsCompleted": true,
+    "stoppedAtFinalBeat": true,
+    "narrationDurations": [
+      35.57498866213152,
+      32.94997732426304,
+      37.749977324263035,
+      34.12498866213152,
+      34.07498866213152,
+      36.77498866213152
+    ],
+    "cueDurations": [
+      0.6610204081632653,
+      0.6610204081632653,
+      0.6610204081632653,
+      0.6610204081632653,
+      0.6610204081632653
+    ],
+    "loopsStarted": 1
+  }
+}

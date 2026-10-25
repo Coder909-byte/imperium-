@@ -1,0 +1,17 @@
+{
+  "scope": "Approved-text relevance correction: standing formation and commander facing it; no shared DB writes",
+  "pages": [
+    {
+      "width": 1440,
+      "actors": "roman_infantry:idle:18,italia_caesar:idle:1",
+      "planes": "mustering-ground",
+      "overflow": false
+    },
+    {
+      "width": 390,
+      "actors": "roman_infantry:idle:18,italia_caesar:idle:1",
+      "planes": "mustering-ground",
+      "overflow": false
+    }
+  ]
+}

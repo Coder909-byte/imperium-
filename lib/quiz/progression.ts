@@ -1,7 +1,7 @@
 import { z } from "zod";
 import { RANKS, type Rank } from "@/lib/ranks";
 
-// Owner-approved provisional policy. Gallia's 90 XP cannot unlock every rank.
+// Owner-approved provisional policy; two campaigns' 170 XP still cannot unlock every rank.
 export const PROGRESSION = {
   xpByDifficulty: { 1: 10, 2: 20, 3: 30 },
   rankThresholds: [0, 50, 150, 350, 700, 1200, 2000],

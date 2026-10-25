@@ -1,0 +1,321 @@
+{
+  "base": "http://localhost:3000",
+  "productionArt": true,
+  "ownerVisualAcceptance": false,
+  "runs": [
+    {
+      "mode": "desktop",
+      "beats": [
+        {
+          "id": "an-order-from-rome",
+          "tier": "low",
+          "planes": "",
+          "actors": "italia_civic:idle:1",
+          "ready": "true",
+          "overflow": false
+        },
+        {
+          "id": "the-army-he-keeps",
+          "tier": "low",
+          "planes": "",
+          "actors": "roman_infantry:march:18,italia_caesar:idle:1",
+          "ready": "true",
+          "overflow": false
+        },
+        {
+          "id": "across-the-boundary",
+          "tier": "low",
+          "planes": "river-reference,river-foreground",
+          "actors": "roman_infantry:march:12,italia_caesar:idle:1",
+          "ready": "true",
+          "overflow": false
+        },
+        {
+          "id": "ariminum",
+          "tier": "low",
+          "planes": "town",
+          "actors": "roman_infantry:march:12,italia_civic:idle:1",
+          "ready": "true",
+          "overflow": false
+        },
+        {
+          "id": "terms-and-marching-orders",
+          "tier": "low",
+          "planes": "courtyard",
+          "actors": "italia_caesar:idle:1,italia_civic:idle:1",
+          "ready": "true",
+          "overflow": false
+        },
+        {
+          "id": "rome-empties",
+          "tier": "low",
+          "planes": "",
+          "actors": "",
+          "ready": "true",
+          "overflow": false
+        }
+      ],
+      "errors": [],
+      "failures": [],
+      "assetRequests": [
+        "http://localhost:3000/assets/italia/river-reference.webp",
+        "http://localhost:3000/assets/italia/town.webp",
+        "http://localhost:3000/assets/italia/courtyard.webp",
+        "http://localhost:3000/assets/italia/river-foreground.webp",
+        "http://localhost:3000/assets/italia/caesar.webp",
+        "http://localhost:3000/assets/italia/civic.webp",
+        "http://localhost:3000/assets/gallia/roman-infantry/body.webp",
+        "http://localhost:3000/assets/gallia/roman-infantry/head.webp",
+        "http://localhost:3000/assets/gallia/roman-infantry/weapon.webp",
+        "http://localhost:3000/assets/gallia/roman-infantry/shield.webp",
+        "http://localhost:3000/assets/gallia/roman-infantry/leg_near.webp",
+        "http://localhost:3000/assets/gallia/roman-infantry/leg_far.webp",
+        "http://localhost:3000/assets/italia/audio/narration-an-order-from-rome.mp3",
+        "http://localhost:3000/assets/italia/audio/wind-plains.mp3",
+        "http://localhost:3000/assets/gallia/audio/kenney-cloth1.ogg",
+        "http://localhost:3000/assets/italia/audio/narration-the-army-he-keeps.mp3",
+        "http://localhost:3000/assets/italia/audio/narration-across-the-boundary.mp3",
+        "http://localhost:3000/assets/italia/audio/narration-ariminum.mp3",
+        "http://localhost:3000/assets/italia/audio/narration-terms-and-marching-orders.mp3",
+        "http://localhost:3000/assets/italia/audio/narration-rome-empties.mp3",
+        "http://localhost:3000/assets/italia/audio/narration-across-the-boundary.mp3"
+      ]
+    },
+    {
+      "mode": "narrow",
+      "beats": [
+        {
+          "id": "an-order-from-rome",
+          "tier": "low",
+          "planes": "",
+          "actors": "italia_civic:idle:1",
+          "ready": "true",
+          "overflow": false
+        },
+        {
+          "id": "the-army-he-keeps",
+          "tier": "low",
+          "planes": "",
+          "actors": "roman_infantry:march:18,italia_caesar:idle:1",
+          "ready": "true",
+          "overflow": false
+        },
+        {
+          "id": "across-the-boundary",
+          "tier": "low",
+          "planes": "river-reference,river-foreground",
+          "actors": "roman_infantry:march:12,italia_caesar:idle:1",
+          "ready": "true",
+          "overflow": false
+        },
+        {
+          "id": "ariminum",
+          "tier": "low",
+          "planes": "town",
+          "actors": "roman_infantry:march:12,italia_civic:idle:1",
+          "ready": "true",
+          "overflow": false
+        },
+        {
+          "id": "terms-and-marching-orders",
+          "tier": "low",
+          "planes": "courtyard",
+          "actors": "italia_caesar:idle:1,italia_civic:idle:1",
+          "ready": "true",
+          "overflow": false
+        },
+        {
+          "id": "rome-empties",
+          "tier": "low",
+          "planes": "",
+          "actors": "",
+          "ready": "true",
+          "overflow": false
+        }
+      ],
+      "errors": [],
+      "failures": [],
+      "assetRequests": [
+        "http://localhost:3000/assets/italia/river-reference.webp",
+        "http://localhost:3000/assets/italia/town.webp",
+        "http://localhost:3000/assets/italia/courtyard.webp",
+        "http://localhost:3000/assets/italia/river-foreground.webp",
+        "http://localhost:3000/assets/italia/caesar.webp",
+        "http://localhost:3000/assets/italia/civic.webp",
+        "http://localhost:3000/assets/gallia/roman-infantry/body.webp",
+        "http://localhost:3000/assets/gallia/roman-infantry/head.webp",
+        "http://localhost:3000/assets/gallia/roman-infantry/weapon.webp",
+        "http://localhost:3000/assets/gallia/roman-infantry/shield.webp",
+        "http://localhost:3000/assets/gallia/roman-infantry/leg_near.webp",
+        "http://localhost:3000/assets/gallia/roman-infantry/leg_far.webp",
+        "http://localhost:3000/assets/italia/audio/narration-an-order-from-rome.mp3",
+        "http://localhost:3000/assets/italia/audio/wind-plains.mp3",
+        "http://localhost:3000/assets/gallia/audio/kenney-cloth1.ogg",
+        "http://localhost:3000/assets/italia/audio/narration-the-army-he-keeps.mp3",
+        "http://localhost:3000/assets/italia/audio/narration-across-the-boundary.mp3",
+        "http://localhost:3000/assets/italia/audio/narration-ariminum.mp3",
+        "http://localhost:3000/assets/italia/audio/narration-terms-and-marching-orders.mp3",
+        "http://localhost:3000/assets/italia/audio/narration-rome-empties.mp3"
+      ]
+    },
+    {
+      "mode": "high",
+      "beats": [
+        {
+          "id": "an-order-from-rome",
+          "tier": "high",
+          "planes": "political-hall",
+          "actors": "italia_civic:idle:1",
+          "ready": "true",
+          "overflow": false
+        },
+        {
+          "id": "the-army-he-keeps",
+          "tier": "high",
+          "planes": "mustering-ground",
+          "actors": "roman_infantry:march:18,italia_caesar:idle:1",
+          "ready": "true",
+          "overflow": false
+        },
+        {
+          "id": "across-the-boundary",
+          "tier": "high",
+          "planes": "river-reference,river-foreground",
+          "actors": "roman_infantry:march:12,italia_caesar:idle:1",
+          "ready": "true",
+          "overflow": false
+        },
+        {
+          "id": "ariminum",
+          "tier": "high",
+          "planes": "town",
+          "actors": "roman_infantry:march:12,italia_civic:idle:1",
+          "ready": "true",
+          "overflow": false
+        },
+        {
+          "id": "terms-and-marching-orders",
+          "tier": "high",
+          "planes": "courtyard",
+          "actors": "italia_caesar:idle:1,italia_civic:idle:1",
+          "ready": "true",
+          "overflow": false
+        },
+        {
+          "id": "rome-empties",
+          "tier": "high",
+          "planes": "rome-departure",
+          "actors": "",
+          "ready": "true",
+          "overflow": false
+        }
+      ],
+      "errors": [],
+      "failures": [],
+      "assetRequests": [
+        "http://localhost:3000/assets/italia/river-reference.webp",
+        "http://localhost:3000/assets/italia/river-foreground.webp",
+        "http://localhost:3000/assets/italia/town.webp",
+        "http://localhost:3000/assets/italia/courtyard.webp",
+        "http://localhost:3000/assets/italia/political-hall.webp",
+        "http://localhost:3000/assets/italia/mustering-ground.webp",
+        "http://localhost:3000/assets/italia/rome-departure.webp",
+        "http://localhost:3000/assets/italia/caesar.webp",
+        "http://localhost:3000/assets/italia/civic.webp",
+        "http://localhost:3000/assets/gallia/roman-infantry/body.webp",
+        "http://localhost:3000/assets/gallia/roman-infantry/head.webp",
+        "http://localhost:3000/assets/gallia/roman-infantry/weapon.webp",
+        "http://localhost:3000/assets/gallia/roman-infantry/shield.webp",
+        "http://localhost:3000/assets/gallia/roman-infantry/leg_near.webp",
+        "http://localhost:3000/assets/gallia/roman-infantry/leg_far.webp",
+        "http://localhost:3000/assets/italia/audio/narration-an-order-from-rome.mp3",
+        "http://localhost:3000/assets/italia/audio/wind-plains.mp3",
+        "http://localhost:3000/assets/gallia/audio/kenney-cloth1.ogg",
+        "http://localhost:3000/assets/italia/audio/narration-the-army-he-keeps.mp3",
+        "http://localhost:3000/assets/italia/audio/narration-across-the-boundary.mp3",
+        "http://localhost:3000/assets/italia/audio/narration-ariminum.mp3",
+        "http://localhost:3000/assets/italia/audio/narration-terms-and-marching-orders.mp3",
+        "http://localhost:3000/assets/italia/audio/narration-rome-empties.mp3"
+      ]
+    },
+    {
+      "mode": "low",
+      "beats": [
+        {
+          "id": "an-order-from-rome",
+          "tier": "low",
+          "planes": "",
+          "actors": "italia_civic:idle:1",
+          "ready": "true",
+          "overflow": false
+        },
+        {
+          "id": "the-army-he-keeps",
+          "tier": "low",
+          "planes": "",
+          "actors": "roman_infantry:march:18,italia_caesar:idle:1",
+          "ready": "true",
+          "overflow": false
+        },
+        {
+          "id": "across-the-boundary",
+          "tier": "low",
+          "planes": "river-reference,river-foreground",
+          "actors": "roman_infantry:march:12,italia_caesar:idle:1",
+          "ready": "true",
+          "overflow": false
+        },
+        {
+          "id": "ariminum",
+          "tier": "low",
+          "planes": "town",
+          "actors": "roman_infantry:march:12,italia_civic:idle:1",
+          "ready": "true",
+          "overflow": false
+        },
+        {
+          "id": "terms-and-marching-orders",
+          "tier": "low",
+          "planes": "courtyard",
+          "actors": "italia_caesar:idle:1,italia_civic:idle:1",
+          "ready": "true",
+          "overflow": false
+        },
+        {
+          "id": "rome-empties",
+          "tier": "low",
+          "planes": "",
+          "actors": "",
+          "ready": "true",
+          "overflow": false
+        }
+      ],
+      "errors": [],
+      "failures": [],
+      "assetRequests": [
+        "http://localhost:3000/assets/italia/river-reference.webp",
+        "http://localhost:3000/assets/italia/town.webp",
+        "http://localhost:3000/assets/italia/courtyard.webp",
+        "http://localhost:3000/assets/italia/river-foreground.webp",
+        "http://localhost:3000/assets/italia/caesar.webp",
+        "http://localhost:3000/assets/italia/civic.webp",
+        "http://localhost:3000/assets/gallia/roman-infantry/body.webp",
+        "http://localhost:3000/assets/gallia/roman-infantry/head.webp",
+        "http://localhost:3000/assets/gallia/roman-infantry/weapon.webp",
+        "http://localhost:3000/assets/gallia/roman-infantry/shield.webp",
+        "http://localhost:3000/assets/gallia/roman-infantry/leg_near.webp",
+        "http://localhost:3000/assets/gallia/roman-infantry/leg_far.webp",
+        "http://localhost:3000/assets/italia/audio/narration-an-order-from-rome.mp3",
+        "http://localhost:3000/assets/italia/audio/wind-plains.mp3",
+        "http://localhost:3000/assets/gallia/audio/kenney-cloth1.ogg",
+        "http://localhost:3000/assets/italia/audio/narration-the-army-he-keeps.mp3",
+        "http://localhost:3000/assets/italia/audio/narration-across-the-boundary.mp3",
+        "http://localhost:3000/assets/italia/audio/narration-ariminum.mp3",
+        "http://localhost:3000/assets/italia/audio/narration-terms-and-marching-orders.mp3",
+        "http://localhost:3000/assets/italia/audio/narration-rome-empties.mp3"
+      ]
+    }
+  ],
+  "reviewStatus": "Rejected by visual inspection: new backgrounds absent under the old global low-tier selection. Ready/overflow alone was insufficient; runner now asserts the actual backdrop ID.",
+  "supersededBy": "italia-visual-revision-production.json"
+}

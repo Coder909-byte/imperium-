@@ -1,6 +1,6 @@
 # Region two proposal — Italia: the Rubicon crisis
 
-**Episode and six-beat outline approved by the owner, 2026-10-25.** Region ID `italia`, episode **Caesar crosses the Rubicon: the opening of civil war**, **January 49 BC** in the contemporary Roman calendar, ending when Pompey/the consuls leave Rome. This initial proposal is retained as the research/decision record. The [full prose](italia-prose-review.md) and [artwork batch](italia-artwork-proposal.md) have separate pending approval gates; [current production status](italia-status.md) records the integrated temporary preview.
+**Episode and six-beat outline approved by the owner, 2026-10-25.** Region ID `italia`, episode **Caesar crosses the Rubicon: the opening of civil war**, **January 49 BC** in the contemporary Roman calendar, ending when Pompey/the consuls leave Rome. This initial proposal is retained as the research/decision record. The [full prose](italia-prose-review.md) and [artwork batch](italia-artwork-proposal.md) were separately approved for production on 2026-10-25; [current production status](italia-status.md) records the delivered art/audio/quiz and remaining final-experience review.
 
 ## Why this next
 
@@ -75,4 +75,4 @@ These are the original inspection findings, not speculative engine limitations. 
 
 No region-name branching in scene rendering, audio grading or progress storage was found that blocks `italia`. Region/province filenames must match `italia`; `loadRegionContent`, `buildSceneProps`, referenced-rig filtering, atlas discovery, question bank filtering, seed adapter and credit ledger already use content/IDs. The present catalog is one campaign per province; this proposal uses the existing slot instead of inventing multi-episode routing. Validate at runtime once actual approved content exists—inspection alone is not a second-region integration pass.
 
-**Decision recorded:** Italia / the January 49 BC Rubicon crisis / these six beats and the stated endpoint are approved. Current gates are full prose approval and the scoped artwork batch. Narration and five-question authoring follow prose approval; the temporary integration is not a complete playable-region acceptance.
+**Decision recorded:** Italia / the January 49 BC Rubicon crisis / these six beats and the stated endpoint are approved. Those prose/use-scope gates were subsequently approved and production is delivered. Final Italia experience acceptance and external checks remain distinct; see current status.

@@ -159,7 +159,7 @@
       "rightsUrl": "https://opengameart.org/content/wind1",
       "rightsStatement": "CC0"
     },
-    "notes": "Owner explicitly approved synthesized candidate E wind1 and Gallia loop preparation in the 2026-10-22 conversation. Exact source rights label: “CC0”, linked to https://creativecommons.org/publicdomain/zero/1.0/ . Exact download: https://opengameart.org/sites/default/files/wind1.wav . Source describes PureData synthesis; this is not a field recording. Original: mono 44100 Hz/16-bit PCM, 59.998912s; SHA-256 a2856f794fbf77e05f8241dc4adeade7f62fa21c3c9dc49f7725b6c6218060c3. Prepared reproducibly with scripts/prepare-gallia-wind.py: first 14s resampled 2:1 using a 63-tap Blackman-windowed sinc (cutoff 0.225 cycles/source sample), then 2s equal-power cyclic crossfade into a 12s loop, +9.376796dB to provisional -30dBFS RMS. Output: mono 22050 Hz/16-bit WAV, 529244 bytes, RMS -30.000002dBFS, peak -13.083091dBFS, 0 clipped samples; wrap step 294 PCM units versus maximum internal step 2143. Output SHA-256 b9d942447175b4b7978e2396ae493d907177005a23fb27e88c855a0719cfcb2b. Numerical seam/level checks and local playback execution are not an audible mix approval; human/device review remains required."
+    "notes": "Owner explicitly approved synthesized candidate E wind1 and Gallia loop preparation in the 2026-10-22 conversation. Exact source rights label: “CC0”, linked to https://creativecommons.org/publicdomain/zero/1.0/ . Exact download: https://opengameart.org/sites/default/files/wind1.wav . Source describes PureData synthesis; this is not a field recording. Original: mono 44100 Hz/16-bit PCM, 59.998912s; SHA-256 a2856f794fbf77e05f8241dc4adeade7f62fa21c3c9dc49f7725b6c6218060c3. Prepared reproducibly with scripts/prepare-gallia-wind.py: first 14s resampled 2:1 using a 63-tap Blackman-windowed sinc (cutoff 0.225 cycles/source sample), then 2s equal-power cyclic crossfade into a 12s loop, +9.376796dB to provisional -30dBFS RMS. Output: mono 22050 Hz/16-bit WAV, 529244 bytes, RMS -30.000002dBFS, peak -13.083091dBFS, 0 clipped samples; wrap step 294 PCM units versus maximum internal step 2143. Output SHA-256 b9d942447175b4b7978e2396ae493d907177005a23fb27e88c855a0719cfcb2b. Numerical seam/level checks and local playback execution are not an audible mix approval; human/device review remains required. Owner separately authorizes suitable Italia reuse on 2026-10-25 (IT-A5); unchanged binary/licence."
   },
   {
     "file": "public/assets/gallia/audio/kenney-cloth1.ogg",
@@ -174,7 +174,7 @@
       "rightsUrl": "https://kenney.nl/assets/rpg-audio",
       "rightsStatement": "License (Creative Commons Zero, CC0)"
     },
-    "notes": "Owner explicitly approved this Kenney cue for Gallia in the 2026-10-22 conversation. Original official archive member Audio/cloth1.ogg, unchanged. Included License.txt exact rights label: “License (Creative Commons Zero, CC0)”. Exact download: https://kenney.nl/media/pages/assets/rpg-audio/8e99002d76-1677590336/kenney_rpg-audio.zip . SHA-256 ddb93a3671233f95da0e0b10367f082f7eb42fa6caaddcf776410aa8833c747d. Approval permits use; no audible level/timing/mix judgement is claimed. Availability does not require a beat cue mapping."
+    "notes": "Owner explicitly approved this Kenney cue for Gallia in the 2026-10-22 conversation. Original official archive member Audio/cloth1.ogg, unchanged. Included License.txt exact rights label: “License (Creative Commons Zero, CC0)”. Exact download: https://kenney.nl/media/pages/assets/rpg-audio/8e99002d76-1677590336/kenney_rpg-audio.zip . SHA-256 ddb93a3671233f95da0e0b10367f082f7eb42fa6caaddcf776410aa8833c747d. Approval permits use; no audible level/timing/mix judgement is claimed. Availability does not require a beat cue mapping. Owner separately authorizes suitable Italia reuse on 2026-10-25 (IT-A5); unchanged binary/licence."
   },
   {
     "file": "public/assets/gallia/audio/kenney-chop.ogg",
@@ -401,7 +401,7 @@
       "matte": false,
       "quality": 88
     },
-    "notes": "Provisional generated painted cutout; source rights separately recorded, not public domain. See docs/m8-personnel-review.md. Owner approved character preparation 2026-10-23.",
+    "notes": "Provisional generated painted cutout; source rights separately recorded, not public domain. See docs/m8-personnel-review.md. Owner approved character preparation 2026-10-23. Owner separately authorizes suitable Italia reuse on 2026-10-25 (IT-A5); original binaries, provisional flags and licence unchanged.",
     "approval": {
       "scope": "character-draft",
       "by": "Project owner (chat approval 2026-10-23)",
@@ -426,7 +426,7 @@
       "matte": false,
       "quality": 88
     },
-    "notes": "Provisional generated painted cutout; source rights separately recorded, not public domain. See docs/m8-personnel-review.md. Owner approved character preparation 2026-10-23.",
+    "notes": "Provisional generated painted cutout; source rights separately recorded, not public domain. See docs/m8-personnel-review.md. Owner approved character preparation 2026-10-23. Owner separately authorizes suitable Italia reuse on 2026-10-25 (IT-A5); original binaries, provisional flags and licence unchanged.",
     "approval": {
       "scope": "character-draft",
       "by": "Project owner (chat approval 2026-10-23)",
@@ -451,7 +451,7 @@
       "matte": false,
       "quality": 88
     },
-    "notes": "Provisional generated painted cutout; source rights separately recorded, not public domain. See docs/m8-personnel-review.md. Owner approved character preparation 2026-10-23.",
+    "notes": "Provisional generated painted cutout; source rights separately recorded, not public domain. See docs/m8-personnel-review.md. Owner approved character preparation 2026-10-23. Owner separately authorizes suitable Italia reuse on 2026-10-25 (IT-A5); original binaries, provisional flags and licence unchanged.",
     "approval": {
       "scope": "character-draft",
       "by": "Project owner (chat approval 2026-10-23)",
@@ -476,7 +476,7 @@
       "matte": false,
       "quality": 88
     },
-    "notes": "Provisional generated painted cutout; source rights separately recorded, not public domain. See docs/m8-personnel-review.md. Owner approved character preparation 2026-10-23.",
+    "notes": "Provisional generated painted cutout; source rights separately recorded, not public domain. See docs/m8-personnel-review.md. Owner approved character preparation 2026-10-23. Owner separately authorizes suitable Italia reuse on 2026-10-25 (IT-A5); original binaries, provisional flags and licence unchanged.",
     "approval": {
       "scope": "character-draft",
       "by": "Project owner (chat approval 2026-10-23)",
@@ -501,7 +501,7 @@
       "matte": false,
       "quality": 88
     },
-    "notes": "Provisional generated painted cutout; source rights separately recorded, not public domain. See docs/m8-personnel-review.md. Owner approved character preparation 2026-10-23.",
+    "notes": "Provisional generated painted cutout; source rights separately recorded, not public domain. See docs/m8-personnel-review.md. Owner approved character preparation 2026-10-23. Owner separately authorizes suitable Italia reuse on 2026-10-25 (IT-A5); original binaries, provisional flags and licence unchanged.",
     "approval": {
       "scope": "character-draft",
       "by": "Project owner (chat approval 2026-10-23)",
@@ -526,7 +526,7 @@
       "matte": false,
       "quality": 88
     },
-    "notes": "Provisional generated painted cutout; source rights separately recorded, not public domain. See docs/m8-personnel-review.md. Owner approved character preparation 2026-10-23.",
+    "notes": "Provisional generated painted cutout; source rights separately recorded, not public domain. See docs/m8-personnel-review.md. Owner approved character preparation 2026-10-23. Owner separately authorizes suitable Italia reuse on 2026-10-25 (IT-A5); original binaries, provisional flags and licence unchanged.",
     "approval": {
       "scope": "character-draft",
       "by": "Project owner (chat approval 2026-10-23)",
@@ -1240,5 +1240,708 @@
       "rightsUrl": "https://www.naturalearthdata.com/about/terms-of-use/",
       "rightsStatement": "All versions of Natural Earth raster + vector map data found on this website are in the public domain."
     }
+  },
+  {
+    "file": "content/assets/staging/italia/met-river-source.jpg",
+    "source": "https://www.metmuseum.org/art/collection/search/436083",
+    "licence": "Public domain",
+    "retrieved": "2026-10-25",
+    "artist": "Charles-François Daubigny",
+    "institution": "The Metropolitan Museum of Art, 14.40.818",
+    "notes": "Exact institutional image downloaded https://collectionapi.metmuseum.org/api/collection/v1/iiif/436083/2004253/main-image . SHA-256 ed4d90912cd2ab809603f771e7c34c204cf81a7f0859be53a60304c80349db59. 1864 French river atmosphere only; not evidence for the Rubicon location or season. Owner authorized Italia batch IT-A1–A4 in chat on 2026-10-25; research/reference input, not a scene texture. Specific-file rights read before download; generated derivatives retain separate provenance.",
+    "approval": {
+      "by": "Project owner (Italia batch approval, chat 2026-10-25)",
+      "at": "2026-10-25",
+      "rightsUrl": "https://www.metmuseum.org/art/collection/search/436083",
+      "rightsStatement": "Public Domain",
+      "scope": "asset"
+    }
+  },
+  {
+    "file": "content/assets/staging/italia/met-town-source.jpg",
+    "source": "https://www.metmuseum.org/art/collection/search/247017",
+    "licence": "Public domain",
+    "retrieved": "2026-10-25",
+    "artist": "Roman artist, unknown",
+    "institution": "The Metropolitan Museum of Art, 03.14.13a–g",
+    "notes": "Exact institutional image downloaded https://collectionapi.metmuseum.org/api/collection/v1/iiif/247017/536525/main-image . SHA-256 54774ba0198c712730ebd047b3fa92cad7dddfe70d88c4b868c844732f9d6df4. Ca. 50–40 BCE Boscoreale imagined architectural vistas, not surveyed Ariminum/Rome. Ignore later installation furniture. Owner authorized Italia batch IT-A1–A4 in chat on 2026-10-25; research/reference input, not a scene texture. Specific-file rights read before download; generated derivatives retain separate provenance.",
+    "approval": {
+      "by": "Project owner (Italia batch approval, chat 2026-10-25)",
+      "at": "2026-10-25",
+      "rightsUrl": "https://www.metmuseum.org/art/collection/search/247017",
+      "rightsStatement": "Public Domain",
+      "scope": "asset"
+    }
+  },
+  {
+    "file": "content/assets/staging/italia/met-civic-source.jpg",
+    "source": "https://www.metmuseum.org/art/collection/search/247009",
+    "licence": "Public domain",
+    "retrieved": "2026-10-25",
+    "artist": "Roman artist, unknown",
+    "institution": "The Metropolitan Museum of Art, 03.14.5",
+    "notes": "Exact institutional image downloaded https://collectionapi.metmuseum.org/api/collection/v1/iiif/247009/530926/main-image . SHA-256 a5daedd61573349403a2f07fcec3213755672f380e43ef192dc5bdc5deebae09. Ca. 50–40 BCE Hellenistic elite female imagery. Drapery/paint handling only, not ordinary Italian civic costume or named portraits. Owner authorized Italia batch IT-A1–A4 in chat on 2026-10-25; research/reference input, not a scene texture. Specific-file rights read before download; generated derivatives retain separate provenance.",
+    "approval": {
+      "by": "Project owner (Italia batch approval, chat 2026-10-25)",
+      "at": "2026-10-25",
+      "rightsUrl": "https://www.metmuseum.org/art/collection/search/247009",
+      "rightsStatement": "Public Domain",
+      "scope": "asset"
+    }
+  },
+  {
+    "file": "content/assets/staging/italia/river-reference.png",
+    "source": "https://www.metmuseum.org/art/collection/search/436083",
+    "licence": "Owner-approved AI-assisted derivative; not public domain",
+    "retrieved": "2026-10-25",
+    "artist": "AI-assisted interpretation, owner-authorized Italia batch",
+    "institution": "Imperium",
+    "notes": "Italia only. Interpreted/provisional, not a surveyed setting, certain likeness or verified costume reconstruction. Built-in image_gen; prompt/output lineage: docs/reviews/italia-art-prompts.json. Input river-reference.png; SHA-256 e5d5f456d58c847ce1ed79bd6b20a53987ad8f5236445377526ff8d9c6eb823f. Original reference limits remain in source row.",
+    "approval": {
+      "scope": "atmospheric-derivative",
+      "by": "Project owner (Italia batch approval, chat 2026-10-25)",
+      "at": "2026-10-25",
+      "rightsUrl": "https://www.metmuseum.org/art/collection/search/436083",
+      "rightsStatement": "Source file rights verified separately. Owner authorizes this generated Italia interpretation; generated output is not PD/CC0."
+    },
+    "derivation": {
+      "kind": "ai-assisted-atmosphere",
+      "sourceFile": "content/assets/staging/italia/met-river-source.jpg",
+      "modifications": "Built-in imagegen painted interpretation; deterministic full-colour resize/WebP export only. See prompt ledger for reference roles and exclusions."
+    }
+  },
+  {
+    "file": "content/assets/staging/italia/caesar-coin-source.jpg",
+    "source": "https://commons.wikimedia.org/wiki/File:Denarius_portrait_of_Julius_Caesar.jpg",
+    "licence": "CC0",
+    "retrieved": "2026-10-25",
+    "artist": "American Numismatic Society; photograph Alan Roche",
+    "institution": "ANS 1937.158.290 / Wikimedia Commons",
+    "notes": "Exact file https://upload.wikimedia.org/wikipedia/commons/e/ee/Denarius_portrait_of_Julius_Caesar.jpg. SHA-256 5ace771f64a97592fcc33d8f3637f41b1de05aca50648bc2e3da07bd10f62205. Specific file page explicitly CC0 1.0; embedded historical copyright metadata retained. Alternate reference after Tübingen endpoint repeatedly returned 503. 44 BC politically styled coin portrait, not guaranteed January 49 BC likeness or clothing evidence. Owner-approved Italia commander reference scope only.",
+    "approval": {
+      "scope": "asset",
+      "by": "Project owner (Italia batch approval, chat 2026-10-25)",
+      "at": "2026-10-25",
+      "rightsUrl": "https://commons.wikimedia.org/wiki/File:Denarius_portrait_of_Julius_Caesar.jpg",
+      "rightsStatement": "This file is made available under the Creative Commons CC0 1.0 Universal Public Domain Dedication."
+    }
+  },
+  {
+    "file": "public/assets/italia/river-reference.webp",
+    "source": "https://www.metmuseum.org/art/collection/search/436083",
+    "licence": "Owner-approved AI-assisted derivative; not public domain",
+    "retrieved": "2026-10-25",
+    "artist": "AI-assisted interpretation, owner-authorized Italia batch",
+    "institution": "Imperium",
+    "notes": "Italia only. Interpreted/provisional, not a surveyed setting, certain likeness or verified costume reconstruction. Built-in image_gen; prompt/output lineage: docs/reviews/italia-art-prompts.json. Input river-reference.png; SHA-256 cbfdcb44c77bab9015b791c75d6ce2940df86e277fb4ec0b1cb83f8e135c6ad9. Original reference limits remain in source row.",
+    "approval": {
+      "scope": "atmospheric-derivative",
+      "by": "Project owner (Italia batch approval, chat 2026-10-25)",
+      "at": "2026-10-25",
+      "rightsUrl": "https://www.metmuseum.org/art/collection/search/436083",
+      "rightsStatement": "Source file rights verified separately. Owner authorizes this generated Italia interpretation; generated output is not PD/CC0."
+    },
+    "derivation": {
+      "kind": "ai-assisted-atmosphere",
+      "sourceFile": "content/assets/staging/italia/met-river-source.jpg",
+      "modifications": "Built-in imagegen painted interpretation; deterministic full-colour resize/WebP export only. See prompt ledger for reference roles and exclusions."
+    }
+  },
+  {
+    "file": "content/assets/staging/italia/river-foreground.png",
+    "source": "https://www.metmuseum.org/art/collection/search/436083",
+    "licence": "Owner-approved AI-assisted derivative; not public domain",
+    "retrieved": "2026-10-25",
+    "artist": "AI-assisted interpretation, owner-authorized Italia batch",
+    "institution": "Imperium",
+    "notes": "Italia only. Interpreted/provisional, not a surveyed setting, certain likeness or verified costume reconstruction. Built-in image_gen; prompt/output lineage: docs/reviews/italia-art-prompts.json. Input river-foreground.png; SHA-256 3fab5c2fb00986adeed99bb1e8b0f01b2a994b3345c783602b5c0eabee13eb7b. Original reference limits remain in source row.",
+    "approval": {
+      "scope": "atmospheric-derivative",
+      "by": "Project owner (Italia batch approval, chat 2026-10-25)",
+      "at": "2026-10-25",
+      "rightsUrl": "https://www.metmuseum.org/art/collection/search/436083",
+      "rightsStatement": "Source file rights verified separately. Owner authorizes this generated Italia interpretation; generated output is not PD/CC0."
+    },
+    "derivation": {
+      "kind": "ai-assisted-atmosphere",
+      "sourceFile": "content/assets/staging/italia/met-river-source.jpg",
+      "modifications": "Built-in imagegen painted interpretation; deterministic full-colour resize/WebP export only. See prompt ledger for reference roles and exclusions."
+    }
+  },
+  {
+    "file": "public/assets/italia/river-foreground.webp",
+    "source": "https://www.metmuseum.org/art/collection/search/436083",
+    "licence": "Owner-approved AI-assisted derivative; not public domain",
+    "retrieved": "2026-10-25",
+    "artist": "AI-assisted interpretation, owner-authorized Italia batch",
+    "institution": "Imperium",
+    "notes": "Italia only. Interpreted/provisional, not a surveyed setting, certain likeness or verified costume reconstruction. Built-in image_gen; prompt/output lineage: docs/reviews/italia-art-prompts.json. Input river-foreground.png; SHA-256 c71f01bcb7bc004ae139200d200fe06f97ed7b8e8b7510119c88e4a3d6cb0917. Original reference limits remain in source row.",
+    "approval": {
+      "scope": "atmospheric-derivative",
+      "by": "Project owner (Italia batch approval, chat 2026-10-25)",
+      "at": "2026-10-25",
+      "rightsUrl": "https://www.metmuseum.org/art/collection/search/436083",
+      "rightsStatement": "Source file rights verified separately. Owner authorizes this generated Italia interpretation; generated output is not PD/CC0."
+    },
+    "derivation": {
+      "kind": "ai-assisted-atmosphere",
+      "sourceFile": "content/assets/staging/italia/met-river-source.jpg",
+      "modifications": "Built-in imagegen painted interpretation; deterministic full-colour resize/WebP export only. See prompt ledger for reference roles and exclusions."
+    }
+  },
+  {
+    "file": "content/assets/staging/italia/caesar.png",
+    "source": "https://commons.wikimedia.org/wiki/File:Denarius_portrait_of_Julius_Caesar.jpg",
+    "licence": "Owner-approved AI-assisted derivative; not public domain",
+    "retrieved": "2026-10-25",
+    "artist": "AI-assisted interpretation, owner-authorized Italia batch",
+    "institution": "Imperium",
+    "notes": "Italia only. Interpreted/provisional, not a surveyed setting, certain likeness or verified costume reconstruction. Built-in image_gen; prompt/output lineage: docs/reviews/italia-art-prompts.json. Input exec-eadc1a10-0b0b-49ba-8ee0-5b74c7939c96.png; SHA-256 3510a847dfb4422cdc7028b1a0c6a84105bc20f0cd2bc2df9f3526550457eb82. Original reference limits remain in source row.",
+    "approval": {
+      "scope": "character-draft",
+      "by": "Project owner (Italia batch approval, chat 2026-10-25)",
+      "at": "2026-10-25",
+      "rightsUrl": "https://commons.wikimedia.org/wiki/File:Denarius_portrait_of_Julius_Caesar.jpg",
+      "rightsStatement": "Source file rights verified separately. Owner authorizes this generated Italia interpretation; generated output is not PD/CC0."
+    },
+    "derivation": {
+      "kind": "ai-assisted-character-draft",
+      "sourceFile": "content/assets/staging/italia/caesar-coin-source.jpg",
+      "modifications": "Built-in imagegen painted interpretation; deterministic full-colour resize/WebP export only. See prompt ledger for reference roles and exclusions."
+    }
+  },
+  {
+    "file": "public/assets/italia/caesar.webp",
+    "source": "https://commons.wikimedia.org/wiki/File:Denarius_portrait_of_Julius_Caesar.jpg",
+    "licence": "Owner-approved AI-assisted derivative; not public domain",
+    "retrieved": "2026-10-25",
+    "artist": "AI-assisted interpretation, owner-authorized Italia batch",
+    "institution": "Imperium",
+    "notes": "Italia only. Interpreted/provisional, not a surveyed setting, certain likeness or verified costume reconstruction. Built-in image_gen; prompt/output lineage: docs/reviews/italia-art-prompts.json. Input exec-eadc1a10-0b0b-49ba-8ee0-5b74c7939c96.png; SHA-256 6083be0010e64511a5b0a6e058cba85a4f4fc465ef5dfe2cf8553356203baa4b. Original reference limits remain in source row.",
+    "approval": {
+      "scope": "character-draft",
+      "by": "Project owner (Italia batch approval, chat 2026-10-25)",
+      "at": "2026-10-25",
+      "rightsUrl": "https://commons.wikimedia.org/wiki/File:Denarius_portrait_of_Julius_Caesar.jpg",
+      "rightsStatement": "Source file rights verified separately. Owner authorizes this generated Italia interpretation; generated output is not PD/CC0."
+    },
+    "derivation": {
+      "kind": "ai-assisted-character-draft",
+      "sourceFile": "content/assets/staging/italia/caesar-coin-source.jpg",
+      "modifications": "Built-in imagegen painted interpretation; deterministic full-colour resize/WebP export only. See prompt ledger for reference roles and exclusions."
+    }
+  },
+  {
+    "file": "content/assets/staging/italia/town.png",
+    "source": "https://www.metmuseum.org/art/collection/search/247017",
+    "licence": "Owner-approved AI-assisted derivative; not public domain",
+    "retrieved": "2026-10-25",
+    "artist": "AI-assisted interpretation, owner-authorized Italia batch",
+    "institution": "Imperium",
+    "notes": "Italia only. Interpreted/provisional, not a surveyed setting, certain likeness or verified costume reconstruction. Built-in image_gen; prompt/output lineage: docs/reviews/italia-art-prompts.json. Input exec-5ccddd2d-5e3b-42d6-944c-7c142f481d8a.png; SHA-256 204607a00809d3bedf3fba28e0f74c5acdb380418f2a088fbc8fd41cbba2a54b. Original reference limits remain in source row.",
+    "approval": {
+      "scope": "structural-draft",
+      "by": "Project owner (Italia batch approval, chat 2026-10-25)",
+      "at": "2026-10-25",
+      "rightsUrl": "https://www.metmuseum.org/art/collection/search/247017",
+      "rightsStatement": "Source file rights verified separately. Owner authorizes this generated Italia interpretation; generated output is not PD/CC0."
+    },
+    "derivation": {
+      "kind": "ai-assisted-structure-draft",
+      "sourceFile": "content/assets/staging/italia/met-town-source.jpg",
+      "modifications": "Built-in imagegen painted interpretation; deterministic full-colour resize/WebP export only. See prompt ledger for reference roles and exclusions."
+    }
+  },
+  {
+    "file": "public/assets/italia/town.webp",
+    "source": "https://www.metmuseum.org/art/collection/search/247017",
+    "licence": "Owner-approved AI-assisted derivative; not public domain",
+    "retrieved": "2026-10-25",
+    "artist": "AI-assisted interpretation, owner-authorized Italia batch",
+    "institution": "Imperium",
+    "notes": "Italia only. Interpreted/provisional, not a surveyed setting, certain likeness or verified costume reconstruction. Built-in image_gen; prompt/output lineage: docs/reviews/italia-art-prompts.json. Input exec-5ccddd2d-5e3b-42d6-944c-7c142f481d8a.png; SHA-256 07fbebe27cbc8acb78631ab02c5f97aeee6c404c53d129370f932c87ee7e429d. Original reference limits remain in source row.",
+    "approval": {
+      "scope": "structural-draft",
+      "by": "Project owner (Italia batch approval, chat 2026-10-25)",
+      "at": "2026-10-25",
+      "rightsUrl": "https://www.metmuseum.org/art/collection/search/247017",
+      "rightsStatement": "Source file rights verified separately. Owner authorizes this generated Italia interpretation; generated output is not PD/CC0."
+    },
+    "derivation": {
+      "kind": "ai-assisted-structure-draft",
+      "sourceFile": "content/assets/staging/italia/met-town-source.jpg",
+      "modifications": "Built-in imagegen painted interpretation; deterministic full-colour resize/WebP export only. See prompt ledger for reference roles and exclusions."
+    }
+  },
+  {
+    "file": "content/assets/staging/italia/courtyard.png",
+    "source": "https://www.metmuseum.org/art/collection/search/247017",
+    "licence": "Owner-approved AI-assisted derivative; not public domain",
+    "retrieved": "2026-10-25",
+    "artist": "AI-assisted interpretation, owner-authorized Italia batch",
+    "institution": "Imperium",
+    "notes": "Italia only. Interpreted/provisional, not a surveyed setting, certain likeness or verified costume reconstruction. Built-in image_gen; prompt/output lineage: docs/reviews/italia-art-prompts.json. Input exec-3c2e5405-9774-4362-bf03-43c57faa0b1a.png; SHA-256 dde02243c687d2780fb780ca1d9135052e757c0507a2745f6e45388c68f741f6. Original reference limits remain in source row.",
+    "approval": {
+      "scope": "structural-draft",
+      "by": "Project owner (Italia batch approval, chat 2026-10-25)",
+      "at": "2026-10-25",
+      "rightsUrl": "https://www.metmuseum.org/art/collection/search/247017",
+      "rightsStatement": "Source file rights verified separately. Owner authorizes this generated Italia interpretation; generated output is not PD/CC0."
+    },
+    "derivation": {
+      "kind": "ai-assisted-structure-draft",
+      "sourceFile": "content/assets/staging/italia/met-town-source.jpg",
+      "modifications": "Built-in imagegen painted interpretation; deterministic full-colour resize/WebP export only. See prompt ledger for reference roles and exclusions."
+    }
+  },
+  {
+    "file": "public/assets/italia/courtyard.webp",
+    "source": "https://www.metmuseum.org/art/collection/search/247017",
+    "licence": "Owner-approved AI-assisted derivative; not public domain",
+    "retrieved": "2026-10-25",
+    "artist": "AI-assisted interpretation, owner-authorized Italia batch",
+    "institution": "Imperium",
+    "notes": "Italia only. Interpreted/provisional, not a surveyed setting, certain likeness or verified costume reconstruction. Built-in image_gen; prompt/output lineage: docs/reviews/italia-art-prompts.json. Input exec-3c2e5405-9774-4362-bf03-43c57faa0b1a.png; SHA-256 ba0917b7fe9e9249aa1874c7d4687930185cc8b4c95107b3789cec189dcaa20b. Original reference limits remain in source row.",
+    "approval": {
+      "scope": "structural-draft",
+      "by": "Project owner (Italia batch approval, chat 2026-10-25)",
+      "at": "2026-10-25",
+      "rightsUrl": "https://www.metmuseum.org/art/collection/search/247017",
+      "rightsStatement": "Source file rights verified separately. Owner authorizes this generated Italia interpretation; generated output is not PD/CC0."
+    },
+    "derivation": {
+      "kind": "ai-assisted-structure-draft",
+      "sourceFile": "content/assets/staging/italia/met-town-source.jpg",
+      "modifications": "Built-in imagegen painted interpretation; deterministic full-colour resize/WebP export only. See prompt ledger for reference roles and exclusions."
+    }
+  },
+  {
+    "file": "content/assets/staging/italia/civic.png",
+    "source": "https://www.metmuseum.org/art/collection/search/247009",
+    "licence": "Owner-approved AI-assisted derivative; not public domain",
+    "retrieved": "2026-10-25",
+    "artist": "AI-assisted interpretation, owner-authorized Italia batch",
+    "institution": "Imperium",
+    "notes": "Italia only. Interpreted/provisional, not a surveyed setting, certain likeness or verified costume reconstruction. Built-in image_gen; prompt/output lineage: docs/reviews/italia-art-prompts.json. Input exec-5a2801e1-79b4-40a2-b163-db83098f66f3.png; SHA-256 9b554fd85ba0466ffab000036c9102319432aa14b510889e205f97f013fb3c46. Original reference limits remain in source row.",
+    "approval": {
+      "scope": "character-draft",
+      "by": "Project owner (Italia batch approval, chat 2026-10-25)",
+      "at": "2026-10-25",
+      "rightsUrl": "https://www.metmuseum.org/art/collection/search/247009",
+      "rightsStatement": "Source file rights verified separately. Owner authorizes this generated Italia interpretation; generated output is not PD/CC0."
+    },
+    "derivation": {
+      "kind": "ai-assisted-character-draft",
+      "sourceFile": "content/assets/staging/italia/met-civic-source.jpg",
+      "modifications": "Built-in imagegen painted interpretation; deterministic full-colour resize/WebP export only. See prompt ledger for reference roles and exclusions."
+    }
+  },
+  {
+    "file": "public/assets/italia/civic.webp",
+    "source": "https://www.metmuseum.org/art/collection/search/247009",
+    "licence": "Owner-approved AI-assisted derivative; not public domain",
+    "retrieved": "2026-10-25",
+    "artist": "AI-assisted interpretation, owner-authorized Italia batch",
+    "institution": "Imperium",
+    "notes": "Italia only. Interpreted/provisional, not a surveyed setting, certain likeness or verified costume reconstruction. Built-in image_gen; prompt/output lineage: docs/reviews/italia-art-prompts.json. Input exec-5a2801e1-79b4-40a2-b163-db83098f66f3.png; SHA-256 c47788521b589e0b7acb6794fbf980909d1a3c7dfbc68d78e69eeefca3a1330c. Original reference limits remain in source row.",
+    "approval": {
+      "scope": "character-draft",
+      "by": "Project owner (Italia batch approval, chat 2026-10-25)",
+      "at": "2026-10-25",
+      "rightsUrl": "https://www.metmuseum.org/art/collection/search/247009",
+      "rightsStatement": "Source file rights verified separately. Owner authorizes this generated Italia interpretation; generated output is not PD/CC0."
+    },
+    "derivation": {
+      "kind": "ai-assisted-character-draft",
+      "sourceFile": "content/assets/staging/italia/met-civic-source.jpg",
+      "modifications": "Built-in imagegen painted interpretation; deterministic full-colour resize/WebP export only. See prompt ledger for reference roles and exclusions."
+    }
+  },
+  {
+    "file": "public/assets/italia/audio/narration-an-order-from-rome.mp3",
+    "source": "https://huggingface.co/onnx-community/Kokoro-82M-v1.0-ONNX/blob/1939ad2a8e416c0acfeecc08a694d14ef25f2231/README.md",
+    "licence": "Generated stock-voice narration",
+    "retrieved": "2026-10-25",
+    "artist": "Stock synthetic voice bm_george; local Kokoro inference",
+    "institution": "Imperium project",
+    "synthesis": {
+      "kind": "stock-voice-tts",
+      "tool": {
+        "name": "kokoro-js",
+        "version": "1.2.1",
+        "url": "https://registry.npmjs.org/kokoro-js/-/kokoro-js-1.2.1.tgz",
+        "licence": "Apache-2.0"
+      },
+      "model": {
+        "name": "onnx-community/Kokoro-82M-v1.0-ONNX (q8)",
+        "revision": "1939ad2a8e416c0acfeecc08a694d14ef25f2231",
+        "url": "https://huggingface.co/onnx-community/Kokoro-82M-v1.0-ONNX/tree/1939ad2a8e416c0acfeecc08a694d14ef25f2231",
+        "licence": "Apache-2.0"
+      },
+      "voice": {
+        "id": "bm_george",
+        "url": "https://huggingface.co/onnx-community/Kokoro-82M-v1.0-ONNX/blob/1939ad2a8e416c0acfeecc08a694d14ef25f2231/voices/bm_george.bin",
+        "licence": "Apache-2.0",
+        "sha256": "c4b235a4c1f2cd3b939fed08b899ce9385638b763f7b73a59616c4fc9bd6c9bc"
+      },
+      "speed": 0.92,
+      "transcript": "At Rome, a letter from Caesar is read aloud. His opponents demand that he give up his army by a fixed deadline; Antony and Cassius, the tribunes who oppose the move, leave the city. Caesar waits at Ravenna, still in his province. He will describe the crisis as an attack on lawful rights. His opponents fear a commander who will not let go of his troops. The argument is still being made in the Senate. Armies are already part of it.",
+      "transcriptSha256": "24e17bfd0913f2cf50b49bc91c1981526dbb811be41e06323f26503dd1f92a03",
+      "durationMs": 35575
+    },
+    "approval": {
+      "scope": "generated-narration",
+      "by": "Project owner (approved Italia prose, George pipeline and six recordings in chat 2026-10-25)",
+      "at": "2026-10-25",
+      "rightsUrl": "https://huggingface.co/onnx-community/Kokoro-82M-v1.0-ONNX/blob/1939ad2a8e416c0acfeecc08a694d14ef25f2231/README.md",
+      "rightsStatement": "Verified Apache-2.0 tool/model/stock-voice grants and pinned George binary. Owner authorizes local generation/distribution of these six approved Italia transcripts. Generated audio is not PD/CC0; listening acceptance remains distinct."
+    },
+    "notes": "Italia only. Complete approved transcript; no cloning/paid API. 24kHz mono MP3 VBR .5; gain 1.437221078812423. SHA-256 8f922ab179dd7c54b32d547484441d0a5019c9c172565afc606891d070c358e6. Sentence/token and output provenance: docs/reviews/italia-narration-generation.json and italia-narration-encoding.json. Owner editorial approval is not independent historical verification."
+  },
+  {
+    "file": "public/assets/italia/audio/narration-the-army-he-keeps.mp3",
+    "source": "https://huggingface.co/onnx-community/Kokoro-82M-v1.0-ONNX/blob/1939ad2a8e416c0acfeecc08a694d14ef25f2231/README.md",
+    "licence": "Generated stock-voice narration",
+    "retrieved": "2026-10-25",
+    "artist": "Stock synthetic voice bm_george; local Kokoro inference",
+    "institution": "Imperium project",
+    "synthesis": {
+      "kind": "stock-voice-tts",
+      "tool": {
+        "name": "kokoro-js",
+        "version": "1.2.1",
+        "url": "https://registry.npmjs.org/kokoro-js/-/kokoro-js-1.2.1.tgz",
+        "licence": "Apache-2.0"
+      },
+      "model": {
+        "name": "onnx-community/Kokoro-82M-v1.0-ONNX (q8)",
+        "revision": "1939ad2a8e416c0acfeecc08a694d14ef25f2231",
+        "url": "https://huggingface.co/onnx-community/Kokoro-82M-v1.0-ONNX/tree/1939ad2a8e416c0acfeecc08a694d14ef25f2231",
+        "licence": "Apache-2.0"
+      },
+      "voice": {
+        "id": "bm_george",
+        "url": "https://huggingface.co/onnx-community/Kokoro-82M-v1.0-ONNX/blob/1939ad2a8e416c0acfeecc08a694d14ef25f2231/voices/bm_george.bin",
+        "licence": "Apache-2.0",
+        "sha256": "c4b235a4c1f2cd3b939fed08b899ce9385638b763f7b73a59616c4fc9bd6c9bc"
+      },
+      "speed": 0.92,
+      "transcript": "The Thirteenth Legion stands before its commander. These are men who have fought for him in Gaul. In Caesar's account, he calls on them to defend his honour and the rights of the tribunes; they answer that they will. His account turns a political quarrel into another obligation between a general and his soldiers. His other legions have not yet gathered. For this first move, he has the loyalty of the men already here.",
+      "transcriptSha256": "8960d3377a8b65030927180b2fb5dd6d3372b94cb56898d437680dcb9f1ad490",
+      "durationMs": 32950
+    },
+    "approval": {
+      "scope": "generated-narration",
+      "by": "Project owner (approved Italia prose, George pipeline and six recordings in chat 2026-10-25)",
+      "at": "2026-10-25",
+      "rightsUrl": "https://huggingface.co/onnx-community/Kokoro-82M-v1.0-ONNX/blob/1939ad2a8e416c0acfeecc08a694d14ef25f2231/README.md",
+      "rightsStatement": "Verified Apache-2.0 tool/model/stock-voice grants and pinned George binary. Owner authorizes local generation/distribution of these six approved Italia transcripts. Generated audio is not PD/CC0; listening acceptance remains distinct."
+    },
+    "notes": "Italia only. Complete approved transcript; no cloning/paid API. 24kHz mono MP3 VBR .5; gain 1.4463889261517968. SHA-256 b37d079f2b4389c95617f2dd63a1b1f89816fd0ab90cbff1f725fc5ff900c8a8. Sentence/token and output provenance: docs/reviews/italia-narration-generation.json and italia-narration-encoding.json. Owner editorial approval is not independent historical verification."
+  },
+  {
+    "file": "public/assets/italia/audio/narration-across-the-boundary.mp3",
+    "source": "https://huggingface.co/onnx-community/Kokoro-82M-v1.0-ONNX/blob/1939ad2a8e416c0acfeecc08a694d14ef25f2231/README.md",
+    "licence": "Generated stock-voice narration",
+    "retrieved": "2026-10-25",
+    "artist": "Stock synthetic voice bm_george; local Kokoro inference",
+    "institution": "Imperium project",
+    "synthesis": {
+      "kind": "stock-voice-tts",
+      "tool": {
+        "name": "kokoro-js",
+        "version": "1.2.1",
+        "url": "https://registry.npmjs.org/kokoro-js/-/kokoro-js-1.2.1.tgz",
+        "licence": "Apache-2.0"
+      },
+      "model": {
+        "name": "onnx-community/Kokoro-82M-v1.0-ONNX (q8)",
+        "revision": "1939ad2a8e416c0acfeecc08a694d14ef25f2231",
+        "url": "https://huggingface.co/onnx-community/Kokoro-82M-v1.0-ONNX/tree/1939ad2a8e416c0acfeecc08a694d14ef25f2231",
+        "licence": "Apache-2.0"
+      },
+      "voice": {
+        "id": "bm_george",
+        "url": "https://huggingface.co/onnx-community/Kokoro-82M-v1.0-ONNX/blob/1939ad2a8e416c0acfeecc08a694d14ef25f2231/voices/bm_george.bin",
+        "licence": "Apache-2.0",
+        "sha256": "c4b235a4c1f2cd3b939fed08b899ce9385638b763f7b73a59616c4fc9bd6c9bc"
+      },
+      "speed": 0.92,
+      "transcript": "The river is small. The boundary is not. The Rubicon marks the edge of Caesar's province; taking his troops beyond it carries the quarrel into Italy. Plutarch and Suetonius, writing much later, give him a pause and words about casting a die. Caesar's own account leaves out that scene. We cannot pin the crossing to an undisputed day or a certain point on today's map. What matters now is the movement of armed men across a provincial boundary.",
+      "transcriptSha256": "209ea530c5571095f0dd8824dc65f0e52738fe2f790645ab35dbd2f96719456a",
+      "durationMs": 37750
+    },
+    "approval": {
+      "scope": "generated-narration",
+      "by": "Project owner (approved Italia prose, George pipeline and six recordings in chat 2026-10-25)",
+      "at": "2026-10-25",
+      "rightsUrl": "https://huggingface.co/onnx-community/Kokoro-82M-v1.0-ONNX/blob/1939ad2a8e416c0acfeecc08a694d14ef25f2231/README.md",
+      "rightsStatement": "Verified Apache-2.0 tool/model/stock-voice grants and pinned George binary. Owner authorizes local generation/distribution of these six approved Italia transcripts. Generated audio is not PD/CC0; listening acceptance remains distinct."
+    },
+    "notes": "Italia only. Complete approved transcript; no cloning/paid API. 24kHz mono MP3 VBR .5; gain 1.4516696812879217. SHA-256 2e325e6bfff523a970708f472d82840ebc7fe9d17f81d2c6cde20e3235c86c2f. Sentence/token and output provenance: docs/reviews/italia-narration-generation.json and italia-narration-encoding.json. Owner editorial approval is not independent historical verification."
+  },
+  {
+    "file": "public/assets/italia/audio/narration-ariminum.mp3",
+    "source": "https://huggingface.co/onnx-community/Kokoro-82M-v1.0-ONNX/blob/1939ad2a8e416c0acfeecc08a694d14ef25f2231/README.md",
+    "licence": "Generated stock-voice narration",
+    "retrieved": "2026-10-25",
+    "artist": "Stock synthetic voice bm_george; local Kokoro inference",
+    "institution": "Imperium project",
+    "synthesis": {
+      "kind": "stock-voice-tts",
+      "tool": {
+        "name": "kokoro-js",
+        "version": "1.2.1",
+        "url": "https://registry.npmjs.org/kokoro-js/-/kokoro-js-1.2.1.tgz",
+        "licence": "Apache-2.0"
+      },
+      "model": {
+        "name": "onnx-community/Kokoro-82M-v1.0-ONNX (q8)",
+        "revision": "1939ad2a8e416c0acfeecc08a694d14ef25f2231",
+        "url": "https://huggingface.co/onnx-community/Kokoro-82M-v1.0-ONNX/tree/1939ad2a8e416c0acfeecc08a694d14ef25f2231",
+        "licence": "Apache-2.0"
+      },
+      "voice": {
+        "id": "bm_george",
+        "url": "https://huggingface.co/onnx-community/Kokoro-82M-v1.0-ONNX/blob/1939ad2a8e416c0acfeecc08a694d14ef25f2231/voices/bm_george.bin",
+        "licence": "Apache-2.0",
+        "sha256": "c4b235a4c1f2cd3b939fed08b899ce9385638b763f7b73a59616c4fc9bd6c9bc"
+      },
+      "speed": 0.92,
+      "transcript": "Ariminum, modern Rimini, is the first town in the advance. Caesar says he reaches it with the Thirteenth and meets the fugitive tribunes there. In Plutarch's later telling, an advance party has already been sent to seize it quietly. The accounts do not line up into a single clean scene. The result does: Caesar has occupied a town beyond his province. Rome's dispute is now being enforced inside Italy, by Roman troops.",
+      "transcriptSha256": "dce6c8c0b02aa00364ae158ab3601e059482173ff14c8414fe31a5373f07a586",
+      "durationMs": 34125
+    },
+    "approval": {
+      "scope": "generated-narration",
+      "by": "Project owner (approved Italia prose, George pipeline and six recordings in chat 2026-10-25)",
+      "at": "2026-10-25",
+      "rightsUrl": "https://huggingface.co/onnx-community/Kokoro-82M-v1.0-ONNX/blob/1939ad2a8e416c0acfeecc08a694d14ef25f2231/README.md",
+      "rightsStatement": "Verified Apache-2.0 tool/model/stock-voice grants and pinned George binary. Owner authorizes local generation/distribution of these six approved Italia transcripts. Generated audio is not PD/CC0; listening acceptance remains distinct."
+    },
+    "notes": "Italia only. Complete approved transcript; no cloning/paid API. 24kHz mono MP3 VBR .5; gain 1.4393229714447404. SHA-256 4e6f9c47313b709131bc8e44cdce97613c5aba78a9a621464c3cc5e3e3ba42f3. Sentence/token and output provenance: docs/reviews/italia-narration-generation.json and italia-narration-encoding.json. Owner editorial approval is not independent historical verification."
+  },
+  {
+    "file": "public/assets/italia/audio/narration-terms-and-marching-orders.mp3",
+    "source": "https://huggingface.co/onnx-community/Kokoro-82M-v1.0-ONNX/blob/1939ad2a8e416c0acfeecc08a694d14ef25f2231/README.md",
+    "licence": "Generated stock-voice narration",
+    "retrieved": "2026-10-25",
+    "artist": "Stock synthetic voice bm_george; local Kokoro inference",
+    "institution": "Imperium project",
+    "synthesis": {
+      "kind": "stock-voice-tts",
+      "tool": {
+        "name": "kokoro-js",
+        "version": "1.2.1",
+        "url": "https://registry.npmjs.org/kokoro-js/-/kokoro-js-1.2.1.tgz",
+        "licence": "Apache-2.0"
+      },
+      "model": {
+        "name": "onnx-community/Kokoro-82M-v1.0-ONNX (q8)",
+        "revision": "1939ad2a8e416c0acfeecc08a694d14ef25f2231",
+        "url": "https://huggingface.co/onnx-community/Kokoro-82M-v1.0-ONNX/tree/1939ad2a8e416c0acfeecc08a694d14ef25f2231",
+        "licence": "Apache-2.0"
+      },
+      "voice": {
+        "id": "bm_george",
+        "url": "https://huggingface.co/onnx-community/Kokoro-82M-v1.0-ONNX/blob/1939ad2a8e416c0acfeecc08a694d14ef25f2231/voices/bm_george.bin",
+        "licence": "Apache-2.0",
+        "sha256": "c4b235a4c1f2cd3b939fed08b899ce9385638b763f7b73a59616c4fc9bd6c9bc"
+      },
+      "speed": 0.92,
+      "transcript": "Cicero has weighed the possible bargains in letters to Atticus: an election, an army surrendered, a compromise neither side trusts. Now news comes of towns occupied by Caesar's men. Caesar says he had proposed that all sides lay down their arms. That claim travels beside the advance it is meant to justify. Messages still promise a political settlement; soldiers are already deciding who controls the roads.",
+      "transcriptSha256": "e09e905c1dc1b9edf94f899b090788a3e3d2faa68246de6143ea7d69f64acd01",
+      "durationMs": 34075
+    },
+    "approval": {
+      "scope": "generated-narration",
+      "by": "Project owner (approved Italia prose, George pipeline and six recordings in chat 2026-10-25)",
+      "at": "2026-10-25",
+      "rightsUrl": "https://huggingface.co/onnx-community/Kokoro-82M-v1.0-ONNX/blob/1939ad2a8e416c0acfeecc08a694d14ef25f2231/README.md",
+      "rightsStatement": "Verified Apache-2.0 tool/model/stock-voice grants and pinned George binary. Owner authorizes local generation/distribution of these six approved Italia transcripts. Generated audio is not PD/CC0; listening acceptance remains distinct."
+    },
+    "notes": "Italia only. Complete approved transcript; no cloning/paid API. 24kHz mono MP3 VBR .5; gain 1.4730939236698664. SHA-256 6f4359c12d1deddd4e01ee54d93e32ffcdd53f5a6030828c7cac7e216c02a3d9. Sentence/token and output provenance: docs/reviews/italia-narration-generation.json and italia-narration-encoding.json. Owner editorial approval is not independent historical verification."
+  },
+  {
+    "file": "public/assets/italia/audio/narration-rome-empties.mp3",
+    "source": "https://huggingface.co/onnx-community/Kokoro-82M-v1.0-ONNX/blob/1939ad2a8e416c0acfeecc08a694d14ef25f2231/README.md",
+    "licence": "Generated stock-voice narration",
+    "retrieved": "2026-10-25",
+    "artist": "Stock synthetic voice bm_george; local Kokoro inference",
+    "institution": "Imperium project",
+    "synthesis": {
+      "kind": "stock-voice-tts",
+      "tool": {
+        "name": "kokoro-js",
+        "version": "1.2.1",
+        "url": "https://registry.npmjs.org/kokoro-js/-/kokoro-js-1.2.1.tgz",
+        "licence": "Apache-2.0"
+      },
+      "model": {
+        "name": "onnx-community/Kokoro-82M-v1.0-ONNX (q8)",
+        "revision": "1939ad2a8e416c0acfeecc08a694d14ef25f2231",
+        "url": "https://huggingface.co/onnx-community/Kokoro-82M-v1.0-ONNX/tree/1939ad2a8e416c0acfeecc08a694d14ef25f2231",
+        "licence": "Apache-2.0"
+      },
+      "voice": {
+        "id": "bm_george",
+        "url": "https://huggingface.co/onnx-community/Kokoro-82M-v1.0-ONNX/blob/1939ad2a8e416c0acfeecc08a694d14ef25f2231/voices/bm_george.bin",
+        "licence": "Apache-2.0",
+        "sha256": "c4b235a4c1f2cd3b939fed08b899ce9385638b763f7b73a59616c4fc9bd6c9bc"
+      },
+      "speed": 0.92,
+      "transcript": "News outruns the marching columns. Pompey and the consuls leave Rome; many senators follow them south. Cicero, who favours Pompey, writes in disbelief at the city's abandonment and admits he does not understand the plan. The government's leaders are moving away from the capital while Caesar is still advancing through Italy. He has not yet entered Rome. The Republic has not become an empire in a night. It has begun a war against itself.",
+      "transcriptSha256": "63939b78e9c99a27de35671e61e01d3a8a6bff0cee3bbfb729bc9a2ba65a5a5d",
+      "durationMs": 36775
+    },
+    "approval": {
+      "scope": "generated-narration",
+      "by": "Project owner (approved Italia prose, George pipeline and six recordings in chat 2026-10-25)",
+      "at": "2026-10-25",
+      "rightsUrl": "https://huggingface.co/onnx-community/Kokoro-82M-v1.0-ONNX/blob/1939ad2a8e416c0acfeecc08a694d14ef25f2231/README.md",
+      "rightsStatement": "Verified Apache-2.0 tool/model/stock-voice grants and pinned George binary. Owner authorizes local generation/distribution of these six approved Italia transcripts. Generated audio is not PD/CC0; listening acceptance remains distinct."
+    },
+    "notes": "Italia only. Complete approved transcript; no cloning/paid API. 24kHz mono MP3 VBR .5; gain 1.4477078276571231. SHA-256 0c1620452e5c6012fd8d66c3435c14dd99253eedca3c03a86be47c03856cdecf. Sentence/token and output provenance: docs/reviews/italia-narration-generation.json and italia-narration-encoding.json. Owner editorial approval is not independent historical verification."
+  },
+  {
+    "file": "content/assets/staging/italia/rome-departure.png",
+    "source": "https://www.metmuseum.org/art/collection/search/247017",
+    "licence": "Owner-approved AI-assisted derivative; not public domain",
+    "retrieved": "2026-10-25",
+    "artist": "AI-assisted interpretation, owner-authorized Italia batch",
+    "institution": "Imperium",
+    "notes": "Italia only. Interpreted/provisional, not a surveyed setting, certain likeness or verified costume reconstruction. Built-in image_gen; prompt/output lineage: docs/reviews/italia-art-prompts.json. Input exec-0d0ff519-9bdf-45cb-8dfd-617065cbf81d.png; SHA-256 5c336b48769ec376da900b2c0c1067b8c94295c17b722b753ceaea9b7ce708c5. Original reference limits remain in source row. Visual revision requested by owner 2026-10-25. Prompt/reference ledger: docs/reviews/italia-visual-revision-prompts.json. IT-A2/IT-A4 combined civic scene: unnamed figures painted directly into the background, not identifiable leaders or duplicate rig instances. No surveyed Roman street/gate claim.",
+    "approval": {
+      "scope": "structural-draft",
+      "by": "Project owner (Italia batch approval, chat 2026-10-25)",
+      "at": "2026-10-25",
+      "rightsUrl": "https://www.metmuseum.org/art/collection/search/247017",
+      "rightsStatement": "Source file rights verified separately. Owner authorizes this generated Italia interpretation; generated output is not PD/CC0."
+    },
+    "derivation": {
+      "kind": "ai-assisted-structure-draft",
+      "sourceFile": "content/assets/staging/italia/met-town-source.jpg",
+      "modifications": "Built-in imagegen painted interpretation; deterministic full-colour resize/WebP export only. See prompt ledger for reference roles and exclusions."
+    }
+  },
+  {
+    "file": "public/assets/italia/rome-departure.webp",
+    "source": "https://www.metmuseum.org/art/collection/search/247017",
+    "licence": "Owner-approved AI-assisted derivative; not public domain",
+    "retrieved": "2026-10-25",
+    "artist": "AI-assisted interpretation, owner-authorized Italia batch",
+    "institution": "Imperium",
+    "notes": "Italia only. Interpreted/provisional, not a surveyed setting, certain likeness or verified costume reconstruction. Built-in image_gen; prompt/output lineage: docs/reviews/italia-art-prompts.json. Input exec-0d0ff519-9bdf-45cb-8dfd-617065cbf81d.png; SHA-256 dd3c2c12a6c1ee42c4f3410889fa0f8ec6a626febe092e3c6e8830292e9ed606. Original reference limits remain in source row. Visual revision requested by owner 2026-10-25. Prompt/reference ledger: docs/reviews/italia-visual-revision-prompts.json. IT-A2/IT-A4 combined civic scene: unnamed figures painted directly into the background, not identifiable leaders or duplicate rig instances. No surveyed Roman street/gate claim.",
+    "approval": {
+      "scope": "structural-draft",
+      "by": "Project owner (Italia batch approval, chat 2026-10-25)",
+      "at": "2026-10-25",
+      "rightsUrl": "https://www.metmuseum.org/art/collection/search/247017",
+      "rightsStatement": "Source file rights verified separately. Owner authorizes this generated Italia interpretation; generated output is not PD/CC0."
+    },
+    "derivation": {
+      "kind": "ai-assisted-structure-draft",
+      "sourceFile": "content/assets/staging/italia/met-town-source.jpg",
+      "modifications": "Built-in imagegen painted interpretation; deterministic full-colour resize/WebP export only. See prompt ledger for reference roles and exclusions."
+    }
+  },
+  {
+    "file": "content/assets/staging/italia/political-hall.png",
+    "source": "https://www.metmuseum.org/art/collection/search/247017",
+    "licence": "Owner-approved AI-assisted derivative; not public domain",
+    "retrieved": "2026-10-25",
+    "artist": "AI-assisted interpretation, owner-authorized Italia batch",
+    "institution": "Imperium",
+    "notes": "Italia only. Interpreted/provisional, not a surveyed setting, certain likeness or verified costume reconstruction. Built-in image_gen; prompt/output lineage: docs/reviews/italia-art-prompts.json. Input exec-ee8e2d80-b436-4fb5-ad9f-be88e1878b64.png; SHA-256 0902c2b96284dfa6944a118b1f2d311ce0e91a6b66e44ded97139cf61b4bb262. Original reference limits remain in source row. Visual revision requested by owner 2026-10-25. Prompt/reference ledger: docs/reviews/italia-visual-revision-prompts.json. ",
+    "approval": {
+      "scope": "structural-draft",
+      "by": "Project owner (Italia batch approval, chat 2026-10-25)",
+      "at": "2026-10-25",
+      "rightsUrl": "https://www.metmuseum.org/art/collection/search/247017",
+      "rightsStatement": "Source file rights verified separately. Owner authorizes this generated Italia interpretation; generated output is not PD/CC0."
+    },
+    "derivation": {
+      "kind": "ai-assisted-structure-draft",
+      "sourceFile": "content/assets/staging/italia/met-town-source.jpg",
+      "modifications": "Built-in imagegen painted interpretation; deterministic full-colour resize/WebP export only. See prompt ledger for reference roles and exclusions."
+    }
+  },
+  {
+    "file": "public/assets/italia/political-hall.webp",
+    "source": "https://www.metmuseum.org/art/collection/search/247017",
+    "licence": "Owner-approved AI-assisted derivative; not public domain",
+    "retrieved": "2026-10-25",
+    "artist": "AI-assisted interpretation, owner-authorized Italia batch",
+    "institution": "Imperium",
+    "notes": "Italia only. Interpreted/provisional, not a surveyed setting, certain likeness or verified costume reconstruction. Built-in image_gen; prompt/output lineage: docs/reviews/italia-art-prompts.json. Input exec-ee8e2d80-b436-4fb5-ad9f-be88e1878b64.png; SHA-256 5e78f73d2add4de45cdb713519c78aadf7d60b2d9de779a5d55864fa12c561db. Original reference limits remain in source row. Visual revision requested by owner 2026-10-25. Prompt/reference ledger: docs/reviews/italia-visual-revision-prompts.json. ",
+    "approval": {
+      "scope": "structural-draft",
+      "by": "Project owner (Italia batch approval, chat 2026-10-25)",
+      "at": "2026-10-25",
+      "rightsUrl": "https://www.metmuseum.org/art/collection/search/247017",
+      "rightsStatement": "Source file rights verified separately. Owner authorizes this generated Italia interpretation; generated output is not PD/CC0."
+    },
+    "derivation": {
+      "kind": "ai-assisted-structure-draft",
+      "sourceFile": "content/assets/staging/italia/met-town-source.jpg",
+      "modifications": "Built-in imagegen painted interpretation; deterministic full-colour resize/WebP export only. See prompt ledger for reference roles and exclusions."
+    }
+  },
+  {
+    "file": "content/assets/staging/italia/mustering-ground.png",
+    "source": "https://www.metmuseum.org/art/collection/search/436083",
+    "licence": "Owner-approved AI-assisted derivative; not public domain",
+    "retrieved": "2026-10-25",
+    "artist": "AI-assisted interpretation, owner-authorized Italia batch",
+    "institution": "Imperium",
+    "notes": "Italia only. Interpreted/provisional, not a surveyed setting, certain likeness or verified costume reconstruction. Built-in image_gen; prompt/output lineage: docs/reviews/italia-art-prompts.json. Input exec-c1499608-5228-493d-a473-ea028dc44c00.png; SHA-256 508d85347f44c343e6f6c45c9d4c080953fcea0d217f6a5e398023642542fe89. Original reference limits remain in source row. Visual revision requested by owner 2026-10-25. Prompt/reference ledger: docs/reviews/italia-visual-revision-prompts.json. IT-A1/IT-A2 scenery: Daubigny supplies atmosphere only; incidental headquarters/farm structures are provisional interpretations, not sourced reconstructions or a proven address location.",
+    "approval": {
+      "scope": "structural-draft",
+      "by": "Project owner (Italia batch approval, chat 2026-10-25)",
+      "at": "2026-10-25",
+      "rightsUrl": "https://www.metmuseum.org/art/collection/search/436083",
+      "rightsStatement": "Source file rights verified separately. Owner authorizes this generated Italia interpretation; generated output is not PD/CC0."
+    },
+    "derivation": {
+      "kind": "ai-assisted-structure-draft",
+      "sourceFile": "content/assets/staging/italia/met-river-source.jpg",
+      "modifications": "Built-in imagegen painted interpretation; deterministic full-colour resize/WebP export only. See prompt ledger for reference roles and exclusions."
+    }
+  },
+  {
+    "file": "public/assets/italia/mustering-ground.webp",
+    "source": "https://www.metmuseum.org/art/collection/search/436083",
+    "licence": "Owner-approved AI-assisted derivative; not public domain",
+    "retrieved": "2026-10-25",
+    "artist": "AI-assisted interpretation, owner-authorized Italia batch",
+    "institution": "Imperium",
+    "notes": "Italia only. Interpreted/provisional, not a surveyed setting, certain likeness or verified costume reconstruction. Built-in image_gen; prompt/output lineage: docs/reviews/italia-art-prompts.json. Input exec-c1499608-5228-493d-a473-ea028dc44c00.png; SHA-256 12f2d6048d02e791987c7a548fb4d0ee75ea8540df6ef1bedee655ca8632d143. Original reference limits remain in source row. Visual revision requested by owner 2026-10-25. Prompt/reference ledger: docs/reviews/italia-visual-revision-prompts.json. IT-A1/IT-A2 scenery: Daubigny supplies atmosphere only; incidental headquarters/farm structures are provisional interpretations, not sourced reconstructions or a proven address location.",
+    "approval": {
+      "scope": "structural-draft",
+      "by": "Project owner (Italia batch approval, chat 2026-10-25)",
+      "at": "2026-10-25",
+      "rightsUrl": "https://www.metmuseum.org/art/collection/search/436083",
+      "rightsStatement": "Source file rights verified separately. Owner authorizes this generated Italia interpretation; generated output is not PD/CC0."
+    },
+    "derivation": {
+      "kind": "ai-assisted-structure-draft",
+      "sourceFile": "content/assets/staging/italia/met-river-source.jpg",
+      "modifications": "Built-in imagegen painted interpretation; deterministic full-colour resize/WebP export only. See prompt ledger for reference roles and exclusions."
+    }
+  },
+  {
+    "file": "public/assets/italia/audio/wind-plains.mp3",
+    "source": "https://opengameart.org/content/wind1",
+    "licence": "CC0",
+    "retrieved": "2026-10-25",
+    "artist": "Luke.RUSTLTD",
+    "institution": "OpenGameArt contributor",
+    "approval": {
+      "by": "Project owner (Italia reuse approval and visual revision request, 2026-10-25)",
+      "at": "2026-10-25",
+      "rightsUrl": "https://opengameart.org/content/wind1",
+      "rightsStatement": "CC0"
+    },
+    "notes": "Italia-only transport encoding of the approved prepared CC0 wind loop. Original rights/source/preparation remain in public/assets/gallia/audio/wind-plains.wav manifest row. Same complete 12 seconds, mono 22050Hz, no authored gain or timing changes. MP3 VBR .5 via SoundFile 0.13.1/libsndfile 1.2.2; output SHA-256 2c995fafc352fa0dc109fedee828c2f4fa6a8338c0bf9bc77e5d052eab88334b. Numerical duration/RMS checks: docs/reviews/italia-wind-encoding.json; lossy encoding is not bit-identical or a listening approval. This reduces download size to fund unique scenery without reducing existing image quality; Gallia source binary remains unchanged."
   }
 ]

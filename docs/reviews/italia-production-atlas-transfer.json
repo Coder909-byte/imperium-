@@ -1,0 +1,48 @@
+{
+  "method": "Final build: real served atlas script tags, Accept-Encoding:gzip, noModule excluded",
+  "bytes": 144602,
+  "scripts": [
+    {
+      "src": "/_next/static/chunks/11jq0c2_zavac.js",
+      "encoding": "gzip",
+      "contentLength": 8504,
+      "bytes": 8504
+    },
+    {
+      "src": "/_next/static/chunks/1mkbuudhndal5.js",
+      "encoding": "gzip",
+      "contentLength": 71576,
+      "bytes": 71576
+    },
+    {
+      "src": "/_next/static/chunks/2h8mq2n9nn_uc.js",
+      "encoding": "gzip",
+      "contentLength": 42739,
+      "bytes": 42739
+    },
+    {
+      "src": "/_next/static/chunks/turbopack-0tcle8anhm_hs.js",
+      "encoding": "gzip",
+      "contentLength": 3848,
+      "bytes": 3848
+    },
+    {
+      "src": "/_next/static/chunks/278axw9oxgjty.js",
+      "encoding": "gzip",
+      "contentLength": 5717,
+      "bytes": 5717
+    },
+    {
+      "src": "/_next/static/chunks/0hg3k7un3rsb_.js",
+      "encoding": "gzip",
+      "contentLength": 8604,
+      "bytes": 8604
+    },
+    {
+      "src": "/_next/static/chunks/3yfl9fgvivx3-.js",
+      "encoding": "gzip",
+      "contentLength": 3614,
+      "bytes": 3614
+    }
+  ]
+}

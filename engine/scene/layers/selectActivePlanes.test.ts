@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { selectPlanesForTier } from "./selectActivePlanes";
+import { selectPlanesForTier, selectScenePlanesForTier, selectVisiblePlanes } from "./selectActivePlanes";
 import type { ScenePlane } from "../types";
 
 function plane(id: string, depth: number): ScenePlane {
@@ -7,6 +7,31 @@ function plane(id: string, depth: number): ScenePlane {
 }
 
 describe("selectPlanesForTier", () => {
+  it("retains every distinct setting instead of leaving later low-tier beats black", () => {
+    const planes = Array.from({ length: 7 }, (_, index) => ({ ...plane(`setting-${index}`, index / 10), essential: index < 4 }));
+    const beats = planes.map(plane => ({ visibleLayers: [plane.id] }));
+    const pool = selectScenePlanesForTier(planes, "low", beats);
+    expect(pool).toHaveLength(7);
+    for (const beat of beats) expect(selectVisiblePlanes(pool, "low", beat.visibleLayers).map(plane => plane.id)).toEqual(beat.visibleLayers);
+  });
+
+  it("caps co-visible planes even when the episode needs more cached settings", () => {
+    const planes = Array.from({ length: 9 }, (_, index) => plane(`setting-${index}`, index / 10));
+    const beats = [{ visibleLayers: planes.slice(0, 6).map(plane => plane.id) }, ...planes.slice(6).map(plane => ({ visibleLayers: [plane.id] }))];
+    const pool = selectScenePlanesForTier(planes, "low", beats);
+    expect(pool.length).toBeGreaterThan(4);
+    for (const beat of beats) expect(selectVisiblePlanes(pool, "low", beat.visibleLayers).length).toBeLessThanOrEqual(4);
+    expect(selectScenePlanesForTier(planes, "high", beats)).toEqual(planes);
+  });
+
+  it("preserves existing global choices and composites when all beats already have scenery", () => {
+    const planes = [{ ...plane("sky", 0), assetUrl: "/assets/sky.webp", lowTierGroup: "base", essential: true },
+      { ...plane("ground", .2), assetUrl: "/assets/ground.webp", lowTierGroup: "base" },
+      ...["hill", "inner", "outer"].map((id, index) => ({ ...plane(id, .3 + index / 10), essential: true })), plane("front", .9)];
+    const beats = [{ visibleLayers: ["sky", "ground", "hill"] }, { visibleLayers: planes.map(plane => plane.id) }];
+    expect(selectScenePlanesForTier(planes, "low", beats)).toEqual(selectPlanesForTier(planes, "low"));
+  });
+
   it("keeps approved sky and ground together without displacing either essential wall", () => {
     const planes = [
       { ...plane("sky", 0.02), assetUrl: "/assets/sky.webp", lowTierGroup: "base", essential: true },

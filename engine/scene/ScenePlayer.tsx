@@ -20,7 +20,7 @@ import { SceneLayers } from "./SceneLayers";
 import { SceneRenderer } from "./SceneRenderer";
 import { SceneEffects } from "./SceneEffects";
 import type { ParallaxPlane } from "./layers/ParallaxPlane";
-import { selectPlanesForTier } from "./layers/selectActivePlanes";
+import { selectScenePlanesForTier, selectVisiblePlanes } from "./layers/selectActivePlanes";
 import type { SceneRegion } from "./types";
 import styles from "./ScenePlayer.module.css";
 
@@ -119,7 +119,7 @@ export function ScenePlayer({ region, onExit, onQuiz, onBeatChange, forcedTier, 
       // Effects must follow planes in Pixi draw order, otherwise opaque
       // art hides particles. Pick the tier before either is constructed.
       const initialTierGuess = forcedTier ?? detectStartingTier(readNavigatorSignals());
-      const planeDefs = selectPlanesForTier(region.planes, initialTierGuess);
+      const planeDefs = selectScenePlanesForTier(region.planes, initialTierGuess, region.beats);
       setRenderedPlanes(planeDefs);
       await layers.init(planeDefs, region.rigs, renderer.getTicker(), debugArt);
       if (cancelled) { layers.destroy(); return; }
@@ -149,8 +149,11 @@ export function ScenePlayer({ region, onExit, onQuiz, onBeatChange, forcedTier, 
         const snapshot = effects.deviceTier.getSnapshot();
         setTier(snapshot.tier);
         if (snapshot.tier !== "low") return;
-        const lowDefs = selectPlanesForTier(region.planes, "low");
+        const lowDefs = selectScenePlanesForTier(region.planes, "low", region.beats);
         layers.applyLowTier(lowDefs);
+        const currentBeat = region.beats[beatDirector.getSnapshot().index];
+        const visible = new Set(selectVisiblePlanes(lowDefs, "low", currentBeat.visibleLayers).map(plane => plane.id));
+        for (const [id, plane] of layers.planes) plane.setVisible(visible.has(id), 0);
         setRenderedPlanes(lowDefs);
       });
 
@@ -215,14 +218,19 @@ export function ScenePlayer({ region, onExit, onQuiz, onBeatChange, forcedTier, 
     // Pixi objects and resetting each PuppetActor's phase — on a bare
     // reduced-motion toggle that didn't actually change the beat.
     actorsRef.current?.applyBeat(beat.actors);
-    const visible = new Set(beat.visibleLayers);
-    const fadeMs = reducedMotion || !hasAppliedBeatRef.current ? 0 : LAYER_REVEAL_MS;
+    const activeTier = effectsRef.current?.deviceTier.getSnapshot().tier ?? "high";
+    const pool = selectScenePlanesForTier(region.planes, activeTier, region.beats);
+    const visible = new Set(selectVisiblePlanes(pool, activeTier, beat.visibleLayers).map(plane => plane.id));
+    // Cached distinct settings may exceed four images, but low tier never
+    // draws more than four, including during transitions between settings.
+    const cut = activeTier === "low" && pool.length > 4;
+    const fadeMs = reducedMotion || cut || !hasAppliedBeatRef.current ? 0 : LAYER_REVEAL_MS;
     for (const [id, plane] of planesRef.current) {
       plane.setVisible(visible.has(id), fadeMs);
     }
     if (!hasAppliedBeatRef.current) renderer.afterNextRender(() => performance.mark("imperium:scene-presented"));
     hasAppliedBeatRef.current = true;
-  }, [engineReady, beat, reducedMotion]);
+  }, [engineReady, beat, reducedMotion, region]);
 
   // Live LUT preview (scene-lab only) — the real /scene/[regionId] route
   // never passes forcedLut, so this only ever re-fires there on region
@@ -279,7 +287,7 @@ export function ScenePlayer({ region, onExit, onQuiz, onBeatChange, forcedTier, 
       data-active-actors={beat.actors.map((a) => `${a.rig}:${a.clip}:${a.count}`).join(",")}
       data-debug-art={debugArt}
       data-narration-state={audio.narrationStatus}
-      data-visible-planes={renderedPlanes.filter((plane) => beat.visibleLayers.includes(plane.id)).flatMap((plane) => (plane.compositeSources ?? [plane]).map((source) => source.id)).join(",")}
+      data-visible-planes={selectVisiblePlanes(renderedPlanes, tier, beat.visibleLayers).flatMap((plane) => (plane.compositeSources ?? [plane]).map((source) => source.id)).join(",")}
     >
       <div ref={containerRef} className={styles.canvasHost} />
       {renderError && <p role="alert" className={styles.renderError}>{renderError}</p>}

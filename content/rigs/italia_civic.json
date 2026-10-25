@@ -1,0 +1,50 @@
+{
+  "id": "italia_civic",
+  "draft": true,
+  "parts": [
+    {
+      "id": "body",
+      "parent": null,
+      "texture": "italia/civic.webp",
+      "size": [
+        440,
+        660
+      ],
+      "pivot": [
+        220,
+        650
+      ],
+      "rest": {
+        "x": 0,
+        "y": 0
+      },
+      "zOrder": 1
+    }
+  ],
+  "clips": [
+    {
+      "id": "idle",
+      "durationMs": 4200,
+      "loop": true,
+      "tracks": {
+        "body": [
+          {
+            "t": 0,
+            "rot": -0.12,
+            "ease": "sine.inOut"
+          },
+          {
+            "t": 0.5,
+            "rot": 0.12,
+            "ease": "sine.inOut"
+          },
+          {
+            "t": 1,
+            "rot": -0.12,
+            "ease": "sine.inOut"
+          }
+        ]
+      }
+    }
+  ]
+}
